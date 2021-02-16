@@ -15,7 +15,7 @@ output:
 fontsize: 14pt
 ---
 
-# Course Websites
+### Course Websites
 Please reference the following course websites for course
 details:
 
@@ -24,19 +24,19 @@ details:
 - [iLearn](https://ilearn.mq.edu.au/course/view.php?id=38800)
 - [Unit Guide](https://unitguides.mq.edu.au/unit_offerings/123650/unit_guide)
 
-# Instructor Information
+### Instructor Information
 - **Name:** Dr. Matthew J. Crossley
 - **Email:** matthew.crossley@mq.edu.au
 - **Office:** Australian Hearing Hub 3.819
 - **Office Hours:** By appointment
 
-# Tutor Information
+### Tutor Information
 - **Name:** TBA
 - **Email:** TBA
 - **Office:** TBA
 - **Office Hours:** TBA
 
-# Course Schedule
+### Course Schedule
 |          | Day       | Time                | Location                            |
 |----------|-----------|---------------------|-------------------------------------|
 | Lecture  | Monday    | 10:00 AM - 11:00 AM | Online                              |
@@ -49,10 +49,10 @@ details:
 | Tutorial | Friday    | 11:00 AM - 12:00 PM | 12 Second Way - 318 Faculty PC Room |
 | Tutorial | Friday    | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
 
-# Weekly Schedule
+### Weekly Schedule
 - Please see [lectures](https://crossley.github.io/cogs2020/lectures-exported.html)
 
-# course philosophy
+### course philosophy
 No Lectures: The worst method for transmitting information
 from my head to yours is for me to lecture you. There are no
 lectures. We work on problems together during class. You
