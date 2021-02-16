@@ -1,0 +1,32 @@
+---
+title: "Lectures"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: false
+    toc_float:
+        collapsed: true
+        smooth_scroll: true
+    toc_depth: 4
+    fig_caption: yes
+    # code_folding: show
+    number_sections: false
+    theme: cerulean
+fontsize: 14pt
+---
+
+#### [Lecture 1: Course intro, `R`, `data.table` and `ggplot2`](lecture_1-exported.html)
+#### [Lecture 2: Descriptive statistics, data types, experiment design](lecture_2-exported.html)
+#### [Lecture 3: Probability, random variables, distribution of sample means, central limit theorem](lecture_3-exported.html)
+#### [Lecture 4: Binomial Test](lecture_4-exported.html)
+#### [Lecture 5: Critical values, two-tailed tests, confidence intervals, Type I vs type II errors](lecture_5-exported.html)
+#### [Lecture 6: Z distribution, one-sample t-test](lecture_6-exported.html)
+#### [Lecture 7: independent samples and paired samples t-test](lecture_7-exported.html)
+#### [Lecture 8: Correlation, regression](lecture_8-exported.html)
+#### [Lecture 9: Testing hypotheses about variance, Comparing the variance of two Normal populations](lecture_9-exported.html)
+#### [Lecture 10: One-way ANOVA](lecture_10-exported.html)
+#### [Lecture 11: Two-way ANOVA](lecture_11-exported.html)
+#### [Lecture 12: Repeated Measures ANOVA](lecture_12-exported.html)
+#### [Lecture 13: Mixed-design ANOVA](lecture_12-exported.html)
+

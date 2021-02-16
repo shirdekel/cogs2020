@@ -1,0 +1,73 @@
+---
+title: "Homework 1"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: true
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+#### 1. Work through the following material:
+
+* [Programming basics](https://rstudio.cloud/learn/primers/1.2)
+* [Data Table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
+* [Bar charts](https://rstudio.cloud/learn/primers/3.2)
+* [Histograms](https://rstudio.cloud/learn/primers/3.3)
+* [Box plots and counts](https://rstudio.cloud/learn/primers/3.4) 
+* [Scatter plots](https://rstudio.cloud/learn/primers/3.6) 
+
+#### 2. Practice using `data.table`
+
+a. Load the `data.table` package
+
+b. Remove all objects from the current R session
+
+c. Read csv file `crit_learn.csv` into a data.table.
+
+d. Extract rows 40 to 60
+
+e. Extract all rows for which `cnd == 'Delay'`
+
+f. Use `|` to extract rows for which `cnd == 'Delay'` or `cnd == 'Long ITI'`
+
+g. Use `%in%` to extract rows for which `cnd == 'Delay'` or `cnd == 'Long ITI'`
+
+h. Use `&` to extract rows for which `prob_num == 1` and `exp == Experiment 1`
+
+i. Use `.N` to count the number of rows extracted in problem **2E**
+
+j. Use `.N` to count the number of rows per `cnd` extracted in problem
+       **2E**
+       
+k. Use `unique()` to count the number of subjects per `cnd` extracted in
+       problem **2E**
+       
+l. Extract only the `sub`, `cnd`, `prob_num`, and `t2c` columns, and keep
+       only the unique rows from the data extracted in problem **2E** 
+       
+m. Use `.N` to count the number of rows per `cnd` and use `unique` to count
+       the number subjects per `cnd` extracted in problem **3D**
+       
+n. Compute the mean `t2c` over all rows extracted in problem **3D**
+
+o. Compute the median `t2c` over all rows extracted in problem **3D**
+
+p. Compute the standard deviation of `t2c` over all rows extracted in
+       problem **3D**
+       
+i. Compute the variance of `t2c` over all rows extracted in problem **3D**
+
+ii. Compute the range of `t2c` over all rows extracted in problem **3D**

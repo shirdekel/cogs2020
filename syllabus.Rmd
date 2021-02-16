@@ -1,0 +1,97 @@
+---
+title: "Syllabus"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: true
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+# Course Websites
+Please reference the following course websites for course
+details:
+
+- [Course Materials](https://crossley.github.io/cogs2020/)
+- [GitHub](https://github.com/crossley/cogs2020)
+- [iLearn](https://ilearn.mq.edu.au/course/view.php?id=38800)
+- [Unit Guide](https://unitguides.mq.edu.au/unit_offerings/123650/unit_guide)
+
+# Instructor Information
+- **Name:** Dr. Matthew J. Crossley
+- **Email:** matthew.crossley@mq.edu.au
+- **Office:** Australian Hearing Hub 3.819
+- **Office Hours:** By appointment
+
+# Tutor Information
+- **Name:** TBA
+- **Email:** TBA
+- **Office:** TBA
+- **Office Hours:** TBA
+
+# Course Schedule
+|          | Day       | Time                | Location                            |
+|----------|-----------|---------------------|-------------------------------------|
+| Lecture  | Monday    | 10:00 AM - 11:00 AM | Online                              |
+| Tutorial | Monday    | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Monday    | 1:00 PM - 2:00 PM   | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Monday    | 2:00 PM - 3:00 PM   | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Wednesday | 11:00 AM - 12:00 PM | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Wednesday | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Wednesday | 1:00 PM - 2:00 PM   | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Friday    | 11:00 AM - 12:00 PM | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Friday    | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
+
+# Weekly Schedule
+- Please see [lectures](https://crossley.github.io/cogs2020/lectures-exported.html)
+
+# course philosophy
+No Lectures: The worst method for transmitting information
+from my head to yours is for me to lecture you. There are no
+lectures. We work on problems together during class. You
+learn soccer with the ball at your feet. You learn about
+data with your hands on the keyboard.
+
+R Everyday: Learning a new programming language is like
+learning a new human language: You will practice (almost)
+every day.
+
+Community: You will probably learn the names of more
+students in this course than in all your other courses
+combined. Awkwardness in the pursuit of community is no
+vice.
+
+Professionalism: We use professional tools. Your workflow
+will be very similar to the workflow involved in paid
+employment. Your problem sets and final project will be
+public, the better to impress others with your abilities.
+High quality work will be shared with your classmates. We
+will learn the "full cycle" of how to draw inferences from
+data and communicate those inferences to others.
+
+Cold Calling: I call on students during class. This keeps
+every student involved, makes for a more lively discussion
+and helps to prepare students for the real world, in which
+you can’t hide in the back row. Want to be left alone? Don’t
+take this course.
+
+Advisory Groups: We do not have normal sections. Instead,
+you will spend 30 minutes each week meeting with your
+assigned TF in a small group. Recall what I just said about
+(not) being left alone in this course.
+
+Teaching to Learn: My main goal is not to teach you how do
+X. That is easy! More importantly, in a few months, I won’t
+be around to teach you Y. My goal is to teach you how to
+teach yourself, how to figure out X and Y and Z on your own.
+That is harder! Much of the pedagogy of the course —
+especially my insistence that you work on topics not covered
+in lecture — is driven by this goal. You will find it
+frustrating.
