@@ -8,10 +8,10 @@ left:
   - text: "GitHub"
     href: https://github.com/crossley/cogs2020
   - text: "Syllabus"
-    href: syllabus-exported.html
+    href: syllabus.html
   - text: "Lectures"
-    href: lectures-exported.html
+    href: lectures.html
   - text: "Homework"
-    href: homework-exported.html
+    href: homework.html
 
 # right:

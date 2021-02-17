@@ -12,7 +12,7 @@ output:
     fig_caption: yes
     # code_folding: show
     number_sections: false
-    theme: cerulean
+    theme: cosmo
 fontsize: 14pt
 ---
 
@@ -73,8 +73,7 @@ rm(list=ls())
 
 ## read in an already built "data.table" of the data
 ## "data.table" is a type of object in R, and it is magical... you'll see.
-d <- fread('data/criterion_learning/data_table/data_table_crit_learn.csv')
-
+d <- fread('data/criterion_learning/crit_learn.csv')
 
 ## Getting stray csv text files into a coherent table like this is a far larger
 ## portion of being a cognitive neuroscientist than is probably wise for me to

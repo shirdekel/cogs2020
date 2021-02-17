@@ -19,8 +19,7 @@ fontsize: 14pt
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
-#### 1. Work through the following material:
+### 0. Study
 
 * [Programming basics](https://rstudio.cloud/learn/primers/1.2)
 * [Data Table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
@@ -29,45 +28,170 @@ knitr::opts_chunk$set(echo = TRUE)
 * [Box plots and counts](https://rstudio.cloud/learn/primers/3.4) 
 * [Scatter plots](https://rstudio.cloud/learn/primers/3.6) 
 
-#### 2. Practice using `data.table`
 
-a. Load the `data.table` package
+### 1. Prepare environment
 
-b. Remove all objects from the current R session
+a. Load the `data.table` and `ggplot2` packages.
 
-c. Read csv file `crit_learn.csv` into a data.table.
+b. Remove all objects from the current R session.
 
-d. Extract rows 40 to 60
+### 2. Basics
 
-e. Extract all rows for which `cnd == 'Delay'`
+a. Create a `vector` with any three numbers you like that sum to 10 and store
+the result in a variable named `ans_2a`.
 
-f. Use `|` to extract rows for which `cnd == 'Delay'` or `cnd == 'Long ITI'`
+b. Create a three element `list` containing one `numeric` item, one `character`
+item, and one `logical` item. Store the result in a variable named `ans_2b`.
 
-g. Use `%in%` to extract rows for which `cnd == 'Delay'` or `cnd == 'Long ITI'`
+c. Use the `:` symbol to create a `numeric vector` with integers starting at 1
+and going up to and including 10. Store the result in a variable named `ans_2c`.
 
-h. Use `&` to extract rows for which `prob_num == 1` and `exp == Experiment 1`
 
-i. Use `.N` to count the number of rows extracted in problem **2E**
+### 3. Subset rows in `i`
 
-j. Use `.N` to count the number of rows per `cnd` extracted in problem
-       **2E**
+a. Read
+`https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv`
+into a `data.table` and store the result in a variable named `d`.
+
+b. Extract rows 40 to 60 and store the result in a variable named `ans_3b`.
+
+c. Extract all rows for which `cnd == 'Delay'` and store the results in a
+variable named `ans_3c`.
+
+
+### 4. Operate on columns in `j`
+
+a. Use `.N` to count the number of rows in which `sub == 101` and store the
+result in a variable named `ans_4a`.
+
+b. Compute the mean `t2c` over the entire `data.table` and store the result in a
+variable named `ans_4b`.
+
        
-k. Use `unique()` to count the number of subjects per `cnd` extracted in
-       problem **2E**
+### 5. Combining `i` and `j`       
        
-l. Extract only the `sub`, `cnd`, `prob_num`, and `t2c` columns, and keep
-       only the unique rows from the data extracted in problem **2E** 
-       
-m. Use `.N` to count the number of rows per `cnd` and use `unique` to count
-       the number subjects per `cnd` extracted in problem **3D**
-       
-n. Compute the mean `t2c` over all rows extracted in problem **3D**
+a. Compute the mean `t2c` when `cnd == 'Delay'` and store the result in a
+variable named `ans_5a`.
 
-o. Compute the median `t2c` over all rows extracted in problem **3D**
+b. Compute the maximum `t2c` when `prob_num == 2` and store the result in a
+variable named `ans_5b`.
 
-p. Compute the standard deviation of `t2c` over all rows extracted in
-       problem **3D**
-       
-i. Compute the variance of `t2c` over all rows extracted in problem **3D**
 
-ii. Compute the range of `t2c` over all rows extracted in problem **3D**
+### 6. Group using `by`.
+
+a. Compute the mean `t2c` per `sub` and store the result in a variable named `ans_6a`.
+
+b. Use `unique()` to count the number of subjects per `cnd` in `d` and store the
+result in a variable named `ans_6b`.
+
+
+### 7. criterion learning experiment
+
+The `data.table` you have been interacting with is from an experiment asking
+whether or not feedback-delay impairs criterion learning? What is criterion
+learning? Here is an example trial:
+
+<center>
+![FigName](img/cats.png){width=250px}
+</center>
+
+In this case, thin bars belong to category A, and thick bars belong to category
+B. But where exactly is the category boundary (i.e., criterion) that separates
+thick from thin? Criterion learning is the process that allows our brains to
+figure this out. Next, you will perform a cursory analysis on the data from this
+experiment.
+
+a. Read
+`https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv`
+into a `data.table` and store the result in a variable named `ans_1a`.
+
+b. Select only rows for which `cnd == Delay` or for which `cnd == Long ITI` and
+store the result in a variable named `ans_1b`.
+
+c. Create a new `data.table` that contains only a `cnd`, `sub` and mean `t2c`
+per `cnd` per `sub`, and store the result in a variable named `ans_1c`.
+
+    * Make sure that your resulting `data.table` has correctly named columns (i.e.,
+    any columns named `V1` etc. will lead to this question being marked
+    incorrect).
+      
+    * Also make sure that your resulting `data.frame` only has one observation per
+    subject. Failure to do so will lead to this question being marked incorrect.
+
+d. Use `ggplot` to reproduce the following plot exactly and store the resulting
+`ggplot` object in a variable named `ans_1d`.
+    
+```{r, echo=F, fig.width=5, fig.height=5}
+library(data.table)
+library(ggplot2)
+d <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
+d <- d[cnd %in% c('Delay', 'Long ITI')]
+dd <- d[, mean(t2c), .(cnd, sub)]
+setnames(dd, 'V1', 't2c')
+g <- ggplot(dd, aes(cnd, t2c)) +
+  geom_violin() +
+  geom_point()
+g
+```
+
+e. Use `ggplot` to reproduce the following plot exactly and store the resulting
+`ggplot` object in a variable named `ans_1e`.
+    
+```{r, echo=F, fig.width=5, fig.height=5}
+d <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
+d <- d[cnd %in% c('Delay', 'Long ITI')]
+dd <- d[, mean(t2c), .(cnd, prob_num)]
+setnames(dd, 'V1', 't2c')
+g <- ggplot(dd, aes(prob_num, t2c, colour=cnd)) +
+  geom_line()
+g
+```
+
+
+### 8. Rat maze experiment
+
+Consider an experiment in which a set of rats run through a set of mazes some
+number of times each. The researchers running this experiment are interested in
+how quickly rats can run these mazes, and so they record the `time` in seconds
+each `rat` takes to complete each `run` of each `maze`. Next, you will perform a
+cursory analysis on the data from this experiment.
+
+a. Read 'https://crossley.github.io/cogs2020/data/maze/maze.csv' into a
+`data.table` and store the result in a variable named `ans_8a`.
+
+b. `rat` and `maze` are both *categorical* experimental factors. All this means
+is that rat 2 cannot be said to be greater than rat 1 in any meaningful sense.
+However, they are currently coded as integers in the `data.table`. Change the
+coding of `rat` and `maze` to `factor` and store the result in a variable named
+`ans_8b`.
+
+c. Turns out that something was wrong with maze 1, so we can't include it in our
+analysis. Select all rows except those corresponding to `maze == 1` and store
+the result in a variable named `ans_8c`.
+
+d. Create a new `data.table` that contains only a `maze`, `rat` and mean `time`
+per `maze` per `rat`, and store the result in a variable named `ans_8d`.
+
+    * Make sure that your resulting `data.table` has correctly named columns (i.e.,
+    any columns named `V1` etc. will lead to this question being marked
+    incorrect).
+      
+    * Also make sure that your resulting `data.frame` only has one observation per
+    rat per maze. Failure to do so will lead to this question being marked incorrect.
+
+e. Use `ggplot` to reproduce the following plot exactly and store the resulting
+`ggplot` object in a variable named `ans_8e`.
+
+```{r echo=F, fig.width=5, fig.height=5}
+rm(list=ls())
+d <- fread('https://crossley.github.io/cogs2020/data/maze/maze.csv')
+d[, rat := as.factor(rat)]
+d[, maze := as.factor(maze)]
+d <- d[maze != 1]
+dd <- d[, mean(time), .(maze, rat)]
+setnames(dd, 'V1', 'time')
+g <- ggplot(dd, aes(maze, time)) +
+  geom_boxplot() +
+  geom_point()
+g
+```

@@ -1,0 +1,248 @@
+---
+title: "Overview of data sets used in this unit"
+author: "Author: Matthew J. Crossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: true
+        smooth_scroll: true
+    toc_depth: 4
+    fig_caption: yes
+    # code_folding: show
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r message=F}
+
+library(data.table)
+library(ggplot2)
+library(ez)
+library(EnvStats)
+
+```
+
+## Rat maze data
+
+Consider an experiment in which a set of rats run through a set of mazes some
+number of times each. The researchers running this experiment are interested in
+how quickly rats can run these mazes, and so they record the `time` in seconds
+each `rat` takes to complete each `run` of each `maze`.
+
+```{r message=F}
+
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/data/maze/maze.csv')
+
+```
+
+The resulting `data.table` contains the following columns:
+
+- `rat`: Rat identifier (i.e., different numbers correspond to different rats).
+
+- `maze`: Maze identifier (i.e., different numbers correspond to different mazes).
+
+- `run`: Run identifier (i.e., different numbers correspond to different runs).
+
+- `time`: The time in seconds taken to complete the maze.
+
+
+## Criterion learning data
+
+- Does feedback-delay impair criterion learning?
+
+- What is criterion learning? Here is an example trial.
+
+<center>
+![FigName](img/cats.png){width=350px}
+</center>
+
+- In this case, thin bars belong to category A, and thick bars belong to
+  category B.
+
+- Bar thickness is continuous... when exactly does thick become thin?
+
+- Where is the category boundary (i.e., criterion) that separates thick from
+  thin?
+
+- Criterion learning is the process that allows our brains to figure this out.
+
+```{r message=F}
+
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
+
+```
+
+The resulting `data.table` contains the following columns:
+
+- `t`: Trial number across the entire experiment.
+
+- `t_prob`: Trial number per problem.
+
+- `sub`: Subject identifier (i.e., different numbers correspond to different
+  subjects).
+
+- `cnd`: Condition identifier.
+
+- `prob_num`: Problem number (gets increased by 1 every time a participant
+  solves a problem).
+
+- `t2c`: Trials to criterion (i.e., the number of trials it took a participant
+  to solve a particular problem.)
+
+- `exp`: Experiment indicator. Overall, this study was broken down into two
+  experiments -- one using sine-wave grating stimuli and the other using a
+  different type of stimuli.
+
+- `nps`: Number of problems solved. This is the same as `max(prob_num)`
+
+
+## NHP data
+The data file can be found here:
+https://crossley.github.io/cogs2020/data//nhp_cat_learn/ii_gabor.csv
+
+This data file contains the results from a monkey performing a category learning
+experiment similar to those that we have seen a handful of times already in this
+class. On each trial of the experiment the monkey sees a sine-wave grating and
+must learn through trial and error whether that grating is a member of category
+A or category B.
+
+```{r message=F}
+
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/data//nhp_cat_learn/ii_gabor.csv')
+
+col_names <- c(
+  'cat',
+  'x',
+  'y',
+  'resp',
+  'rt',
+  'phase'
+)
+
+setnames(d, col_names)
+
+d[, trial := 1:.N]
+
+```
+
+- `trial`: Trial number.
+
+- `cat`: Category label.
+
+- `x`: The spatial frequency of the sine-wave grating.
+
+- `y`: The orientation of the sine-wave grating.
+
+- `resp`: The response made by the monkey (i.e., category A or B).
+
+- `rt`: Reaction time (time from stimulus onset to button press).
+
+- `phase`: Indicates the phase of the experiment. In `phase==2`, the category
+  labels are swapped relative to `phase==1`.
+
+
+## Minimally invasive surgery (MIS) data
+
+- This data is from a motor learning and motor control experiment.
+
+- On each trial, participants simply rested their hand in the middle of a desk,
+  and then tried to move their hand quickly and accurately to a visual target
+  somewhere on a circle centred at their hand position and with a radius of
+  about 8 cm.
+
+- We tested two different groups of people. One group were college students, and
+  the other group were professional surgeons.
+
+- The data file can be found here:
+  https://crossley.github.io/cogs2020/data/mis/mis_data.csv
+
+
+```{r message=F}
+
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/data/mis/mis_data.csv')
+
+```
+
+- `subject`: Anonymous subject ID
+- `group`: Indicates college student or surgeon
+- `phase`: Indicates the phase of the experiment
+- `trial`: Trial number
+- `target`: The visual target was reached to for this trial
+- `error`: The mismatch between the centre of the target and the final hand position
+- `movement_time`: How long the movement lasted
+- `reaction_time`: How long until the movement began
+- `peak_velocity`: The maximum velocity reached during the reach
+
+
+## MEG data
+We also have magnetoencephalography (MEG) data collected from a single
+participant while they performed a category learning experiment. On each trial
+of the category learning experiment, the participant viewed a circular sine wave
+grating, and had to push a button to indicate whether they believed the stimulus
+belonged to category A or category B. We have seen and worked with this type of
+category learning experiment many times throughout this course, and it is
+further described by the following figure.
+
+<center>
+![FigName](img/cats.png){width=300px}
+</center>
+
+MEG is used to record the time-series of magnetic and electric potentials at the
+scalp, which are generated by the activity of neurons. There are many sensors,
+each configured to pick up signal from a different position on the scalp. This
+is shown in the following figure (the text labels indicate the channel name and
+are placed approximately where the MEG sensor is located on a real head).
+
+<center>
+![FigName](img/MEG_2.png){width=300px}
+</center>
+
+The data file that we will be working with is arranged into *epochs* aligned to
+stimulus presentation. This means that every time a stimulus is presented we say
+that an epoch has occurred. We then assign a time of $t=0$ to the exact moment
+the stimulus appeared. We then typically look at the neural time series from
+just before the stimulus appeared to a little while after the stimulus has
+appeared. For this data, each epoch starts 0.1 seconds before stimulus onset,
+and concludes 0.3 seconds after stimulus onset. The following figure shows the
+MEG signal at every sensory location across the entire scalp for 5 time points
+within this $[-0.1s, 0.3s]$ interval.
+
+<center>
+![FigName](img/MEG_1.png){width=550px}
+</center>
+
+The data can be located here:
+`https://crossley.github.io/cogs2020/data/eeg/epochs.txt`
+
+```{r message=F}
+
+rm(list=ls())
+
+## d <- fread('https://crossley.github.io/cogs2020/data/eeg/epochs.txt')
+
+```
+
+- The `time` column contains times in seconds relative to stimulus onset.
+  Stimulus onset always occurs at $0$ seconds.
+
+- The `condition` column indicates which category the stimulus belonged to for
+  the given `epoch`. We won't make use of this column here, and we will remove
+  it below.
+
+- The `epoch` column is the epoch number. You can think of this like we have
+  usually thought of `trial` columns in examples throughout the course.
+
+- The many different `MEG xyz` columns contain the actual neural time series
+  signals for each sensor. See the above figure for how these column names map
+  onto scalp positions.

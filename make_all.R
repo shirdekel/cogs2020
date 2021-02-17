@@ -8,7 +8,7 @@ make <- function(in_file) {
     rmarkdown::render(
                    in_file,
                    output_format = out_format,
-                   output_file = str_replace(in_file, '.Rmd', '-exported.html'),
+                   output_file = str_replace(in_file, '.Rmd', '.html'),
                    knit_root_dir=getwd()
                )
 }
