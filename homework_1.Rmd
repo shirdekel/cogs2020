@@ -19,7 +19,12 @@ fontsize: 14pt
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### 0. Study
+```{r, echo=F}
+library(data.table)
+library(ggplot2)
+```
+
+## 0. Study
 
 * [Programming basics](https://rstudio.cloud/learn/primers/1.2)
 * [Data Table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
@@ -29,67 +34,66 @@ knitr::opts_chunk$set(echo = TRUE)
 * [Scatter plots](https://rstudio.cloud/learn/primers/3.6) 
 
 
-### 1. Prepare environment
+<!-- ## 1. Prepare environment -->
 
-a. Load the `data.table` and `ggplot2` packages.
+<!-- a. Load the `data.table` and `ggplot2` packages. -->
 
-b. Remove all objects from the current R session.
+<!-- b. Remove all objects from the current R session. -->
 
-### 2. Basics
+<!-- ## 2. Basics -->
 
-a. Create a `vector` with any three numbers you like that sum to 10 and store
-the result in a variable named `ans_2a`.
+<!-- a. Create a `vector` with any three numbers you like that sum to 10 and store -->
+<!-- the result in a variable named `ans_2a`. -->
 
-b. Create a three element `list` containing one `numeric` item, one `character`
-item, and one `logical` item. Store the result in a variable named `ans_2b`.
+<!-- b. Create a three element `list` containing one `numeric` item, one `character` -->
+<!-- item, and one `logical` item. Store the result in a variable named `ans_2b`. -->
 
-c. Use the `:` symbol to create a `numeric vector` with integers starting at 1
-and going up to and including 10. Store the result in a variable named `ans_2c`.
-
-
-### 3. Subset rows in `i`
-
-a. Read
-`https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv`
-into a `data.table` and store the result in a variable named `d`.
-
-b. Extract rows 40 to 60 and store the result in a variable named `ans_3b`.
-
-c. Extract all rows for which `cnd == 'Delay'` and store the results in a
-variable named `ans_3c`.
+<!-- c. Use the `:` symbol to create a `numeric vector` with integers starting at 1 -->
+<!-- and going up to and including 10. Store the result in a variable named `ans_2c`. -->
 
 
-### 4. Operate on columns in `j`
+<!-- ## 3. Subset rows in `i` -->
 
-a. Use `.N` to count the number of rows in which `sub == 101` and store the
-result in a variable named `ans_4a`.
+<!-- a. Read -->
+<!-- `https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv` -->
+<!-- into a `data.table` and store the result in a variable named `d`. -->
 
-b. Compute the mean `t2c` over the entire `data.table` and store the result in a
-variable named `ans_4b`.
+<!-- b. Extract rows 40 to 60 and store the result in a variable named `ans_3b`. -->
 
-       
-### 5. Combining `i` and `j`       
-       
-a. Compute the mean `t2c` when `cnd == 'Delay'` and store the result in a
-variable named `ans_5a`.
-
-b. Compute the maximum `t2c` when `prob_num == 2` and store the result in a
-variable named `ans_5b`.
+<!-- c. Extract all rows for which `cnd == 'Delay'` and store the results in a -->
+<!-- variable named `ans_3c`. -->
 
 
-### 6. Group using `by`.
+<!-- ## 4. Operate on columns in `j` -->
 
-a. Compute the mean `t2c` per `sub` and store the result in a variable named `ans_6a`.
+<!-- a. Use `.N` to count the number of rows in which `sub == 101` and store the -->
+<!-- result in a variable named `ans_4a`. -->
 
-b. Use `unique()` to count the number of subjects per `cnd` in `d` and store the
-result in a variable named `ans_6b`.
+<!-- b. Compute the mean `t2c` over the entire `data.table` and store the result in a -->
+<!-- variable named `ans_4b`. -->
 
 
-### 7. criterion learning experiment
+<!-- ## 5. Combining `i` and `j`        -->
 
-The `data.table` you have been interacting with is from an experiment asking
-whether or not feedback-delay impairs criterion learning? What is criterion
-learning? Here is an example trial:
+<!-- a. Compute the mean `t2c` when `cnd == 'Delay'` and store the result in a -->
+<!-- variable named `ans_5a`. -->
+
+<!-- b. Compute the maximum `t2c` when `prob_num == 2` and store the result in a -->
+<!-- variable named `ans_5b`. -->
+
+
+<!-- ## 6. Group using `by`. -->
+
+<!-- a. Compute the mean `t2c` per `sub` and store the result in a variable named `ans_6a`. -->
+
+<!-- b. Use `unique()` to count the number of subjects per `cnd` in `d` and store the -->
+<!-- result in a variable named `ans_6b`. -->
+
+## 1. Criterion learning experiment
+
+Consider an experiment designed to find out whether or not feedback-delay
+impairs criterion learning? What is criterion learning? Here is an example
+trial:
 
 <center>
 ![FigName](img/cats.png){width=250px}
@@ -122,33 +126,18 @@ d. Use `ggplot` to reproduce the following plot exactly and store the resulting
 `ggplot` object in a variable named `ans_1d`.
     
 ```{r, echo=F, fig.width=5, fig.height=5}
-library(data.table)
-library(ggplot2)
+rm(list=ls())
 d <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
 d <- d[cnd %in% c('Delay', 'Long ITI')]
-dd <- d[, mean(t2c), .(cnd, sub)]
-setnames(dd, 'V1', 't2c')
+dd <- d[, .(t2c = mean(t2c)), .(cnd, sub)]
 g <- ggplot(dd, aes(cnd, t2c)) +
   geom_violin() +
   geom_point()
 g
 ```
 
-e. Use `ggplot` to reproduce the following plot exactly and store the resulting
-`ggplot` object in a variable named `ans_1e`.
-    
-```{r, echo=F, fig.width=5, fig.height=5}
-d <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
-d <- d[cnd %in% c('Delay', 'Long ITI')]
-dd <- d[, mean(t2c), .(cnd, prob_num)]
-setnames(dd, 'V1', 't2c')
-g <- ggplot(dd, aes(prob_num, t2c, colour=cnd)) +
-  geom_line()
-g
-```
 
-
-### 8. Rat maze experiment
+## 2. Rat maze experiment
 
 Consider an experiment in which a set of rats run through a set of mazes some
 number of times each. The researchers running this experiment are interested in
@@ -156,21 +145,15 @@ how quickly rats can run these mazes, and so they record the `time` in seconds
 each `rat` takes to complete each `run` of each `maze`. Next, you will perform a
 cursory analysis on the data from this experiment.
 
-a. Read 'https://crossley.github.io/cogs2020/data/maze/maze.csv' into a
-`data.table` and store the result in a variable named `ans_8a`.
+a. Read `https://crossley.github.io/cogs2020/data/maze/maze.csv` into a
+`data.table` and store the result in a variable named `ans_2a`.
 
-b. `rat` and `maze` are both *categorical* experimental factors. All this means
-is that rat 2 cannot be said to be greater than rat 1 in any meaningful sense.
-However, they are currently coded as integers in the `data.table`. Change the
-coding of `rat` and `maze` to `factor` and store the result in a variable named
-`ans_8b`.
+b. `rat` and `maze` are both `categorical` experimental factors, but they are
+currently coded as `numeric`. Inside the `data.table`, change the coding of
+`rat` and `maze` to `factor` and store the result in a variable named `ans_2b`.
 
-c. Turns out that something was wrong with maze 1, so we can't include it in our
-analysis. Select all rows except those corresponding to `maze == 1` and store
-the result in a variable named `ans_8c`.
-
-d. Create a new `data.table` that contains only a `maze`, `rat` and mean `time`
-per `maze` per `rat`, and store the result in a variable named `ans_8d`.
+c. Create a new `data.table` that contains only a `maze`, `rat` and mean `time`
+per `maze` per `rat`, and store the result in a variable named `ans_2c`.
 
     * Make sure that your resulting `data.table` has correctly named columns (i.e.,
     any columns named `V1` etc. will lead to this question being marked
@@ -180,18 +163,133 @@ per `maze` per `rat`, and store the result in a variable named `ans_8d`.
     rat per maze. Failure to do so will lead to this question being marked incorrect.
 
 e. Use `ggplot` to reproduce the following plot exactly and store the resulting
-`ggplot` object in a variable named `ans_8e`.
+`ggplot` object in a variable named `ans_2e`.
 
 ```{r echo=F, fig.width=5, fig.height=5}
 rm(list=ls())
 d <- fread('https://crossley.github.io/cogs2020/data/maze/maze.csv')
 d[, rat := as.factor(rat)]
 d[, maze := as.factor(maze)]
-d <- d[maze != 1]
-dd <- d[, mean(time), .(maze, rat)]
-setnames(dd, 'V1', 'time')
+dd <- d[, .(time = mean(time)), .(maze, rat)]
 g <- ggplot(dd, aes(maze, time)) +
   geom_boxplot() +
   geom_point()
+g
+```
+
+## 3. Motor learning experiment
+
+Consider an experiment designed to discover differences in the sensorimotor
+learning abilities of expert minimally invasive surgeons as compared to healthy
+college aged controls. On each trial, participants simply rested their hand in
+the middle of a desk, and then tried to move their hand quickly and accurately
+to a visual target somewhere on a circle centred at their hand position and with
+a radius of about 8 cm. The data file can be found here at
+`https://crossley.github.io/cogs2020/data/mis/mis_data.csv` and contains the
+following columns:
+
+* `subject`: Anonymous subject ID
+* `group`: Indicates college student or surgeon
+* `phase`: Indicates the phase of the experiment
+* `trial`: Trial number
+* `target`: The visual target was reached to for this trial
+* `error`: The mismatch between the centre of the target and the final hand position
+* `movement_time`: How long the movement lasted
+* `reaction_time`: How long until the movement began
+* `peak_velocity`: The maximum velocity reached during the reach
+
+a. Compute the mean `hand_angle` per `group` per `trial` and store the result in
+a variable named `ans_3a`.
+
+b. Use `ggplot` to reproduce the following plot exactly and store the resulting
+`ggplot` object in a variable named `ans_3b`.
+
+```{r message=F, echo=F, fig.width=7, fig.height=5}
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/data/mis/mis_data.csv')
+d[, group := as.factor(group)]
+dd <- d[, .(hand_angle = mean(hand_angle)), .(group, trial)]
+g <- ggplot(dd, aes(trial, hand_angle, colour=group)) +
+  geom_line()
+g
+```
+
+
+## 4. MEG experiment
+Consider an magnetoencephalography (MEG) experiment that collected data from a
+single participant while they performed a category learning experiment. On each
+trial of the category learning experiment, the participant viewed a circular
+sine wave grating, and had to push a button to indicate whether they believed
+the stimulus belonged to category A or category B.
+
+MEG is used to record the time-series of magnetic and electric potentials at the
+scalp, which are generated by the activity of neurons. There are many sensors,
+each configured to pick up signal from a different position on the scalp. This
+is shown in the following figure (the text labels indicate the channel name and
+are placed approximately where the MEG sensor is located on a real head).
+
+<center>
+![FigName](img/MEG_2.png){width=300px}
+</center>
+
+The data file that we will be working with is arranged into *epochs* aligned to
+stimulus presentation. This means that every time a stimulus is presented we say
+that an epoch has occurred. We then assign a time of $t=0$ to the exact moment
+the stimulus appeared. We then typically look at the neural time series from
+just before the stimulus appeared to a little while after the stimulus has
+appeared. For this data, each epoch starts 0.1 seconds before stimulus onset,
+and concludes 0.3 seconds after stimulus onset. The following figure shows the
+MEG signal at every sensory location across the entire scalp for 5 time points
+within this $[-0.1s, 0.3s]$ interval.
+
+<center>
+![FigName](img/MEG_1.png){width=550px}
+</center>
+
+The data can be located
+at`https://crossley.github.io/cogs2020/data/eeg/epochs.txt` and contains the
+following columns:
+
+* The `time` column contains times in seconds relative to stimulus onset.
+  Stimulus onset always occurs at $0$ seconds.
+
+* The `condition` column indicates which category the stimulus belonged to for
+  the given `epoch`. We won't make use of this column here, and we will remove
+  it below.
+
+* The `epoch` column is the epoch number. You can think of this like we have
+  usually thought of `trial` columns in examples throughout the course.
+
+* The many different `MEG xyz` columns contain the actual neural time series
+  signals for each sensor. See the above figure for how these column names map
+  onto scalp positions.
+
+a. Load this data into a `data.table`, remove column `V1`, and convert
+`condition` from an `int` to a `factor`. Store the result in variable named
+`ans_4a`.
+
+b. Convert the resulting `data.table` to long format using `time`, `epoch`, and
+`condition` as `id.vars` and store the result in a variable named `ans_4b`.
+
+c. Filter the `data.table` such that it only contains rows corresponding to the
+`MEG 001` channel and store the result in a variable named `ans_4c`.
+
+d. Compute the mean MEG signal separately per `condition` and per `time` and
+store the result in a variable named `ans_4d`.
+  
+e. Use `ggplot` to reproduce the following plot exactly and store the resulting
+`ggplot` object in a variable named `ans_4e`.
+
+```{r message=F, echo=F, fig.width=7, fig.height=5}
+rm(list=ls())
+d <- fread('https://crossley.github.io/cogs2020/data/eeg/epochs.txt')
+d[, V1 := NULL]
+d[, condition := as.factor(condition)]
+dd <- melt(d, id.vars=c('time', 'epoch', 'condition'))
+dd <- dd[variable == 'MEG 001']
+ddd <- dd[, .(value = mean(value)), .(condition, time)]
+g <- ggplot(ddd, aes(time, value, colour=condition)) + 
+  geom_line()
 g
 ```
