@@ -39,59 +39,70 @@ details:
 ### Course Schedule
 |          | Day       | Time                | Location                            |
 |----------|-----------|---------------------|-------------------------------------|
-| Lecture  | Monday    | 10:00 AM - 11:00 AM | Online                              |
+| Lecture  | Monday    | 9:00 AM - 10:00 AM  | Online                              |
 | Tutorial | Monday    | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
 | Tutorial | Monday    | 1:00 PM - 2:00 PM   | 12 Second Way - 318 Faculty PC Room |
 | Tutorial | Monday    | 2:00 PM - 3:00 PM   | 12 Second Way - 318 Faculty PC Room |
 | Tutorial | Wednesday | 11:00 AM - 12:00 PM | 12 Second Way - 318 Faculty PC Room |
 | Tutorial | Wednesday | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
 | Tutorial | Wednesday | 1:00 PM - 2:00 PM   | 12 Second Way - 318 Faculty PC Room |
-| Tutorial | Friday    | 11:00 AM - 12:00 PM | 12 Second Way - 318 Faculty PC Room |
-| Tutorial | Friday    | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Thursday  | 11:00 AM - 12:00 PM | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Thursday  | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
 
 ### Weekly Schedule
 - Please see [lectures](https://crossley.github.io/cogs2020/lectures-exported.html)
 
-### course philosophy
-No Lectures: The worst method for transmitting information
-from my head to yours is for me to lecture you. There are no
-lectures. We work on problems together during class. You
-learn soccer with the ball at your feet. You learn about
-data with your hands on the keyboard.
+### Course Philosophy
+**Useful humans**: By the end of the course, you will be
+fully prepared to grapple with the most common data
+exploration and analysis situations that occur in cognitive
+neuroscience. You will learn how to draw inferences from
+data and how to communicate those inferences to others.
 
-R Everyday: Learning a new programming language is like
-learning a new human language: You will practice (almost)
-every day.
+**Code everyday**: Learning to program is very much like
+learning a new language crossed with learning a new motor
+skill. Daily practice and full immersion will help you
+immensely. There is no replacement for learning by doing.
+Semi-weekly problem sets and quizzes are designed to keep
+you motivated and on the hook.
 
-Community: You will probably learn the names of more
-students in this course than in all your other courses
-combined. Awkwardness in the pursuit of community is no
-vice.
+**Learn how to think**:  Too often intro courses leave
+students simply consulting a cheat sheet of "apply test X in
+situation Y".  Ultimately, the needs of your future research
+will be unique. You will need to apply the general
+principles of statistics and programming to get the job
+done.
 
-Professionalism: We use professional tools. Your workflow
-will be very similar to the workflow involved in paid
-employment. Your problem sets and final project will be
-public, the better to impress others with your abilities.
-High quality work will be shared with your classmates. We
-will learn the "full cycle" of how to draw inferences from
-data and communicate those inferences to others.
+**Learn how to teach yourself**: The ultimate goal is for
+you to develop the ability to teach yourself more statistics
+and more programming. No matter how many courses you take,
+your research will eventually take you here. Might as well
+get started early.
 
-Cold Calling: I call on students during class. This keeps
-every student involved, makes for a more lively discussion
-and helps to prepare students for the real world, in which
-you can’t hide in the back row. Want to be left alone? Don’t
-take this course.
+### Performance Evaluation
+- 10% quizzes
+- 30% problem sets
+- 30% midterm exam
+- 30% final exam
 
-Advisory Groups: We do not have normal sections. Instead,
-you will spend 30 minutes each week meeting with your
-assigned TF in a small group. Recall what I just said about
-(not) being left alone in this course.
+**Quizzes**: These will not be hard. They are simple nudges
+to motivate you to study lecture notes **before** lecture
+begins.
 
-Teaching to Learn: My main goal is not to teach you how do
-X. That is easy! More importantly, in a few months, I won’t
-be around to teach you Y. My goal is to teach you how to
-teach yourself, how to figure out X and Y and Z on your own.
-That is harder! Much of the pedagogy of the course —
-especially my insistence that you work on topics not covered
-in lecture — is driven by this goal. You will find it
-frustrating.
+**Problem sets**: These are where most of your learning will
+occur. They will require hard work and it is essential that
+you take them seriously and commit adequate time to them.
+Try to embrace that **code everyday** lifestyle.
+
+**Midterm exam**: 2 hour "take-home" exam. I will release it
+at our normal lecture time and you will have 2 hours to
+submit your work. If you understand the problem sets, this
+will be easy.
+
+**Final exam**: 3 hour "take-home" exam. I will release it
+whenever our final exam is scheduled by MQ and you will have
+3 hours to submit your work. Again, if you understand the
+problem sets, this will be easy.
+
+### Academic Integrity
+Please don't cheat.
