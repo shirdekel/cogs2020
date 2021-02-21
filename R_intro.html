@@ -325,10 +325,7 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="https://unitguides.mq.edu.au/unit_offerings/123650/unit_guide">Unit Guide</a>
-</li>
-<li>
-  <a href="https://ilearn.mq.edu.au/course/view.php?id=38800">iLearn</a>
+  <a href="https://ilearn.mq.edu.au/course/view.php?id=50609">iLearn</a>
 </li>
 <li>
   <a href="https://github.com/crossley/cogs2020">GitHub</a>
@@ -356,7 +353,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 1 - Introduction to <code>R</code></h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 20 February, 2021</h4>
+<h4 class="date">Last update: 21 February, 2021</h4>
 
 </div>
 
@@ -383,7 +380,7 @@ x + y</code></pre>
 <li><p><code>ls()</code> is a function that reports what objects (e.g., variables you ahve defined) are in the current environment and therefore available for you to interact with.</p></li>
 </ul>
 <pre class="r"><code>ls()</code></pre>
-<pre><code>## [1] &quot;x&quot; &quot;y&quot;</code></pre>
+<pre><code>## [1] &quot;in_file&quot; &quot;x&quot;       &quot;y&quot;</code></pre>
 <ul>
 <li><p><code>rm()</code> is a function that can remove objects from the current environment.</p></li>
 <li><p>It takes several arguments. Type <code>?rm()</code> to see help information on how to use it.</p></li>
@@ -471,18 +468,18 @@ z &lt;- rnorm(12)
 df &lt;- data.frame(x, y, z)
 df</code></pre>
 <pre><code>##      x y          z
-## 1    I a -1.6694670
-## 2    I a  0.7097565
-## 3    I b -1.4600037
-## 4   II b -0.2264449
-## 5   II c -1.6129901
-## 6   II c -0.1141184
-## 7  III d  0.4844448
-## 8  III d  0.5622640
-## 9  III e -0.8916644
-## 10  IV e  0.4564989
-## 11  IV f -0.8191516
-## 12  IV f  1.4507451</code></pre>
+## 1    I a  1.0372939
+## 2    I a -0.2203802
+## 3    I b  0.2997091
+## 4   II b  0.3416750
+## 5   II c -0.7303437
+## 6   II c  0.6416340
+## 7  III d -0.5935615
+## 8  III d -0.9249629
+## 9  III e -0.2433456
+## 10  IV e  0.4293826
+## 11  IV f -1.9109277
+## 12  IV f  0.1607943</code></pre>
 <pre class="r"><code># Access column x
 df$x</code></pre>
 <pre><code>##  [1] &quot;I&quot;   &quot;I&quot;   &quot;I&quot;   &quot;II&quot;  &quot;II&quot;  &quot;II&quot;  &quot;III&quot; &quot;III&quot; &quot;III&quot; &quot;IV&quot;  &quot;IV&quot;  &quot;IV&quot;</code></pre>
@@ -508,18 +505,18 @@ library(data.table)
 dt &lt;- data.table(x, y, z)
 dt</code></pre>
 <pre><code>##       x y          z
-##  1:   I a -1.6694670
-##  2:   I a  0.7097565
-##  3:   I b -1.4600037
-##  4:  II b -0.2264449
-##  5:  II c -1.6129901
-##  6:  II c -0.1141184
-##  7: III d  0.4844448
-##  8: III d  0.5622640
-##  9: III e -0.8916644
-## 10:  IV e  0.4564989
-## 11:  IV f -0.8191516
-## 12:  IV f  1.4507451</code></pre>
+##  1:   I a  1.0372939
+##  2:   I a -0.2203802
+##  3:   I b  0.2997091
+##  4:  II b  0.3416750
+##  5:  II c -0.7303437
+##  6:  II c  0.6416340
+##  7: III d -0.5935615
+##  8: III d -0.9249629
+##  9: III e -0.2433456
+## 10:  IV e  0.4293826
+## 11:  IV f -1.9109277
+## 12:  IV f  0.1607943</code></pre>
 <div id="subset-rows-in-i" class="section level4">
 <h4>Subset rows in <code>i</code></h4>
 <ul>
@@ -532,14 +529,14 @@ dt</code></pre>
 <pre class="r"><code># Select rows by passing integer indices
 dt[c(2, 4)]</code></pre>
 <pre><code>##     x y          z
-## 1:  I a  0.7097565
-## 2: II b -0.2264449</code></pre>
+## 1:  I a -0.2203802
+## 2: II b  0.3416750</code></pre>
 <pre class="r"><code># Select rows by passing a logical expression
 dt[x==&#39;II&#39;]</code></pre>
 <pre><code>##     x y          z
-## 1: II b -0.2264449
-## 2: II c -1.6129901
-## 3: II c -0.1141184</code></pre>
+## 1: II b  0.3416750
+## 2: II c -0.7303437
+## 3: II c  0.6416340</code></pre>
 </div>
 <div id="select-columns-with-j" class="section level4">
 <h4>Select columns with <code>j</code></h4>
@@ -553,33 +550,33 @@ dt[x==&#39;II&#39;]</code></pre>
 <pre class="r"><code># Select every row of columns y and z the cool way
 dt[, .(y, z)]</code></pre>
 <pre><code>##     y          z
-##  1: a -1.6694670
-##  2: a  0.7097565
-##  3: b -1.4600037
-##  4: b -0.2264449
-##  5: c -1.6129901
-##  6: c -0.1141184
-##  7: d  0.4844448
-##  8: d  0.5622640
-##  9: e -0.8916644
-## 10: e  0.4564989
-## 11: f -0.8191516
-## 12: f  1.4507451</code></pre>
+##  1: a  1.0372939
+##  2: a -0.2203802
+##  3: b  0.2997091
+##  4: b  0.3416750
+##  5: c -0.7303437
+##  6: c  0.6416340
+##  7: d -0.5935615
+##  8: d -0.9249629
+##  9: e -0.2433456
+## 10: e  0.4293826
+## 11: f -1.9109277
+## 12: f  0.1607943</code></pre>
 <pre class="r"><code># Select every row of columns y and z the long way
 dt[, list(y, z)]</code></pre>
 <pre><code>##     y          z
-##  1: a -1.6694670
-##  2: a  0.7097565
-##  3: b -1.4600037
-##  4: b -0.2264449
-##  5: c -1.6129901
-##  6: c -0.1141184
-##  7: d  0.4844448
-##  8: d  0.5622640
-##  9: e -0.8916644
-## 10: e  0.4564989
-## 11: f -0.8191516
-## 12: f  1.4507451</code></pre>
+##  1: a  1.0372939
+##  2: a -0.2203802
+##  3: b  0.2997091
+##  4: b  0.3416750
+##  5: c -0.7303437
+##  6: c  0.6416340
+##  7: d -0.5935615
+##  8: d -0.9249629
+##  9: e -0.2433456
+## 10: e  0.4293826
+## 11: f -1.9109277
+## 12: f  0.1607943</code></pre>
 </div>
 <div id="operate-on-columns-with-j" class="section level4">
 <h4>Operate on columns with <code>j</code></h4>
@@ -588,8 +585,8 @@ dt[, list(y, z)]</code></pre>
 </ul>
 <pre class="r"><code># return the mean and standard deviation of z
 dt[, .(mean(z), sd(z))]</code></pre>
-<pre><code>##            V1       V2
-## 1: -0.2608442 1.026999</code></pre>
+<pre><code>##            V1        V2
+## 1: -0.1427527 0.8068247</code></pre>
 </div>
 <div id="combine-i-and-j" class="section level4">
 <h4>Combine <code>i</code> and <code>j</code></h4>
@@ -599,9 +596,9 @@ dt[, .(mean(z), sd(z))]</code></pre>
 <pre class="r"><code># Select all rows for which x==II and return columns y and z
 dt[x==&#39;II&#39;, .(y, z)]</code></pre>
 <pre><code>##    y          z
-## 1: b -0.2264449
-## 2: c -1.6129901
-## 3: c -0.1141184</code></pre>
+## 1: b  0.3416750
+## 2: c -0.7303437
+## 3: c  0.6416340</code></pre>
 </div>
 <div id="group-using-by" class="section level4">
 <h4>Group using <code>by</code></h4>
@@ -614,22 +611,22 @@ dt[x==&#39;II&#39;, .(y, z)]</code></pre>
 # each value of x
 dt[, sum(z), .(x)]</code></pre>
 <pre><code>##      x         V1
-## 1:   I -2.4197142
-## 2:  II -1.9535534
-## 3: III  0.1550445
-## 4:  IV  1.0880924</code></pre>
+## 1:   I  1.1166227
+## 2:  II  0.2529654
+## 3: III -1.7618700
+## 4:  IV -1.3207508</code></pre>
 <pre class="r"><code># Compute the sum of elements in column z separately for
 # each unique combination of values in x and y
 dt[, sum(z), .(x, y)]</code></pre>
-<pre><code>##      x y         V1
-## 1:   I a -0.9597105
-## 2:   I b -1.4600037
-## 3:  II b -0.2264449
-## 4:  II c -1.7271085
-## 5: III d  1.0467089
-## 6: III e -0.8916644
-## 7:  IV e  0.4564989
-## 8:  IV f  0.6315936</code></pre>
+<pre><code>##      x y          V1
+## 1:   I a  0.81691361
+## 2:   I b  0.29970909
+## 3:  II b  0.34167504
+## 4:  II c -0.08870966
+## 5: III d -1.51852437
+## 6: III e -0.24334563
+## 7:  IV e  0.42938259
+## 8:  IV f -1.75013342</code></pre>
 </div>
 </div>
 </div>
