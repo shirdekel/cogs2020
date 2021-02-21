@@ -1,0 +1,279 @@
+---
+title: "Lecture 1 - Introduction to `R`"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    # code_folding: show
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Basics
+```{r}
+# Use R as a calculator
+2 + 2
+
+# Store results in variables
+x <- 2 + 2
+x
+
+# Perform mathematical operations on variables
+x <- 2 + 2
+y <- 3 + 7
+x + y
+```
+
+
+## Functions
+* Functions are objects that take *arguments* as inputs,
+perform some operation on those inputs, and return the
+results.
+
+* `ls()` is a function that reports what objects (e.g.,
+variables you ahve defined) are in the current environment
+and therefore available for you to interact with.
+
+```{r}
+ls()
+```
+
+* `rm()` is a function that can remove objects from the
+current environment.
+
+* It takes several arguments. Type `?rm()` to see help
+information on how to use it.
+
+* We will commonly combine `ls()` and `rm()` to remove all
+objects from the current environment. This is a good thing
+to do at the beginning of every new script you write.
+
+```{r}
+# Remove all objects from the current R session.
+rm(list = ls())
+```
+
+## Data types
+
+### `numeric`
+```{r}
+x <- 2
+class(x)
+```
+
+### `character`
+```{r}
+x <- 'a'
+class(x)
+```
+
+### `logical` 
+```{r}
+x <- TRUE
+class(x)
+```
+
+
+## Containers
+
+### `vector`
+
+* Create a vector with the function `c()`.
+
+* The elements of a `vector` must be of the same type.
+
+* Access element `i` of `vector` `x` with square brackets
+(e.g., `x[i]`)
+
+```{r}
+# Create a vector with any three numbers you like.
+x <- c(1, 2, 3.14159)
+x
+
+# Access the third element of x
+x3 <- x[3]
+x3
+```
+
+
+### `list`
+
+* Create a list with the function `list()`
+
+* The elements of a `list` can be of different types.
+
+* Access element `i` of `list` `x` with *double* square
+brackets (e.g., `x[[i]]`)
+
+```{r}
+# Create a three element list containing one numeric
+# item, one `character` item, and one logical item.
+x <- list(3.14159, 'pi', TRUE)
+x
+
+# Access the third element of x
+x3 <- x[[3]]
+x3
+```
+
+
+### `data.frame`
+
+* Create a `data.frame` with the function `data.frame()`
+
+* `data.frame` is pretty close what you might think of as an
+excel spreadsheet.
+
+* Access column `x` in `data.frame` `df` with the `$`
+operator (e.g., `df$x`).
+
+```{r}
+# Create vectors to later store in a data frame
+x <- c('I', 'I', 'I', 'II', 'II', 'II', 'III', 'III', 'III', 'IV', 'IV', 'IV')
+y <- c('a', 'a', 'b', 'b', 'c', 'c', 'd', 'd', 'e', 'e', 'f', 'f')
+z <- rnorm(12)
+
+# Create the data frame
+df <- data.frame(x, y, z)
+df
+
+# Access column x
+df$x
+```
+
+### `data.table`
+
+* `data.table` does everything `data.frame` does, and much more.
+
+* Because `data.table` is so powerful and so fast, we won't
+really bother much with the finer details of `data.frame`.
+
+* To use `data.table` we must first load it into our
+environemtn using the `library()` function.
+
+* Create a `data.table` with the `data.table()` function.
+
+* General form: `DT[i, j, by]`
+
+  * `i`: selects rows
+  
+  * `j`: specifies columns and operations to perform on those
+  columns
+  
+  * `by`: specifies columns to group the operation performed
+  in `j` by
+
+```{r}
+# Load the data.table library 
+library(data.table)
+
+# create a data table
+dt <- data.table(x, y, z)
+dt
+```
+
+#### Subset rows in `i`
+
+* There are many ways to select rows.
+
+  * Set `i` equal to a vector of integers
+  
+  * Set `i` equal to a logical expression
+  
+```{r}
+# Select rows by passing integer indices
+dt[c(2, 4)]
+
+# Select rows by passing a logical expression
+dt[x=='II']
+```
+
+
+#### Select columns with `j`
+
+* First a quick note about specifying `i`.
+
+* If you want to operate on every row of some set of
+columns, leave the `i` argument blank.
+
+* This will result in the first character inside the square
+brackets being a comma, which looks a bit strange if you're
+not used to it. Just remember to read it as *select every row*.
+
+* To operate on specific columns, set `j` equal to a list
+of the names of the columns you want.
+
+* Inside the square brackets of a `data.table`, `list` can
+be abbreviated with a `.`, which can also look strage at
+first. Once you get used to it, you will appreciate the
+brevity.
+  
+```{r}
+# Select every row of columns y and z the cool way
+dt[, .(y, z)]
+
+# Select every row of columns y and z the long way
+dt[, list(y, z)]
+```
+
+
+#### Operate on columns with `j`
+
+* You can do a lot more than just return the columns
+specified in `j`. In fact, you can perform any operation you
+want on them.
+
+```{r}
+# return the mean and standard deviation of z
+dt[, .(mean(z), sd(z))]
+```
+
+
+#### Combine `i` and `j`
+
+* It is straightforward to combine `i` and `j`.
+
+```{r}
+# Select all rows for which x==II and return columns y and z
+dt[x=='II', .(y, z)]
+```
+
+
+#### Group using `by`
+
+* The real magic of `data.table` comes in the power of the
+`by` argument.
+
+* `by` allows you apply the operation that you specify with
+`j` to separate groups of rows defined by the unique values
+in the columns specified in `by`.
+
+* Put another way, whatever column you pass to `by` will be
+split up into groups with each unique value getting its own
+group. Those groups will then be applied to the columns you
+specify in `j` and the operation also specified in `j` will
+be applied only to rows from the same group. Then, after all
+is done, everything is put back into a single `data.table`.
+
+```{r}
+# Compute the sum of elements in column z separately for
+# each value of x
+dt[, sum(z), .(x)]
+```
+
+```{r}
+# Compute the sum of elements in column z separately for
+# each unique combination of values in x and y
+dt[, sum(z), .(x, y)]
+```

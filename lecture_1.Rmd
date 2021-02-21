@@ -1,5 +1,5 @@
 ---
-title: "Lecture 1"
+title: "Lecture 1 - Introduction to the course"
 author: "Author: Matthew J. Cossley"
 date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -111,19 +111,3 @@ studies.
 - Install RStudio: Find the appropriate download link
     [here](https://rstudio.com/products/rstudio/)
 - Get going on [homework 1](homework_1.html)
-
-<!-- ```{r} -->
-<!-- library(data.table) -->
-<!-- x <- c('I', 'I', 'I', 'II', 'II', 'II', 'III', 'III', 'III', 'IV', 'IV', 'IV') -->
-<!-- y <- c('a', 'a', 'b', 'b', 'c', 'c', 'd', 'd', 'e', 'e', 'f', 'f') -->
-<!-- z <- 1:12 -->
-<!-- d <- data.table(x, y, z) -->
-<!-- d[x=='II'] -->
-<!-- d[, y] -->
-<!-- d[, .(y)] -->
-<!-- d[, .(y, z)] -->
-<!-- d[x=='II', .(y, z)] -->
-<!-- d[, sum(z), .(x)] -->
-<!-- d[, sum(z), .(x, y)] -->
-<!-- ``` -->
-

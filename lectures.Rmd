@@ -17,15 +17,39 @@ fontsize: 14pt
 ---
 
 #### [Lecture 1: Course intro, `R`, `data.table` and `ggplot2`](lecture_1.html)
-#### [Lecture 2: Descriptive statistics, data types, experiment design](lecture_2.html)
-#### [Lecture 3: Probability, random variables, distribution of sample means, central limit theorem](lecture_3.html)
-#### [Lecture 4: Binomial Test](lecture_4.html)
-#### [Lecture 5: Critical values, two-tailed tests, confidence intervals, Type I vs type II errors](lecture_5.html)
-#### [Lecture 6: Z distribution, one-sample t-test](lecture_6.html)
-#### [Lecture 7: independent samples and paired samples t-test](lecture_7.html)
-#### [Lecture 8: Correlation, regression](lecture_8.html)
-#### [Lecture 9: Testing hypotheses about variance, Comparing the variance of two Normal populations](lecture_9.html)
-#### [Lecture 10: One-way ANOVA](lecture_10.html)
-#### [Lecture 11: Two-way ANOVA](lecture_11.html)
-#### [Lecture 12: Repeated Measures ANOVA](lecture_12.html)
-#### [Lecture 13: Mixed-design ANOVA](lecture_12.html)
+
+#### Lecture 2: Descriptive statistics, data types, experiment design
+<!-- #### [Lecture 2: Descriptive statistics, data types, experiment design](lecture_2.html) -->
+
+#### Lecture 3: Probability, random variables, distribution of sample means, central limit theorem
+<!-- #### [Lecture 3: Probability, random variables, distribution of sample means, central limit theorem](lecture_3.html) -->
+
+#### Lecture 4: Binomial Test
+<!-- #### [Lecture 4: Binomial Test](lecture_4.html) -->
+
+#### Lecture 5: Critical values, two-tailed tests, confidence intervals, Type I vs type II errors
+<!-- #### [Lecture 5: Critical values, two-tailed tests, confidence intervals, Type I vs type II errors](lecture_5.html) -->
+
+#### Lecture 6: Z distribution, one-sample t-test
+<!-- #### [Lecture 6: Z distribution, one-sample t-test](lecture_6.html) -->
+
+#### Lecture 7: independent samples and paired samples t-test
+<!-- #### [Lecture 7: independent samples and paired samples t-test](lecture_7.html) -->
+
+#### Lecture 8: Correlation, regression
+<!-- #### [Lecture 8: Correlation, regression](lecture_8.html) -->
+
+#### Lecture 9: Testing hypotheses about variance, Comparing the variance of two Normal populations
+<!-- #### [Lecture 9: Testing hypotheses about variance, Comparing the variance of two Normal populations](lecture_9.html) -->
+
+#### Lecture 10: One-way ANOVA
+<!-- #### [Lecture 10: One-way ANOVA](lecture_10.html) -->
+
+#### Lecture 11: Two-way ANOVA
+<!-- #### [Lecture 11: Two-way ANOVA](lecture_11.html) -->
+
+#### Lecture 12: Repeated Measures ANOVA
+<!-- #### [Lecture 12: Repeated Measures ANOVA](lecture_12.html) -->
+
+#### Lecture 13: Mixed-design ANOVA
+<!-- #### [Lecture 13: Mixed-design ANOVA](lecture_12.html) -->

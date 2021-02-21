@@ -1,0 +1,45 @@
+---
+title: "scrath"
+author: "Matthew J. Crossley"
+date: "20/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+a. Read
+`https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv`
+into a `data.table` and store the result in a variable named `d`.
+
+b. Extract rows 40 to 60 and store the result in a variable named `ans_3b`.
+
+c. Extract all rows for which `cnd == 'Delay'` and store the results in a
+variable named `ans_3c`.
+
+
+### Operate on columns in `j`
+
+a. Use `.N` to count the number of rows in which `sub == 101` and store the
+result in a variable named `ans_4a`.
+
+b. Compute the mean `t2c` over the entire `data.table` and store the result in a
+variable named `ans_4b`.
+
+
+### Combining `i` and `j`
+
+a. Compute the mean `t2c` when `cnd == 'Delay'` and store the result in a
+variable named `ans_5a`.
+
+b. Compute the maximum `t2c` when `prob_num == 2` and store the result in a
+variable named `ans_5b`.
+
+
+### Group using `by`
+
+a. Compute the mean `t2c` per `sub` and store the result in a variable named `ans_6a`.
+
+b. Use `unique()` to count the number of subjects per `cnd` in `d` and store the
+result in a variable named `ans_6b`.

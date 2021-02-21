@@ -15,28 +15,27 @@ output:
 fontsize: 14pt
 ---
 
-### Course Websites
+## Course Websites
 Please reference the following course websites for course
 details:
 
 - [Course Materials](https://crossley.github.io/cogs2020/)
-- [GitHub](https://github.com/crossley/cogs2020)
 - [iLearn](https://ilearn.mq.edu.au/course/view.php?id=38800)
 - [Unit Guide](https://unitguides.mq.edu.au/unit_offerings/123650/unit_guide)
 
-### Instructor Information
+## Instructor Information
 - **Name:** Dr. Matthew J. Crossley
 - **Email:** matthew.crossley@mq.edu.au
 - **Office:** Australian Hearing Hub 3.819
 - **Office Hours:** By appointment
 
-### Tutor Information
-- **Name:** TBA
-- **Email:** TBA
+## Tutor Information
+- **Name:** Juan Andres Mucarquer Fuentes
+- **Email:** juan.mucarquer@mq.edu.au
 - **Office:** TBA
 - **Office Hours:** TBA
 
-### Course Schedule
+## Course Schedule
 |          | Day       | Time                | Location                            |
 |----------|-----------|---------------------|-------------------------------------|
 | Lecture  | Monday    | 9:00 AM - 10:00 AM  | Online                              |
@@ -49,10 +48,10 @@ details:
 | Tutorial | Thursday  | 11:00 AM - 12:00 PM | 12 Second Way - 318 Faculty PC Room |
 | Tutorial | Thursday  | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
 
-### Weekly Schedule
+## Weekly Lectures
 - Please see [lectures](https://crossley.github.io/cogs2020/lectures-exported.html)
 
-### Course Philosophy
+## Course Philosophy
 **Useful humans**: By the end of the course, you will be
 fully prepared to grapple with the most common data
 exploration and analysis situations that occur in cognitive
@@ -79,30 +78,31 @@ and more programming. No matter how many courses you take,
 your research will eventually take you here. Might as well
 get started early.
 
-### Performance Evaluation
+## Performance Evaluation
 - 10% quizzes
 - 30% problem sets
 - 30% midterm exam
 - 30% final exam
 
-**Quizzes**: These will not be hard. They are simple nudges
-to motivate you to study lecture notes **before** lecture
-begins.
+**Quizzes**: 10 short online multiple quizzes designed to
+provide routine assessment and feedback. Graded on
+credit/no-credit basis. The 2 lowest quizzes (missed or
+marked non-credit) may be dropped without penalty. These
+will not be hard. They are simple nudges to motivate you to
+study lecture notes **before** lecture begins.
 
-**Problem sets**: These are where most of your learning will
-occur. They will require hard work and it is essential that
-you take them seriously and commit adequate time to them.
-Try to embrace that **code everyday** lifestyle.
+**Problem sets**: 10 problem sets will be released
+approximately 1 per week. These are where most of your
+learning will occur. They will require hard work and it is
+essential that you take them seriously and commit adequate
+time to them. Try to embrace that **code everyday**
+lifestyle.
 
-**Midterm exam**: 2 hour "take-home" exam. I will release it
-at our normal lecture time and you will have 2 hours to
-submit your work. If you understand the problem sets, this
-will be easy.
+**Midterm exam**: 1 hour exam. I will release it at our
+normal lecture time and you will have 1 hour to submit your
+work. If you understand the problem sets, this will be easy.
 
-**Final exam**: 3 hour "take-home" exam. I will release it
+**Final exam**: 2 hour "take-home" exam. I will release it
 whenever our final exam is scheduled by MQ and you will have
-3 hours to submit your work. Again, if you understand the
+2 hours to submit your work. Again, if you understand the
 problem sets, this will be easy.
-
-### Academic Integrity
-Please don't cheat.
