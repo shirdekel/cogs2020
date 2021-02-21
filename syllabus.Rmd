@@ -49,7 +49,7 @@ details:
 | Tutorial | Thursday  | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
 
 ## Weekly Lectures
-- Please see [lectures](https://crossley.github.io/cogs2020/lectures-exported.html)
+- Please see [lectures](lectures.html)
 
 ## Course Philosophy
 **Useful humans**: By the end of the course, you will be
