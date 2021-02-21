@@ -20,8 +20,8 @@ Please reference the following course websites for course
 details:
 
 - [Course Materials](https://crossley.github.io/cogs2020/)
-- [iLearn](https://ilearn.mq.edu.au/course/view.php?id=38800)
-- [Unit Guide](https://unitguides.mq.edu.au/unit_offerings/123650/unit_guide)
+- [iLearn](https://ilearn.mq.edu.au/course/view.php?id=50609)
+<!-- - [Unit Guide](https://unitguides.mq.edu.au/unit_offerings/123650/unit_guide) -->
 
 ## Instructor Information
 - **Name:** Dr. Matthew J. Crossley
