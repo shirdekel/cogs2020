@@ -180,7 +180,7 @@ g <- ggplot(dd, aes(maze, time)) +
 g
 ```
 
-### 3. Motor learning experiment
+## 3. Motor learning experiment
 Consider an experiment designed to discover differences in
 the sensorimotor learning abilities of expert minimally
 invasive surgeons as compared to healthy college aged

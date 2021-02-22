@@ -106,3 +106,9 @@ work. If you understand the problem sets, this will be easy.
 whenever our final exam is scheduled by MQ and you will have
 2 hours to submit your work. Again, if you understand the
 problem sets, this will be easy.
+
+**Grading**: No partial credit will be given for any
+assignment. Furthermore, you must read the instructions very
+carefully and store the results of your code in variables
+named exactly as instructed in the assignment. Failure to do
+so will result in your work being marked incorrect.
