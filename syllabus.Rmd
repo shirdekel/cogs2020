@@ -22,6 +22,9 @@ details:
 - [Course Materials](https://crossley.github.io/cogs2020/)
 - [iLearn](https://ilearn.mq.edu.au/course/view.php?id=50609)
 <!-- - [Unit Guide](https://unitguides.mq.edu.au/unit_offerings/123650/unit_guide) -->
+- [Lecture Zoom](https://macquarie.zoom.us/j/85296023917?pwd=S1UzTExLYnR0cFYzMGk1TzJTUDRGdz09)
+- [M/W Tutorial Zoom](https://macquarie.zoom.us/j/9384264831?pwd=ekd2QXkxdU9pankrMzZsN3dseUJYZz09)
+- [F Zoom]()
 
 ## Instructor Information
 - **Name:** Dr. Matthew J. Crossley
@@ -38,7 +41,7 @@ details:
 ## Course Schedule
 |          | Day       | Time                | Location                            |
 |----------|-----------|---------------------|-------------------------------------|
-| Lecture  | Monday    | 9:00 AM - 10:00 AM  | Online                              |
+| Lecture  | Monday    | 9:00 AM - 10:00 AM  | Online only                         |
 | Tutorial | Monday    | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
 | Tutorial | Monday    | 1:00 PM - 2:00 PM   | 12 Second Way - 318 Faculty PC Room |
 | Tutorial | Monday    | 2:00 PM - 3:00 PM   | 12 Second Way - 318 Faculty PC Room |
@@ -112,3 +115,6 @@ assignment. Furthermore, you must read the instructions very
 carefully and store the results of your code in variables
 named exactly as instructed in the assignment. Failure to do
 so will result in your work being marked incorrect.
+
+**Attendance**: Attendance is not compulsory, but is highly
+recommended. This applies both to lecture and tutorial.
