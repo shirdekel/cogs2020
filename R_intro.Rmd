@@ -160,7 +160,11 @@ df$x
 really bother much with the finer details of `data.frame`.
 
 * To use `data.table` we must first load it into our
-environemtn using the `library()` function.
+environment using the `library()` function. 
+
+* If you get an error message complaining that `there is no
+package called data.table` then install it by executing
+`install.packages('data.table')`.
 
 * Create a `data.table` with the `data.table()` function.
 
