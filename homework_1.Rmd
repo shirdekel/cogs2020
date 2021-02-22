@@ -26,6 +26,7 @@ library(ggplot2)
 
 ## 0. Study
 
+* [R and R Studio intro](https://education.rstudio.com/learn/beginner/)
 * [COGS2020 introduction to R](R_intro.html)
 * [Programming basics](https://rstudio.cloud/learn/primers/1.2)
 * [Data Table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
