@@ -16,10 +16,11 @@ output:
 fontsize: 14pt
 ---
 
+<!-- #### Lecture 1: Course intro, `R`, `data.table` and `ggplot2` -->
 #### [Lecture 1: Course intro, `R`, `data.table` and `ggplot2`](lecture_1.html)
 
-#### Lecture 2: Descriptive statistics, data types, experiment design
-<!-- #### [Lecture 2: Descriptive statistics, data types, experiment design](lecture_2.html) -->
+<!-- #### Lecture 2: Descriptive statistics, data types, experiment design -->
+#### [Lecture 2: Descriptive statistics, data types, experiment design](lecture_2.html)
 
 #### Lecture 3: Probability, random variables, distribution of sample means, central limit theorem
 <!-- #### [Lecture 3: Probability, random variables, distribution of sample means, central limit theorem](lecture_3.html) -->
