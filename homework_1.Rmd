@@ -27,13 +27,15 @@ library(ggplot2)
 ## 0. Study
 
 * [R and R Studio intro](https://education.rstudio.com/learn/beginner/)
-* [COGS2020 introduction to R](R_intro.html)
 * [Programming basics](https://rstudio.cloud/learn/primers/1.2)
-* [Data Table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
 * [Bar charts](https://rstudio.cloud/learn/primers/3.2)
 * [Histograms](https://rstudio.cloud/learn/primers/3.3)
 * [Box plots and counts](https://rstudio.cloud/learn/primers/3.4) 
 * [Scatter plots](https://rstudio.cloud/learn/primers/3.6) 
+* [Data Table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
+* [Data Table cheat sheet](https://s3.amazonaws.com/assets.datacamp.com/img/blog/data+table+cheat+sheet.pdf)
+* [Data Table cheat sheet 2](https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf)
+* [COGS2020 introduction to R](R_intro.html)
 
 ## 1. Criterion learning experiment
 
@@ -87,22 +89,23 @@ Select only rows for which `cnd == Delay` or for which `cnd
 `ans_1b`.
 
 ### c. 
-Create a new `data.table` that contains only a `cnd`, `sub`
-and mean `t2c` per `cnd` per `sub`, and store the result in
-a variable named `ans_1c`.
+Starting with `ans_1b`, create a new `data.table` that
+contains only a `cnd`, `sub` and mean `t2c` per `cnd` per
+`sub`, and store the result in a variable named `ans_1c`.
 
-* Make sure that your resulting `data.table` has correctly
-named columns (i.e., any columns named `V1` etc. will lead
-to this question being marked incorrect).
+* Make sure that your resulting `data.table` has only `cnd`,
+`sub` and `t2c` columns and nothing more. Any columns named
+`V1` etc. will lead to this question being marked
+incorrect).
 
 * Also make sure that your resulting `data.frame` only has
 one observation per subject. Failure to do so will lead to
 this question being marked incorrect.
 
 ### d. 
-Use `ggplot` to reproduce the following plot exactly and
-store the resulting `ggplot` object in a variable named
-`ans_1d`.
+Use `ans_1c` and `ggplot` to reproduce the following plot
+exactly and store the resulting `ggplot` object in a
+variable named `ans_1d`.
     
 ```{r, fig.width=5, fig.height=5}
 rm(list=ls())
@@ -152,22 +155,23 @@ the `data.table`, change the coding of `rat` and `maze` to
 `factor` and store the result in a variable named `ans_2b`.
 
 ### c. 
-Create a new `data.table` that contains only a `maze`, `rat`
-and mean `time` per `maze` per `rat`, and store the result
-in a variable named `ans_2c`.
+Starting with `ans_2b`, create a new `data.table` that
+contains only a `maze`, `rat` and mean `time` per `maze` per
+`rat`, and store the result in a variable named `ans_2c`.
 
-* Make sure that your resulting `data.table` has correctly
-named columns (i.e., any columns named `V1` etc. will lead
-to this question being marked incorrect).
+* Make sure that your resulting `data.table` has only
+`maze`, `rat` and `time` columns and nothing more. Any
+columns named `V1` etc. will lead to this question being
+marked incorrect).
 
 * Also make sure that your resulting `data.frame` only has
-one observation per rat per maze. Failure to do so will lead
-to this question being marked incorrect.
+one observation per `rat` per `maze`. Failure to do so will
+lead to this question being marked incorrect.
 
-### e. 
-Use `ggplot` to reproduce the following plot exactly and
-store the resulting `ggplot` object in a variable named
-`ans_2e`.
+### d. 
+Use `ans_2c` and `ggplot` to reproduce the following plot
+exactly and store the resulting `ggplot` object in a
+variable named `ans_2d`.
 
 ```{r fig.width=5, fig.height=5}
 rm(list=ls())
@@ -209,9 +213,9 @@ Compute the mean `hand_angle` per `group` per `trial` and
 store the result in a variable named `ans_3a`.
 
 ### b. 
-Use `ggplot` to reproduce the following plot exactly and
-store the resulting `ggplot` object in a variable named
-`ans_3b`.
+Use `ans_3a` and `ggplot` to reproduce the following plot
+exactly and store the resulting `ggplot` object in a
+variable named `ans_3b`.
 
 ```{r message=F, fig.width=7, fig.height=5}
 rm(list=ls())
@@ -288,19 +292,19 @@ convert `condition` from an `int` to a `factor`. Store the
 result in variable named `ans_4a`.
 
 ### b.
-Convert the resulting `data.table` to long format using
-`time`, `epoch`, and `condition` as `id.vars` and store the
-result in a variable named `ans_4b`.
+Convert `ans_4a` to *long format* using the `melt()`
+function. Use `time`, `epoch`, and `condition` as `id.vars`
+and store the result in a variable named `ans_4b`.
 
 ### c. 
-Filter the `data.table` such that it only contains rows
+Filter `ans_4b` such that it only contains rows
 corresponding to the `MEG 001` channel and store the result
 in a variable named `ans_4c`.
 
 ### d. 
-Compute the mean MEG signal separately per `condition` and
-per `time` and store the result in a variable named
-`ans_4d`.
+From `ans_4c` compute the mean MEG signal separately per
+`condition` and per `time` and store the result in a
+variable named `ans_4d`.
   
 ### e. 
 Use `ggplot` to reproduce the following plot exactly and

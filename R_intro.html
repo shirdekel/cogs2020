@@ -353,7 +353,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 1 - Introduction to <code>R</code></h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 22 February, 2021</h4>
+<h4 class="date">Last update: 26 February, 2021</h4>
 
 </div>
 
@@ -408,6 +408,15 @@ class(x)</code></pre>
 <pre class="r"><code>x &lt;- TRUE
 class(x)</code></pre>
 <pre><code>## [1] &quot;logical&quot;</code></pre>
+</div>
+<div id="factor" class="section level3">
+<h3><code>factor</code></h3>
+<ul>
+<li>A <code>factor</code> is a <em>categorical</em> data type. They are most often used to code for different conditions in an experiment.</li>
+</ul>
+<pre class="r"><code>x &lt;- factor(1)
+class(x)</code></pre>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
 </div>
 </div>
 <div id="containers" class="section level2">
@@ -468,18 +477,18 @@ z &lt;- rnorm(12)
 df &lt;- data.frame(x, y, z)
 df</code></pre>
 <pre><code>##      x y          z
-## 1    I a  1.2774008
-## 2    I a -1.0054346
-## 3    I b  0.9797418
-## 4   II b -0.8666968
-## 5   II c  2.0841833
-## 6   II c -1.4070570
-## 7  III d -1.7414350
-## 8  III d -2.1286395
-## 9  III e  0.6697831
-## 10  IV e -0.5318558
-## 11  IV f  0.9065220
-## 12  IV f  0.3010717</code></pre>
+## 1    I a  1.5243830
+## 2    I a  0.9234292
+## 3    I b  0.5444596
+## 4   II b -0.9665333
+## 5   II c  0.3158816
+## 6   II c  0.2191077
+## 7  III d  2.4600147
+## 8  III d -0.7529843
+## 9  III e -0.1580054
+## 10  IV e  0.3933520
+## 11  IV f -1.9167232
+## 12  IV f  0.4620382</code></pre>
 <pre class="r"><code># Access column x
 df$x</code></pre>
 <pre><code>##  [1] &quot;I&quot;   &quot;I&quot;   &quot;I&quot;   &quot;II&quot;  &quot;II&quot;  &quot;II&quot;  &quot;III&quot; &quot;III&quot; &quot;III&quot; &quot;IV&quot;  &quot;IV&quot;  &quot;IV&quot;</code></pre>
@@ -506,18 +515,18 @@ library(data.table)
 dt &lt;- data.table(x, y, z)
 dt</code></pre>
 <pre><code>##       x y          z
-##  1:   I a  1.2774008
-##  2:   I a -1.0054346
-##  3:   I b  0.9797418
-##  4:  II b -0.8666968
-##  5:  II c  2.0841833
-##  6:  II c -1.4070570
-##  7: III d -1.7414350
-##  8: III d -2.1286395
-##  9: III e  0.6697831
-## 10:  IV e -0.5318558
-## 11:  IV f  0.9065220
-## 12:  IV f  0.3010717</code></pre>
+##  1:   I a  1.5243830
+##  2:   I a  0.9234292
+##  3:   I b  0.5444596
+##  4:  II b -0.9665333
+##  5:  II c  0.3158816
+##  6:  II c  0.2191077
+##  7: III d  2.4600147
+##  8: III d -0.7529843
+##  9: III e -0.1580054
+## 10:  IV e  0.3933520
+## 11:  IV f -1.9167232
+## 12:  IV f  0.4620382</code></pre>
 <div id="subset-rows-in-i" class="section level4">
 <h4>Subset rows in <code>i</code></h4>
 <ul>
@@ -530,14 +539,14 @@ dt</code></pre>
 <pre class="r"><code># Select rows by passing integer indices
 dt[c(2, 4)]</code></pre>
 <pre><code>##     x y          z
-## 1:  I a -1.0054346
-## 2: II b -0.8666968</code></pre>
+## 1:  I a  0.9234292
+## 2: II b -0.9665333</code></pre>
 <pre class="r"><code># Select rows by passing a logical expression
 dt[x==&#39;II&#39;]</code></pre>
 <pre><code>##     x y          z
-## 1: II b -0.8666968
-## 2: II c  2.0841833
-## 3: II c -1.4070570</code></pre>
+## 1: II b -0.9665333
+## 2: II c  0.3158816
+## 3: II c  0.2191077</code></pre>
 </div>
 <div id="select-columns-with-j" class="section level4">
 <h4>Select columns with <code>j</code></h4>
@@ -551,33 +560,33 @@ dt[x==&#39;II&#39;]</code></pre>
 <pre class="r"><code># Select every row of columns y and z the cool way
 dt[, .(y, z)]</code></pre>
 <pre><code>##     y          z
-##  1: a  1.2774008
-##  2: a -1.0054346
-##  3: b  0.9797418
-##  4: b -0.8666968
-##  5: c  2.0841833
-##  6: c -1.4070570
-##  7: d -1.7414350
-##  8: d -2.1286395
-##  9: e  0.6697831
-## 10: e -0.5318558
-## 11: f  0.9065220
-## 12: f  0.3010717</code></pre>
+##  1: a  1.5243830
+##  2: a  0.9234292
+##  3: b  0.5444596
+##  4: b -0.9665333
+##  5: c  0.3158816
+##  6: c  0.2191077
+##  7: d  2.4600147
+##  8: d -0.7529843
+##  9: e -0.1580054
+## 10: e  0.3933520
+## 11: f -1.9167232
+## 12: f  0.4620382</code></pre>
 <pre class="r"><code># Select every row of columns y and z the long way
 dt[, list(y, z)]</code></pre>
 <pre><code>##     y          z
-##  1: a  1.2774008
-##  2: a -1.0054346
-##  3: b  0.9797418
-##  4: b -0.8666968
-##  5: c  2.0841833
-##  6: c -1.4070570
-##  7: d -1.7414350
-##  8: d -2.1286395
-##  9: e  0.6697831
-## 10: e -0.5318558
-## 11: f  0.9065220
-## 12: f  0.3010717</code></pre>
+##  1: a  1.5243830
+##  2: a  0.9234292
+##  3: b  0.5444596
+##  4: b -0.9665333
+##  5: c  0.3158816
+##  6: c  0.2191077
+##  7: d  2.4600147
+##  8: d -0.7529843
+##  9: e -0.1580054
+## 10: e  0.3933520
+## 11: f -1.9167232
+## 12: f  0.4620382</code></pre>
 </div>
 <div id="operate-on-columns-with-j" class="section level4">
 <h4>Operate on columns with <code>j</code></h4>
@@ -586,8 +595,8 @@ dt[, list(y, z)]</code></pre>
 </ul>
 <pre class="r"><code># return the mean and standard deviation of z
 dt[, .(mean(z), sd(z))]</code></pre>
-<pre><code>##           V1       V2
-## 1: -0.121868 1.338477</code></pre>
+<pre><code>##          V1       V2
+## 1: 0.254035 1.146779</code></pre>
 </div>
 <div id="combine-i-and-j" class="section level4">
 <h4>Combine <code>i</code> and <code>j</code></h4>
@@ -597,9 +606,9 @@ dt[, .(mean(z), sd(z))]</code></pre>
 <pre class="r"><code># Select all rows for which x==II and return columns y and z
 dt[x==&#39;II&#39;, .(y, z)]</code></pre>
 <pre><code>##    y          z
-## 1: b -0.8666968
-## 2: c  2.0841833
-## 3: c -1.4070570</code></pre>
+## 1: b -0.9665333
+## 2: c  0.3158816
+## 3: c  0.2191077</code></pre>
 </div>
 <div id="group-using-by" class="section level4">
 <h4>Group using <code>by</code></h4>
@@ -612,22 +621,112 @@ dt[x==&#39;II&#39;, .(y, z)]</code></pre>
 # each value of x
 dt[, sum(z), .(x)]</code></pre>
 <pre><code>##      x         V1
-## 1:   I  1.2517080
-## 2:  II -0.1895705
-## 3: III -3.2002913
-## 4:  IV  0.6757379</code></pre>
+## 1:   I  2.9922718
+## 2:  II -0.4315439
+## 3: III  1.5490250
+## 4:  IV -1.0613330</code></pre>
 <pre class="r"><code># Compute the sum of elements in column z separately for
 # each unique combination of values in x and y
 dt[, sum(z), .(x, y)]</code></pre>
 <pre><code>##      x y         V1
-## 1:   I a  0.2719662
-## 2:   I b  0.9797418
-## 3:  II b -0.8666968
-## 4:  II c  0.6771263
-## 5: III d -3.8700744
-## 6: III e  0.6697831
-## 7:  IV e -0.5318558
-## 8:  IV f  1.2075937</code></pre>
+## 1:   I a  2.4478122
+## 2:   I b  0.5444596
+## 3:  II b -0.9665333
+## 4:  II c  0.5349894
+## 5: III d  1.7070304
+## 6: III e -0.1580054
+## 7:  IV e  0.3933520
+## 8:  IV f -1.4546850</code></pre>
+</div>
+<div id="adding-and-modifying-columns" class="section level4">
+<h4>Adding and modifying columns</h4>
+<ul>
+<li>Use the <code>:=</code> operator inside the <code>j</code> argument of a <code>data.table</code> to add or modify a column.</li>
+</ul>
+<pre class="r"><code># If you pass a single number, data.table will fill the
+# entire column with that value
+dt[, a := 9]
+
+# Otherwise, just pass a vector of the same length as the
+# data.table
+dt[, b := seq(2, 24, 2)]
+
+# redefine or modify an existing column the same way
+dt[, b := seq(4, 48, 4)]
+
+# Remove a column using := and the NULL keyword
+dt[, b := NULL]</code></pre>
+</div>
+<div id="be-careful-when-copying-data.table-objects" class="section level4">
+<h4>Be careful when copying <code>data.table</code> objects</h4>
+<ul>
+<li><p><code>dt2 = dt</code> creates a <em>shallow copy</em>. This means that there is really only one <code>data.table</code> object in memory, but it can be referred to by both names.</p></li>
+<li><p>This means that changes to <code>dt2</code> will be reflected in <code>dt</code> and vice-versa.</p></li>
+<li><p>You can show that this is the case by modifying dt2 and observing that dt also changes (see code chunks below).</p></li>
+<li><p>To create a <em>deep copy</em> use <code>dt2 = data.table(dt)</code>.</p></li>
+</ul>
+<pre class="r"><code># shallow copy:
+dt2 = dt # Not a deep copy
+dt ## inspect dt before dt2 changes</code></pre>
+<pre><code>##       x y          z a
+##  1:   I a  1.5243830 9
+##  2:   I a  0.9234292 9
+##  3:   I b  0.5444596 9
+##  4:  II b -0.9665333 9
+##  5:  II c  0.3158816 9
+##  6:  II c  0.2191077 9
+##  7: III d  2.4600147 9
+##  8: III d -0.7529843 9
+##  9: III e -0.1580054 9
+## 10:  IV e  0.3933520 9
+## 11:  IV f -1.9167232 9
+## 12:  IV f  0.4620382 9</code></pre>
+<pre class="r"><code>dt2[, a := NULL]
+dt ## inspect dt after dt changes</code></pre>
+<pre><code>##       x y          z
+##  1:   I a  1.5243830
+##  2:   I a  0.9234292
+##  3:   I b  0.5444596
+##  4:  II b -0.9665333
+##  5:  II c  0.3158816
+##  6:  II c  0.2191077
+##  7: III d  2.4600147
+##  8: III d -0.7529843
+##  9: III e -0.1580054
+## 10:  IV e  0.3933520
+## 11:  IV f -1.9167232
+## 12:  IV f  0.4620382</code></pre>
+<pre class="r"><code># deep copy:
+dt2 = data.table(dt) # this is a deep copy
+dt ## inspect dt before dt2 changes</code></pre>
+<pre><code>##       x y          z
+##  1:   I a  1.5243830
+##  2:   I a  0.9234292
+##  3:   I b  0.5444596
+##  4:  II b -0.9665333
+##  5:  II c  0.3158816
+##  6:  II c  0.2191077
+##  7: III d  2.4600147
+##  8: III d -0.7529843
+##  9: III e -0.1580054
+## 10:  IV e  0.3933520
+## 11:  IV f -1.9167232
+## 12:  IV f  0.4620382</code></pre>
+<pre class="r"><code>dt2[, x := NULL]
+dt ## inspect dt after dt changes</code></pre>
+<pre><code>##       x y          z
+##  1:   I a  1.5243830
+##  2:   I a  0.9234292
+##  3:   I b  0.5444596
+##  4:  II b -0.9665333
+##  5:  II c  0.3158816
+##  6:  II c  0.2191077
+##  7: III d  2.4600147
+##  8: III d -0.7529843
+##  9: III e -0.1580054
+## 10:  IV e  0.3933520
+## 11:  IV f -1.9167232
+## 12:  IV f  0.4620382</code></pre>
 </div>
 </div>
 </div>

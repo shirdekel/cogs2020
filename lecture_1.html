@@ -347,51 +347,70 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 1 - Introduction to the course</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 21 February, 2021</h4>
+<h4 class="date">Last update: 23 February, 2021</h4>
 
 </div>
 
 
-<div id="what-are-statistics" class="section level2">
-<h2>What are statistics?</h2>
+<div id="what-is-computational-neuroscience" class="section level2">
+<h2>What is computational neuroscience?</h2>
 <ul>
-<li><p>Very roughly speaking, we can think of statistics as a mathematical tool for describing data using <strong>descriptive statistics</strong> and for making decisions on the basis of data using <strong>inferential statistics</strong>.</p></li>
-<li><p>Visualising the data and computing summary statistics like means and standard deviations are standard approaches for descriptive statistics.</p></li>
-<li><p>Using Null Hypothesis Significance Testing (NHST) is the standard approach for inferential statistics.</p></li>
+<li><p>Computational neuroscience is just using computers to study brains.</p></li>
+<li><p>What counts as <em>brains</em> has come to refer to pretty much anything across a very wide range of levels. E.g.,</p>
+<ul>
+<li><p>Biochemical and electrical signal transduction and prorogation within individual cell compartments.</p></li>
+<li><p>Intracellular signalling cascades.</p></li>
+<li><p>Whole cell action potential spiking properties.</p></li>
+<li><p>Collection of neurons as dynamical systems.</p></li>
+<li><p>Local field potential, hemodynamic response, cortical oscillatory patterns.</p></li>
+<li><p>Behaviour (e.g., decision making, action selection and execution)</p></li>
+</ul></li>
+<li><p>Using computers to study purely neural systems – without concern for behaviour – is pretty fairly called <em>computational neuroscience</em>.</p></li>
+<li><p>Using computers to study behaviour – without concern for neural systems – would fall more naturally under the banner of <em>cognitive modelling</em>.</p></li>
+<li><p>Using computers to study how the brain drives behaviour – i.e., explicitly caring about both neural and cognitive domains and trying to link them – is sometimes given special names like <em>computational cognitive neuroscience</em>.</p></li>
 </ul>
 </div>
-<div id="why-are-statistics-necessary" class="section level2">
-<h2>Why are statistics necessary?</h2>
+<div id="why-computers" class="section level2">
+<h2>Why computers?</h2>
 <ul>
-<li><p>Basically, statistical methods are useful whenever the outcomes of an experiment you would like to summarise and interpret are at least a little bit random.</p></li>
-<li><p>For example, imagine trying to determine if a coin is fair coin (i.e., equal probability of landing heads as landing tails) or not. Can you make a good decision after just one flip? Certainly not. This is because you know that the outcome of each flip is random, so seeing one measly flip tells you next to nothing. Rather, you need to flip it a bunch of times, and then think very carefully about the pattern of outcomes that you observed. The thinking very carefully part is where statistics comes in to save the day.</p></li>
-<li><p>In statistics, we have special terminology to refer the process that generates random outcomes of an experiment — we call is a <strong>random variable</strong>. Any particular single outcome or sometimes set of random outcomes from an experiment is called a <strong>sample</strong> from the random variable.</p></li>
+<li><p>Mathematics is at the heart of computational neuroscience.</p></li>
+<li><p>The goal is to write down equations that formally describe the process through which the phenomena of interest are hypothesised to emerge.</p></li>
+<li><p>The need for computers arises when the mathematics that you write down is complicated and difficult to evaluate.</p></li>
+<li><p>Computational approaches give us tools to deal with these difficult mathematical situations. Well, some of them at least.</p></li>
 </ul>
 </div>
-<div id="why-learn-to-code" class="section level2">
-<h2>Why learn to code?</h2>
-<p>Compared to pointing and clicking your way through data, <strong>coding is a legit super power</strong>.</p>
+<div id="what-is-the-real-value-gained-with-the-computational" class="section level2">
+<h2>What is the real value gained with the computational</h2>
+<p>approach?</p>
 <ul>
-<li>Code is more efficient</li>
-<li>Code is less prone to error</li>
-<li>Code is reusable and reproducible</li>
-<li>Code scales to big data</li>
-<li>Code forces you to think clearly</li>
+<li><p>Have you ever stuggled or argued with yourelf or others about what a certain <em>hypothesis</em> predicts in a particular experiment?</p></li>
+<li><p>Mathematical precision makes science happy. It eliminates ambiguity and thereby makes mathematical models more falsifiable.</p></li>
+<li><p>In practice, the word <em>more</em> in the last sentence above can do an awful lot of work. Coming up with experiments that are strong tests of any model, even mathematically precise models, can be very difficult.</p></li>
+<li><p>Even so, there is no question that mathematics and computers help… and sometimes they help a whole lot.</p></li>
 </ul>
 </div>
-<div id="why-r" class="section level2">
-<h2>Why R?</h2>
+<div id="marrs-levels" class="section level2">
+<h2>Marr’s levels</h2>
+<ul>
+<li><p><strong>Computational</strong>: A specification of what a system does and why it does it.</p></li>
+<li><p><strong>Algorithmic</strong>: A specification of how it does what it does (i.e., what process is followed).</p></li>
+<li><p><strong>implementational</strong>: A specification of how the system is implemented in the brain.</p></li>
+<li><p>In my opinion, few models cleanly reside at a single one of these levels and many probably are best classified between levels. Even so, the conceptual divisions they get us thinking about are useful to have on hand.</p></li>
+</ul>
+</div>
+<div id="why-python" class="section level2">
+<h2>Why Python</h2>
 <ul>
 <li>It is a real programming language</li>
 <li>It is mature</li>
 <li>It is widely embraced in psychology and neuroscience</li>
-<li>It is widely embraced in data science</li>
+<li>It is widely embraced inside and outside academia</li>
+<li>It is widely used in the machine learning community</li>
 <li>It is relatively easy to learn</li>
-<li>That said, it is not the only good option. Python, for example, is excellent. Matlab is not quite so excellent, but it is still widely used in academia. You might even run into more obscure languages here and there. At the end of the day, we have to pick one. R is a good plave to start and it will offer you excellent return on investment.</li>
 </ul>
 </div>
-<div id="why-rstudio" class="section level2">
-<h2>Why RStudio?</h2>
+<div id="python-headaches" class="section level2">
+<h2>Python headaches</h2>
 <ul>
 <li><p>RStudio is an excellent place to begin.</p></li>
 <li><p>Sensible default and easy to adjust settings.</p></li>

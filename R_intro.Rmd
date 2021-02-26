@@ -84,6 +84,16 @@ x <- TRUE
 class(x)
 ```
 
+### `factor`
+
+* A `factor` is a *categorical* data type. They are most
+often used to code for different conditions in an
+experiment.
+
+```{r}
+x <- factor(1)
+class(x)
+```
 
 ## Containers
 
@@ -281,3 +291,54 @@ dt[, sum(z), .(x)]
 # each unique combination of values in x and y
 dt[, sum(z), .(x, y)]
 ```
+
+
+#### Adding and modifying columns
+
+* Use the `:=` operator inside the `j` argument of a
+`data.table` to add or modify a column.
+
+```{r}
+# If you pass a single number, data.table will fill the
+# entire column with that value
+dt[, a := 9]
+
+# Otherwise, just pass a vector of the same length as the
+# data.table
+dt[, b := seq(2, 24, 2)]
+
+# redefine or modify an existing column the same way
+dt[, b := seq(4, 48, 4)]
+
+# Remove a column using := and the NULL keyword
+dt[, b := NULL]
+```
+
+#### Be careful when copying `data.table` objects
+
+* `dt2 = dt` creates a *shallow copy*. This means that there
+is really only one `data.table` object in memory, but it can
+be referred to by both names.
+
+* This means that changes to `dt2` will be reflected in `dt`
+and vice-versa.
+
+* You can show that this is the case by modifying dt2 and
+observing that dt also changes (see code chunks below).
+
+* To create a *deep copy* use `dt2 = data.table(dt)`.
+
+```{r}
+# shallow copy:
+dt2 = dt # Not a deep copy
+dt ## inspect dt before dt2 changes
+dt2[, a := NULL]
+dt ## inspect dt after dt changes
+
+# deep copy:
+dt2 = data.table(dt) # this is a deep copy
+dt ## inspect dt before dt2 changes
+dt2[, x := NULL]
+dt ## inspect dt after dt changes
+```
+
