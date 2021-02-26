@@ -476,19 +476,19 @@ z &lt;- rnorm(12)
 # Create the data frame
 df &lt;- data.frame(x, y, z)
 df</code></pre>
-<pre><code>##      x y          z
-## 1    I a  1.5243830
-## 2    I a  0.9234292
-## 3    I b  0.5444596
-## 4   II b -0.9665333
-## 5   II c  0.3158816
-## 6   II c  0.2191077
-## 7  III d  2.4600147
-## 8  III d -0.7529843
-## 9  III e -0.1580054
-## 10  IV e  0.3933520
-## 11  IV f -1.9167232
-## 12  IV f  0.4620382</code></pre>
+<pre><code>##      x y            z
+## 1    I a -0.854515837
+## 2    I a  1.274466572
+## 3    I b  2.217120743
+## 4   II b -0.009352991
+## 5   II c -1.839056619
+## 6   II c  1.937397368
+## 7  III d -1.049195969
+## 8  III d  1.317532534
+## 9  III e  0.828078391
+## 10  IV e  1.270581702
+## 11  IV f  0.810746146
+## 12  IV f -0.424528444</code></pre>
 <pre class="r"><code># Access column x
 df$x</code></pre>
 <pre><code>##  [1] &quot;I&quot;   &quot;I&quot;   &quot;I&quot;   &quot;II&quot;  &quot;II&quot;  &quot;II&quot;  &quot;III&quot; &quot;III&quot; &quot;III&quot; &quot;IV&quot;  &quot;IV&quot;  &quot;IV&quot;</code></pre>
@@ -514,19 +514,19 @@ library(data.table)
 # create a data table
 dt &lt;- data.table(x, y, z)
 dt</code></pre>
-<pre><code>##       x y          z
-##  1:   I a  1.5243830
-##  2:   I a  0.9234292
-##  3:   I b  0.5444596
-##  4:  II b -0.9665333
-##  5:  II c  0.3158816
-##  6:  II c  0.2191077
-##  7: III d  2.4600147
-##  8: III d -0.7529843
-##  9: III e -0.1580054
-## 10:  IV e  0.3933520
-## 11:  IV f -1.9167232
-## 12:  IV f  0.4620382</code></pre>
+<pre><code>##       x y            z
+##  1:   I a -0.854515837
+##  2:   I a  1.274466572
+##  3:   I b  2.217120743
+##  4:  II b -0.009352991
+##  5:  II c -1.839056619
+##  6:  II c  1.937397368
+##  7: III d -1.049195969
+##  8: III d  1.317532534
+##  9: III e  0.828078391
+## 10:  IV e  1.270581702
+## 11:  IV f  0.810746146
+## 12:  IV f -0.424528444</code></pre>
 <div id="subset-rows-in-i" class="section level4">
 <h4>Subset rows in <code>i</code></h4>
 <ul>
@@ -538,15 +538,15 @@ dt</code></pre>
 </ul>
 <pre class="r"><code># Select rows by passing integer indices
 dt[c(2, 4)]</code></pre>
-<pre><code>##     x y          z
-## 1:  I a  0.9234292
-## 2: II b -0.9665333</code></pre>
+<pre><code>##     x y            z
+## 1:  I a  1.274466572
+## 2: II b -0.009352991</code></pre>
 <pre class="r"><code># Select rows by passing a logical expression
 dt[x==&#39;II&#39;]</code></pre>
-<pre><code>##     x y          z
-## 1: II b -0.9665333
-## 2: II c  0.3158816
-## 3: II c  0.2191077</code></pre>
+<pre><code>##     x y            z
+## 1: II b -0.009352991
+## 2: II c -1.839056619
+## 3: II c  1.937397368</code></pre>
 </div>
 <div id="select-columns-with-j" class="section level4">
 <h4>Select columns with <code>j</code></h4>
@@ -559,34 +559,34 @@ dt[x==&#39;II&#39;]</code></pre>
 </ul>
 <pre class="r"><code># Select every row of columns y and z the cool way
 dt[, .(y, z)]</code></pre>
-<pre><code>##     y          z
-##  1: a  1.5243830
-##  2: a  0.9234292
-##  3: b  0.5444596
-##  4: b -0.9665333
-##  5: c  0.3158816
-##  6: c  0.2191077
-##  7: d  2.4600147
-##  8: d -0.7529843
-##  9: e -0.1580054
-## 10: e  0.3933520
-## 11: f -1.9167232
-## 12: f  0.4620382</code></pre>
+<pre><code>##     y            z
+##  1: a -0.854515837
+##  2: a  1.274466572
+##  3: b  2.217120743
+##  4: b -0.009352991
+##  5: c -1.839056619
+##  6: c  1.937397368
+##  7: d -1.049195969
+##  8: d  1.317532534
+##  9: e  0.828078391
+## 10: e  1.270581702
+## 11: f  0.810746146
+## 12: f -0.424528444</code></pre>
 <pre class="r"><code># Select every row of columns y and z the long way
 dt[, list(y, z)]</code></pre>
-<pre><code>##     y          z
-##  1: a  1.5243830
-##  2: a  0.9234292
-##  3: b  0.5444596
-##  4: b -0.9665333
-##  5: c  0.3158816
-##  6: c  0.2191077
-##  7: d  2.4600147
-##  8: d -0.7529843
-##  9: e -0.1580054
-## 10: e  0.3933520
-## 11: f -1.9167232
-## 12: f  0.4620382</code></pre>
+<pre><code>##     y            z
+##  1: a -0.854515837
+##  2: a  1.274466572
+##  3: b  2.217120743
+##  4: b -0.009352991
+##  5: c -1.839056619
+##  6: c  1.937397368
+##  7: d -1.049195969
+##  8: d  1.317532534
+##  9: e  0.828078391
+## 10: e  1.270581702
+## 11: f  0.810746146
+## 12: f -0.424528444</code></pre>
 </div>
 <div id="operate-on-columns-with-j" class="section level4">
 <h4>Operate on columns with <code>j</code></h4>
@@ -595,8 +595,8 @@ dt[, list(y, z)]</code></pre>
 </ul>
 <pre class="r"><code># return the mean and standard deviation of z
 dt[, .(mean(z), sd(z))]</code></pre>
-<pre><code>##          V1       V2
-## 1: 0.254035 1.146779</code></pre>
+<pre><code>##           V1       V2
+## 1: 0.4566061 1.274872</code></pre>
 </div>
 <div id="combine-i-and-j" class="section level4">
 <h4>Combine <code>i</code> and <code>j</code></h4>
@@ -605,10 +605,10 @@ dt[, .(mean(z), sd(z))]</code></pre>
 </ul>
 <pre class="r"><code># Select all rows for which x==II and return columns y and z
 dt[x==&#39;II&#39;, .(y, z)]</code></pre>
-<pre><code>##    y          z
-## 1: b -0.9665333
-## 2: c  0.3158816
-## 3: c  0.2191077</code></pre>
+<pre><code>##    y            z
+## 1: b -0.009352991
+## 2: c -1.839056619
+## 3: c  1.937397368</code></pre>
 </div>
 <div id="group-using-by" class="section level4">
 <h4>Group using <code>by</code></h4>
@@ -621,22 +621,22 @@ dt[x==&#39;II&#39;, .(y, z)]</code></pre>
 # each value of x
 dt[, sum(z), .(x)]</code></pre>
 <pre><code>##      x         V1
-## 1:   I  2.9922718
-## 2:  II -0.4315439
-## 3: III  1.5490250
-## 4:  IV -1.0613330</code></pre>
+## 1:   I 2.63707148
+## 2:  II 0.08898776
+## 3: III 1.09641496
+## 4:  IV 1.65679940</code></pre>
 <pre class="r"><code># Compute the sum of elements in column z separately for
 # each unique combination of values in x and y
 dt[, sum(z), .(x, y)]</code></pre>
-<pre><code>##      x y         V1
-## 1:   I a  2.4478122
-## 2:   I b  0.5444596
-## 3:  II b -0.9665333
-## 4:  II c  0.5349894
-## 5: III d  1.7070304
-## 6: III e -0.1580054
-## 7:  IV e  0.3933520
-## 8:  IV f -1.4546850</code></pre>
+<pre><code>##      x y           V1
+## 1:   I a  0.419950735
+## 2:   I b  2.217120743
+## 3:  II b -0.009352991
+## 4:  II c  0.098340748
+## 5: III d  0.268336565
+## 6: III e  0.828078391
+## 7:  IV e  1.270581702
+## 8:  IV f  0.386217702</code></pre>
 </div>
 <div id="adding-and-modifying-columns" class="section level4">
 <h4>Adding and modifying columns</h4>
@@ -668,65 +668,104 @@ dt[, b := NULL]</code></pre>
 <pre class="r"><code># shallow copy:
 dt2 = dt # Not a deep copy
 dt ## inspect dt before dt2 changes</code></pre>
-<pre><code>##       x y          z a
-##  1:   I a  1.5243830 9
-##  2:   I a  0.9234292 9
-##  3:   I b  0.5444596 9
-##  4:  II b -0.9665333 9
-##  5:  II c  0.3158816 9
-##  6:  II c  0.2191077 9
-##  7: III d  2.4600147 9
-##  8: III d -0.7529843 9
-##  9: III e -0.1580054 9
-## 10:  IV e  0.3933520 9
-## 11:  IV f -1.9167232 9
-## 12:  IV f  0.4620382 9</code></pre>
+<pre><code>##       x y            z a
+##  1:   I a -0.854515837 9
+##  2:   I a  1.274466572 9
+##  3:   I b  2.217120743 9
+##  4:  II b -0.009352991 9
+##  5:  II c -1.839056619 9
+##  6:  II c  1.937397368 9
+##  7: III d -1.049195969 9
+##  8: III d  1.317532534 9
+##  9: III e  0.828078391 9
+## 10:  IV e  1.270581702 9
+## 11:  IV f  0.810746146 9
+## 12:  IV f -0.424528444 9</code></pre>
 <pre class="r"><code>dt2[, a := NULL]
 dt ## inspect dt after dt changes</code></pre>
-<pre><code>##       x y          z
-##  1:   I a  1.5243830
-##  2:   I a  0.9234292
-##  3:   I b  0.5444596
-##  4:  II b -0.9665333
-##  5:  II c  0.3158816
-##  6:  II c  0.2191077
-##  7: III d  2.4600147
-##  8: III d -0.7529843
-##  9: III e -0.1580054
-## 10:  IV e  0.3933520
-## 11:  IV f -1.9167232
-## 12:  IV f  0.4620382</code></pre>
+<pre><code>##       x y            z
+##  1:   I a -0.854515837
+##  2:   I a  1.274466572
+##  3:   I b  2.217120743
+##  4:  II b -0.009352991
+##  5:  II c -1.839056619
+##  6:  II c  1.937397368
+##  7: III d -1.049195969
+##  8: III d  1.317532534
+##  9: III e  0.828078391
+## 10:  IV e  1.270581702
+## 11:  IV f  0.810746146
+## 12:  IV f -0.424528444</code></pre>
 <pre class="r"><code># deep copy:
 dt2 = data.table(dt) # this is a deep copy
 dt ## inspect dt before dt2 changes</code></pre>
-<pre><code>##       x y          z
-##  1:   I a  1.5243830
-##  2:   I a  0.9234292
-##  3:   I b  0.5444596
-##  4:  II b -0.9665333
-##  5:  II c  0.3158816
-##  6:  II c  0.2191077
-##  7: III d  2.4600147
-##  8: III d -0.7529843
-##  9: III e -0.1580054
-## 10:  IV e  0.3933520
-## 11:  IV f -1.9167232
-## 12:  IV f  0.4620382</code></pre>
+<pre><code>##       x y            z
+##  1:   I a -0.854515837
+##  2:   I a  1.274466572
+##  3:   I b  2.217120743
+##  4:  II b -0.009352991
+##  5:  II c -1.839056619
+##  6:  II c  1.937397368
+##  7: III d -1.049195969
+##  8: III d  1.317532534
+##  9: III e  0.828078391
+## 10:  IV e  1.270581702
+## 11:  IV f  0.810746146
+## 12:  IV f -0.424528444</code></pre>
 <pre class="r"><code>dt2[, x := NULL]
 dt ## inspect dt after dt changes</code></pre>
-<pre><code>##       x y          z
-##  1:   I a  1.5243830
-##  2:   I a  0.9234292
-##  3:   I b  0.5444596
-##  4:  II b -0.9665333
-##  5:  II c  0.3158816
-##  6:  II c  0.2191077
-##  7: III d  2.4600147
-##  8: III d -0.7529843
-##  9: III e -0.1580054
-## 10:  IV e  0.3933520
-## 11:  IV f -1.9167232
-## 12:  IV f  0.4620382</code></pre>
+<pre><code>##       x y            z
+##  1:   I a -0.854515837
+##  2:   I a  1.274466572
+##  3:   I b  2.217120743
+##  4:  II b -0.009352991
+##  5:  II c -1.839056619
+##  6:  II c  1.937397368
+##  7: III d -1.049195969
+##  8: III d  1.317532534
+##  9: III e  0.828078391
+## 10:  IV e  1.270581702
+## 11:  IV f  0.810746146
+## 12:  IV f -0.424528444</code></pre>
+</div>
+<div id="converting-from-wide-to-long-format" class="section level4">
+<h4>Converting from wide to long format</h4>
+<ul>
+<li><p>Suppose you perform an experiment in which you collect data from 3 participants, and each participant gives you 5 observations.</p></li>
+<li><p>If this data were represented in <em>wide</em> format, then data from each participant would be in separate columns.</p></li>
+<li><p>If this data were represented in <em>long</em> format, then data from every participant would be in the same column. A separate column would <em>indicate</em> what subject a given row corresponded to.</p></li>
+<li><p>To convert from wide to long format use the <code>melt()</code> function from <code>data.table</code>.</p></li>
+</ul>
+<pre class="r"><code>x1 &lt;- runif(5)
+x2 &lt;- runif(5)
+x3 &lt;- runif(5)
+data_wide &lt;- data.table(x1, x2, x3)
+data_long &lt;- melt(data_wide, measure.vars=c(&#39;x1&#39;, &#39;x2&#39;, &#39;x3&#39;))
+
+data_wide</code></pre>
+<pre><code>##           x1         x2        x3
+## 1: 0.9755385 0.03508787 0.8708307
+## 2: 0.5642742 0.21906132 0.6496477
+## 3: 0.8587453 0.64506563 0.2956545
+## 4: 0.1914747 0.51436047 0.9157293
+## 5: 0.8853220 0.09538985 0.7768037</code></pre>
+<pre class="r"><code>data_long</code></pre>
+<pre><code>##     variable      value
+##  1:       x1 0.97553849
+##  2:       x1 0.56427423
+##  3:       x1 0.85874534
+##  4:       x1 0.19147468
+##  5:       x1 0.88532197
+##  6:       x2 0.03508787
+##  7:       x2 0.21906132
+##  8:       x2 0.64506563
+##  9:       x2 0.51436047
+## 10:       x2 0.09538985
+## 11:       x3 0.87083070
+## 12:       x3 0.64964766
+## 13:       x3 0.29565452
+## 14:       x3 0.91572931
+## 15:       x3 0.77680372</code></pre>
 </div>
 </div>
 </div>

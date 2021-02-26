@@ -342,3 +342,31 @@ dt2[, x := NULL]
 dt ## inspect dt after dt changes
 ```
 
+#### Converting from wide to long format
+
+* Suppose you perform an experiment in which you collect
+data from 3 participants, and each participant gives you 5
+observations. 
+
+* If this data were represented in *wide* format, then data
+from each participant would be in separate columns.
+
+* If this data were represented in *long* format, then data
+from every participant would be in the same column. A
+separate column would *indicate* what subject a given row
+corresponded to.
+
+* To convert from wide to long format use the `melt()`
+function from `data.table`.
+
+```{r}
+x1 <- runif(5)
+x2 <- runif(5)
+x3 <- runif(5)
+data_wide <- data.table(x1, x2, x3)
+data_long <- melt(data_wide, measure.vars=c('x1', 'x2', 'x3'))
+
+data_wide
+data_long
+```
+
