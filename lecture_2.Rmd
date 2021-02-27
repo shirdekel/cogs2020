@@ -6,7 +6,7 @@ output:
   html_document:
     toc: true
     toc_float:
-        collapsed: true
+        collapsed: false
         smooth_scroll: true
     toc_depth: 3
     fig_caption: yes
@@ -22,8 +22,29 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Learning objectives
 
-- Understand conceptually and be able to compute by hand and using R the
-  following descriptive statistics:
+- Understand the relationship between a sample and a
+population.
+
+- Understand the relationship between descriptive and
+inferential statistics.
+
+- Understand the difference between continuous and discrete
+data observations.
+
+- Understand the difference between wide and long data
+formats and be able to convert from wide to long.
+
+- Understand and be able to generate the following plots
+using `data.table` and `ggplot`:
+  - `geom_point`
+  - `geom_box`
+  - `geom_violin`
+  - `geom_hist`
+  - `geom_bar`
+  - `geom_line`
+
+- Understand conceptually and be able to compute by hand and
+using R the following descriptive statistics:
   - sample mean
   - sample median
   - sample mode
@@ -31,13 +52,6 @@ knitr::opts_chunk$set(echo = TRUE)
   - sample standard deviation
   - sample range
 
-- Understand and be able to generate using R histograms and dot plots using
-  ggplot.
-
-- Understand and be able to add line segment annotations to ggplot plots.
-
-- Understand and be able to control aspect ratio and axis text font size of
-  ggplot figures.
 
 ## What is statistics?
 
@@ -65,8 +79,18 @@ $$
 \boldsymbol{x} = ( 52.38, 55.41, 70.88, 43.30, 50.15, 41.99, 36.82, 34.05, 52.70, 72.25 )
 $$
 
-We would say that $\boldsymbol{x}$ is our sample. If
-somebody asks you about your experiment, it is often not
+We would say that $\boldsymbol{x}$ is our sample, and in
+this case consists of **continuous** data observations. This
+is because we are measuring time, and time can yield any
+real number as a measurement. If instead we were to measure
+the number of wrong turns, our observations would be
+**discrete**, and might look like this:
+
+$$
+\boldsymbol{x} = ( 8, 2, 10, 7, 3, 1, 6, 9, 5, 4 )
+$$
+
+If somebody asks you about your experiment, it is often not
 very practical to list all the numbers that you observed.
 Instead, you would want some way to concisely summarise the
 sample that you obtained. In the following sections, we will
@@ -90,16 +114,14 @@ that you will ever observe you run this experiment forever.
 
 Another way of thinking about it is that the **population**
 is the process that generates the maze times you will
-observe whenever you perform your experiment.
-
-A **population** is the true state of the world... it is
+observe whenever you perform your experiment. A
+**population** is the true state of the world --- it is
 either the entire collection of things that you are
 interested in studying, or else it is the process that
 generates a potentially infinite set of things that you are
-interested in.
-
-For example, if you perform your experiment another two
-times, you might end up with the following samples:
+interested in. For example, if you perform your experiment
+another two times, you might end up with the following
+samples:
 
 $$
 \boldsymbol{x_1} = ( 52.38, 55.41, 70.88, 43.30, 50.15, 41.99, 36.82, 34.05, 52.70, 72.25 )
@@ -117,13 +139,196 @@ being drawn or generated from a **population**, and we want
 to estimate properties of the **population** by using our
 **sample**.
 
-To review, we will want to concisely describe our data using
-**descriptive statistics**, and we will want to use our data
-to make decisions using **inferential statistics**.
+#### Summary
 
-## Describing data
+* data from an experiment is a **sample** from a
+**population**. 
 
-### Central tendency of a sample
+* We concisely describe our data using **descriptive
+statistics**.
+
+* We will use our data to make decisions using **inferential
+statistics**.
+
+
+## Data representation
+
+### Wide vs long format
+
+Consider the rat maze data example given above. We can get
+that data into a `data.table` in a number of ways. Here is
+an example of how to do it by first using `vectors`.
+
+```{r message=F}
+# Our first action will almost always be to start R, load
+# the `data.table` and `ggplot2` libraries, and clear the
+# current session
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+x1 <- c(52.38, 55.41, 70.88, 43.30, 50.15, 41.99, 36.82, 34.05, 52.70, 72.25)
+x2 <- c(62.36, 53.89, 53.95, 33.81, 61.12, 61.48, 36.89, 49.45, 52.50, 50.95)
+x3 <- c(52.04, 48.28, 48.12, 58.89, 51.76, 42.88, 49.04, 60.41, 53.99, 70.06)
+
+d_wide <- data.table(x1, x2, x3)
+```
+
+The `data.table` we created above is in **wide format**
+because the results from each of the three experiments that
+we ran are contained in separate columns.
+
+Although it is possible to use `ggplot` with wide format
+data, it is usually much more efficient to use **long
+format** data. As such, this will almost always be our
+convention. We can convert from wide to long by using the
+`melt()` function as follows:
+
+```{r, message=F}
+d_long = melt(d_wide, 
+              measure.vars=c('x1', 'x2', 'x3'),
+              variable.name = 'experiment_id',
+              value.name = 'time')
+```
+
+On the other hand, we could have created a long format
+`data.table` right off the bat as follows:
+
+```{r, message=F}
+time <- c(x1, x2, x3)
+experiment_id = c(rep('x1', length(x1)), 
+                  rep('x2', length(x1)), 
+                  rep('x3', length(x1)))
+d_long = data.table(experiment_id, time)
+```
+
+## Data visualisation
+
+Data visualisation is a core component of modern descriptive
+statistics and it is essential that we become proficient at
+collecting data, assembling it into csv-style formats,
+piping it into `R`, and inspecting it using plots.
+
+There are numerous methods to generate plots using `R`, but
+in this unit, we will focus exclusively on first
+representing our data as a `data.table` and then using
+`ggplot` to make plots.
+
+
+### `geom_point`
+
+Perhaps the most straightforward approach to visualising
+data is simply to plot points for each observation in your
+sample. We have separate experiments -- coded by
+`experiment_id` -- so we will keep them separate.
+
+```{r, message=F}
+ggplot(data=d_long, aes(x=experiment_id, y=time)) +
+  geom_point()
+```
+
+
+### `geom_box`
+
+Box plots give a summary of how your data is distributed by
+visually marking out the median value as well as the 25th to
+the 75th percentile. The idea is to concisely illustrate
+where the majority of the data fall. 
+
+Whiskers will typically extend from the ends of the box to
+indicate the more extreme end of your data, and very extreme
+data points will often be plotted individually. This aspect
+of box plots doesn't have as strong a convention as the
+rest, so it's important to read the documentation to be sure
+you are plotting what you think you are plotting.
+
+I often find that it can be quite nice to use both
+`geom_point` and `geom_box` in conjunction as follows.
+
+```{r, message=F}
+ggplot(data=d_long, aes(x=experiment_id, y=time)) +
+  geom_boxplot() + 
+  geom_point()
+```
+
+
+### `geom_violin`
+
+Violin plots are similar to box plots, except rather than
+represent your data in terms of percentiles, it attempts to
+give you a continuous estimate of how much our your data
+fall along the range of possible values. As with box plots,
+I often like to overlay individual points.
+
+```{r, message=F}
+ggplot(data=d_long, aes(x=experiment_id, y=time)) +
+  geom_violin() + 
+  geom_point()
+```
+
+
+### `geom_hist`
+
+A histogram attempts to illustrate how data is distributed
+by grouping data points into a set number of bins, and
+plotting a bar with height equal to the number of points in
+each bin. 
+
+If you have a lot of data, this method can work really well
+and convey lots of great information. With a smaller data
+set --- like the toy rat example that we are currently using
+--- it only works okay.  In any case, working with
+histograms can involve a bit of tweaking to get things to
+look nice. For example, you can control how many bins are
+used and how big or small each bin is by using the `bins`
+and `breaks` argument.
+
+```{r, message=F}
+ggplot(data=d_long, aes(x=time, fill=experiment_id)) +
+  geom_histogram(bins = 5) +
+  facet_wrap(~experiment_id)
+```
+
+
+### `geom_bar`
+
+Bar plots are among the most common plots you will encounter
+as you navigate pretty much any scientific field. They throw
+away all information about how your data is distributed, and
+instead report only on the average values (unless error bars
+are included).
+
+There are many ways to use `ggplot` and `geom_bar` to make a
+bar plot. A good way to start is to first create a
+`data.table` that contains only the average values that you
+want to be represented by the bar heights:
+
+```{r, message=F}
+d_mean = d_long[, .(time = mean(time)), .(experiment_id)]
+ggplot(data=d_mean, aes(x=experiment_id, y=time)) +
+  geom_bar(stat='identity')
+```
+
+
+### `geom_line`
+
+We might be interested in examining whether the rat got fast
+from run to run within each experiment. To do this, it would
+be reasonable to place `run` on the x-axis and `time` on the
+y-axis. One issue that are faced with right away is that
+`d_long` doesn't have a `run` column --- i.e., `run` is
+implicitly indicated by the row index. Below, we will first
+add a `run` column, and then make the plot described above.
+
+```{r, message=F}
+d_long[, run := 1:.N, .(experiment_id)]
+ggplot(data=d_long, aes(x=run, y=time, colour=experiment_id)) +
+  geom_line()
+```
+
+
+## Central tendency of a sample
 
 Given a sample, a measure of central tendency is supposed to
 tell us where most values tend to be clustered. One very
@@ -194,26 +399,10 @@ $$
 ### Central tendency using R
 
 In general, things are easier and we are happier and more
-productive human beings if we use R. Our first action will
-almost always be to start R and load the `data.table` and
-`ggplot2` libraries.
-
-```{r eval=TRUE, message=FALSE}
-library(data.table)
-library(ggplot2)
-rm(list=ls())
-```
-
-It is also good practice to clear everything from the
-current session memory at the top of the script.
-
-```{r eval=TRUE, message=FALSE}
-rm(list=ls())
-```
-
-Next, we just store our sample observations in a variable
-`x`, and use R's built-in functions `mean()` and `median()`
-to compute the sample mean and sample median.
+productive human beings if we use R. We just store our
+sample observations in a variable `x`, and use built-in `R`
+functions `mean()` and `median()` to compute the sample mean
+and sample median.
 
 ```{r eval=TRUE, message=FALSE}
 x <- c(55, 35, 23, 44, 31)
@@ -230,358 +419,64 @@ mean(x)
 median(x)
 ```
 
+
 ### Central tendency and outliers
 
 Sometimes a sample contains a few observations that are very
 different from the majority of the others. Theses
 observations are called **outliers**. How will outliers
-influence our measures of central tendency? To answer this
-question, consider the following example:
+influence our measures of central tendency?
 
-To study the possible effects of a new noise pollution
-ordinance, 18 power lawn mowers were observed and their
-noise levels were recorded to the nearest decibel. The
-following data were obtained:
+To answer this question, consider the rat maze running
+example from above. Lets pool all observations across all
+three experiments into a single histogram.
 
-```{r eval=TRUE, message=FALSE}
-noise_levels <-
-    c(95,120,117,99,110,107,125,98,85,127,105,114,103,112,92,101,122,120)
-mower_id <- 1:length(noise_levels)
-
-d <- data.table(mower_id, noise_levels)
+```{r}
+ggplot(d_long, aes(x='', y=time)) + 
+  geom_violin() +
+  geom_point()
 ```
-
-Here, we entered our observations into the variable
-`noise_levels`, created a variable called `mower_id` to
-indicate which power lawn mower our measurement was taken
-from, and finally created a `data.table` with each of these
-two variables as columns.
 
 Taking a look at our sample, no observation seems much
-different from any other (i.e., there are no outliers). Lets
-make a plot to really persuade ourselves that this is true.
+different from any other (i.e., there are no obvious
+outliers). How do the sample mean and sample median behave
+in this case?
 
-```{r eval=TRUE, message=FALSE}
-ggplot(d, aes(x=noise_levels)) +
-    geom_dotplot() +
-    theme(aspect.ratio = 1) +
-    theme(
-        aspect.ratio=1,
-        axis.title=element_text(size=14),
-        axis.text=element_text(size=12)
-    )
+```{r}
+d_long[, .('sample_mean' = mean(time), 'sample_median' = median(time))]
+```
+We see that the sample mean and sample median are nearly
+identical when there are no outliers.  Lets consider another
+example to see how the sample mean and sample median behave
+when our sample does contain outliers.
+
+```{r}
+d_long_out = data.table(d_long)
+d_long_out[.N, time := time * 10] # make the last observation an outlier
+
+ggplot(d_long_out, aes(x='', y=time)) + 
+  geom_violin() +
+  geom_point()
 ```
 
-Here, we have plotted our data as a dot plot, and indeed,
-there do not appear to be any major outliers. How do the
-sample mean and sample median behave in this case?
+We have clearly introduced an outlier. How do our mesures of
+central tendancy behave in this case?
 
-```{r eval=TRUE, message=FALSE}
-noise_mean <- d[, mean(noise_levels)]
-noise_median <- d[, median(noise_levels)]
-
-print(c(noise_mean, noise_median))
-```
-
-The sample mean and sample median are nearly identical when
-there are no outliers. For practice, lets add the mean and
-median to the plot.
-
-```{r eval=TRUE, message=FALSE}
-ggplot(d, aes(x=noise_levels)) +
-  geom_dotplot() +
-  theme(aspect.ratio = 1) +
-  geom_vline(xintercept = noise_mean, colour = 'red') +
-    geom_vline(xintercept = noise_median, colour = 'blue') +
-    theme(
-        aspect.ratio=1,
-        axis.title=element_text(size=14),
-        axis.text=element_text(size=12)
-    )
-```
-
-Lets consider another example to see how the sample mean and
-sample median behave when our sample does contain outliers.
-
-Waiting to cross a busy street on the way to class one
-morning, Professor J. noted the following times in seconds
-between cars traveling in the same direction:
-
-```{r eval=TRUE, message=FALSE}
-times <- c(6,3,5,6,4,3,5,4,6,3,4,5,4,18)
-times_id <- 1:length(times)
-
-d <- data.table(times_id, times)
-
-ggplot(d, aes(x=times)) +
-  geom_dotplot() +
-    theme(aspect.ratio = 1) +
-    theme(
-        aspect.ratio=1,
-        axis.title=element_text(size=14),
-        axis.text=element_text(size=12)
-    )
-```
-
-Here, we have followed the same procedure that we followed
-in our previous example, ultimately getting a `data.table`
-representation of our sample, and plotting it as a dot plot.
-
-The dotplot reveals that the times are closely grouped
-around 4 or 5, except for one outlier that is much larger
-than the rest. How do the sample mean and sample median
-behave in this scenario?
-
-```{r eval=TRUE, message=FALSE}
-noise_mean <- d[, mean(times)]
-noise_median <- d[, median(times)]
-ggplot(d, aes(x=times)) +
-  geom_dotplot() +
-  theme(aspect.ratio = 1) +
-  geom_vline(xintercept = noise_mean, colour = 'red') +
-    geom_vline(xintercept = noise_median, colour = 'blue') +
-    theme(
-        aspect.ratio=1,
-        axis.title=element_text(size=14),
-        axis.text=element_text(size=12)
-    )
+```{r}
+d_long_out[, .('sample_mean' = mean(time), 'sample_median' = median(time))]
 ```
 
 Here, you can see that the mean, but much less so the
-median, is sensitive to outliers.
-
-So, which is a better measure of central tendency? The
-answer to this question depends entirely on what you think
-is an outlier and how much you care about them. Saying much
-more than that is beyond the scope of this lecture, but we
-should leave with at least a simple lesson: **it is always a
-good idea to identify and investigate outliers in our
-data.**
-
-In this silly example, lets say that Prof J. noticed the
-outlier, investigated it, and discovered that there was a
-stop light a block away that had turned red. Mystery solved.
-
-### Practice central tendency
-
-Compute the mean and the median of each sample described
-above for the rat maze navigation data that we opened the
-lecture notes with:
-
-$$
-\boldsymbol{x_1} = ( 52.38, 55.41, 70.88, 43.30, 50.15, 41.99, 36.82, 34.05, 52.70, 72.25 )
-$$
-
-$$
-\boldsymbol{x_2} = ( 62.36, 53.89, 53.95, 33.81, 61.12, 61.48, 36.89, 49.45, 52.50, 50.95 )
-$$
-
-$$
-\boldsymbol{x_3} = ( 52.04, 48.28, 48.12, 58.89, 51.76, 42.88, 49.04, 60.41, 53.99, 70.06 )
-$$
+median, is sensitive to outliers. So, which is a better
+measure of central tendency? The answer to this question
+depends entirely on what you think is an outlier and how
+much you care about them. Saying much more than that is
+beyond the scope of this lecture, but we should leave with
+at least a simple lesson: **it is always a good idea to
+identify and investigate outliers in our data.**
 
 
-### Visualising samples with histograms
-
-In our previous examples, we have used dot plots to show how
-our sample data is distributed. A more common approach -- at
-least in cognitive science -- is to use histograms for this
-purpose. We will dive into this in the following example.
-
-One of the major indicators of air pollution in large cities
-and industrial belts is the concentration of ozone in the
-atmosphere. From massive data collected by LA County
-authorities, 78 measurements of ozone concentration in the
-downtown LA area during the summer of 1966 and 1967 are
-recorded in the table below. Each measurement is an average
-of hourly readings taken every fourth day.
-
-```{r eval=TRUE, message=FALSE}
-ozone <- c( 3.5, 1.4, 6.6, 6.0, 4.2, 4.4, 5.3, 5.6, 6.8, 2.5, 5.4, 4.4, 5.4,
-  4.7, 3.5, 4.0, 2.4, 3.0, 5.6, 4.7, 6.5, 3.0, 4.1, 3.4, 6.8, 1.7, 5.3, 4.7,
-  7.4, 6.0, 6.7, 11.7, 5.5, 1.1, 5.1, 5.6, 5.5, 1.4, 3.9, 6.6, 6.2, 7.5, 6.2,
-  6.0, 5.8, 2.8, 6.1, 4.1, 5.7, 5.8, 3.1, 5.8, 1.6, 2.5, 8.1, 6.6, 6.8, 3.1,
-  4.7, 3.8, 5.9, 3.3, 6.2, 7.6, 6.6, 4.4, 5.7, 4.5, 3.7, 9.4 )
-
-ozone_id <- 1:length(ozone)
-
-d <- data.table(ozone, ozone_id)
-```
-
-Here, we have followed the same procedure we ran through in
-the previous examples. Lets begin by simply plotting a
-histogram representation of this sample.
-
-```{r eval=TRUE, message=FALSE}
-ggplot(d, aes(x=ozone)) +
-  geom_histogram(col='black', fill='white') +
-    scale_y_continuous('count', 1:10) +
-    theme(aspect.ratio = 1) +
-    theme(
-        aspect.ratio=1,
-        axis.title=element_text(size=14),
-        axis.text=element_text(size=12)
-    )
-```
-
-Dot plots and histograms convey very much the same
-information. A good way to see this is to plot them both at
-the same time.
-
-```{r eval=TRUE, message=FALSE}
-ggplot(d, aes(x=ozone)) +
-  geom_histogram(col='black', fill='white') +
-  geom_dotplot() +
-  scale_y_continuous('count', 1:10) +
-    theme(aspect.ratio = 1) +
-    theme(
-        aspect.ratio=1,
-        axis.title=element_text(size=14),
-        axis.text=element_text(size=12)
-    )
-```
-
-Working with histograms can involve a bit of tweaking to get
-things to look nice. For example, you can control how big or
-small the bins are using the `breaks` argument
-
-<div class = "row">  
-<div class = "col-md-6">
-```{r eval=TRUE, message=FALSE, fig.width = 4}
-## big bins
-b <- seq(0,12,by=2.0)
-ggplot(d, aes(x=ozone)) +
-    geom_histogram(
-        breaks=b,
-        col='black',
-        fill='white') +
-    theme(aspect.ratio = 1) +
-    theme(
-        aspect.ratio=1,
-        axis.title=element_text(size=14),
-        axis.text=element_text(size=12)
-    )
-```
-</div>  
-<div class = "col-md-6">
-```{r eval=TRUE, message=FALSE, fig.width = 4}
-## small bins
-b <- seq(0,12,by=0.25)
-ggplot(d, aes(x=ozone)) +
-    geom_histogram(
-        breaks=b,
-        col='black',
-        fill='white') +
-    theme(aspect.ratio = 1) +
-    theme(
-        aspect.ratio=1,
-        axis.title=element_text(size=14),
-        axis.text=element_text(size=12)
-    )
-```
-</div>
-</div>
-
-`geom_density()` can be a nice addition to histograms.
-However, a problem is that `geom_density()` normalises the
-total area to 1, but a regular old histogram, by default,
-doesn't. We can force normalisation by using
-`geom_histogram(aes(y=..density..))`.
-
-<div class = "row">  
-<div class = "col-md-6">
-```{r eval=TRUE, message=FALSE, fig.width = 4}
-## without aes(y=..density..)
-b <- seq(0,12,by=0.25)
-ggplot(d, aes(x=ozone)) +
-    geom_histogram(
-        aes(),
-        breaks=b,
-        col='black',
-        fill='white') +
-  geom_density(colour='red') +
-    theme(aspect.ratio = 1) +
-    theme(
-        aspect.ratio=1,
-        axis.title=element_text(size=14),
-        axis.text=element_text(size=12)
-    )
-```
-</div>
-<div class = "col-md-6">
-```{r eval=TRUE, message=FALSE, fig.width = 4}
-## with aes(y=..density..)
-b <- seq(0,12,by=0.25)
-ggplot(d, aes(x=ozone)) +
-  geom_histogram(
-    aes(y=..density..),
-    breaks=b,
-    col='black',
-    fill='white') +
-  geom_density(colour='red') +
-    theme(aspect.ratio = 1) +
-    theme(
-        aspect.ratio=1,
-        axis.title=element_text(size=14),
-        axis.text=element_text(size=12)
-    )
-```
-</div>
-</div>
-
-Next, lets add vertical lines to show the sample mean and
-sample median to the histogram using small bins. Lets also
-do the same thing using large bins so we can see that the
-selection of bin size is influencing the aesthetics of our
-plot, but is not changing the fundamental information in our
-plot.
-
-<div class = "row">  
-<div class = "col-md-6">
-```{r eval=TRUE, message=FALSE, fig.width = 4}
-## small bins
-b <- seq(0,12,by=0.25)
-ggplot(d, aes(x=ozone)) +
-  geom_histogram(
-    aes(y=..density..),
-    breaks=b,
-    col='black',
-    fill='white') +
-  geom_density(colour='black', size=1.25) +
-  theme(aspect.ratio = 1) +
-  geom_vline(xintercept = d[, mean(ozone)], colour='red') +
-    geom_vline(xintercept = d[, median(ozone)], colour='blue') +
-    theme(
-        aspect.ratio=1,
-        axis.title=element_text(size=14),
-        axis.text=element_text(size=12)
-    )
-```
-</div>
-<div class = "col-md-6">
-```{r eval=TRUE, message=FALSE, fig.width = 4}
-## slightly larger bins
-b <- seq(0,12,by=1.0)
-ggplot(d, aes(x=ozone)) +
-  geom_histogram(
-    aes(y=..density..),
-    breaks=b,
-    col='black',
-    fill='white') +
-  geom_density(colour='black', size=1.25) +
-  theme(aspect.ratio = 1) +
-  geom_vline(xintercept = d[, mean(ozone)], colour='red') +
-    geom_vline(xintercept = d[, median(ozone)], colour='blue') +
-    theme(
-        aspect.ratio=1,
-        axis.title=element_text(size=14),
-        axis.text=element_text(size=12)
-    )
-```
-</div>
-</div>
-
-### Spread of a sample
+## Spread of a sample
 
 Measures of spread of a sample are supposed to tell us how
 widely the sample observations are distributed. One very
@@ -591,6 +486,22 @@ is denoted by $\boldsymbol{s}^2$ and it is defined as:
 $$
 \boldsymbol{s}^2 = \frac{1}{n-1} \sum_{i=1}^{n} ( x_{i} - \overline{\boldsymbol{x}} )^2
 $$
+
+An additional measure of spread is called the **sample
+standard deviation**. It is denoted by, $\boldsymbol{s}$,
+and it is defined simply as the square root of the sample
+variance.
+
+$$
+\boldsymbol{s} = \sqrt{\boldsymbol{s}^2}
+$$
+
+A third measure of spread that we will consider is called
+the **sample range**, and it is defined as the difference
+between the most extreme observed values.
+
+
+### Spread by hand
 
 Consider the following sample:
 
@@ -619,89 +530,46 @@ $$
 \boldsymbol{s}^2 = \frac{ 552.75 }{4-1} = 184.25
 $$
 
-Well, that sucked, and in a moment we will see that R will
-do this for us with grace and ease. Before we celebrate the
-awesomeness of R, lets cover two more measures of spread.
+Well, that sucked, and in the next section we will see that
+`R` will do this for us with grace and ease.
 
-One additional measure is called the **sample standard
-deviation**. It is denoted by, $\boldsymbol{s}$, and it is
-defined simply as the square root of the sample variance.
 
-$$
-\boldsymbol{s} = \sqrt{\boldsymbol{s}^2}
-$$
+### Spread by `R`
 
-The third measure of spread that we will consider is called
-the **sample range**, and it is defined as the difference
-between the most extreme observed values
-
-Okay, now lets use R to quickly compute the all measures of
-central tendency and spread that we have learned about so
-far.
+We now use `R` to quickly compute the all measures of spread
+just covered.
 
 ```{r eval=TRUE, message=FALSE}
-
-ozone_mean   <- d[, mean(ozone)]
-ozone_median <- d[, median(ozone)]
-ozone_var    <- d[, var(ozone)]
-ozone_sd     <- d[, sd(ozone)]
-ozone_range  <- d[, range(ozone)]
-ozone_range  <- diff(ozone_range)
-
-print(ozone_var)
-print(ozone_sd)
-print(ozone_range)
-
+d_long[, .('sample_variance' = var(time),
+           'sample_standard_deviation' = sd(time),
+           'sample_range' = diff(range(time)))]
 ```
+
+Notice that that sample variance is larger than sample
+standard deviation. This will always true.
 
 We will now finish up by adding the sample mean, sample
 variance, standard deviation, and range to our previous
-histogram plot.
+histogram plot. This is a useful exercise to develop an
+intuition for what these quantities represent.
 
-```{r eval=TRUE, message=FALSE}
-b <- seq(0,12,by=1.0)
-ggplot(d, aes(x=ozone)) +
-  geom_histogram(aes(y=..density..), breaks=b, col='black', fill='white') +
-  geom_density(colour='black', size=1.25) +
-  theme(aspect.ratio = 1) +
-  geom_vline(xintercept = ozone_mean, colour='black') +
-  geom_segment(
-    aes(x=ozone_mean-ozone_var, xend=ozone_mean+ozone_var, y=.3, yend=.3),
-    colour='red') +
-  geom_segment(
-    aes(x=ozone_mean-ozone_sd, xend=ozone_mean+ozone_sd, y=.35, yend=.35),
-    colour='blue') +
-  geom_segment(
-    aes(x=ozone_mean-ozone_range, xend=ozone_mean+ozone_range, y=.4, yend=.4),
-    colour='green') +
-    theme(
-        aspect.ratio=1,
-        axis.title=element_text(size=14),
-        axis.text=element_text(size=12)
-    )
+```{r, message=F}
+ggplot(data=d_long, aes(x=time)) +
+  geom_histogram(bins = 10) + 
+  # sample variance
+  geom_segment(aes(x=mean(time)-var(time)/2,
+                   xend=mean(time)+var(time)/2,
+                   y = 20,
+                   yend = 20), colour='red') +
+  # sample sd
+  geom_segment(aes(x=mean(time)-sd(time)/2,
+                   xend=mean(time)+sd(time)/2,
+                   y = 18,
+                   yend = 18), colour='blue') +
+  # sample range
+  geom_segment(aes(x=mean(time)-diff(range(time))/2,
+                   xend=mean(time)+diff(range(time))/2,
+                   y = 16,
+                   yend = 16), colour='green')
 ```
 
-### Practice it all 
-
-Compute the mean, median, and all three measures of sample
-spread for each sample described above for the rat maze
-navigation data that we opened the lecture notes with:
-
-$$
-\boldsymbol{x_1} = ( 52.38, 55.41, 70.88, 43.30, 50.15, 41.99, 36.82, 34.05, 52.70, 72.25 )
-$$
-
-$$
-\boldsymbol{x_2} = ( 62.36, 53.89, 53.95, 33.81, 61.12, 61.48, 36.89, 49.45, 52.50, 50.95 )
-$$
-
-$$
-\boldsymbol{x_3} = ( 52.04, 48.28, 48.12, 58.89, 51.76, 42.88, 49.04, 60.41, 53.99, 70.06 )
-$$
-
-To do this, first use `c()` to concatenate all three samples
-into one mega-sample.
-
-Make a histogram of the final concatenated result and add
-lines to visualise the mean, median, and different measures
-of spread.
