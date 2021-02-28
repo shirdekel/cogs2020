@@ -1,0 +1,207 @@
+---
+title: "Lecture 4 - Binomial distribution"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 2
+    fig_caption: yes
+    # code_folding: show
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Learning objectives
+* ...
+* ...
+
+## Bernoulli random variable
+
+### Definition
+A single sample from a any random variable that produces a
+dichotomous outcome is formally defined as a *Bernoulli*
+trial. To be a Bernoulli trial, a few conditions must be
+met:
+
+(1) Each trial yields one of the two outcomes usually called
+success ($S$) and failure ($F$).
+
+(2) For each trial, the probability of success $P(S)$ is the
+same and is denoted by $p = P(S)$. The probability of
+failure is then $q = P(F) = 1 - P(S)$ for each trial.
+
+(3) Trials are **independent**. The probability of success
+in a trial does not change given any amount of information
+about the outcomes of other trials.
+
+Bernoulli random variables are completely defined by the
+single parameter $p = P(S)$. If $X$ is a Bernoulli random
+variable then we would write:
+
+$X \sim Bernoulli(p)$
+
+### Probability distribution
+The probability distribution of a Bernoulli random variable
+is very simple. We simply need to indicate two probabilities
+as follows.
+
+```{r}
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+# Specify the probability of success
+p <- 0.3
+
+# On the y-axis, we want to plot the probability of the
+# possible outcomes (S and F)
+y <- c(0.3, 0.7)
+
+# On the x-axis, we want to indicate the outcome names
+x <- c('S', 'F')
+
+# To plot things with ggplot we need our data in a
+# data.table
+d <- data.table(x, y)
+
+ggplot(d, aes(x, y)) +
+  geom_segment(aes(xend=x, yend=0)) +
+  xlab('X = Bernoulli') +
+  ylab('Probability') +
+  theme(aspect.ratio = 1)
+```
+
+
+## Binomial random variable
+### Definition
+Consider a fixed number $n$ of Bernoulli trials conducted
+with success probability $P(S)=p$ and failure probability
+$P(F)=q=1-p$ in each trial. Define the random variable $X$
+as follows:
+
+$X =$ the sum of the number of Successes from $n$ of the
+above Bernoulli trials.
+
+Then $X$ is called a binomial distribution with $n$ trials
+and success probability $p$. The binomial distribution is
+completely defined by two parameters, $n$ and $p$, and we
+can write:
+
+$X \sim Binomial(n,p)$
+
+### Probability distribution
+Define the random variable $X$ as follows:
+
+$X$ = the number of *heads* in $3$ flips of a *fair* coin.
+
+Then $X \sim Binomial(n=3, p=0.5)$ 
+
+To obtain the probability distribution, we must compute the
+probability of every possible outcome that $X$ can produce.
+With $n=2$ flips, it is easy to see that there are 3
+possible outcomes (0, 1, or 2 heads) which are obtained with
+the following possible events and corresponding
+probabilities:
+
+$$
+\begin{align}
+P(X=0) &= P(TT) \\
+       &= P(T)P(T) \\
+       &= 0.5 \times 0.5 \\
+       &= 0.25 \\\\
+P(X=1) &= P(TH) + P(HT) \\
+       &= P(T)P(H) + P(H)P(T) \\
+       &= 0.5 \times 0.5 + 0.5 \times 0.5 \\
+       &= 0.25 + 0.25 \\
+       &= 0.5 \\\\
+P(X=2) &= P(HH) \\
+       &= P(H)P(H) \\
+       &= 0.5 \times 0.5 \\
+       &= 0.25
+\end{align}
+$$
+
+Above, we were able to write $P(TT)=P(T)P(T)$ because coin
+flips are statistically **independent**.
+
+In simple cases like this it's no big deal to compute the
+probabilities or all possible events by hand, but this
+approach quickly becomes intractable in real world
+situations. Luckily, `R` provides functions for essentially
+all the probability distributions you will likely ever find
+yourself using. In the case of a binomial distribution, we
+will use the `dbinom()` function as illustrated below.
+
+```{r } 
+# set Binomial parameter values
+n <- 2
+p <- 0.5
+
+# plot binomial probability distribution
+x <- 0:n
+y <- dbinom(x, n, p)
+d <- data.table(x,y)
+ggplot(d, aes(x=x,y=y)) +
+  geom_point() +
+  geom_segment(aes(xend=x, yend=0)) +
+  xlab('X = number successes in n=3 Bernoulli trials') +
+  ylab('Probability') +
+  theme(aspect.ratio = 1)
+ 
+```
+
+Now lets run through this exercise with different $n$ and $p$ values.
+
+```{r }
+
+# Explore 3 levels each of n and p
+n_levels <- c(5, 15, 30)
+p_levels <- c(.1, .5, .9)
+
+# Below, we use a couple of for loops to iterate through the
+# possible combinations of n and p defined above. We will
+# want to plot them all at once, so we will store each
+# probability distribution computed in a list (d_list) for
+# later use.
+d_list = vector('list', 9)
+for(i in 1:3) {
+  for(j in 1:3) {
+    n <- n_levels[i]
+    p <- p_levels[j]
+    x <- 0:n
+    y <- dbinom(0:n, n, p)
+    d <- data.table(n, p, x, y)
+    
+    # On the following line, j + 3*(i-1) is a method to
+    # convert two indices (i and j) into a single index.
+    # This is necessary because d_list is one-deminsional.
+    d_list[[j + 3*(i-1)]] = d
+  }
+}
+
+# If you have a bunch of data.tables with the same format
+# stored in a list then you can use the function rbindlist()
+# to stack them into a single longer data.table
+d <- rbindlist(d_list)
+
+ggplot(d, aes(x=x, y=y)) +
+    geom_point() +
+    geom_segment(aes(xend=x, yend=0)) +
+    xlab('X = number successes in n Bernoulli trials') +
+    ylab('Probability') +
+    facet_wrap(~n*p)
+
+```
