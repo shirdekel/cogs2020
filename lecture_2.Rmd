@@ -110,9 +110,9 @@ scenario, but we will begin developing an intuition now.
 
 As it turns out, answering this question intelligently
 requires using our **sample** to make inferences about a
-**population**, which can be roughly thought of as the set
-of all possible maze times and their relative frequencies
-that you will ever observe you run this experiment forever.
+**population**, which can be roughly thought of as the set of
+all possible maze times and their relative frequencies that
+you will ever observe if you run this experiment forever.
 
 Another way of thinking about it is that the **population**
 is the process that generates the maze times you will
