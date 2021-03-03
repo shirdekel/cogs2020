@@ -213,7 +213,7 @@ $$
 \begin{align}
 \mu &= E(\boldsymbol{X}) \\
     &= \sum_{i}^{n} x_i p(x_i) \\
-    &= (1 \times 0.3) + (2.0 \times 0.6) + (3.0 \times 0.1) \\
+    &= (1 \times 0.1) + (2.0 \times 0.4) + (3.0 \times 0.5) \\
     &= 2.4
 \end{align}
 $$
