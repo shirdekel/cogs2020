@@ -234,7 +234,7 @@ g
 ```
 
 ## 4. MEG experiment
-Consider an magnetoencephalography (MEG) experiment that
+Consider a magnetoencephalography (MEG) experiment that
 collected data from a single participant while they
 performed a category learning experiment (see problem 1 for
 example stimuli and an example trial). On each trial of the
