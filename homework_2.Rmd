@@ -19,7 +19,7 @@ fontsize: 14pt
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, echo=FALSE}
 library(data.table)
 library(ggplot2)
 ```
@@ -50,7 +50,38 @@ library(ggplot2)
 <!--        &= a^2 Var(X) \\ -->
 <!-- \end{align} -->
 
+
 ## Problem 1
+
+Consider an experiment in which two four-sided die are
+thrown. 
+
+**(a)** Create a `data.table` named `ans_1a` with two columns
+labelled `die1` and `die2` where these columns encode the
+**sample space** of this experiment. See below for the first
+eight rows of the resulting `data.table`.
+
+```{r echo=FALSE}
+die1 <- rep(c(1, 2, 3, 4), 4)
+die2 <- rep(c(1, 2, 3, 4), each=4)
+ans_1a <- data.table(die1, die2)
+ans_1a[1:8]
+```
+
+**(b)** Create a deep copy of `ans_1a` called `ans_1b` and
+then add a column to `ans_1b` called `X` and set it equal to
+the sum of the corresponding `die1` and `die2` values on a
+per row basis.
+
+**(c)** Let $X$ be the random variable defined by the `X`
+column in `ans_1b`. What is $P(X<5)$? Store your result in a
+variable named `ans_1c`.
+
+**(d)** Is the event defined as the set of all outcomes for
+which $X=2$ an elementary event? Store your answer (`"YES"`
+or `"NO"`) in a variable named `ans_1d`.
+
+## Problem 2
 
 For the following probability distribution:
 
@@ -62,20 +93,20 @@ For the following probability distribution:
 
 **(a)** Is $f(x)$ a valid probability distribution? Store
 your answer (`"YES"` or `"NO"`) in a variable named
-`ans_1a`.
+`ans_2a`.
 
 **(b)** Calculate $E(X)$ store the result in a variable
-named `ans_1b`.
+named `ans_2b`.
 
 **(c)** Calculate $P(X \geq 4)$ store the result in a
-variable named `ans_1c`.
+variable named `ans_2c`.
 
 **(d)** Calculate $P(2 < X \leq 4)$ and store the result in
-a variable named `ans_1d`.
+a variable named `ans_2d`.
 
 <!-- **(d)** Let $Y = (2X-8)^2$.  Obtain the distribution of $Y$ and calculate $E(Y)$ -->
 
-## Problem 2
+## Problem 3
 
 Given the following probability distribution:
 
@@ -93,19 +124,19 @@ ggplot(d, aes(x, fx)) +
 Find:
 
 **(a)** Calculate $P(X \geq 2)$ and store your result in a
-variable named `ans_1a`.
+variable named `ans_3a`.
 
 **(b)** Calculate $P(0 < X \leq 2)$ and store your result in
-a variable named `ans_1b`.
+a variable named `ans_3b`.
 
 **(c)** Calculate $E(X)$ and store your result in a variable
-named `ans_1c`.
+named `ans_3c`.
 
 **(d)** $Var(X)$ and store your result in a variable named
-`ans_1d`.
+`ans_3d`.
 
 **(e)** $sd(X)$ and store your result in a variable named
-`ans_1e`.
+`ans_3e`.
 
 <!-- ## Problem 3 -->
 
@@ -121,7 +152,7 @@ named `ans_1c`.
 
 <!-- **(b)** $Y = (X-100)/20$ -->
 
-## Problem 3
+## Problem 4
 
 The chance that monkeys will have a positive (*successful*)
 reaction during a trial of an experiment is $1/3$. Trials
@@ -151,7 +182,7 @@ Let $P(Success) = 1/3$.
 
 **(a)** Is the geometric distribution continuous or
 discrete. Use either `ans_1a<-"continuous"` or
-`ans_1a<-"discrete"` to store your answer.
+`ans_4a<-"discrete"` to store your answer.
 
 **(b)** Plot the geometric probability distribution from
 $x=1$ to $x=10$ and $p=\frac{1}{3}$. To do this, perform the
@@ -167,7 +198,8 @@ following steps:
 `data.table(x,fx)`
 
 * Use `ggplot`, `geom_point` and `geom_segment` to replicate
-the following plot exactly:
+the following plot exactly and store your result in a
+variable named `ans_4b`.
 
 ```{r, echo=FALSE}
 p <- 1/3
@@ -179,28 +211,40 @@ ggplot(d, aes(x, fx)) +
   geom_segment(aes(x=x, xend=x, y=0, yend=fx))
 ```
 
-**(c)** Plot the geometric distribution for the following
-values of $P(Success)$:
+<!-- **(c)** Plot the geometric distribution for the following -->
+<!-- values of $P(Success)$: -->
 
-$$
-p(Success) = 0.2 \\
-p(Success) = 0.5 \\
-p(Success) = 0.8 \\
-$$
+<!-- $$ -->
+<!-- p(Success) = 0.2 \\ -->
+<!-- p(Success) = 0.5 \\ -->
+<!-- p(Success) = 0.8 \\ -->
+<!-- $$ -->
 
-Use `facet_wrap` to plot on a single figure.
+<!-- Use `facet_wrap` to plot on a single figure. -->
 
-**(d)** Compute the expected value of the geometric
-distributions that you plotted in (d). For the geometric
-distribution, $x$ can assume any value from zero to
-infinity, but for now, assume $x$ only ranges from 0 to 10.
-Add vertical lines to indicate the population mean to each
-panel of the figure you made in part (d).
+**(c)** Compute the expected value of the geometric
+distribution that you plotted in (b) using
+$\sum_{i=1}^{10}xP(x)$. Store your result in a variable
+named `ans_4c`.
 
-**(e)** It turns out it can be proven that if $X$ ~
-geometric with probability of success of $p$, then $E(X) =
-(1-p)/p$. How does this compare to the population means you
-computed in (e)? Are they different, and if so, why?
+**(d)** It turns out it can be proven that if $X$ ~
+geometric with probability of success of $p$, then
+$E(X)=\frac{1}{p}$. This formula will yield a slightly
+different number than the number you computed in c. Why is
+this case?
+
+* Use `ans_4d <- "option 1"` if the difference arises due to
+computer rounding errors.
+
+* Use `ans_4d <- "option 2"` if the difference arises
+because part c only considered x in the range 1 to 10, yet
+the true range of a geometric random variable is 1 to
+infinity.
+
+* Use `ans_4d <- "option 3"` if the difference arises
+because the distribution of sample means is a random
+variable.
+
 
 <!-- ## Probalem 4 -->
 
@@ -216,11 +260,13 @@ computed in (e)? Are they different, and if so, why?
 <!-- **(d)** Compute $P(X <= 3)$ and store your result in a -->
 <!-- variable named `ans_2d`. -->
 
-## Problem 4
+## Problem 5
 
-**(a)** Does the following histrogram represent samples from
-a geometric distribution or from the distribution of
-geometric sample means?
+**(a)** Does the following histogram represent samples from
+a geometric distribution (use `ans_5a <- "geometric"`) or
+from the distribution of geometric sample means `ans_5a <-
+"geometric means"`? Note that histograms can make samples
+from a discrete distribution appear continuous.
 
 <!-- **(c)** Draw a sample of size $n=1000$ from the above -->
 <!-- geometric distribution and plot it with a histogram. To do -->
@@ -241,12 +287,15 @@ n <- 1000
 x <- rgeom(n, p)
 d <- data.table(x)
 ggplot(d, aes(x)) + 
-  geom_histogram(bins=10)
+  geom_histogram(breaks=0.5:10.5)
 ```
 
-**(b)** Does the following histrogram represent samples from
-a geometric distribution or from the distribution of
-geometric sample means?
+
+**(b)** Does the following histogram represent samples from
+a geometric distribution (use `ans_5b <- "geometric"`) or
+from the distribution of geometric sample means `ans_5b <-
+"geometric means"`? Note that histograms can make samples
+from a discrete distribution appear continuous.
 
 ```{r, echo=FALSE}
 n <- 1000
@@ -259,7 +308,7 @@ for(i in 1:n_exp) {
 }
 dd <- rbindlist(d_list)
 ggplot(dd, aes(x)) + 
-  geom_histogram(bins=10)
+  geom_histogram(bins=10) 
 ```
 
 

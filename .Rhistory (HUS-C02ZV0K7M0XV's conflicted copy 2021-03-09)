@@ -1,0 +1,512 @@
+knitr::opts_chunk$set(echo = FALSE)
+d <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
+library(data.table)
+d <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
+d
+d[, .(cnd, sub, t2c)]
+d[, list(cnd, sub, t2c)]
+d[cnd=='Delay' | cnd=='Delay']
+d[cnd=='Delay' | cnd=='Long ITI']
+d[cnd=='Delay' | cnd=='Long ITI'][, list(cnd, sub, t2c)]
+x <- c(1, 2, 4, 5,3 4)
+x <- c(1, 2, 4, 5, 3, 4)
+x
+class(x)
+as.factor(x)
+y <- as.factor(x)
+y
+class(y)
+library(data.table)
+y <- c(2, 4, 55, 8, 2, 4)
+library(data.table)
+x <- c(1, 2, 4, 5, 3, 4)
+y <- c(2, 4, 55, 8, 2, 4)
+d <- data.table(x, y)
+x
+class(x)
+class(y)
+class(d)
+d
+z <- y + 14
+z
+d
+d[, zz := z]
+d
+d[, z := z]
+d
+d
+d[, zz := NULL]
+d
+d[, z := y]
+d
+x
+y
+z
+d
+sre(d)
+d
+str(d)
+d[, x := factor(x)]
+d
+str(d)
+d
+d[, .(x, y)]
+d[, .(x, y)][, x]
+d[, factor(x)][, factor(y)]
+d[, x := factor(x)][, y := factor(y)]
+str(d)
+d
+library(data.table)
+x <- c(1, 2, 4, 5, 3, 4)
+y <- c(2, 4, 55, 8, 2, 4)
+z <- y + 14
+d <- data.table(x, y)
+d
+d2 <- d
+d2
+d2[, z := 1:.N]
+1:10
+d2
+d
+d2 <- data.table(d)
+d2
+d2[, zz := 1:.N]
+d2
+d
+source('~/Desktop/scratch.R', echo=TRUE)
+x
+y
+z
+dt <- data.table(x, y, z)
+adt
+dt
+str(dt)
+dt[, zz := 10]
+dt
+str(dt)
+dt[, zz := as.factor(zz)]
+dt
+str(zz)
+str(dt)
+dt[, x := as.factor(x)]
+str(dt)
+library(data.table)
+library(ggplot)
+library(ggplot2)
+ls()
+ls()
+rm(list=ls())
+everything <- ls()
+everything
+x <- 2
+x
+ls()
+everything <- ls()
+everything
+rm(x)
+ls()
+x <- 2
+ls()
+rm(everything)
+ls()
+rm(list=ls())
+ls()
+x <- c("A", "A", "B", "B", "C", "C")
+x
+x[1]
+x[3]
+y <- c("I", "I", "I", "II", "II", "II")
+x
+y
+length(x)
+length(y)
+c(1, "A")
+"1" + "1"
+1 + 1
+z <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+z
+z <- 1:12
+1:12
+d <- data.table(x, y, z)
+d
+str(d)
+x
+as.factor(x)
+type(x)
+class(x)
+class(as.factor(x))
+class(factor(x))
+d
+d[, ]
+d[, x]
+d[, as.factor(x)]
+str(d)
+d[, x := as.factor(x)]
+d
+str(d)
+d[, x := as.factor(x)]
+d
+d[, y := y + 10]
+d[, z := z + 10]
+d
+d[, zz := z - 10]
+d
+d[, zz := NULL]
+d
+hgjdksahgks.....fhdjskhfds
+hfjdksahfd....fdhjfhdks <- 2
+d
+d[x=="A"]
+d[x=="A", sum(x)]
+d[x=="A", sum(z)]
+d[x=="B", sum(z)]
+d[x=="C", sum(z)]
+d[, sum(z)]
+d[, sum(z), .(x)]
+d
+d[, sum(z), .(x, y)]
+d[, mean(z), .(x, y)]
+setnames(d, "V1", "z")
+d
+d[, mean(z), .(x, y)]
+dd <- d[, mean(z), .(x, y)]
+dd
+setnames(dd, "V1", "z")
+dd
+d
+dd <- d[, .(z = mean(z)), .(x, y)]
+dd
+d
+dd
+str(dd)
+dd2 <- dd
+dd
+dd2
+dd2[, zz := 8]
+dd2
+dd
+x <- 2
+x
+y <- x
+y
+y <- y + 2
+y
+x
+dd2 <- data.table(dd)
+dd
+dd2
+dd2[, zzz := 9]
+dd2
+dd
+dd
+ggplot(data=dd, aes(x=x, y=z))
+ggplot(data=dd, aes(x=x, y=z)) +
+geom_point()
+ans_1d <- ggplot(data=dd, aes(x=x, y=z)) +
+geom_point()
+source('~/Desktop/cogs2020tutorial.R', echo=TRUE)
+ans_1d
+ans_1d
+type(ans_1d)
+class(ans_1d)
+install.packages("farver")
+fread("https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv")
+d <- fread("https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv")
+ans_1a <- fread("https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv")
+ans_1a <- fread("https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv")
+ans_1a[1:2]
+ans_1b[, mean(t2c), .(cnd)]
+ans_1b <- ans_1a[1:2]
+ans_1b[, mean(t2c), .(cnd)]
+ggplot(data=dd, aes(x=x, y=z)) +
+geom_point()
+library(data.table)
+library(ggplot2)
+rm(list=ls())
+ls()
+x <- 2
+ls()
+rm(x)
+ls()
+x <- c("A", "A", "A", "B", "B", "B", "C", "C", "C")
+x
+y <- c("I", "I", "II", "II", "III", "III")
+x <- c("A", "A", "A", "B", "B", "B")
+y <- c("I", "I", "II", "II", "III", "III")
+x
+y
+length(x)
+length(y)
+z <- c(1, 2, 3, 4, 5, 6)
+z <- 1:6
+1:6
+d <- data.table(x, y, z)
+d
+str(d)
+d
+d []
+d[1]
+d[3]
+d[1:3]
+d[x == "A"]
+x <- TRUE
+y <- FALSE
+x == y
+z <- TRUE
+x == z
+zz <- c(TRUE, FALSE, TRUE)
+zz
+x == zz
+x
+zz
+d
+d
+d[y == "II "]
+d[x == "A"]
+d[y == "II"]
+(TRUE==TRUE) & (TRUE==TRUE)
+(TRUE==TRUE) & (TRUE==FALSE)
+(TRUE==TRUE) | (TRUE==FALSE)
+d
+d[x=="A" & y=="II"]
+d[x=="A" | y=="II"]
+d
+d[, zz := 10]
+d
+d[, zz := NULL]
+dd
+d
+d[, zz := z + 10]
+d
+d[, zz := zz + 1]
+d
+x
+x <- c(1, 2, 3)
+x
+class(x)
+as.factor(x)
+class(as.factor(x))
+d
+str(x)
+str(x)
+str(d)
+d[, x := as.factor(x)]
+d
+str(d)
+class(1)
+d
+str(d)
+d[, y := as.factor(y)]
+str(d)
+x
+class(x)
+x <- as.factor(x)
+x
+as.numeric(x)
+x <- 2
+x
+y <- x
+y
+y <- y = 2
+y <- y + 2
+y
+x
+d2 <- d
+d
+d
+d2
+d2[, zzz := 8]
+d2
+d
+d2 <- data.table(d)
+d2
+d
+d2
+d2[, aaaa := 4444]
+d2
+d
+d
+d[, zz := NULL]
+d[, zzz := NULL]
+d
+d[x=="A", mean(z)]
+d[x=="B", mean(z)]
+d[, mean(z), .(x)]
+d[, mean(z), .(x, y)]
+d[, mean(z), .(x, y)]
+dd <- d[, mean(z), .(x, y)]
+dd
+setnames(dd, "V1", "z")
+dd
+d <- data.table(x, x, x, x, y, y, y, z, z, z)
+d
+x <- c("A", "A", "A", "B", "B", "B")
+y <- c("I", "I", "II", "II", "III", "III")
+z <- 1:6
+d <- data.table(x, x, x, x, y, y, y, z, z, z)
+d
+d <- data.table(x, y, z1=z, z2=z, z3=z)
+d
+melt(d, id.vars=c("x", "y"))
+knitr::opts_chunk$set(echo = FALSE)
+rm(list=ls())
+d <- fread('https://crossley.github.io/cogs2020/data/eeg/epochs.txt')
+d[, V1 := NULL]
+d[, condition := as.factor(condition)]
+dd <- melt(d, id.vars=c('time', 'epoch', 'condition'))
+dd <- dd[variable == 'MEG 001']
+ddd <- dd[, .(value = mean(value)), .(condition, time)]
+g <- ggplot(ddd, aes(time, value, colour=condition)) +
+geom_line()
+g
+dd
+dd == dd
+dd
+2+2
+2+2
+2+2
+x <- 2+2
+x
+library(data.table)
+library(ggplot2)
+ls()
+library(data.table)
+library(ggplot2)
+rm(list=ls())
+x <- c("A", "A", "A", "B", "B", "B")
+y <- c("I", "I", "II", "II", "III", "III")
+z <- c(1, 2, 3, 4, 5, 6)
+x
+y
+z
+d <- data.table(x, y, z)
+d
+# select rows
+d
+# select rows
+d[1]
+# select rows
+d[2]
+1:5
+# select rows
+d[1:2]
+# select rows
+d[c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE)]
+d
+d[x == "A"]
+d[x == "B"]
+d[y == "II"]
+TRUE & TRUE
+TRUE & FALSE
+TRUE | TRUE
+TRUE | FALSE
+d[x == "A" | y == "II"]
+d2 <- d[x == "A" | y == "II"]
+d2
+(3 + 3 + 3 + 3 + 1 + 3 + 3 + 3 + 2 + 3)
+sample_mean <- (3 + 3 + 3 + 3 + 1 + 3 + 3 + 3 + 2 + 3) / 10
+sample_mean
+x <- c(3 + 3 + 3 + 3 + 1 + 3 + 3 + 3 + 2 + 3)
+x
+mean(x)
+var(x)
+x
+x <- c(3 + 3 + 3 + 3 + 1 + 3 + 3 + 3 + 2 + 3)
+x
+mean(x)
+x
+x <- c(3 , 3 , 3 , 3 , 1 , 3 , 3, 3 , 2 , 3)
+x
+mean(x)
+var(x)
+sd(x)
+var(x) == sd(x)^2
+sd(x)
+sd(x)^2
+2^2
+var(x)
+sd(x)^2
+var(x) == sd(x)^2
+library(data.table)
+rm(list=ls())
+x <- 2
+x
+y <- 4
+¬x
+x
+y
+ls()
+rm(x)
+ls()
+rm(y)
+ls
+ls()
+x <- 2
+y <- 4
+ls
+ls()
+rm(list=ls())
+ls()
+library(data.table)
+x <- 2
+y <- 4
+rm(list=ls())
+ls()
+source('~/Dropbox/teaching/2021/cogs2020/live_course_material/scratch.R', echo=TRUE)
+ls()
+y <- 4
+ls()
+z
+source('~/Dropbox/teaching/2021/cogs2020/live_course_material/scratch.R', echo=TRUE)
+x
+y
+z
+d <- data.table(x, y, z)
+d
+source('~/Dropbox/teaching/2021/cogs2020/live_course_material/scratch.R', echo=TRUE)
+source('~/Dropbox/teaching/2021/cogs2020/live_course_material/scratch.R', echo=TRUE)
+str(ans_1e)
+ans_1e
+d
+d[x=="A", mean(z)]
+d[x=="B", mean(z)]
+d[, mean(z)]
+d[, mean(z), list(x)]
+d[, mean(z), .(x, y)]
+d[, mean(z), .(x, y)]
+dd <- d[, mean(z), .(x, y)]
+d
+dd
+setnames(dd, "V1", "z")
+dd
+d
+# shallow copy
+d2 <- d
+d2
+d2[, zz := 10]
+d2
+d
+# deep copy
+d2 <- data.table(d)
+d
+d2
+d2[, zz := NULL]
+d2
+d
+d
+str(d)
+d[, x := as.factor(x)]
+str(d)
+d
+str(d)
+d[, y := as.factor(y)]
+str(d)
+d[, zzz := 11]
+str(d)
+d[, zzz := NULL]
+str(d)
+dd
+11
+class(11)
+"11"
+class("11")

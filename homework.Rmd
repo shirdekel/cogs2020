@@ -17,7 +17,7 @@ fontsize: 14pt
 ---
 
 #### [Homework 1](homework_1.html)
-<!-- #### [Homework 2](homework_2.html) -->
+#### [Homework 2](homework_2.html)
 <!-- #### [Homework 3](homework_3.html) -->
 <!-- #### [Homework 4](homework_4.html) -->
 <!-- #### [Homework 5](homework_5.html) -->
