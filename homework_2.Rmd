@@ -237,8 +237,8 @@ this case?
 computer rounding errors.
 
 * Use `ans_4d <- "option 2"` if the difference arises
-because part c only considered x in the range 1 to 10, yet
-the true range of a geometric random variable is 1 to
+because part c only considered x in the range 0 to 10, yet
+the true range of a geometric random variable is 0 to
 infinity.
 
 * Use `ans_4d <- "option 3"` if the difference arises
