@@ -221,13 +221,17 @@ denoted by $\sigma^2$ and is defined below.
 
 $$
 \begin{align} 
-\hat{\sigma^2} = \boldsymbol{s}^2 \\
+\hat{\sigma^2} &= \boldsymbol{s}^2 \\
+\\
+\boldsymbol{s}^2 &= \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{\boldsymbol{x}})^2
 \\
 Var(\boldsymbol{X}) &= \sigma^2 \\
        &= E((X - \mu)^2) \\
-       &= \sum_i x_{i}^2 p(x_{i}) - \mu^2
-\\
-\boldsymbol{s}^2 &= \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{\boldsymbol{x}})^2
+       &= \sum(x^2 - 2x\mu + \mu^2) p(x) \\
+       &= \sum x^2 p(x) - \sum 2 x \mu p(x) + \sum \mu^2 p(x) \\
+       &= \sum x^2 p(x) - 2 \mu \sum x p(x) + \mu^2 \sum p(x) \\
+       &= \sum x^2 p(x) - 2 \mu^2 + \mu^2 \\
+       &= \left(\sum_i x_{i}^2 p(x_{i})\right) - \mu^2
 \end{align}
 $$
 
