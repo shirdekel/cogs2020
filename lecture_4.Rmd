@@ -24,8 +24,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ## Learning objectives
-* ...
-* ...
+* Define and understand Bernoulli random variables
+* Define and understand Binomial random variables
 
 ## Bernoulli random variable
 
@@ -205,3 +205,8 @@ ggplot(d, aes(x=x, y=y)) +
     facet_wrap(~n*p)
 
 ```
+
+## Normal distribution
+
+
+## Central limit theorem
