@@ -339,6 +339,9 @@ div.tocify {
 <li>
   <a href="homework.html">Homework</a>
 </li>
+<li>
+  <a href="grades.html">Grades</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -358,6 +361,8 @@ div.tocify {
 </div>
 
 
+<div id="solutions" class="section level2">
+<h2>Solutions</h2>
 <pre class="r"><code>library(data.table)
 library(ggplot2)
 
@@ -397,6 +402,7 @@ ans_4c &lt;- ans_4b[variable == &#39;MEG 001&#39;]
 ans_4d &lt;- ans_4c[, .(value = mean(value)), .(condition, time)]
 ans_4e &lt;- ggplot(ans_4d, aes(time, value, colour=condition)) +
   geom_line()</code></pre>
+</div>
 
 
 

@@ -281,6 +281,12 @@ div.tocify {
   border-radius: 0px;
 }
 
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
 
 </style>
 
@@ -333,6 +339,9 @@ div.tocify {
 <li>
   <a href="homework.html">Homework</a>
 </li>
+<li>
+  <a href="grades.html">Grades</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -347,7 +356,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 1 - Introduction to the course</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 27 February, 2021</h4>
+<h4 class="date">Last update: 13 March, 2021</h4>
 
 </div>
 
@@ -471,7 +480,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = true;
+    options.showAndHide = false;
     options.smoothScroll = true;
 
     // tocify

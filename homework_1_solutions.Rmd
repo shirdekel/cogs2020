@@ -19,14 +19,6 @@ fontsize: 14pt
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Grades
-
-```{r}
-grades <- fread('https://crossley.github.io/cogs2020/data/grades/hw_1_table.csv')
-grades
-```
-
-
 ## Solutions
 
 ```{r}

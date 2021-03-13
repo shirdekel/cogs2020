@@ -339,6 +339,9 @@ div.tocify {
 <li>
   <a href="homework.html">Homework</a>
 </li>
+<li>
+  <a href="grades.html">Grades</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -353,7 +356,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 1 - Introduction to <code>R</code></h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 26 February, 2021</h4>
+<h4 class="date">Last update: 13 March, 2021</h4>
 
 </div>
 
@@ -380,7 +383,7 @@ x + y</code></pre>
 <li><p><code>ls()</code> is a function that reports what objects (e.g., variables you ahve defined) are in the current environment and therefore available for you to interact with.</p></li>
 </ul>
 <pre class="r"><code>ls()</code></pre>
-<pre><code>## [1] &quot;x&quot; &quot;y&quot;</code></pre>
+<pre><code>## [1] &quot;f&quot; &quot;x&quot; &quot;y&quot;</code></pre>
 <ul>
 <li><p><code>rm()</code> is a function that can remove objects from the current environment.</p></li>
 <li><p>It takes several arguments. Type <code>?rm()</code> to see help information on how to use it.</p></li>
@@ -476,19 +479,19 @@ z &lt;- rnorm(12)
 # Create the data frame
 df &lt;- data.frame(x, y, z)
 df</code></pre>
-<pre><code>##      x y            z
-## 1    I a -0.854515837
-## 2    I a  1.274466572
-## 3    I b  2.217120743
-## 4   II b -0.009352991
-## 5   II c -1.839056619
-## 6   II c  1.937397368
-## 7  III d -1.049195969
-## 8  III d  1.317532534
-## 9  III e  0.828078391
-## 10  IV e  1.270581702
-## 11  IV f  0.810746146
-## 12  IV f -0.424528444</code></pre>
+<pre><code>##      x y           z
+## 1    I a -0.20249422
+## 2    I a -1.00028229
+## 3    I b  0.45255261
+## 4   II b  0.97032703
+## 5   II c  0.11897087
+## 6   II c  1.11735892
+## 7  III d -0.02741162
+## 8  III d  0.16442851
+## 9  III e  0.68877515
+## 10  IV e -0.14851606
+## 11  IV f -0.39967002
+## 12  IV f -0.35651395</code></pre>
 <pre class="r"><code># Access column x
 df$x</code></pre>
 <pre><code>##  [1] &quot;I&quot;   &quot;I&quot;   &quot;I&quot;   &quot;II&quot;  &quot;II&quot;  &quot;II&quot;  &quot;III&quot; &quot;III&quot; &quot;III&quot; &quot;IV&quot;  &quot;IV&quot;  &quot;IV&quot;</code></pre>
@@ -514,19 +517,19 @@ library(data.table)
 # create a data table
 dt &lt;- data.table(x, y, z)
 dt</code></pre>
-<pre><code>##       x y            z
-##  1:   I a -0.854515837
-##  2:   I a  1.274466572
-##  3:   I b  2.217120743
-##  4:  II b -0.009352991
-##  5:  II c -1.839056619
-##  6:  II c  1.937397368
-##  7: III d -1.049195969
-##  8: III d  1.317532534
-##  9: III e  0.828078391
-## 10:  IV e  1.270581702
-## 11:  IV f  0.810746146
-## 12:  IV f -0.424528444</code></pre>
+<pre><code>##       x y           z
+##  1:   I a -0.20249422
+##  2:   I a -1.00028229
+##  3:   I b  0.45255261
+##  4:  II b  0.97032703
+##  5:  II c  0.11897087
+##  6:  II c  1.11735892
+##  7: III d -0.02741162
+##  8: III d  0.16442851
+##  9: III e  0.68877515
+## 10:  IV e -0.14851606
+## 11:  IV f -0.39967002
+## 12:  IV f -0.35651395</code></pre>
 <div id="subset-rows-in-i" class="section level4">
 <h4>Subset rows in <code>i</code></h4>
 <ul>
@@ -538,15 +541,15 @@ dt</code></pre>
 </ul>
 <pre class="r"><code># Select rows by passing integer indices
 dt[c(2, 4)]</code></pre>
-<pre><code>##     x y            z
-## 1:  I a  1.274466572
-## 2: II b -0.009352991</code></pre>
+<pre><code>##     x y         z
+## 1:  I a -1.000282
+## 2: II b  0.970327</code></pre>
 <pre class="r"><code># Select rows by passing a logical expression
 dt[x==&#39;II&#39;]</code></pre>
-<pre><code>##     x y            z
-## 1: II b -0.009352991
-## 2: II c -1.839056619
-## 3: II c  1.937397368</code></pre>
+<pre><code>##     x y         z
+## 1: II b 0.9703270
+## 2: II c 0.1189709
+## 3: II c 1.1173589</code></pre>
 </div>
 <div id="select-columns-with-j" class="section level4">
 <h4>Select columns with <code>j</code></h4>
@@ -559,34 +562,34 @@ dt[x==&#39;II&#39;]</code></pre>
 </ul>
 <pre class="r"><code># Select every row of columns y and z the cool way
 dt[, .(y, z)]</code></pre>
-<pre><code>##     y            z
-##  1: a -0.854515837
-##  2: a  1.274466572
-##  3: b  2.217120743
-##  4: b -0.009352991
-##  5: c -1.839056619
-##  6: c  1.937397368
-##  7: d -1.049195969
-##  8: d  1.317532534
-##  9: e  0.828078391
-## 10: e  1.270581702
-## 11: f  0.810746146
-## 12: f -0.424528444</code></pre>
+<pre><code>##     y           z
+##  1: a -0.20249422
+##  2: a -1.00028229
+##  3: b  0.45255261
+##  4: b  0.97032703
+##  5: c  0.11897087
+##  6: c  1.11735892
+##  7: d -0.02741162
+##  8: d  0.16442851
+##  9: e  0.68877515
+## 10: e -0.14851606
+## 11: f -0.39967002
+## 12: f -0.35651395</code></pre>
 <pre class="r"><code># Select every row of columns y and z the long way
 dt[, list(y, z)]</code></pre>
-<pre><code>##     y            z
-##  1: a -0.854515837
-##  2: a  1.274466572
-##  3: b  2.217120743
-##  4: b -0.009352991
-##  5: c -1.839056619
-##  6: c  1.937397368
-##  7: d -1.049195969
-##  8: d  1.317532534
-##  9: e  0.828078391
-## 10: e  1.270581702
-## 11: f  0.810746146
-## 12: f -0.424528444</code></pre>
+<pre><code>##     y           z
+##  1: a -0.20249422
+##  2: a -1.00028229
+##  3: b  0.45255261
+##  4: b  0.97032703
+##  5: c  0.11897087
+##  6: c  1.11735892
+##  7: d -0.02741162
+##  8: d  0.16442851
+##  9: e  0.68877515
+## 10: e -0.14851606
+## 11: f -0.39967002
+## 12: f -0.35651395</code></pre>
 </div>
 <div id="operate-on-columns-with-j" class="section level4">
 <h4>Operate on columns with <code>j</code></h4>
@@ -595,8 +598,8 @@ dt[, list(y, z)]</code></pre>
 </ul>
 <pre class="r"><code># return the mean and standard deviation of z
 dt[, .(mean(z), sd(z))]</code></pre>
-<pre><code>##           V1       V2
-## 1: 0.4566061 1.274872</code></pre>
+<pre><code>##           V1        V2
+## 1: 0.1147937 0.6107756</code></pre>
 </div>
 <div id="combine-i-and-j" class="section level4">
 <h4>Combine <code>i</code> and <code>j</code></h4>
@@ -605,10 +608,10 @@ dt[, .(mean(z), sd(z))]</code></pre>
 </ul>
 <pre class="r"><code># Select all rows for which x==II and return columns y and z
 dt[x==&#39;II&#39;, .(y, z)]</code></pre>
-<pre><code>##    y            z
-## 1: b -0.009352991
-## 2: c -1.839056619
-## 3: c  1.937397368</code></pre>
+<pre><code>##    y         z
+## 1: b 0.9703270
+## 2: c 0.1189709
+## 3: c 1.1173589</code></pre>
 </div>
 <div id="group-using-by" class="section level4">
 <h4>Group using <code>by</code></h4>
@@ -621,22 +624,22 @@ dt[x==&#39;II&#39;, .(y, z)]</code></pre>
 # each value of x
 dt[, sum(z), .(x)]</code></pre>
 <pre><code>##      x         V1
-## 1:   I 2.63707148
-## 2:  II 0.08898776
-## 3: III 1.09641496
-## 4:  IV 1.65679940</code></pre>
+## 1:   I -0.7502239
+## 2:  II  2.2066568
+## 3: III  0.8257920
+## 4:  IV -0.9047000</code></pre>
 <pre class="r"><code># Compute the sum of elements in column z separately for
 # each unique combination of values in x and y
 dt[, sum(z), .(x, y)]</code></pre>
-<pre><code>##      x y           V1
-## 1:   I a  0.419950735
-## 2:   I b  2.217120743
-## 3:  II b -0.009352991
-## 4:  II c  0.098340748
-## 5: III d  0.268336565
-## 6: III e  0.828078391
-## 7:  IV e  1.270581702
-## 8:  IV f  0.386217702</code></pre>
+<pre><code>##      x y         V1
+## 1:   I a -1.2027765
+## 2:   I b  0.4525526
+## 3:  II b  0.9703270
+## 4:  II c  1.2363298
+## 5: III d  0.1370169
+## 6: III e  0.6887752
+## 7:  IV e -0.1485161
+## 8:  IV f -0.7561840</code></pre>
 </div>
 <div id="adding-and-modifying-columns" class="section level4">
 <h4>Adding and modifying columns</h4>
@@ -668,65 +671,65 @@ dt[, b := NULL]</code></pre>
 <pre class="r"><code># shallow copy:
 dt2 = dt # Not a deep copy
 dt ## inspect dt before dt2 changes</code></pre>
-<pre><code>##       x y            z a
-##  1:   I a -0.854515837 9
-##  2:   I a  1.274466572 9
-##  3:   I b  2.217120743 9
-##  4:  II b -0.009352991 9
-##  5:  II c -1.839056619 9
-##  6:  II c  1.937397368 9
-##  7: III d -1.049195969 9
-##  8: III d  1.317532534 9
-##  9: III e  0.828078391 9
-## 10:  IV e  1.270581702 9
-## 11:  IV f  0.810746146 9
-## 12:  IV f -0.424528444 9</code></pre>
+<pre><code>##       x y           z a
+##  1:   I a -0.20249422 9
+##  2:   I a -1.00028229 9
+##  3:   I b  0.45255261 9
+##  4:  II b  0.97032703 9
+##  5:  II c  0.11897087 9
+##  6:  II c  1.11735892 9
+##  7: III d -0.02741162 9
+##  8: III d  0.16442851 9
+##  9: III e  0.68877515 9
+## 10:  IV e -0.14851606 9
+## 11:  IV f -0.39967002 9
+## 12:  IV f -0.35651395 9</code></pre>
 <pre class="r"><code>dt2[, a := NULL]
 dt ## inspect dt after dt changes</code></pre>
-<pre><code>##       x y            z
-##  1:   I a -0.854515837
-##  2:   I a  1.274466572
-##  3:   I b  2.217120743
-##  4:  II b -0.009352991
-##  5:  II c -1.839056619
-##  6:  II c  1.937397368
-##  7: III d -1.049195969
-##  8: III d  1.317532534
-##  9: III e  0.828078391
-## 10:  IV e  1.270581702
-## 11:  IV f  0.810746146
-## 12:  IV f -0.424528444</code></pre>
+<pre><code>##       x y           z
+##  1:   I a -0.20249422
+##  2:   I a -1.00028229
+##  3:   I b  0.45255261
+##  4:  II b  0.97032703
+##  5:  II c  0.11897087
+##  6:  II c  1.11735892
+##  7: III d -0.02741162
+##  8: III d  0.16442851
+##  9: III e  0.68877515
+## 10:  IV e -0.14851606
+## 11:  IV f -0.39967002
+## 12:  IV f -0.35651395</code></pre>
 <pre class="r"><code># deep copy:
 dt2 = data.table(dt) # this is a deep copy
 dt ## inspect dt before dt2 changes</code></pre>
-<pre><code>##       x y            z
-##  1:   I a -0.854515837
-##  2:   I a  1.274466572
-##  3:   I b  2.217120743
-##  4:  II b -0.009352991
-##  5:  II c -1.839056619
-##  6:  II c  1.937397368
-##  7: III d -1.049195969
-##  8: III d  1.317532534
-##  9: III e  0.828078391
-## 10:  IV e  1.270581702
-## 11:  IV f  0.810746146
-## 12:  IV f -0.424528444</code></pre>
+<pre><code>##       x y           z
+##  1:   I a -0.20249422
+##  2:   I a -1.00028229
+##  3:   I b  0.45255261
+##  4:  II b  0.97032703
+##  5:  II c  0.11897087
+##  6:  II c  1.11735892
+##  7: III d -0.02741162
+##  8: III d  0.16442851
+##  9: III e  0.68877515
+## 10:  IV e -0.14851606
+## 11:  IV f -0.39967002
+## 12:  IV f -0.35651395</code></pre>
 <pre class="r"><code>dt2[, x := NULL]
 dt ## inspect dt after dt changes</code></pre>
-<pre><code>##       x y            z
-##  1:   I a -0.854515837
-##  2:   I a  1.274466572
-##  3:   I b  2.217120743
-##  4:  II b -0.009352991
-##  5:  II c -1.839056619
-##  6:  II c  1.937397368
-##  7: III d -1.049195969
-##  8: III d  1.317532534
-##  9: III e  0.828078391
-## 10:  IV e  1.270581702
-## 11:  IV f  0.810746146
-## 12:  IV f -0.424528444</code></pre>
+<pre><code>##       x y           z
+##  1:   I a -0.20249422
+##  2:   I a -1.00028229
+##  3:   I b  0.45255261
+##  4:  II b  0.97032703
+##  5:  II c  0.11897087
+##  6:  II c  1.11735892
+##  7: III d -0.02741162
+##  8: III d  0.16442851
+##  9: III e  0.68877515
+## 10:  IV e -0.14851606
+## 11:  IV f -0.39967002
+## 12:  IV f -0.35651395</code></pre>
 </div>
 <div id="converting-from-wide-to-long-format" class="section level4">
 <h4>Converting from wide to long format</h4>
@@ -743,29 +746,29 @@ data_wide &lt;- data.table(x1, x2, x3)
 data_long &lt;- melt(data_wide, measure.vars=c(&#39;x1&#39;, &#39;x2&#39;, &#39;x3&#39;))
 
 data_wide</code></pre>
-<pre><code>##           x1         x2        x3
-## 1: 0.9755385 0.03508787 0.8708307
-## 2: 0.5642742 0.21906132 0.6496477
-## 3: 0.8587453 0.64506563 0.2956545
-## 4: 0.1914747 0.51436047 0.9157293
-## 5: 0.8853220 0.09538985 0.7768037</code></pre>
+<pre><code>##            x1         x2        x3
+## 1: 0.49620446 0.20761635 0.8150100
+## 2: 0.06070995 0.01290223 0.6510782
+## 3: 0.09655765 0.02251260 0.6834664
+## 4: 0.67189264 0.20407652 0.3475946
+## 5: 0.34437177 0.83542555 0.6683075</code></pre>
 <pre class="r"><code>data_long</code></pre>
 <pre><code>##     variable      value
-##  1:       x1 0.97553849
-##  2:       x1 0.56427423
-##  3:       x1 0.85874534
-##  4:       x1 0.19147468
-##  5:       x1 0.88532197
-##  6:       x2 0.03508787
-##  7:       x2 0.21906132
-##  8:       x2 0.64506563
-##  9:       x2 0.51436047
-## 10:       x2 0.09538985
-## 11:       x3 0.87083070
-## 12:       x3 0.64964766
-## 13:       x3 0.29565452
-## 14:       x3 0.91572931
-## 15:       x3 0.77680372</code></pre>
+##  1:       x1 0.49620446
+##  2:       x1 0.06070995
+##  3:       x1 0.09655765
+##  4:       x1 0.67189264
+##  5:       x1 0.34437177
+##  6:       x2 0.20761635
+##  7:       x2 0.01290223
+##  8:       x2 0.02251260
+##  9:       x2 0.20407652
+## 10:       x2 0.83542555
+## 11:       x3 0.81500999
+## 12:       x3 0.65107820
+## 13:       x3 0.68346645
+## 14:       x3 0.34759457
+## 15:       x3 0.66830746</code></pre>
 </div>
 </div>
 </div>

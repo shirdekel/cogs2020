@@ -13,5 +13,7 @@ left:
     href: lectures.html
   - text: "Homework"
     href: homework.html
+  - text: "Grades"
+    href: grades.html
 
 # right:
