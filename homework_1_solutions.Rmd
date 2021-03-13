@@ -1,0 +1,73 @@
+---
+title: "Homework 1 Solutions"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Grades
+
+```{r}
+grades <- fread('https://crossley.github.io/cogs2020/data/grades/hw_1_table.csv')
+grades
+```
+
+
+## Solutions
+
+```{r}
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+# 1
+ans_1a <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
+ans_1b <- ans_1a[cnd %in% c('Delay', 'Long ITI')]
+ans_1c <- ans_1b[, .(t2c = mean(t2c)), .(cnd, sub)]
+ans_1d <- ggplot(ans_1c, aes(cnd, t2c)) +
+  geom_violin() +
+  geom_point()
+
+# 2
+ans_2a <- fread('https://crossley.github.io/cogs2020/data/maze/maze.csv')
+ans_2b <- data.table(ans_2a)
+ans_2b[, rat := as.factor(rat)]
+ans_2b[, maze := as.factor(maze)]
+ans_2c <- ans_2b[, .(time = mean(time)), .(maze, rat)]
+ans_2d <- ggplot(ans_2c, aes(maze, time)) +
+  geom_boxplot() +
+  geom_point()
+
+# 3
+ans_3a <- fread('https://crossley.github.io/cogs2020/data/mis/mis_data.csv')
+ans_3a[, group := as.factor(group)]
+ans_3a <- ans_3a[, .(hand_angle = mean(hand_angle)), .(group, trial)]
+ans_3b <- ggplot(ans_3a, aes(trial, hand_angle, colour=group)) +
+  geom_line()
+
+# 4
+ans_4a <- fread('https://crossley.github.io/cogs2020/data/eeg/epochs.txt')
+ans_4a[, V1 := NULL]
+ans_4a[, condition := as.factor(condition)]
+ans_4b <- melt(ans_4a, id.vars=c('time', 'epoch', 'condition'))
+ans_4c <- ans_4b[variable == 'MEG 001']
+ans_4d <- ans_4c[, .(value = mean(value)), .(condition, time)]
+ans_4e <- ggplot(ans_4d, aes(time, value, colour=condition)) +
+  geom_line()
+```
+

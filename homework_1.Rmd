@@ -6,7 +6,7 @@ output:
   html_document:
     toc: true
     toc_float:
-        collapsed: true
+        collapsed: false
         smooth_scroll: true
     toc_depth: 3
     fig_caption: yes
@@ -22,25 +22,29 @@ knitr::opts_chunk$set(echo = FALSE)
 ```{r}
 library(data.table)
 library(ggplot2)
+
+rm(list=ls())
 ```
 
 ## 0. Study
 
-### Tutorials
-* [R and R Studio intro](https://education.rstudio.com/learn/beginner/)
-* [Programming basics](https://rstudio.cloud/learn/primers/1.2)
-* [Bar charts](https://rstudio.cloud/learn/primers/3.2)
-* [Histograms](https://rstudio.cloud/learn/primers/3.3)
-* [Box plots and counts](https://rstudio.cloud/learn/primers/3.4) 
-* [Scatter plots](https://rstudio.cloud/learn/primers/3.6) 
-* [Data Table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
-* [COGS2020 introduction to R](R_intro.html)
+* Tutorials
 
-### Cheat sheets
-* [ggplot cheat sheet](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
-* [Data Table cheat sheet](https://s3.amazonaws.com/assets.datacamp.com/img/blog/data+table+cheat+sheet.pdf)
-* [Data Table cheat sheet 2](https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf)
+  * [R and R Studio intro](https://education.rstudio.com/learn/beginner/)
+  * [Programming basics](https://rstudio.cloud/learn/primers/1.2)
+  * [Bar charts](https://rstudio.cloud/learn/primers/3.2)
+  * [Histograms](https://rstudio.cloud/learn/primers/3.3)
+  * [Box plots and counts](https://rstudio.cloud/learn/primers/3.4)
+  * [Scatter plots](https://rstudio.cloud/learn/primers/3.6)
+  * [Data Table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
+  * [COGS2020 introduction to R](R_intro.html)
 
+* Cheat sheets
+
+  * [ggplot cheat sheet](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+  * [Data Table cheat sheet](https://s3.amazonaws.com/assets.datacamp.com/img/blog/data+table+cheat+sheet.pdf)
+  * [Data Table cheat sheet 2](https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf)
+  
 
 ## 1. Criterion learning experiment
 
@@ -59,7 +63,7 @@ Criterion learning is the process that allows our brains to
 figure this out.   Next, you will perform a cursory analysis
 on the data from this experiment.
 
-### a. 
+**a.**
 Read
 `https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv`
 into a `data.table` and store the result in a variable named
@@ -88,12 +92,12 @@ The resulting `data.table` contains the following columns:
 
 - `nps`: Number of problems solved. This is the same as `max(prob_num)`
 
-### b. 
+**b.**
 Select only rows for which `cnd == Delay` or for which `cnd
 == Long ITI` and store the result in a variable named
 `ans_1b`.
 
-### c. 
+**c.**
 Starting with `ans_1b`, create a new `data.table` that
 contains only a `cnd`, `sub` and mean `t2c` per `cnd` per
 `sub`, and store the result in a variable named `ans_1c`.
@@ -107,20 +111,19 @@ incorrect).
 one observation per subject. Failure to do so will lead to
 this question being marked incorrect.
 
-### d. 
+**d.**
 Use `ans_1c` and `ggplot` to reproduce the following plot
 exactly and store the resulting `ggplot` object in a
 variable named `ans_1d`.
-    
+
 ```{r, fig.width=5, fig.height=5}
-rm(list=ls())
-d <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
-d <- d[cnd %in% c('Delay', 'Long ITI')]
-dd <- d[, .(t2c = mean(t2c)), .(cnd, sub)]
-g <- ggplot(dd, aes(cnd, t2c)) +
+ans_1a <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
+ans_1b <- ans_1a[cnd %in% c('Delay', 'Long ITI')]
+ans_1c <- ans_1b[, .(t2c = mean(t2c)), .(cnd, sub)]
+ans_1d <- ggplot(ans_1c, aes(cnd, t2c)) +
   geom_violin() +
   geom_point()
-g
+ans_1d
 ```
 
 
@@ -134,7 +137,7 @@ seconds each `rat` takes to complete each `run` of each
 `maze`. Next, you will perform a cursory analysis on the
 data from this experiment.
 
-### a. 
+**a.**
 Read
 `https://crossley.github.io/cogs2020/data/maze/maze.csv`
 into a `data.table` and store the result in a variable named
@@ -153,13 +156,13 @@ to different runs).
 
 - `time`: The time in seconds taken to complete the maze.
 
-### b.
+**b.**
 `rat` and `maze` are both `categorical` experimental
 factors, but they are currently coded as `numeric`. Inside
 the `data.table`, change the coding of `rat` and `maze` to
 `factor` and store the result in a variable named `ans_2b`.
 
-### c. 
+**c.**
 Starting with `ans_2b`, create a new `data.table` that
 contains only a `maze`, `rat` and mean `time` per `maze` per
 `rat`, and store the result in a variable named `ans_2c`.
@@ -173,21 +176,21 @@ marked incorrect).
 one observation per `rat` per `maze`. Failure to do so will
 lead to this question being marked incorrect.
 
-### d. 
+**d.**
 Use `ans_2c` and `ggplot` to reproduce the following plot
 exactly and store the resulting `ggplot` object in a
 variable named `ans_2d`.
 
 ```{r fig.width=5, fig.height=5}
-rm(list=ls())
-d <- fread('https://crossley.github.io/cogs2020/data/maze/maze.csv')
-d[, rat := as.factor(rat)]
-d[, maze := as.factor(maze)]
-dd <- d[, .(time = mean(time)), .(maze, rat)]
-g <- ggplot(dd, aes(maze, time)) +
+ans_2a <- fread('https://crossley.github.io/cogs2020/data/maze/maze.csv')
+ans_2b <- data.table(ans_2a)
+ans_2b[, rat := as.factor(rat)]
+ans_2b[, maze := as.factor(maze)]
+ans_2c <- ans_2b[, .(time = mean(time)), .(maze, rat)]
+ans_2d <- ggplot(ans_2c, aes(maze, time)) +
   geom_boxplot() +
   geom_point()
-g
+ans_2d
 ```
 
 ## 3. Motor learning experiment
@@ -213,24 +216,22 @@ and contains the following columns:
 * `peak_velocity`: The maximum velocity reached during the reach
 * `hand_angle`: The angle of the hand movement
 
-### a. 
+**a.**
 Compute the mean `hand_angle` per `group` per `trial` and
 store the result in a variable named `ans_3a`.
 
-### b. 
+**b.**
 Use `ans_3a` and `ggplot` to reproduce the following plot
 exactly and store the resulting `ggplot` object in a
 variable named `ans_3b`.
 
 ```{r message=F, fig.width=7, fig.height=5}
-rm(list=ls())
-
-d <- fread('https://crossley.github.io/cogs2020/data/mis/mis_data.csv')
-d[, group := as.factor(group)]
-dd <- d[, .(hand_angle = mean(hand_angle)), .(group, trial)]
-g <- ggplot(dd, aes(trial, hand_angle, colour=group)) +
+ans_3a <- fread('https://crossley.github.io/cogs2020/data/mis/mis_data.csv')
+ans_3a[, group := as.factor(group)]
+ans_3a <- ans_3a[, .(hand_angle = mean(hand_angle)), .(group, trial)]
+ans_3b <- ggplot(ans_3a, aes(trial, hand_angle, colour=group)) +
   geom_line()
-g
+ans_3b
 ```
 
 ## 4. MEG experiment
@@ -291,40 +292,39 @@ examples throughout the course.
 neural time series signals for each sensor. See the above
 figure for how these column names map onto scalp positions.
 
-### a. 
+**a.**
 Load this data into a `data.table`, remove column `V1`, and
 convert `condition` from an `int` to a `factor`. Store the
 result in variable named `ans_4a`.
 
-### b.
+**b.**
 Convert `ans_4a` to *long format* using the `melt()`
 function. Use `time`, `epoch`, and `condition` as `id.vars`
 and store the result in a variable named `ans_4b`.
 
-### c. 
+**c.**
 Filter `ans_4b` such that it only contains rows
 corresponding to the `MEG 001` channel and store the result
 in a variable named `ans_4c`.
 
-### d. 
+**d.**
 From `ans_4c` compute the mean MEG signal separately per
 `condition` and per `time` and store the result in a
 variable named `ans_4d`.
-  
-### e. 
+
+**e.**
 Use `ggplot` to reproduce the following plot exactly and
 store the resulting `ggplot` object in a variable named
 `ans_4e`.
 
 ```{r message=F, fig.width=7, fig.height=5}
-rm(list=ls())
-d <- fread('https://crossley.github.io/cogs2020/data/eeg/epochs.txt')
-d[, V1 := NULL]
-d[, condition := as.factor(condition)]
-dd <- melt(d, id.vars=c('time', 'epoch', 'condition'))
-dd <- dd[variable == 'MEG 001']
-ddd <- dd[, .(value = mean(value)), .(condition, time)]
-g <- ggplot(ddd, aes(time, value, colour=condition)) + 
+ans_4a <- fread('https://crossley.github.io/cogs2020/data/eeg/epochs.txt')
+ans_4a[, V1 := NULL]
+ans_4a[, condition := as.factor(condition)]
+ans_4b <- melt(ans_4a, id.vars=c('time', 'epoch', 'condition'))
+ans_4c <- ans_4b[variable == 'MEG 001']
+ans_4d <- ans_4c[, .(value = mean(value)), .(condition, time)]
+ans_4e <- ggplot(ans_4d, aes(time, value, colour=condition)) +
   geom_line()
-g
+ans_4e
 ```
