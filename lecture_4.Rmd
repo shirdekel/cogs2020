@@ -124,7 +124,7 @@ Define the random variable $X$ as follows:
 
 $X$ = the number of *heads* in $3$ flips of a *fair* coin.
 
-Then $X \sim Binomial(n=3, p=0.5)$ 
+Then $X \sim Binomial(n=2, p=0.5)$ 
 
 To obtain the probability distribution, we must compute the
 probability of every possible outcome that $X$ can produce.
@@ -182,7 +182,15 @@ ggplot(d, aes(x=x,y=y)) +
 #### Population parameters: function of n and p
 
 Now lets run through this exercise with different $n$ and
-$p$ values.
+$p$ values.  Below, notice that when $p=0.1$, the
+distribution is skewed to the left. This makes sense because
+if the probability of success is very small, then the
+probability of achieving zero or only few successes is high.
+Similarly, notice that when $p=0.9$, the distribution is
+skewed to the right. The same logic applied in the previous
+sentence applies here. If the probability of success is very
+high, then we should expect many successes, and most of the
+probability will correspond to larger outcomes.
 
 ```{r, echo=F}
 
@@ -221,7 +229,7 @@ ggplot(d, aes(x=x, y=y)) +
     geom_segment(aes(xend=x, yend=0)) +
     xlab('X = number successes in n Bernoulli trials') +
     ylab('Probability') +
-    facet_wrap(~n*p)
+    facet_grid(n~p)
 
 ```
 
@@ -257,11 +265,6 @@ with zero mean and unit variance ($\mu=0$, $\sigma^2=1$). It
 is also called the $Z$ distribution. It looks like this:
 
 ```{r, echo=F}
-
-library(data.table)
-library(ggplot2)
-
-rm(list=ls())
 
 mu <- 0
 sigma <- 1
@@ -308,7 +311,7 @@ ggplot(d, aes(x=x, y=p_norm)) +
     geom_line() +
     xlab('X') +
     ylab('Probability Density') +
-    facet_wrap(~mean*var)
+    facet_grid(mean~var)
 
 ```
 
@@ -443,7 +446,7 @@ ggplot(d, aes(x, fx)) +
 
 With continuous probability distributions -- aslo called
 probability density functions (pdfs) -- the probability of
-any single outcome is zero. The distribution is represents
+any single outcome is zero. The distribution represents
 *probability density* rather than probability. In this case,
 probability is computed by taking the area under the curve.
 
@@ -499,7 +502,7 @@ ggplot(d, aes(x,
 
 ```
 
-$$ p(X<8) = \sum_{i=0}^n x_{i} p(x_{i}) $$
+$$ p(X<8) = \sum_{i=0}^7 p(x_{i}) $$
 
 </div>
 <div class = "col-md-6">
@@ -726,12 +729,12 @@ n <- 15
 p <- 0.5
 
 ## Using pmf (exact)
-p <- sum(dbinom(0:7, n, p))
-p
+px <- sum(dbinom(0:7, n, p))
+px
 
 ## using cdf (exact)
-p <- pbinom(7, n, p)
-p
+px <- pbinom(7, n, p)
+px
 ```
 </div>
 
@@ -770,12 +773,12 @@ mu <- 0
 sig <- 1
 
 ## Using pdf (not exact)
-p <- sum(dnorm(seq(-5, 1, .1), mu, sig)*.1)
-p
+px <- sum(dnorm(seq(-5, 1, .1), mu, sig)*.1)
+px
 
 ## using cdf (exact)
-p <- pnorm(1, mu, sig)
-p
+px <- pnorm(1, mu, sig)
+px
 ```
 
 </div>
@@ -819,12 +822,12 @@ n <- 15
 p <- 0.5
 
 ## Using pmf (exact)
-p <- sum(dbinom(8:n, n, p))
-p
+px <- sum(dbinom(10:n, n, p))
+px
 
 ## using cdf (exact)
-p <- pbinom(9, n, p, lower.tail=F)
-p
+px <- pbinom(9, n, p, lower.tail=F)
+px
 ```
 </div>
 
@@ -903,7 +906,7 @@ $\mu_{Y} = \mu_{X}$
 
 $\sigma_{y}^2 = \frac{\sigma_{X}^2}{n}$
 
-As a matter of terminology, $\frac{\sigma_{X}^2}{\sqrt{n}}$
+As a matter of terminology, $\frac{\sigma_{X}}{\sqrt{n}}$
 is called the *standard error*.
 
 </div>
