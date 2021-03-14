@@ -1,0 +1,131 @@
+---
+title: "Homework 3"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: true
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+<div style="color:#990000">
+**Note that this homework is not yet finalised. I am posting
+it here for practice purposes only.**
+<br></br>
+</div>
+
+<style type="text/css">
+.table {
+
+    width: 40%;
+
+***
+</style>
+
+
+## Problem 1
+
+**(a)** Show that for continuous distributions $p(X<x)=p(X≤x)$.
+
+**(b)** Show that for discrete distributions $p(X<x) \neq p(X≤x)$.
+
+
+## Problem 2
+
+Consider the random variable $X \sim N(\mu_X=2, \sigma_X=7)$.
+
+Find the following:
+
+**(a)** $P(X > 4.23)$
+
+**(b)** $P(X < -3.54)$
+
+**(c)** $P(X <= 2.98)$
+
+**(d)** $P(X >= 4.12)$
+
+**(e)** $P(1.22 > X > 4.55)$
+
+**(f)** x such that $P(X>x) = .9$
+
+**(g)** x such that $P(X \leq x) = .8$
+
+
+## Problem 3
+
+**(a)** For each item in the previous problem, draw the pdf or cdf, and
+  illustrate the quantity requested.
+
+
+## Problem 4
+
+**(a)** Demonstrate the central limit theorem for a discrete distribution not
+  covered in the lecture notes.
+
+**(b)** Demonstrate the central limit theorem for a continuous distribution not
+  covered in the lecture notes.
+
+
+## Problem 5
+
+Consider the following random variable:
+
+\begin{align}
+Y &= \sum_{i=1}^{n} i X_{i} \\
+  &= X_1 + 2 X_2 + 3 X_3 + \ldots + n X_n
+\end{align}
+
+where $\mu_{X}=7$, $\sigma_{X}=12$, $n=100$, and all $X_i$ are independent and
+identically distributed.
+
+**(a)** What is $\mu_{Y}$
+
+**(b)** What is $\sigma_{Y}$
+
+
+## Problem 6
+
+Verify the central limit theorem using:
+
+$X \sim F(d1, d2)$ for $d1=5$, $d2=100$
+
+For these values of $d1$ and $d2$,
+
+$E[X] = \frac{d2}{d2 - 2}$
+
+$Var[X] = \frac{2 d2^2 (d1 + d2 - 2)}{d1 (d2 - 2)^2 (d2 - 4)}$
+
+**(a)** Compute the population mean and variance for $X$
+
+**(b)** Perform 6 experiments. In each experiment, draw 1000 samples from $X$.
+Plot a histogram for the results of each experiment **(6 panels on one figure)**.
+Do the histograms appear Normally distributed? If not, what is the main
+difference?
+
+**(c)** Estimate the distribution of sample means as a function of the number of
+samples that were drawn per experiment. Perform 6 experiments in which you draw
+2, 10, 20, 30, 50, and 100 samples from $X$ (each of these numbers corresponds
+to one experiment). Each of these experiments, if performed once, will give you
+one sample mean. To examine the distribution of sample means, repeat each
+experiment 1000 times. This will give you 1000 sample means per experiment,
+which is plenty for a good histogram. For each experiment, estimate the
+distribution of sample means with a histogram. Please make a single figure with
+separate panels for each experiment.
+
+**(d)** At what value of n do you think the distribution of sample means looks
+like a Normal distribution?
+
+**(e)** What happens to the variance of the distribution of sample means as n
+increases? Verify what you see in the plot above by printing it out via
+`data.table`.
+
+**(f)** What is the population mean and population variance of the distribution
+of sample means (hint: what does the central limit theorem say it should be)?
+Do your data agree?

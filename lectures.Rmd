@@ -25,8 +25,8 @@ fontsize: 14pt
 <!-- #### Lecture 3: Probability, random variables, distribution of sample means -->
 #### [Lecture 3: Probability, random variables, distribution of sample means](lecture_3.html)
 
-#### Lecture 4: Binomial distribution, Normal distribution, central limit theorem
-<!-- #### [Lecture 4: Binomial Test](lecture_4.html) -->
+<!-- #### Lecture 4: Binomial distribution, Normal distribution, central limit theorem -->
+#### [Lecture 4: Binomial distribution, Normal distribution, central limit theorem](lecture_4.html)
 
 #### Lecture 5: Null hypothesis significance testing
 <!-- #### Lecture 5: Critical values, two-tailed tests, confidence intervals, Type I vs type II errors -->
