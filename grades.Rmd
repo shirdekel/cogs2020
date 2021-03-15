@@ -33,7 +33,7 @@ library(ggplot2)
 
 rm(list=ls())
 
-d <- fread('https://crossley.github.io/cogs2020/data/grades/hw_1_table.csv')
+d <- fread('https://crossley.github.io/cogs2020/grades/hw_1_table.csv')
 # d <- fread('../grades/hw_1_table.csv')
 
 dd <- d[, .(score = unique(score)), .(student_id)]
@@ -41,8 +41,8 @@ ggplot(dd, aes(score)) +
   geom_histogram(bins=10)
 
 
-dd <- d[, .(ans_mean = mean(ans, na.rm=T),
-            ans_err = sd(ans, na.rm=T)/sqrt(.N)), .(ans_labels)]
+dd <- d[, .(ans_mean = mean(ans=="correct"),
+            ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
 ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
   geom_pointrange(aes(x=ans_labels,
                       ymin=ans_mean-ans_err,
