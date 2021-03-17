@@ -118,11 +118,11 @@ $X \sim Binomial(n,p)$
 
 ### Probability distribution
 
-#### Population parameters: n=3, p=0.5
+#### Population parameters: n=2, p=0.5
 
 Define the random variable $X$ as follows:
 
-$X$ = the number of *heads* in $3$ flips of a *fair* coin.
+$X$ = the number of *heads* in $2$ flips of a *fair* coin.
 
 Then $X \sim Binomial(n=2, p=0.5)$ 
 
@@ -172,7 +172,7 @@ d <- data.table(x,y)
 ggplot(d, aes(x=x,y=y)) +
   geom_point() +
   geom_segment(aes(xend=x, yend=0)) +
-  xlab('X = number successes in n=3 Bernoulli trials') +
+  xlab('X = number successes in n=2 Bernoulli trials') +
   ylab('Probability') +
   theme(aspect.ratio = 1)
  

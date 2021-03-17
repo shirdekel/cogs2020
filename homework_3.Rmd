@@ -30,73 +30,468 @@ it here for practice purposes only.**
 </style>
 
 
+```{r, echo=F}
+library(data.table)
+library(ggplot2)
+library(ggpubr)
+```
+
+
 ## Problem 1
 
-**(a)** Show that for continuous distributions $p(X<x)=p(X≤x)$.
+$p(X<x)=p(X≤x)$ for continuous distributions but not for
+discrete distributions.
 
-**(b)** Show that for discrete distributions $p(X<x) \neq p(X≤x)$.
+**(a)** Verify that $p(X<x)=p(X \leq x)$ for:
 
+  * $X\sim\mathcal{N}(\mu,\sigma)$ 
+  * $x=1$ 
+  * $\mu=0$ 
+  * $\sigma=1$ 
+  
+  * Do this by performing the following steps:
+
+  * Define a variable `p1` and set its value to $p(X<x)$.
+  Use `lower.tail=FALSE` to do so.
+  
+  * Define a variable `p2` and set its value to
+  $p(X{\leq}x$. Use `lower.tail=TRUE` to do so.
+  
+  * Define a variable `ans_1a` and set its value to `TRUE`
+  if `p1` is equal to `p2` and set its value to `FALSE`
+  otherwise.
+  
+  * The $X$ probability distribution (pdf since X is
+  continuous) and the probabilities given by
+  `lower.tail=TRUE` and `lower.tail=FALSE` are illustrated
+  in the following figure. This figure is only here to help
+  you think about what is being asked.
+
+```{r, echo=F}
+x <- seq(-5, 5, 0.01)
+fx <- dnorm(x)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+  geom_line() +
+  geom_segment(aes(x=1, xend=1, y=0, yend=dnorm(1)), linetype=2) +
+  geom_ribbon(data=d[x<=1],
+              aes(x=x, ymin=0, ymax=fx),
+              fill='blue',
+              alpha=0.25) +
+  geom_ribbon(data=d[x>1],
+              aes(x=x, ymin=0, ymax=fx),
+              fill='green',
+              alpha=0.25) +
+  annotate("text", x=-0.5, y=0.05, label="P(X<=x)") +
+  annotate("text", x=1.5, y=0.05, label="P(X>x)") +
+  ylab('f(x)')
+```
+
+
+**(b)** Verify that $p(X<x){\neq}p(X{\leq}x)$ for:
+
+  * $X{\sim}binom(n,p)$ 
+  
+  * $x=3$
+  
+  * $n=10$
+  
+  * $p=0.2$. 
+
+  * Do this by performing the following steps:
+
+  * Define a variable `p1` and set its value to $p(X<x)$.
+  Use `lower.tail=FALSE` to do so.
+  
+  * Define a variable `p2` and set its value to
+  $p(X{\leq}x$. Use `lower.tail=TRUE` to do so.
+  
+  * Define a variable `ans_1b` and set its value to `TRUE`
+  if `p1` is equal to `p2` and set its value to `FALSE`
+  otherwise.
+  
+  * The $X$ probability distribution (pdf since X is
+  continuous) and the probabilities given by
+  `lower.tail=TRUE` and `lower.tail=FALSE` are illustrated
+  in the following figure. This figure is only here to help
+  you think about what is being asked.
+
+```{r, echo=F}
+n <- 10
+p <- 0.2
+x <- seq(0, n, 1)
+fx <- dbinom(x, n, p)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+  geom_segment(data=d[x<=3], aes(x=x, xend=x, y=0, yend=dbinom(x,n,p)), colour='blue') +
+  geom_segment(data=d[x>3], aes(x=x, xend=x, y=0, yend=dbinom(x,n,p)), colour='green') +
+  annotate("text", x=3, y=0.21, label="P(X<=x)") +
+  annotate("text", x=4, y=0.1, label="P(X>x)") +
+  scale_x_continuous(breaks=0:10) +
+  ylab('f(x)')
+```
 
 ## Problem 2
 
-Consider the random variable $X \sim N(\mu_X=2, \sigma_X=7)$.
+Consider the random variables
+$X{\sim}\mathcal{N}(\mu_X=15,\sigma_X=2.74$ and
+$Y{\sim}Binomial(n=30,p=0.5)$.
 
-Find the following:
+$X$ and $Y$ are described as illustrated in the following
+figure:
 
-**(a)** $P(X > 4.23)$
+```{r, echo=F}
+x <- seq(0, 30, 0.01)
+fx <- dnorm(x, 15, 2.74)
+d <- data.table(x, fx)
+gx <- ggplot(d, aes(x, fx)) +
+  geom_line() +
+  ylab('f(x)')
 
-**(b)** $P(X < -3.54)$
+n <- 30
+p <- 0.5
+y <- seq(0, 30, 1)
+fy <- dbinom(y, n, p)
+d <- data.table(y, fy)
+gy <- ggplot(d, aes(y, fy)) +
+  geom_segment(aes(x=y, xend=y, y=0, yend=fy)) + 
+  ylab('f(y)')
 
-**(c)** $P(X <= 2.98)$
+ggarrange(gx, gy, ncol=2)
+```
 
-**(d)** $P(X >= 4.12)$
+**(a)** Compute $P(X > 17)$ and store it in a variable
+named `ans_2a`.
 
-**(e)** $P(1.22 > X > 4.55)$
+**(b)** Compute $P(X \leq 14)$ and store it in a variable
+named `ans_2b`.
 
-**(f)** x such that $P(X>x) = .9$
+**(c)** Compute $P(X \geq 20)$ and store it in a variable
+named `ans_2c`.
 
-**(g)** x such that $P(X \leq x) = .8$
+**(d)** Compute $P(X < 13)$ and store it in a variable
+named `ans_2d`.
 
+**(e)** Compute $P(Y > 17)$ and store it in a variable
+named `ans_2a`.
+
+**(f)** Compute $P(Y \leq 14)$ and store it in a variable
+named `ans_2b`.
+
+**(g)** Compute $P(Y \geq 20)$ and store it in a variable
+named `ans_2c`.
+
+**(h)** Compute $P(Y < 13)$ and store it in a variable
+named `ans_2d`.
+
+**(i)** How do all of the above quantities computed with
+respect to $X$ compare to those computed with respect to
+$y$? No points for this one. Just think about it.
+
+<!-- **(e)** Compute $P(12.22 < X < 24.55)$ and store it in a -->
+<!-- variable named `ans_2e`. -->
+
+<!-- **(f)** Compute $x$ such that $P(X>x) = .9$ and store it in -->
+<!-- a variable named `ans_2f`. -->
+
+<!-- **(g)** Compute $x$ such that $P(X \leq x) = .8$ and store -->
+<!-- it in a variable named `ans_2g`. -->
 
 ## Problem 3
 
-**(a)** For each item in the previous problem, draw the pdf or cdf, and
-  illustrate the quantity requested.
+**(a)** Which of the following plots corresponds to the
+quantity requested in problem 2a? Please respond by creating
+a variable named `ans_3a` and setting its value to one of
+`I`, `II`, `III`, or `IV`.
+
+**(b)** Which of the following plots corresponds to the
+quantity requested in problem 2b? Please respond by creating
+a variable named `ans_3b` and setting its value to one of
+`I`, `II`, `III`, or `IV`.
+
+**(c)** Which of the following plots corresponds to the
+quantity requested in problem 2c? Please respond by creating
+a variable named `ans_3c` and setting its value to one of
+`I`, `II`, `III`, or `IV`.
+
+**(d)** Which of the following plots corresponds to the
+quantity requested in problem 2d? Please respond by creating
+a variable named `ans_3b` and setting its value to one of
+`I`, `II`, `III`, or `IV`.
+
+**(d)** Which of the following plots corresponds to the
+quantity requested in problem 2e? Please respond by creating
+a variable named `ans_3e` and setting its value to one of
+`I`, `II`, `III`, or `IV`.
+
+**(d)** Which of the following plots corresponds to the
+quantity requested in problem 2f? Please respond by creating
+a variable named `ans_3f` and setting its value to one of
+`I`, `II`, `III`, or `IV`.
+
+**(d)** Which of the following plots corresponds to the
+quantity requested in problem 2g? Please respond by creating
+a variable named `ans_3g` and setting its value to one of
+`I`, `II`, `III`, or `IV`.
+
+**(d)** Which of the following plots corresponds to the
+quantity requested in problem 2h? Please respond by creating
+a variable named `ans_3h` and setting its value to one of
+`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`.
+
+```{r, echo=F}
+xcritvec <- c(17, 14, 20, 13)
+
+mu <- 15
+sigma <- 2.74
+
+x <- seq((mu-sigma*4), (mu+sigma*4), 0.01)
+fxd <- dnorm(x, mu, sigma)
+
+fxp <- pnorm(x, mu, sigma, lower.tail=F)
+d <- data.table(x, fxd, fxp)
+xcrit <- xcritvec[1]
+ga1n <- ggplot(d, aes(x, fxd)) +
+  geom_line() +
+  geom_ribbon(data=d[x>xcrit],
+              aes(x=x, ymin=0, ymax=fxd),
+              fill='blue',
+              alpha=0.25) +
+  ylab('f(x)') +
+  theme(aspect.ratio=1)
+
+ga2n <- ggplot(d, aes(x, fxp)) +
+  geom_line() +
+  geom_segment(x=xcrit,
+               xend=xcrit,
+               y=0,
+               yend=pnorm(xcrit, mu, sigma, lower.tail=F),
+               linetype=2) +
+  geom_segment(x=min(x),
+               xend=xcrit,
+               y=pnorm(xcrit, mu, sigma, lower.tail=F),
+               yend=pnorm(xcrit, mu, sigma, lower.tail=F),
+               linetype=2) +
+  ylab('P(X>x)') +
+  theme(aspect.ratio=1)
+
+fxp <- pnorm(x, mu, sigma, lower.tail=T)
+d <- data.table(x, fxd, fxp)
+xcrit <- xcritvec[2]
+gb1n <- ggplot(d, aes(x, fxd)) +
+  geom_line() +
+  geom_ribbon(data=d[x <= xcrit],
+              aes(x=x, ymin=0, ymax=fxd),
+              fill='blue',
+              alpha=0.25) +
+  ylab('f(x)') +
+  theme(aspect.ratio=1)
+
+gb2n <- ggplot(d, aes(x, fxp)) +
+  geom_line() +
+  geom_segment(x=xcrit,
+               xend=xcrit,
+               y=0,
+               yend=pnorm(xcrit, mu, sigma, lower.tail=T),
+               linetype=2) +
+  geom_segment(x=min(x),
+               xend=xcrit,
+               y=pnorm(xcrit, mu, sigma, lower.tail=T),
+               yend=pnorm(xcrit, mu, sigma, lower.tail=T),
+               linetype=2) +
+  ylab('P(X<=x)') +
+  theme(aspect.ratio=1)
+
+fxp <- pnorm(x, mu, sigma, lower.tail=F)
+d <- data.table(x, fxd, fxp)
+xcrit <- xcritvec[3]
+gc1n <- ggplot(d, aes(x, fxd)) +
+  geom_line() +
+  geom_ribbon(data=d[x >= xcrit],
+              aes(x=x, ymin=0, ymax=fxd),
+              fill='blue',
+              alpha=0.25) +
+  ylab('f(x)') +
+  theme(aspect.ratio=1)
+
+gc2n <- ggplot(d, aes(x, fxp)) +
+  geom_line() +
+  geom_segment(x=xcrit,
+               xend=xcrit,
+               y=0,
+               yend=pnorm(xcrit, mu, sigma, lower.tail=F),
+               linetype=2) +
+  geom_segment(x=min(x),
+               xend=xcrit,
+               y=pnorm(xcrit, mu, sigma, lower.tail=F),
+               yend=pnorm(xcrit, mu, sigma, lower.tail=F),
+               linetype=2) +
+  ylab('P(X>x)') +
+  theme(aspect.ratio=1)
+
+fxp <- pnorm(x, mu, sigma, lower.tail=T)
+d <- data.table(x, fxd, fxp)
+xcrit <- xcritvec[4]
+gd1n <- ggplot(d, aes(x, fxd)) +
+  geom_line() +
+  geom_ribbon(data=d[x < xcrit],
+              aes(x=x, ymin=0, ymax=fxd),
+              fill='blue',
+              alpha=0.25) +
+  ylab('f(x)') +
+  theme(aspect.ratio=1)
+
+gd2n <- ggplot(d, aes(x, 1-fxp)) +
+  geom_line() +
+  geom_segment(x=xcrit,
+               xend=xcrit,
+               y=0,
+               yend=pnorm(xcrit, mu, sigma, lower.tail=F),
+               linetype=2) +
+  geom_segment(x=min(x),
+               xend=xcrit,
+               y=pnorm(xcrit, mu, sigma, lower.tail=F),
+               yend=pnorm(xcrit, mu, sigma, lower.tail=F),
+               linetype=2) +
+  ylab('P(X<=x)') +
+  theme(aspect.ratio=1)
+```
+
+
+```{r, echo=F}
+n <- 30
+p <- 0.5
+x <- seq(0, n, 1)
+
+fxd <- dbinom(x, n, p)
+fxp <- pbinom(x, n, p, lower.tail=F)
+d <- data.table(x, fxd, fxp)
+xcrit <- xcritvec[1]
+ga1b <- ggplot(d, aes(x, fxd)) +
+  geom_segment(data=d[x>xcrit], aes(x=x, xend=x, y=0, yend=fxd), colour='blue') +
+  geom_segment(data=d[x<=xcrit], aes(x=x, xend=x, y=0, yend=fxd)) +
+  ylab('f(x)') +
+  scale_x_continuous(breaks=seq(0,n,2))+
+  theme(aspect.ratio=1)
+
+ga2b <- ggplot(d, aes(x, fxp)) +
+  geom_point() +
+  geom_segment(x=xcrit, 
+               xend=xcrit, 
+               y=0, 
+               yend=pbinom(xcrit, n, p, lower.tail=F), 
+               linetype=2) +
+  geom_segment(x=min(x),
+               xend=xcrit,
+               y=pbinom(xcrit, n, p, lower.tail=F),
+               yend=pbinom(xcrit, n, p, lower.tail=F),
+               linetype=2) +
+  ylab('P(X>x)') +
+  scale_x_continuous(breaks=seq(0,n,2)) +
+  theme(aspect.ratio=1)
+
+fxd <- dbinom(x, n, p)
+fxp <- pbinom(x, n, p, lower.tail=T)
+d <- data.table(x, fxd, fxp)
+xcrit <- xcritvec[2]
+gb1b <- ggplot(d, aes(x, fxd)) +
+  geom_segment(data=d[x<=xcrit], aes(x=x, xend=x, y=0, yend=fxd), colour='blue') +
+  geom_segment(data=d[x>xcrit], aes(x=x, xend=x, y=0, yend=fxd)) +
+  ylab('f(x)') +
+  scale_x_continuous(breaks=seq(0,n,2)) +
+  theme(aspect.ratio=1)
+
+gb2b <- ggplot(d, aes(x, fxp)) +
+  geom_point() +
+  geom_segment(x=xcrit, 
+               xend=xcrit, 
+               y=0, 
+               yend=pbinom(xcrit, n, p, lower.tail=T), 
+               linetype=2) +
+  geom_segment(x=min(x),
+               xend=xcrit,
+               y=pbinom(xcrit, n, p, lower.tail=T),
+               yend=pbinom(xcrit, n, p, lower.tail=T),
+               linetype=2) +
+  ylab('P(X<=x)') +
+  scale_x_continuous(breaks=seq(0,n,2)) +
+  theme(aspect.ratio=1)
+
+fxd <- dbinom(x, n, p)
+fxp <- pbinom(x, n, p, lower.tail=F)
+d <- data.table(x, fxd, fxp)
+xcrit <- xcritvec[3]
+gc1b <- ggplot(d, aes(x, fxd)) +
+  geom_segment(data=d[x>=xcrit], aes(x=x, xend=x, y=0, yend=fxd), colour='blue') +
+  geom_segment(data=d[x<xcrit], aes(x=x, xend=x, y=0, yend=fxd)) +
+  ylab('f(x)') +
+  scale_x_continuous(breaks=seq(0,n,2))+
+  theme(aspect.ratio=1)
+
+gc2b <- ggplot(d, aes(x, fxp)) +
+  geom_point() +
+  geom_segment(x=xcrit-1, 
+               xend=xcrit-1, 
+               y=0, 
+               yend=pbinom(xcrit-1, n, p, lower.tail=F), 
+               linetype=2) +
+  geom_segment(x=min(x),
+               xend=xcrit-1,
+               y=pbinom(xcrit-1, n, p, lower.tail=F),
+               yend=pbinom(xcrit-1, n, p, lower.tail=F),
+               linetype=2) +
+  ylab('P(X>x)') +
+  scale_x_continuous(breaks=seq(0,n,2)) +
+  theme(aspect.ratio=1)
+
+fxd <- dbinom(x, n, p)
+fxp <- pbinom(x, n, p, lower.tail=T)
+d <- data.table(x, fxd, fxp)
+xcrit <- xcritvec[4]
+gd1b <- ggplot(d, aes(x, fxd)) +
+  geom_segment(data=d[x<xcrit], aes(x=x, xend=x, y=0, yend=fxd), colour='blue') +
+  geom_segment(data=d[x>=xcrit], aes(x=x, xend=x, y=0, yend=fxd)) +
+  ylab('f(x)') +
+  scale_x_continuous(breaks=seq(0,n,2)) +
+  theme(aspect.ratio=1)
+
+gd2b <- ggplot(d, aes(x, fxp)) +
+  geom_point() +
+  geom_segment(x=xcrit-1, 
+               xend=xcrit-1, 
+               y=0, 
+               yend=pbinom(xcrit-1, n, p, lower.tail=T), 
+               linetype=2) +
+  geom_segment(x=min(x),
+               xend=xcrit-1,
+               y=pbinom(xcrit-1, n, p, lower.tail=T),
+               yend=pbinom(xcrit-1, n, p, lower.tail=T),
+               linetype=2) +
+  ylab('P(X<=x)') +
+  scale_x_continuous(breaks=seq(0,n,2)) +
+  theme(aspect.ratio=1)
+```
+
+```{r, echo=F, fig.height=25}
+plot_list <- list(ga1n, gd2n, gc2b, gb1n,
+                  gd1b, gc1b, gb2n, ga2b)
+plot_labels <- list('I', 'II', 'III', 'IV',
+                    'V', 'VI', 'VII', 'VIII')
+# plot_list <- list(ga1n, gb1n, gc1n, gd1n, 
+#                   ga2n, gb2n, gc2n, gd2n,
+#                   ga1b, gb1b, gc1b, gd1b, 
+#                   ga2b, gb2b, gc2b, gd2b) 
+ggarrange(plotlist=plot_list,
+          labels=plot_labels,
+          nrow=8,
+          ncol=2)
+```
 
 
 ## Problem 4
 
-**(a)** Demonstrate the central limit theorem for a discrete distribution not
-  covered in the lecture notes.
-
-**(b)** Demonstrate the central limit theorem for a continuous distribution not
-  covered in the lecture notes.
-
-
-## Problem 5
-
-Consider the following random variable:
-
-\begin{align}
-Y &= \sum_{i=1}^{n} i X_{i} \\
-  &= X_1 + 2 X_2 + 3 X_3 + \ldots + n X_n
-\end{align}
-
-where $\mu_{X}=7$, $\sigma_{X}=12$, $n=100$, and all $X_i$ are independent and
-identically distributed.
-
-**(a)** What is $\mu_{Y}$
-
-**(b)** What is $\sigma_{Y}$
-
-
-## Problem 6
-
-Verify the central limit theorem using:
-
-$X \sim F(d1, d2)$ for $d1=5$, $d2=100$
-
-For these values of $d1$ and $d2$,
+Consider the random variable $X{\sim}F(d1,d2)$ for $d1=5$,
+$d2=100$.  For these values of $d1$ and $d2$,
 
 $E[X] = \frac{d2}{d2 - 2}$
 
@@ -104,28 +499,3 @@ $Var[X] = \frac{2 d2^2 (d1 + d2 - 2)}{d1 (d2 - 2)^2 (d2 - 4)}$
 
 **(a)** Compute the population mean and variance for $X$
 
-**(b)** Perform 6 experiments. In each experiment, draw 1000 samples from $X$.
-Plot a histogram for the results of each experiment **(6 panels on one figure)**.
-Do the histograms appear Normally distributed? If not, what is the main
-difference?
-
-**(c)** Estimate the distribution of sample means as a function of the number of
-samples that were drawn per experiment. Perform 6 experiments in which you draw
-2, 10, 20, 30, 50, and 100 samples from $X$ (each of these numbers corresponds
-to one experiment). Each of these experiments, if performed once, will give you
-one sample mean. To examine the distribution of sample means, repeat each
-experiment 1000 times. This will give you 1000 sample means per experiment,
-which is plenty for a good histogram. For each experiment, estimate the
-distribution of sample means with a histogram. Please make a single figure with
-separate panels for each experiment.
-
-**(d)** At what value of n do you think the distribution of sample means looks
-like a Normal distribution?
-
-**(e)** What happens to the variance of the distribution of sample means as n
-increases? Verify what you see in the plot above by printing it out via
-`data.table`.
-
-**(f)** What is the population mean and population variance of the distribution
-of sample means (hint: what does the central limit theorem say it should be)?
-Do your data agree?
