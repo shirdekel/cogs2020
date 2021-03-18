@@ -39,9 +39,6 @@ library(ggpubr)
 
 ## Problem 1
 
-$p(X<x)=p(X≤x)$ for continuous distributions but not for
-discrete distributions.
-
 **(a)** Verify that $p(X<x)=p(X \leq x)$ for:
 
   * $X\sim\mathcal{N}(\mu,\sigma)$ 
@@ -133,12 +130,14 @@ ggplot(d, aes(x, fx)) +
 
 ## Problem 2
 
-Consider the random variables
-$X{\sim}\mathcal{N}(\mu_X=15,\sigma_X=2.74$ and
-$Y{\sim}Binomial(n=30,p=0.5)$.
+Consider the following random variables:
 
-$X$ and $Y$ are described as illustrated in the following
-figure:
+* $X{\sim}\mathcal{N}(\mu_X=15,\sigma_X=2.74)$ 
+
+* $Y{\sim}Binomial(n=30,p=0.5)$.
+
+The $X$ and $Y$ distributions are illustrated in the
+following figure:
 
 ```{r, echo=F}
 x <- seq(0, 30, 0.01)
@@ -173,20 +172,20 @@ named `ans_2c`.
 named `ans_2d`.
 
 **(e)** Compute $P(Y > 17)$ and store it in a variable
-named `ans_2a`.
+named `ans_2e`.
 
 **(f)** Compute $P(Y \leq 14)$ and store it in a variable
-named `ans_2b`.
+named `ans_2f`.
 
 **(g)** Compute $P(Y \geq 20)$ and store it in a variable
-named `ans_2c`.
+named `ans_2g`.
 
 **(h)** Compute $P(Y < 13)$ and store it in a variable
-named `ans_2d`.
+named `ans_2h`.
 
 **(i)** How do all of the above quantities computed with
 respect to $X$ compare to those computed with respect to
-$y$? No points for this one. Just think about it.
+$Y$? No points for this one. Just think about it.
 
 <!-- **(e)** Compute $P(12.22 < X < 24.55)$ and store it in a -->
 <!-- variable named `ans_2e`. -->
@@ -202,37 +201,37 @@ $y$? No points for this one. Just think about it.
 **(a)** Which of the following plots corresponds to the
 quantity requested in problem 2a? Please respond by creating
 a variable named `ans_3a` and setting its value to one of
-`I`, `II`, `III`, or `IV`.
+`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
 
 **(b)** Which of the following plots corresponds to the
 quantity requested in problem 2b? Please respond by creating
 a variable named `ans_3b` and setting its value to one of
-`I`, `II`, `III`, or `IV`.
+`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
 
 **(c)** Which of the following plots corresponds to the
 quantity requested in problem 2c? Please respond by creating
 a variable named `ans_3c` and setting its value to one of
-`I`, `II`, `III`, or `IV`.
+`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
 
 **(d)** Which of the following plots corresponds to the
 quantity requested in problem 2d? Please respond by creating
 a variable named `ans_3b` and setting its value to one of
-`I`, `II`, `III`, or `IV`.
+`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
 
 **(d)** Which of the following plots corresponds to the
 quantity requested in problem 2e? Please respond by creating
 a variable named `ans_3e` and setting its value to one of
-`I`, `II`, `III`, or `IV`.
+`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
 
 **(d)** Which of the following plots corresponds to the
 quantity requested in problem 2f? Please respond by creating
 a variable named `ans_3f` and setting its value to one of
-`I`, `II`, `III`, or `IV`.
+`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
 
 **(d)** Which of the following plots corresponds to the
 quantity requested in problem 2g? Please respond by creating
 a variable named `ans_3g` and setting its value to one of
-`I`, `II`, `III`, or `IV`.
+`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
 
 **(d)** Which of the following plots corresponds to the
 quantity requested in problem 2h? Please respond by creating
@@ -497,5 +496,140 @@ $E[X] = \frac{d2}{d2 - 2}$
 
 $Var[X] = \frac{2 d2^2 (d1 + d2 - 2)}{d1 (d2 - 2)^2 (d2 - 4)}$
 
-**(a)** Compute the population mean and variance for $X$
+```{r, echo=F}
+d1 <- 5
+d2 <- 100
+```
+
+
+**(a)** Compute the population mean and variance for $X$ ans
+store your result in a variable named `ans_4a`.
+
+**(b)** We next perform 6 experiments. In each experiment,
+we draw 1000 samples from $X$ and plot a histogram for the
+results of each experiment. Please copy and paste the the
+code below into your homework .R file and then run the code.
+
+```{r}
+# Define the number of experiments to run
+n_exp <- 6
+
+# Define the number of samples to draw per experiment
+n <- 1000
+
+# Create an empty list. We will later use this list to store
+# the results of each experiment
+storage_list <- list()
+
+# Run through a for loop and in each iteration of the for
+# loop, draw n samples from the random variable X, and store
+# the result in the storage list defined just above.
+for(i in 1:n_exp) {
+  
+  # We will use the function `rf()` to draw random samples
+  # from X. However, I need you all to work with the same
+  # random samples as me (for grading purposes), so we use
+  # the `set.seed()` function to ensure that we all get the
+  # same "random" numbers.
+  set.seed(i)
+  
+  # Generate a random sample using the `rf()` function
+  random_sample <- rf(n, d1, d2)
+  
+  # we will want things in data.table format later, so might
+  # as well get started on it now.
+  result <- data.table(exp=i, x=random_sample)
+  
+  # Store the result in our storage list
+  storage_list[[i]] <- result
+}
+
+# Storage_list contains a list of data.tables. Each
+# data.table in this list has one column named exp (this is
+# an indicator column that indicates the experiment from
+# which data was obtained) and another named x (this column
+# contains the data sampled in each experiment). We next use
+# the data.table function `rbindlist()` to combine this list
+# of data.tables into a single data.table.
+d <- rbindlist(storage_list)
+
+# We now plot histograms to show the results of each
+# experiment.
+ggplot(d, aes(x)) +
+  geom_histogram(bins=50) +
+  facet_wrap(~exp)
+```
+
+Do the histograms appear Normally distributed? If not, what
+is the main difference? Please respond with one of the
+following:
+
+* `ans_4b <- "skewed left"`
+* `ans_4b <- "skewed right"`
+* `ans_4b <- "Normal"`
+
+**(c)** We next estimate the distribution of sample means as
+a function of the number of samples `n` that were drawn per
+experiment. We will perform 6 experiments in which we draw
+2, 10, 20, 30, 50, and 100 samples from $X$ (each of these
+numbers corresponds to one experiment). Each of these
+experiments, if performed once, will give us one sample
+mean. To examine the distribution of sample means, we repeat
+each experiment 1000 times. This will give us 1000 sample
+means per experiment. For each experiment, we estimate the
+distribution of sample means with a histogram and make a
+single figure with separate panels for each experiment to
+show our results.  Please copy and paste the the code below
+into your homework .R file and then run the code.
+
+```{r}
+# The following code is very similar to the above, so no
+# comments are provided.
+n_exp <- 1000
+n <- c(2, 5, 10, 15, 30, 50)
+
+storage_list <- list()
+for(j in 1:length(n)) {
+  for(i in 1:n_exp) {
+    set.seed(i + j*n_exp)
+    random_sample <- rf(n[j], d1, d2)
+    sample_mean <- mean(random_sample)
+    result <- data.table(exp=i, n=n[j], x=sample_mean)
+    storage_list[[i + j*n_exp]] <- result
+  }
+}
+
+d <- rbindlist(storage_list)
+
+ggplot(d, aes(x)) +
+  geom_histogram(bins=50) +
+  facet_wrap(~n)
+```
+
+* What happens to the variance of the distribution of sample
+means as $n$ increases?
+  * `ans_4c1 <- "Stays the same"`
+  * `ans_4c1 <- "Increases"`
+  * `ans_4c1 <- "Decreases"`
+
+* What happens to the skew of the distribution of sample
+means as $n$ increases?
+  * `ans_4c2 <- "Stays the same"`
+  * `ans_4c2 <- "Increases"`
+  * `ans_4c2 <- "Decreases"`
+
+**(d)** What is the population mean of this distribution of
+sample means? Store your answer in a variable named
+`ans_4d`.
+
+**(e)** What is the population variance of this distribution
+of sample means? Store your answer in a variable named
+`ans_4e`.
+
+**(f)** How does increasing $n$ influence your sample mean
+estimate of the population mean?
+
+  * `ans_4f <- "estimate approaches the population value"`
+  * `ans_4f <- "no effect"`
+  * `ans_4f <- "population value decreases variance"`
 
