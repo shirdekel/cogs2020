@@ -472,14 +472,17 @@ gd2b <- ggplot(d, aes(x, fxp)) +
 ```
 
 ```{r, echo=F, fig.height=25}
-plot_list <- list(ga1n, gd2n, gc2b, gb1n,
-                  gd1b, gc1b, gb2n, ga2b)
+plot_list <- list(ga1n, gb1n, gc1n, gd1n,
+                  ga2n, gb2n, gc2n, gd2n,
+                  ga1b, gb1b, gc1b, gd1b,
+                  ga2b, gb2b, gc2b, gd2b)
+
+set.seed(0)
+plot_list <- sample(plot_list, 8)
+
 plot_labels <- list('I', 'II', 'III', 'IV',
                     'V', 'VI', 'VII', 'VIII')
-# plot_list <- list(ga1n, gb1n, gc1n, gd1n, 
-#                   ga2n, gb2n, gc2n, gd2n,
-#                   ga1b, gb1b, gc1b, gd1b, 
-#                   ga2b, gb2b, gc2b, gd2b) 
+
 ggarrange(plotlist=plot_list,
           labels=plot_labels,
           nrow=8,
