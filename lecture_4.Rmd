@@ -877,8 +877,6 @@ p
 
 </div>
 
-
-
 ## Central limit theorem
 
 The **central limit theorem** tells us that the sum of
@@ -887,26 +885,35 @@ approximates a Normal distribution.
 
 Let 
 
-$\boldsymbol{Y} = \boldsymbol{X}_1 + \boldsymbol{X}_2 + \dots + \boldsymbol{X}_n$
+$Y = X_1 + X_2 + \ldots + X_n$
 
 and 
 
-$\boldsymbol{X}_i \sim \boldsymbol{D}$
+$X_i \sim D$
 
-where $\boldsymbol{D}$ can have any distribution whatsoever.
+where $D$ can have any distribution whatsoever.
 Then,
 
-$\boldsymbol{Y} \sim N(\mu_{Y}, \sigma_{y}^2)$
+$\boldsymbol{Y} \sim \mathcal{N}(\mu_{Y}, \sigma_{y}^2)$
 
-where $N$ stands for a *Normal* distribution.
+where $\mathcal{N}$ stands for a *Normal* distribution.
 
 It turns out that we can show:
 
-$\mu_{Y} = \mu_{X}$ 
+$\mu_{Y} = n \mu_{X}$ 
 
-$\sigma_{y}^2 = \frac{\sigma_{X}^2}{n}$
+$\sigma_{y}^2 = n \sigma_{X}^2$
 
-As a matter of terminology, $\frac{\sigma_{X}}{\sqrt{n}}$
+This leads to the following statements about the **distribution 
+of sample means** defined by the random variable $\bar{X}$.
+
+$\bar{X}=\frac{X_1 + X_2 + \ldots + X_n}{n}$
+
+$\mu_{\bar{X}} = \mu_{X}$
+
+$\sigma_{\bar{X}}^2 = \frac{\sigma_{\bar{X}}^2}{n}$
+
+As a matter of terminology, $\sigma_{\bar{X}}=\frac{\sigma_{X}}{\sqrt{n}}$
 is called the *standard error*.
 
 </div>
