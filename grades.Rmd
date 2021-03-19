@@ -34,7 +34,6 @@ library(ggplot2)
 rm(list=ls())
 
 d <- fread('https://crossley.github.io/cogs2020/grades/hw_1_table.csv')
-# d <- fread('../grades/hw_1_table.csv')
 
 dd <- d[, .(score = unique(score)), .(student_id)]
 ggplot(dd, aes(score)) +

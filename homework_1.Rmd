@@ -93,8 +93,8 @@ The resulting `data.table` contains the following columns:
 - `nps`: Number of problems solved. This is the same as `max(prob_num)`
 
 **b.**
-Select only rows for which `cnd == Delay` or for which `cnd
-== Long ITI` and store the result in a variable named
+Select only rows for which `cnd == Delay` or for which 
+`cnd==Long ITI` and store the result in a variable named
 `ans_1b`.
 
 **c.**

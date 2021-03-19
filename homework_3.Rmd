@@ -15,11 +15,11 @@ output:
 fontsize: 14pt
 ---
 
-<div style="color:#990000">
-**Note that this homework is not yet finalised. I am posting
-it here for practice purposes only.**
-<br></br>
-</div>
+<!-- <div style="color:#990000"> -->
+<!-- **Note that this homework is not yet finalised. I am posting -->
+<!-- it here for practice purposes only.** -->
+<!-- <br></br> -->
+<!-- </div> -->
 
 <style type="text/css">
 .table {
@@ -39,36 +39,25 @@ library(ggpubr)
 
 ## Problem 1
 
-**(a)** Verify that $p(X<x)=p(X \leq x)$ for:
+Consider the following two random variables:
 
-  * $X\sim\mathcal{N}(\mu,\sigma)$ 
-  * $x=1$ 
-  * $\mu=0$ 
-  * $\sigma=1$ 
-  
-  * Do this by performing the following steps:
+* $X\sim\mathcal{N}(\mu=0,\sigma=1)$ 
 
-  * Define a variable `p1` and set its value to $p(X<x)$.
-  Use `lower.tail=FALSE` to do so.
-  
-  * Define a variable `p2` and set its value to
-  $p(X{\leq}x$. Use `lower.tail=TRUE` to do so.
-  
-  * Define a variable `ans_1a` and set its value to `TRUE`
-  if `p1` is equal to `p2` and set its value to `FALSE`
-  otherwise.
-  
-  * The $X$ probability distribution (pdf since X is
-  continuous) and the probabilities given by
-  `lower.tail=TRUE` and `lower.tail=FALSE` are illustrated
-  in the following figure. This figure is only here to help
-  you think about what is being asked.
+* $Y{\sim}binom(n=10,p=0.2)$ 
 
-```{r, echo=F}
-x <- seq(-5, 5, 0.01)
+The $X$ probability distribution (pdf since X is continuous) and
+the $Y$ probability distribution (pmf since Y is discrete) are 
+illustrated below. The probability corresponding to $x{\leq}1$
+and $y{\leq}3$ (`lower.tail=TRUE`) are coloured blue and the the 
+probability corresponding to $x{>}1$ and $y{>}3$ (`lower.tail=FALSE`)
+are coloured green. This figure is only here to help you think about 
+what is being asked below.
+
+```{r, echo=F, fig.width=10}
+x <- seq(-4, 4, 0.01)
 fx <- dnorm(x)
 d <- data.table(x, fx)
-ggplot(d, aes(x, fx)) +
+ga <- ggplot(d, aes(x, fx)) +
   geom_line() +
   geom_segment(aes(x=1, xend=1, y=0, yend=dnorm(1)), linetype=2) +
   geom_ribbon(data=d[x<=1],
@@ -82,51 +71,46 @@ ggplot(d, aes(x, fx)) +
   annotate("text", x=-0.5, y=0.05, label="P(X<=x)") +
   annotate("text", x=1.5, y=0.05, label="P(X>x)") +
   ylab('f(x)')
+
+n <- 10
+p <- 0.2
+y <- seq(0, n, 1)
+fy <- dbinom(y, n, p)
+d <- data.table(y, fy)
+gb <- ggplot(d, aes(y, fy)) +
+  geom_segment(data=d[y<=3], aes(x=y, xend=y, y=0, yend=dbinom(y,n,p)), colour='blue') +
+  geom_segment(data=d[y>3], aes(x=y, xend=y, y=0, yend=dbinom(y,n,p)), colour='green') +
+  annotate("text", x=3, y=0.21, label="P(Y<=y)") +
+  annotate("text", x=4, y=0.1, label="P(Y>y)") +
+  scale_x_continuous(breaks=0:10) +
+  ylab('f(y)')
+
+ggarrange(ga, gb, ncol=2)
 ```
 
+**(a)** Verify that $p(X{<}x)=p(X{\leq}x)$ for $x=1$.
+Do this by performing the following steps:
 
-**(b)** Verify that $p(X<x){\neq}p(X{\leq}x)$ for:
-
-  * $X{\sim}binom(n,p)$ 
-  
-  * $x=3$
-  
-  * $n=10$
-  
-  * $p=0.2$. 
-
-  * Do this by performing the following steps:
-
-  * Define a variable `p1` and set its value to $p(X<x)$.
-  Use `lower.tail=FALSE` to do so.
+  * Define a variable `p1` and set its value to $p(X{<}x)$.
   
   * Define a variable `p2` and set its value to
-  $p(X{\leq}x$. Use `lower.tail=TRUE` to do so.
+  $p(X{\leq}x)$.
+  
+  * Define a variable `ans_1a` and set its value to `TRUE`
+  if `p1` is equal to `p2` and set its value to `FALSE`
+  otherwise.
+
+**(b)** Verify that $p(X<x){\neq}p(X{\leq}x)$ for $y=3$.
+Do this by performing the following steps:
+
+  * Define a variable `p1` and set its value to $p(X{<}x)$.
+  
+  * Define a variable `p2` and set its value to
+  $p(X{\leq}x)$.
   
   * Define a variable `ans_1b` and set its value to `TRUE`
   if `p1` is equal to `p2` and set its value to `FALSE`
   otherwise.
-  
-  * The $X$ probability distribution (pdf since X is
-  continuous) and the probabilities given by
-  `lower.tail=TRUE` and `lower.tail=FALSE` are illustrated
-  in the following figure. This figure is only here to help
-  you think about what is being asked.
-
-```{r, echo=F}
-n <- 10
-p <- 0.2
-x <- seq(0, n, 1)
-fx <- dbinom(x, n, p)
-d <- data.table(x, fx)
-ggplot(d, aes(x, fx)) +
-  geom_segment(data=d[x<=3], aes(x=x, xend=x, y=0, yend=dbinom(x,n,p)), colour='blue') +
-  geom_segment(data=d[x>3], aes(x=x, xend=x, y=0, yend=dbinom(x,n,p)), colour='green') +
-  annotate("text", x=3, y=0.21, label="P(X<=x)") +
-  annotate("text", x=4, y=0.1, label="P(X>x)") +
-  scale_x_continuous(breaks=0:10) +
-  ylab('f(x)')
-```
 
 ## Problem 2
 
@@ -139,7 +123,7 @@ Consider the following random variables:
 The $X$ and $Y$ distributions are illustrated in the
 following figure:
 
-```{r, echo=F}
+```{r, echo=F, fig.width=10}
 x <- seq(0, 30, 0.01)
 fx <- dnorm(x, 15, 2.74)
 d <- data.table(x, fx)
@@ -198,47 +182,9 @@ $Y$? No points for this one. Just think about it.
 
 ## Problem 3
 
-**(a)** Which of the following plots corresponds to the
-quantity requested in problem 2a? Please respond by creating
-a variable named `ans_3a` and setting its value to one of
-`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
+Consider the following plots:
 
-**(b)** Which of the following plots corresponds to the
-quantity requested in problem 2b? Please respond by creating
-a variable named `ans_3b` and setting its value to one of
-`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
-
-**(c)** Which of the following plots corresponds to the
-quantity requested in problem 2c? Please respond by creating
-a variable named `ans_3c` and setting its value to one of
-`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
-
-**(d)** Which of the following plots corresponds to the
-quantity requested in problem 2d? Please respond by creating
-a variable named `ans_3b` and setting its value to one of
-`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
-
-**(d)** Which of the following plots corresponds to the
-quantity requested in problem 2e? Please respond by creating
-a variable named `ans_3e` and setting its value to one of
-`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
-
-**(d)** Which of the following plots corresponds to the
-quantity requested in problem 2f? Please respond by creating
-a variable named `ans_3f` and setting its value to one of
-`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
-
-**(d)** Which of the following plots corresponds to the
-quantity requested in problem 2g? Please respond by creating
-a variable named `ans_3g` and setting its value to one of
-`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`
-
-**(d)** Which of the following plots corresponds to the
-quantity requested in problem 2h? Please respond by creating
-a variable named `ans_3h` and setting its value to one of
-`I`, `II`, `III`, `IV`, `V`, `VI`, `VII`, or `VIII`.
-
-```{r, echo=F}
+```{r, echo=F, fig.height=14, fig.width=10}
 xcritvec <- c(17, 14, 20, 13)
 
 mu <- 15
@@ -256,8 +202,7 @@ ga1n <- ggplot(d, aes(x, fxd)) +
               aes(x=x, ymin=0, ymax=fxd),
               fill='blue',
               alpha=0.25) +
-  ylab('f(x)') +
-  theme(aspect.ratio=1)
+  ylab('f(x)')
 
 ga2n <- ggplot(d, aes(x, fxp)) +
   geom_line() +
@@ -271,8 +216,7 @@ ga2n <- ggplot(d, aes(x, fxp)) +
                y=pnorm(xcrit, mu, sigma, lower.tail=F),
                yend=pnorm(xcrit, mu, sigma, lower.tail=F),
                linetype=2) +
-  ylab('P(X>x)') +
-  theme(aspect.ratio=1)
+  ylab('P(X>x)')
 
 fxp <- pnorm(x, mu, sigma, lower.tail=T)
 d <- data.table(x, fxd, fxp)
@@ -283,8 +227,7 @@ gb1n <- ggplot(d, aes(x, fxd)) +
               aes(x=x, ymin=0, ymax=fxd),
               fill='blue',
               alpha=0.25) +
-  ylab('f(x)') +
-  theme(aspect.ratio=1)
+  ylab('f(x)')
 
 gb2n <- ggplot(d, aes(x, fxp)) +
   geom_line() +
@@ -298,8 +241,7 @@ gb2n <- ggplot(d, aes(x, fxp)) +
                y=pnorm(xcrit, mu, sigma, lower.tail=T),
                yend=pnorm(xcrit, mu, sigma, lower.tail=T),
                linetype=2) +
-  ylab('P(X<=x)') +
-  theme(aspect.ratio=1)
+  ylab('P(X<=x)')
 
 fxp <- pnorm(x, mu, sigma, lower.tail=F)
 d <- data.table(x, fxd, fxp)
@@ -310,8 +252,7 @@ gc1n <- ggplot(d, aes(x, fxd)) +
               aes(x=x, ymin=0, ymax=fxd),
               fill='blue',
               alpha=0.25) +
-  ylab('f(x)') +
-  theme(aspect.ratio=1)
+  ylab('f(x)')
 
 gc2n <- ggplot(d, aes(x, fxp)) +
   geom_line() +
@@ -325,8 +266,7 @@ gc2n <- ggplot(d, aes(x, fxp)) +
                y=pnorm(xcrit, mu, sigma, lower.tail=F),
                yend=pnorm(xcrit, mu, sigma, lower.tail=F),
                linetype=2) +
-  ylab('P(X>x)') +
-  theme(aspect.ratio=1)
+  ylab('P(X>x)')
 
 fxp <- pnorm(x, mu, sigma, lower.tail=T)
 d <- data.table(x, fxd, fxp)
@@ -337,8 +277,7 @@ gd1n <- ggplot(d, aes(x, fxd)) +
               aes(x=x, ymin=0, ymax=fxd),
               fill='blue',
               alpha=0.25) +
-  ylab('f(x)') +
-  theme(aspect.ratio=1)
+  ylab('f(x)')
 
 gd2n <- ggplot(d, aes(x, 1-fxp)) +
   geom_line() +
@@ -352,12 +291,8 @@ gd2n <- ggplot(d, aes(x, 1-fxp)) +
                y=pnorm(xcrit, mu, sigma, lower.tail=F),
                yend=pnorm(xcrit, mu, sigma, lower.tail=F),
                linetype=2) +
-  ylab('P(X<=x)') +
-  theme(aspect.ratio=1)
-```
+  ylab('P(X<=x)')
 
-
-```{r, echo=F}
 n <- 30
 p <- 0.5
 x <- seq(0, n, 1)
@@ -370,8 +305,7 @@ ga1b <- ggplot(d, aes(x, fxd)) +
   geom_segment(data=d[x>xcrit], aes(x=x, xend=x, y=0, yend=fxd), colour='blue') +
   geom_segment(data=d[x<=xcrit], aes(x=x, xend=x, y=0, yend=fxd)) +
   ylab('f(x)') +
-  scale_x_continuous(breaks=seq(0,n,2))+
-  theme(aspect.ratio=1)
+  scale_x_continuous(breaks=seq(0,n,2))
 
 ga2b <- ggplot(d, aes(x, fxp)) +
   geom_point() +
@@ -386,8 +320,7 @@ ga2b <- ggplot(d, aes(x, fxp)) +
                yend=pbinom(xcrit, n, p, lower.tail=F),
                linetype=2) +
   ylab('P(X>x)') +
-  scale_x_continuous(breaks=seq(0,n,2)) +
-  theme(aspect.ratio=1)
+  scale_x_continuous(breaks=seq(0,n,2))
 
 fxd <- dbinom(x, n, p)
 fxp <- pbinom(x, n, p, lower.tail=T)
@@ -397,8 +330,7 @@ gb1b <- ggplot(d, aes(x, fxd)) +
   geom_segment(data=d[x<=xcrit], aes(x=x, xend=x, y=0, yend=fxd), colour='blue') +
   geom_segment(data=d[x>xcrit], aes(x=x, xend=x, y=0, yend=fxd)) +
   ylab('f(x)') +
-  scale_x_continuous(breaks=seq(0,n,2)) +
-  theme(aspect.ratio=1)
+  scale_x_continuous(breaks=seq(0,n,2))
 
 gb2b <- ggplot(d, aes(x, fxp)) +
   geom_point() +
@@ -413,8 +345,7 @@ gb2b <- ggplot(d, aes(x, fxp)) +
                yend=pbinom(xcrit, n, p, lower.tail=T),
                linetype=2) +
   ylab('P(X<=x)') +
-  scale_x_continuous(breaks=seq(0,n,2)) +
-  theme(aspect.ratio=1)
+  scale_x_continuous(breaks=seq(0,n,2))
 
 fxd <- dbinom(x, n, p)
 fxp <- pbinom(x, n, p, lower.tail=F)
@@ -424,8 +355,7 @@ gc1b <- ggplot(d, aes(x, fxd)) +
   geom_segment(data=d[x>=xcrit], aes(x=x, xend=x, y=0, yend=fxd), colour='blue') +
   geom_segment(data=d[x<xcrit], aes(x=x, xend=x, y=0, yend=fxd)) +
   ylab('f(x)') +
-  scale_x_continuous(breaks=seq(0,n,2))+
-  theme(aspect.ratio=1)
+  scale_x_continuous(breaks=seq(0,n,2))
 
 gc2b <- ggplot(d, aes(x, fxp)) +
   geom_point() +
@@ -440,8 +370,7 @@ gc2b <- ggplot(d, aes(x, fxp)) +
                yend=pbinom(xcrit-1, n, p, lower.tail=F),
                linetype=2) +
   ylab('P(X>x)') +
-  scale_x_continuous(breaks=seq(0,n,2)) +
-  theme(aspect.ratio=1)
+  scale_x_continuous(breaks=seq(0,n,2))
 
 fxd <- dbinom(x, n, p)
 fxp <- pbinom(x, n, p, lower.tail=T)
@@ -451,8 +380,7 @@ gd1b <- ggplot(d, aes(x, fxd)) +
   geom_segment(data=d[x<xcrit], aes(x=x, xend=x, y=0, yend=fxd), colour='blue') +
   geom_segment(data=d[x>=xcrit], aes(x=x, xend=x, y=0, yend=fxd)) +
   ylab('f(x)') +
-  scale_x_continuous(breaks=seq(0,n,2)) +
-  theme(aspect.ratio=1)
+  scale_x_continuous(breaks=seq(0,n,2))
 
 gd2b <- ggplot(d, aes(x, fxp)) +
   geom_point() +
@@ -467,11 +395,8 @@ gd2b <- ggplot(d, aes(x, fxp)) +
                yend=pbinom(xcrit-1, n, p, lower.tail=T),
                linetype=2) +
   ylab('P(X<=x)') +
-  scale_x_continuous(breaks=seq(0,n,2)) +
-  theme(aspect.ratio=1)
-```
+  scale_x_continuous(breaks=seq(0,n,2))
 
-```{r, echo=F, fig.height=25}
 list_1 <- list(ga1n, gb1n, gc1n, gd1n, ga1b, gb1b, gc1b, gd1b)
 list_2 <- list(ga2n, gb2n, gc2n, gd2n, ga2b, gb2b, gc2b, gd2b)
 plot_list_list <- list(list_1, list_2)
@@ -488,12 +413,48 @@ for(i in 1:8) {
 plot_labels <- list('I', 'II', 'III', 'IV',
                     'V', 'VI', 'VII', 'VIII')
 
-ggarrange(plotlist=plot_list,
-          labels=plot_labels,
-          nrow=8,
-          ncol=2)
+ggarrange(
+  plotlist=plot_list,
+  labels=plot_labels,
+  nrow=4,
+  ncol=2)
 ```
 
+For each of the following problems, please respond by
+setting the appropriate variable to one of `"I"`, `"II"`,
+`"III"`, `"IV"`, `"V"`, `"VI"`, `"VII"`, or `"VIII"`.
+
+**(a)** Which plot corresponds to the quantity requested 
+in problem 2a? Please store your answer in a variable named
+`ans_3a`.
+
+**(b)** Which plot corresponds to the quantity requested 
+in problem 2b? Please store your answer in a variable named
+`ans_3b`.
+
+**(c)** Which plot corresponds to the quantity requested 
+in problem 2c? Please store your answer in a variable named
+`ans_3c`.
+
+**(d)** Which plot corresponds to the quantity requested 
+in problem 2d? Please store your answer in a variable named
+`ans_3d`.
+
+**(e)** Which plot corresponds to the quantity requested 
+in problem 2e? Please store your answer in a variable named
+`ans_3e`.
+
+**(f)** Which plot corresponds to the quantity requested 
+in problem 2f? Please store your answer in a variable named
+`ans_3f`.
+
+**(g)** Which plot corresponds to the quantity requested 
+in problem 2g? Please store your answer in a variable named
+`ans_3g`.
+
+**(h)** Which plot corresponds to the quantity requested 
+in problem 2h? Please store your answer in a variable named
+`ans_3h`.
 
 ## Problem 4
 
@@ -510,8 +471,11 @@ d2 <- 100
 ```
 
 
-**(a)** Compute the population mean and variance for $X$ ans
-store your result in a variable named `ans_4a`.
+**(a1)** Compute the population mean for $X$ ans
+store your result in a variable named `ans_4a1`.
+
+**(a2)** Compute the population variance for $X$ ans
+store your result in a variable named `ans_4a2`.
 
 **(b)** We next perform 6 experiments. In each experiment,
 we draw 1000 samples from $X$ and plot a histogram for the
@@ -574,7 +538,7 @@ following:
 
 * `ans_4b <- "skewed left"`
 * `ans_4b <- "skewed right"`
-* `ans_4b <- "Normal"`
+* `ans_4b <- "normal"`
 
 **(c)** We next estimate the distribution of sample means as
 a function of the number of samples `n` that were drawn per
@@ -634,10 +598,42 @@ sample means? Store your answer in a variable named
 of sample means? Store your answer in a variable named
 `ans_4e`.
 
-**(f)** How does increasing $n$ influence your sample mean
-estimate of the population mean?
+<!-- **(f)** The plots above were generated from the data.table `d` -->
+<!-- which is defined in the above code chunk. This data.table contains -->
+<!-- three columns: -->
 
-  * `ans_4f <- "estimate approaches the population value"`
-  * `ans_4f <- "no effect"`
-  * `ans_4f <- "population value decreases variance"`
+<!--   * `exp` indicates the experiment (we ran 1000 of them) -->
+
+<!--   * `n` indicates the number of samples drawn from $X$ in  -->
+<!--   a given experiment.  -->
+
+<!--   * `x` contains the sample mean obtained in experiment `exp`  -->
+<!--   with sample size `n`. -->
+
+<!-- ```{r} -->
+<!-- # inspect d by printing to console -->
+<!-- d -->
+<!-- ``` -->
+
+<!--   * Starting with `d`, create a new data.table named `dd` that  -->
+<!--   contains the mean of `x` per level of `n`. Please be sure that -->
+<!--   you set the column names of `dd` to `n` and `x`, where `x`  -->
+<!--   the mean values just computed. The resulting data.table should -->
+<!--   look eactly as follows. -->
+
+<!-- ```{r, echo=False} -->
+<!-- dd <- d[, .(x=mean(x)), .(n)] -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # inspect dd by printing to console -->
+<!-- dd -->
+<!-- ``` -->
+
+<!-- How does increasing $n$ influence your sample mean -->
+<!-- estimate of the population mean? -->
+
+<!--   * `ans_4f <- "estimate approaches the population value"` -->
+<!--   * `ans_4f <- "no effect"` -->
+<!--   * `ans_4f <- "population value decreases variance"` -->
 
