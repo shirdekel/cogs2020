@@ -1,5 +1,5 @@
 ---
-title: "Lecture 5 - Central limit theorem"
+title: "Lecture 5 - Hypothesis testing"
 author: "Author: Matthew J. Cossley"
 date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -27,32 +27,11 @@ knitr::opts_chunk$set(echo = TRUE)
 * ...
 * ...
 
-## Central limit theorem
+## Hypothesis testing logic
 
-The **central limit theorem** tells us that the sum of
-independent and identically distributed random variables
-approximates a Normal distribution.
 
-Let 
+## Binomial test
 
-$\boldsymbol{Y} = \boldsymbol{X}_1 + \boldsymbol{X}_2 + \dots + \boldsymbol{X}_n$
 
-and 
+## single-sample t-test
 
-$\boldsymbol{X}_i \sim \boldsymbol{D}$
-
-where $\boldsymbol{D}$ can have any distribution whatsoever.
-Then,
-
-$\boldsymbol{Y} \sim N(\mu_{Y}, \sigma_{y}^2)$
-
-where $N$ stands for a *Normal* distribution.
-
-It turns out that we can show:
-
-$\mu_{Y} = \mu_{X}$ 
-
-$\sigma_{y}^2 = \frac{\sigma_{X}^2}{n}$
-
-As a matter of terminology, $\frac{\sigma_{X}^2}{\sqrt{n}}$
-is called the *standard error*.

@@ -50,6 +50,28 @@ library(ggplot2)
 <!--        &= a^2 Var(X) \\ -->
 <!-- \end{align} -->
 
+## Problem 0
+
+* Load `data.table` and `ggplot2` but no other packages.
+
+* Do not call `install.packages` anywhere in this script.
+Once you installed them once, there is no need to install
+them again. If you need to install some other package in the
+future, do so by using `install.packages` function in the
+console.
+
+* Make sure you are starting with a clean environment by
+running `rm(list=ls())`. Running this line of code will
+erase any variable defined before it. Do not put this line
+of code after anything important to keep for grading.
+
+* Create a variable named `my_name` and set its value equal
+to a **character** vector (i.e., letters surrounded by `""`)
+containing your name.
+
+* Create a variable named `my_student_id` and set its value
+equal to a **character** vector (i.e., letters surrounded by
+`""`) containing your student id.
 
 ## Problem 1
 

@@ -656,20 +656,80 @@ p</code></pre>
 <h2>Central limit theorem</h2>
 <p>The <strong>central limit theorem</strong> tells us that the sum of independent and identically distributed random variables approximates a Normal distribution.</p>
 <p>Let</p>
-<p><span class="math inline">\(Y = X_1 + X_2 + \ldots + X_n\)</span></p>
+<p><span class="math inline">\(\boldsymbol{Y} = \boldsymbol{X}_1 + \boldsymbol{X}_2 + \dots + \boldsymbol{X}_n\)</span></p>
 <p>and</p>
-<p><span class="math inline">\(X_i \sim D\)</span></p>
-<p>where <span class="math inline">\(D\)</span> can have any distribution whatsoever. Then,</p>
-<p><span class="math inline">\(\boldsymbol{Y} \sim \mathcal{N}(\mu_{Y}, \sigma_{y}^2)\)</span></p>
-<p>where <span class="math inline">\(\mathcal{N}\)</span> stands for a <em>Normal</em> distribution.</p>
-<p>It turns out that we can show:</p>
-<p><span class="math inline">\(\mu_{Y} = n \mu_{X}\)</span></p>
-<p><span class="math inline">\(\sigma_{y}^2 = n \sigma_{X}^2\)</span></p>
-<p>This leads to the following statements about the <strong>distribution of sample means</strong> defined by the random variable <span class="math inline">\(\bar{X}\)</span>.</p>
-<p><span class="math inline">\(\bar{X}=\frac{X_1 + X_2 + \ldots + X_n}{n}\)</span></p>
-<p><span class="math inline">\(\mu_{\bar{X}} = \mu_{X}\)</span></p>
-<p><span class="math inline">\(\sigma_{\bar{X}}^2 = \frac{\sigma_{\bar{X}}^2}{n}\)</span></p>
-<p>As a matter of terminology, <span class="math inline">\(\sigma_{\bar{X}}=\frac{\sigma_{X}}{\sqrt{n}}\)</span> is called the <em>standard error</em>.</p>
+<p><span class="math inline">\(\boldsymbol{X}_i \sim \boldsymbol{D}\)</span></p>
+<p>where <span class="math inline">\(\boldsymbol{D}\)</span> can have any distribution whatsoever. Then,</p>
+<p><span class="math inline">\(\boldsymbol{Y} \sim N(\mu_{Y}, \sigma_{y}^2)\)</span></p>
+<p>where <span class="math inline">\(N\)</span> stands for a <em>Normal</em> distribution.</p>
+<div id="central-limit-theorem-mean-and-variance" class="section level3">
+<h3>Central limit theorem mean and variance</h3>
+<p>One way to see where the mean and variance parameters come from in the central limit theorem is by using the rule I gave you in Homework 2:</p>
+<p>Let</p>
+<p><span class="math inline">\(Y \sim a X + b\)</span></p>
+<p>Then:</p>
+<p><span class="math inline">\(E(Y) = a E(X) + E(b)\)</span></p>
+<p><span class="math inline">\(Var(Y) = (a^2) E(X)\)</span></p>
+</div>
+<div id="applied-to-the-distribution-of-sample-sums" class="section level3">
+<h3>Applied to the distribution of sample sums</h3>
+<p><span class="math display">\[\begin{align}
+
+\boldsymbol{Y} &amp;= \boldsymbol{X}_1 + \boldsymbol{X}_2 + \dots + \boldsymbol{X}_n \\
+\\
+E(\boldsymbol{Y}) &amp;= E(\boldsymbol{X}_1 + \boldsymbol{X}_2 + \dots + \boldsymbol{X}_n) \\
+    &amp;= E(\boldsymbol{X}_1) + E(\boldsymbol{X}_2) + \dots + E(\boldsymbol{X}_n) \\
+    &amp;= \mu_x + \mu_x + \ldots + \mu_x \\
+    &amp;= n \mu_x \\
+\\   
+Var(\boldsymbol{Y}) &amp;= Var(\boldsymbol{X}_1 + \boldsymbol{X}_2 + \dots + \boldsymbol{X}_n) \\
+    &amp;= Var(\boldsymbol{X}_1) + Var(\boldsymbol{X}_2) + \dots + Var(\boldsymbol{X}_n) \\
+    &amp;= \sigma_x^2 + \sigma_x^2 + \dots + \sigma_x^2 \\
+    &amp;= n \sigma_x^2 \\
+    
+\end{align}\]</span></p>
+<p><span class="math display">\[\begin{align}
+\mu_{Y} &amp;= n \mu_{X} \\
+\sigma_Y^2 &amp;= n \sigma_X^2 \\
+\end{align}\]</span></p>
+</div>
+<div id="applied-to-the-distribution-of-sample-means" class="section level3">
+<h3>Applied to the distribution of sample means</h3>
+<p><span class="math display">\[\begin{align}
+
+\boldsymbol{Y} &amp;= \frac{1}{n} (\boldsymbol{X}_1 + \boldsymbol{X}_2 + \dots + \boldsymbol{X}_n) \\
+\\
+E(\boldsymbol{Y}) &amp;= E(\frac{1}{n} (\boldsymbol{X}_1 + \boldsymbol{X}_2 + \dots + \boldsymbol{X}_n)) \\
+    &amp;= \frac{1}{n} 
+    (E(\boldsymbol{X}_1) + E(\boldsymbol{X}_2) + \dots + E(\boldsymbol{X}_n)) \\
+    &amp;= \frac{1}{n} (\mu_x + \mu_x + \ldots + \mu_x) \\
+    &amp;= \mu_x \\
+\\   
+Var(\boldsymbol{Y}) &amp;= Var(\frac{1}{n} (\boldsymbol{X}_1 + \boldsymbol{X}_2 + \dots + \boldsymbol{X}_n)) \\
+    &amp;= Var(\frac{1}{n^2} (Var(\boldsymbol{X}_1) + Var(\boldsymbol{X}_2) + \dots + Var(\boldsymbol{X}_n)) \\
+    &amp;= \frac{1}{n^2} ( \sigma_x^2 + \sigma_x^2 + \dots + \sigma_x^2 ) \\
+    &amp;= \frac{1}{n} \sigma_x^2 \\
+    
+\end{align}\]</span></p>
+<p><span class="math display">\[\begin{align}
+\mu_{Y} &amp;= \mu_{X} \\
+\sigma_Y^2 &amp;= \frac{1}{n} \sigma_X^2 \\
+\end{align}\]</span></p>
+</div>
+<div id="standard-error" class="section level3">
+<h3>Standard Error</h3>
+<p>When applying the central limit theorem to the distribution of sample means, we get:</p>
+<p><span class="math display">\[\begin{align}
+\mu_{Y} &amp;= \mu_{X} \\
+\sigma_Y^2 &amp;= \frac{1}{n} \sigma_X^2 \\
+\end{align}\]</span></p>
+<p>When expressed in terms of standard deviation:</p>
+<p><span class="math display">\[\begin{align}
+\mu_{Y} &amp;= \mu_{X} \\
+\sigma_y &amp;= \frac{1}{\sqrt{n}} \sigma_X \\
+\end{align}\]</span></p>
+<p>Here, <span class="math inline">\(\sigma_Y\)</span> is called the <strong>standard error of the mean (SEM)</strong> and it is very commonly used to draw error bars on various plots.</p>
+</div>
 </div>
 </div>
 </div>
