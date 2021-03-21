@@ -10,11 +10,10 @@ output:
         smooth_scroll: true
     toc_depth: 2
     fig_caption: yes
-    # code_folding: show
     number_sections: false
     theme: cosmo
 fontsize: 14pt
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 
@@ -22,16 +21,622 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r, echo=F}
+library(data.table)
+library(ggplot2)
+```
 
 ## Learning objectives
-* ...
-* ...
 
-## Hypothesis testing logic
+* Define and understand null hypothesis significance testing.
+
+* Define and understand **p-value**.
+
+* Define and understand **more extreme outcomes** in the context
+  of hypothesis testing.
+
+* Define and understand **critical value**.
+
+* Define and understand **rejection region**.
+
+* Define and understand **$1-\alpha\%$ confidence interval**.
+
+* Be able to perform hypothesis binomial tests and t-tests
+  manually (i.e., run through the 5 steps).
+
+* Understand when and how to use `binom.test()`.
+
+* Understand when and how to use `t.test()`.
 
 
-## Binomial test
+## Null Hypothesis Significance Testing
+
+We will unpack each of these 5 steps in the examples that
+follow. They are listed here for reference.
+
+1. Specify the null and alternative hypotheses ($H_0$ and
+   $H_1$) in terms of a population parameter.
+
+2. Specify the type I error rate -- denoted by the symbol
+   $\alpha$) -- you are willing to tolerate.
+
+3. Specify the sample statistic that you will use to
+   estimate the population parameter in step 1 and state how
+   it is distributed under the assumption that $H_0$ is
+   true.
+
+4. Obtain a random sample and use it to compute the sample
+   statistic from step 3. Call this value
+   $\widehat{\theta}_{\text{obs}}$
+
+5. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
+   occur under the assumption that $H_0$ is true, then
+   reject $H_0$. Otherwise, do not reject $H_0$.
+
+## Binomial Test
+
+Consider an experiment in which researchers are trying to
+determine if a particular rat has learned to press one of
+two levers whenever they are placed inside of an
+experimental apparatus. Intuitively, answering this
+questions would be as simple as just watching the rat and
+taking note of whether it pressed the correct lever or not.
+The trouble is that rat behaviour is somewhat random: it
+sometimes pressed the correct lever and sometimes presses
+the incorrect lever.
+
+Suppose that the experiment contained $n=100$
+trials and the number of trials in which the rat pressed the
+lever was $n_{\text{pressed}}=61$. Did the rat learn or not?
+We turn to **Null Hypothesis Significance Testing (NHST)**
+to answer this question.
+
+<h4>1\. Specify the null and alternative hypotheses ($H_0$ and
+   $H_1$) in terms of a distribution and population
+   parameter.</h4>
+
+First, decide on a statistical model for the measurements
+you are trying to reason about. That is, think of your data
+as being samples from a random variable. What distribution
+does that random variable have? We have a rat that either
+presses the correct lever or doesn't. This is a dichotomous
+outcome, so we know that Binomial distribution is a good
+model. Recall that the binomial has two parameters, (1) the
+number of trials $n$ and (2) the probability of success $p$.
+The number of trials is fixed for us by our experiment
+($n=100$), and $p$ is the very thing we are trying to reason
+about. If $p=0.5$ then the rat is just guessing at the
+levers. If $p>0.5$ then the rat is doing better than
+guessing and we would say that it has learned.
+
+$$
+H_0: p_{\text{success}} = 0.5 \\
+H_1: p_{\text{success}} > 0.5
+$$
+
+<h4>2\. Specify the type I error rate -- denoted by the symbol
+   $\alpha$ -- you are willing to tolerate.</h4>
+
+It is traditional in psychology and neuroscience to tolerate
+a $5\%$ type I error rate in our inference procedure. This
+means that 5 out of every 100 times we think the rat has
+learned, we will have made an incorrect conclusion.
+
+$$
+\alpha=0.5
+$$
+
+<h4>3\. Specify the sample statistic that you will use to
+   estimate the population parameter in step 1 and state how
+   it is distributed under the assumption that $H_0$ is
+   true.</h4>
+
+We are trying to make an inference about the population
+parameter $p_{\text{success}}$. An intuitive estimate of
+this parameter is the proportion of successful trials
+relative to all trials performed.
+
+For convenience, allow the following definitions:
+
+* $n_{\text{success}} = x$
+* $n_{\text{total}} = n$
+* $p_{\text{success}} = p$
+* $\widehat{p}=\frac{x}{n}$
+
+We know that $x$ is Binomial, but what about $\widehat{p}$?
+With some careful thinking, we can see that $\widehat{p}$ is
+also Binomial. The possible outcomes of $x$ just need to be
+normalised by the total number of observations and the
+probabilities associated with these outcomes are the same
+Binomial probabilities that corresponded to the $x$
+distribution. Another approach (not taken here) is to
+rephrase the hypotheses to be in terms of counts instead of
+proportions. The **sampling distribution** looks as follows:
+
+$$
+x \sim binomial(n, p) \\
+\widehat{p} = \frac{x}{n} \sim binomial(n, p), x \rightarrow \frac{x}{n}
+$$
+
+```{r, echo=F}
+n <- 100
+p <- 0.5
+x <- 0:n
+fx <- dbinom(x, n, p)
+x <- x/n
+xobs <- 61/n
+d <- data.table(x,
+                fx,
+                region=factor(x>=xobs, labels=c('x < xobs', 'x >= xobs')))
+ggplot(d, aes(x, fx, colour=region)) +
+  geom_point() +
+  geom_segment(aes(x=xobs, xend=xobs, y=0, yend=d[x==xobs, fx]),
+               colour='black',
+               linetype=2) +
+  annotate('text', x=xobs+0.2, y=d[x==xobs, fx],
+           label='xobs or more extreme',
+           colour='black') +
+  scale_x_continuous(breaks=seq(0,n,10)/n) +
+  ylab('P(X=x)') +
+  xlab('x_successes / n_total') +
+  theme(legend.title = element_blank())
+```
+
+<h4>4\. Obtain a random sample and use it to compute the
+   sample statistic from step 3. Call this value
+   $\widehat{\theta}_{\text{obs}}$</h4>
+
+This was given to us in the formulation of the example. The
+key is to understand that in this example,
+$\widehat{\theta}_{\text{obs}} = \widehat{p}$
+
+$$
+\widehat{p}=\frac{63}{100} \\
+\widehat{p}=0.63
+$$
+
+<h4>5\. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
+   occur under the assumption that $H_0$ is true, then
+   reject $H_0$. Otherwise, do not reject $H_0$.</h4>
+
+Compute the probability of $\widehat{\theta}_{\text{obs}}$
+**or a more extreme outcome** occurring under the
+assumption that $H_0$ is true. This value is called the
+**p-value** in NHST. If the p-value is very small then
+reject $H_0$. Otherwise, fail to reject $H_0$.
+
+**Notice that our logic only allows to reject or fail to
+reject the null hypothesis.** We can't make any inference
+about the alternative hypothesis (e.g., we can't accept the
+alternative). We are only assessing the evidence for the
+null. The purpose of including an alternative hypothesis is
+to give meaning to what sorts of outcomes correspond to more
+extreme than what we observed.
+
+When actually computing the p-value, we will turn to
+`pbinom()`. From the plot above, and from reasoning about
+the alternative hypothesis, we see that we need
+`lower.tail=FALSE`.
+
+```{r}
+pval <- pbinom(xobs * n - 1, n, p, lower.tail=FALSE)
+pval
+```
+
+The decision rule above can also be expressed in terms of a
+**critical value**. The critical value in NHST is the value
+which corresponds to $\widehat{\theta}_{\text{obs}} = 0.05$. As
+such, any observed outcome equal to the critical value or
+more extreme than the critical value should lead to the
+rejection of the null. For this reason, values more extreme
+than the critical value are said reside in the **rejection
+region**.
+
+To obtain critical values, we need to get an outcome that
+corresponds to a specific probability. This is given to us
+by the `qbinom()` function, again with `lower.tail=FALSE`.
+
+```{r}
+# Have to divide by n because we are working with
+# proportions not counts
+xcrit <- qbinom(0.05, n, p, lower.tail=FALSE) / n
+xcrit
+```
+
+```{r, echo=F}
+d <- data.table(x,
+                fx,
+                pregion=factor(x>=xcrit, labels=c('x < xobs', 'x >= xobs')),
+                rregion=factor(x>=xcrit, labels=c('x < xcrit', 'x >= xcrit'))
+                )
+ggplot(d, aes(x, fx, colour=rregion)) +
+  geom_point() +
+  geom_segment(aes(x=xobs, xend=xobs, y=0, yend=d[x==xobs, fx]),
+               colour='black',
+               linetype=2) +
+  geom_segment(aes(x=xcrit, xend=xcrit, y=0, yend=d[x==xcrit, fx]),
+               linetype=2) +
+  annotate('text', x=xobs+0.05, y=d[x==xobs, fx],
+           label='xobs',
+           colour='black') +
+  annotate('text', x=xobs+0.2, y=d[x==xcrit, fx],
+           label='rejection region',
+           colour='#00AFBB') +
+  scale_x_continuous(breaks=seq(0,n,10)/n) +
+  ylab('P(X=x)') +
+  xlab('x_successes / n_total') +
+  theme(legend.title = element_blank())
+```
+
+Yet another way of stating the decision rule above is
+through the use of **95% confidence intervals**. A
+confidence interval is a range of outcomes within which the
+probability that the true parameter value is within the
+interval is 95%. If the null falls outside of a test 95%
+confidence interval, then we reject the null. Learning how
+to compute confidence intervals for a binomial test is a bit
+beyond the scope of this unit, but later on we will learn
+how to compute them for other sampling distributions. For
+now, it is enough to simply be aware that they exist and
+have a vague understanding of whhat they are and how to
+use them. A full treatment of confidence intervals will
+come in a later lecture.
+
+The five steps outlined above are the core of
+null-hypothesis significance testing, and working through
+each step in the longhand format that we just did is
+important to be able to do. This is because these five steps
+are completely general and will perfectly apply to any
+situation you might find yourself in. That said, in many
+situations, R has built-in functions to handle all five
+steps in one line of code. When making inferences from a
+binomial distribution, you can use the `binom.test()`
+function.
+
+```{r}
+xobs <- 61       ## number of observed successes
+n <- 100         ## n parameter of H0
+p <- 0.5         ## p parameter of H0
+alpha <- 0.05    ## error rate tolerance
+alt <- 'greater' ## test direction
+
+## Use built in `binom.test()`
+binom.test(xobs,
+           n,
+           p,
+           alternative = alt,
+           conf.level = 1 - alpha
+           )
+```
+
+## Normal test
+
+Consider an experiment in which a rat is placed into a maze
+and given the chance to search for a bit of cheese hidden
+somewhere in the maze. After much training, the researchers
+are interested in assessing whether or not the animal has
+learned where the cheese is hidden. The researchers also
+know that rats without any training whatsoever find the
+cheese on average in 90 seconds with a standard deviation
+of 20 seconds. They perform 15 trials and measure the time
+to cheese on each trial. The data are as follows:
+
+```{r, echo=F}
+set.seed(0)
+n <- 15
+mux <- 80
+sigx <- 20
+xobs <- rnorm(n, mux, sigx)
+d <- data.table(xobs)
+ggplot(d, aes(xobs)) +
+  geom_histogram(bins=6)
+```
+
+<h4>1\. Specify the null and alternative hypotheses ($H_0$ and
+   $H_1$) in terms of a distribution and population
+   parameter.</h4>
+
+If the rat has learned something about where to find the cheese,
+then we expect it's time to be less than that of naive rats,
+which we are told is 90 seconds. This leads to the following hypotheses.
+
+$$
+H_0: \mu = 90 \\
+H_1: \mu < 90
+$$
+
+<h4>2\. Specify the type I error rate -- denoted by the symbol
+   $\alpha$ -- you are willing to tolerate.</h4>
+
+$$
+\alpha = 0.05
+$$
+
+<h4>3\. Specify the sample statistic that you will use to
+   estimate the population parameter in step 1 and state how
+   it is distributed under the assumption that $H_0$ is
+   true.</h4>
+
+$$
+\widehat{\mu} = \bar{x} \\
+\bar{x} \sim \mathcal{N}(\mu_{\bar{x}}, \sigma_{\bar{x}})
+$$
+
+Since we are the sample mean $\bar{x}$ to estimate $\mu$,
+the sampling distribution of our test statistic is the
+distribution of sample means. This is great news because
+we know from previous lectures how the mean and variance
+of the distribution of sample means $\bar{x}$ relates to
+the mean and variance of our origin distribution $x$. In
+particular, we know:
+
+$$
+\mu_{\bar{x}} = \mu_{x} \\
+\sigma_{\bar{x}} = \frac{\sigma_{x}}{\sqrt{n}}
+$$
+
+<h4>4\. Obtain a random sample and use it to compute the sample
+   statistic from step 3. Call this value
+   $\widehat{\theta}_{\text{obs}}$</h4>
+
+In this example, $\widehat{\theta}_{\text{obs}}$ corresponds to the
+observed sample mean, which for this sample works out to be
+$\bar{x}$ `r mean(xobs)`. We can now inspect the sampling distribution
+under the assumption that $H_0$ is true, and inspect how likely the observed $\bar{x}$ is to be sampled from this distribution.
+
+```{r, echo=F}
+xbarobs <- mean(xobs)
+muxbar <- 90
+sigxbar <- sigx / sqrt(n)
+x <- seq(muxbar-4*sigxbar, muxbar+4*sigxbar, 0.01)
+fx <- dnorm(x, muxbar, sigxbar)
+d <- data.table(x,
+                fx,
+                region=factor(x<=xbarobs, labels=c('x <= xobs', 'x > xobs')))
+ggplot(d, aes(x, fx, colour=region)) +
+  geom_line() +
+  geom_vline(xintercept=xbarobs, colour='black', linetype=2) +
+  geom_ribbon(aes(ymin=0, ymax=dnorm(x, muxbar, sigxbar), fill=region), alpha=0.5) +
+  annotate('text', x=75, y=0.05,
+           label='xobs or more extreme',
+           colour='#00AFBB') +
+  ylab('f(x)') +
+  xlab('x') +
+  theme(legend.title = element_blank())
+```
+
+<h4>5\. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
+   occur under the assumption that $H_0$ is true, then
+   reject $H_0$. Otherwise, do not reject $H_0$.</h4>
+
+When computing the p-value, we will turn to `pnorm()`. From the
+plot above, and from reasoning about the alternative hypothesis,
+we see that we need `lower.tail=TRUE`.
+
+```{r}
+## p-value
+pval <- pnorm(xbarobs, muxbar, sigxbar, lower.tail=TRUE)
+pval
+
+## critical value
+xbarcrit <- qnorm(0.05, muxbar, sigxbar, lower.tail=TRUE)
+xbarcrit
+```
+
+It is easy to decide whether or not to reject $H_0$ based on
+the p-value or the critical region, but it sure would be nice
+if R gave us a one liner like `binom.test()`. Unfortunately,
+in the case of a normal sampling distribution, no such R function
+exists. The reason for this is that to have a normal $\bar{x}$
+sampling distribution, you have to know both the mean and the variance
+of the $H_0$ distribution. The mean is specified by $H_0$ so is
+no issue, but we rarely are in a situation to know the population
+variance of X, and we therefore have to estimate it. This leads
+us to the famous t-test.
+
+## t-test
+
+So far, everything that we have done we have been lucky
+enough to know both the mean and the variance of the
+sampling distribution in our hypothesis tests. The mean is
+specified in $H_0$ and $H_1$ and the variance has either
+fallen out luckily (e.g., as with the Binomial test), or I
+have just given you a number and told you pretend that we
+just know it to be true (e.g., previous cheese maze
+example). Of course, in most real world scenarios, we will
+not know the variance of the sampling distribution, and this
+means that the approaches we have developed so far aren't
+quite appropriate. Here is what we do instead:
+
+Let $X_1, X_2, \ldots, X_n$ be independent and identically
+distributed as
+
+$$
+X_i \sim N(\mu_X, \sigma_X)
+$$
+
+and define two random variables $\bar{X}$ and $S^2$ as
+
+$$
+\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i
+$$
+
+$$
+S^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X})^2
+$$
+
+then the random variable
+
+$$
+\frac{\bar{X} - \mu_X}{\frac{\sigma_X}{\sqrt{n}}} \sim N(0, 1) = Z
+$$
+
+and
+
+$$
+\frac{\bar{X} - \mu_X}{\frac{S}{\sqrt{n}}} \sim t(n-1)
+$$
+
+where $t$ is a t-distribution, which is completely defined
+by one parameter called the *degrees of freedom* given by
+$n-1$. This all means that the mathematical formulation for
+how our sampling distribution is defined is different
+depending on whether or not we know $\sigma_X$.
+Lets examine how this pans out using the cheese example from
+the previous example, but without assuming known variance.
+
+<h4>1\. Specify the null and alternative hypotheses ($H_0$ and
+   $H_1$) in terms of a distribution and population
+   parameter.</h4>
+
+$$
+H_0: \mu = 90 \\
+H_1: \mu < 90
+$$
+
+<h4>2\. Specify the type I error rate -- denoted by the symbol
+   $\alpha$ -- you are willing to tolerate.</h4>
+
+$$
+\alpha = 0.05
+$$
+
+<h4>3\. Specify the sample statistic that you will use to
+   estimate the population parameter in step 1 and state how
+   it is distributed under the assumption that $H_0$ is
+   true.</h4>
+
+In this example we do not know $\sigma_{x}$, and so we
+must estimate it. This means that we do not want to reason using
+and observed $\bar{x}$ value and corresponding sampling distribution,
+but instead want to reason using an observed $t$ value and corresponding
+t-distribution.
+
+$$
+t_{obs} = \frac{\bar{x} - \mu_x}{\frac{s_x}{\sqrt{n}}} \sim t(n-1)
+$$
+
+<h4>4\. Obtain a random sample and use it to compute the sample
+   statistic from step 3. Call this value
+   $\widehat{\theta}_{\text{obs}}$</h4>
+
+For our data, the following is true:
+
+* $n=15$,
+* $\bar{x} =$ `r mean(xobs)`,
+* $s_x =$ `r sd(xobs)`
+* $t_{obs} =$ `r (mean(xobs)-90)/(sd(xobs)/sqrt(n))`.
+
+```{r, echo=F, warning=F}
+tobs <- (mean(xobs)-90)/(sd(xobs)/sqrt(n))
+mu <- 0
+t <- seq(-4, 4, 0.01)
+ft <- dt(x, n-1)
+
+xbarobs <- mean(xobs)
+muxbar <- 90
+sigxbar <- sigx / sqrt(n)
+zobs <- (xbarobs - 90) / sigxbar
+z <- seq(-4, 4, 0.01)
+fz <- dnorm(z, 0, 1)
+
+d <- data.table(t,
+                ft,
+                z,
+                fz,
+                region=factor(t<=tobs, labels=c('t <= tobs', 't > tobs')))
+
+ggplot(d, aes(t, ft, colour=region)) +
+  geom_line() +
+  geom_line(aes(z, fz), colour='black') +
+  geom_vline(xintercept=tobs, colour='black', linetype=2) +
+  geom_ribbon(aes(ymin=0, ymax=dt(t, n-1), fill=region), alpha=0.5) +
+  annotate('text', x=-3, y=0.1,
+           label='tobs or more extreme',
+           colour='#00AFBB') +
+  ylab('f(t)') +
+  xlab('t') +
+  theme(legend.title = element_blank())
+```
+
+The above plot shows the $t(n-1)$ sampling distribution in
+colour, and the $Z\sim\mathcal{N}(0,1)$ in black. The $t$
+has higher tails than the $Z$. This is because the t-value
+is the result of two random variables (sample mean and
+sample variance), while the z-value is only a product of
+only one random variable (the sample mean). However, it is
+easy to see that the difference between $t$ and $Z$ is
+reduces as $n$ increases.
+
+```{r, echo=F}
+z <- seq(-5, 5, 0.001)
+fz <- dnorm(z, 0, 1)
+ft1 <- dt(z, 1)
+ft3 <- dt(z, 3)
+ft10 <- dt(z, 10)
+
+d <- data.table(z, fz, ft1, ft3, ft10)
+
+dd <- melt(d, measure.vars=c('fz', 'ft1', 'ft3', 'ft10'))
+
+ggplot(dd, aes(z, value, colour=variable)) +
+  geom_line() +
+  xlab('x') +
+  ylab('f(x)')
+```
+
+<h4>5\. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
+   occur under the assumption that $H_0$ is true, then
+   reject $H_0$. Otherwise, do not reject $H_0$.</h4>
+
+When computing the p-value, we will turn to `pt()`. From the
+plot above, and from reasoning about the alternative hypothesis,
+we see that we need `lower.tail=TRUE`.
+
+```{r}
+## p-value
+pval <- pt(tobs, n-1, lower.tail=TRUE)
+pval
+
+## critical value
+tcrit <- qt(0.05, n-1, lower.tail=TRUE)
+tcrit
+```
+
+Finally, there is a built in function called `t.test()` that
+will do all of this for you.
+```{r}
+t.test(xobs, mu=90, alternative='less')
+```
 
 
-## single-sample t-test
+## Summary
 
+* The **p-value** is the probability of the outcome or a
+  more extreme outcome occurring under the assumption that 
+  $H_0$ is true.
+  
+* What counts as a more extreme outcome is determined by $H_1$.
+
+* The **critical value** is the observed value for which
+  more extreme outcomes would lead us to reject $H_0$.
+
+* The **rejection region** is the set of all outcomes that
+  would lead us to reject $H_0$.
+
+* A **$1-\alpha\%$ confidence interval** is a range of
+  values in which the true value of the parameter is
+  $1-\alpha\%$ likely to reside.
+
+* `binom.test()` can be used to efficiently perform a
+  binomial test without manually labouring through the
+  5 steps.
+
+* Must do everything long-form if dealing with a Normal
+  sampling distribution (known variance).
+  
+* A $t$ distribution has higher tails than a $Z$ distribution
+  but is otherwise very similar.
+  
+* `t.test()` can be used to efficiently perform a t-test
+  without manually labouring through the 5 steps.
