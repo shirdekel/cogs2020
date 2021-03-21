@@ -28,9 +28,9 @@ fontsize: 14pt
 <!-- #### Lecture 4: Binomial distribution, Normal distribution, central limit theorem -->
 #### [Lecture 4: Binomial distribution, Normal distribution, central limit theorem](lecture_4.html)
 
-#### Lecture 5: Null hypothesis significance testing
+<!-- #### Lecture 5: Null hypothesis significance testing -->
 <!-- #### Lecture 5: Critical values, two-tailed tests, confidence intervals, Type I vs type II errors -->
-<!-- #### [Lecture 5: Critical values, two-tailed tests, confidence intervals, Type I vs type II errors](lecture_5.html) -->
+#### [Lecture 5: Null hypothesis significance testings](lecture_5.html)
 
 #### Lecture 6: Binomial test, one-sample t-test
 <!-- #### [Lecture 6: Binomial test, one-sample t-test](lecture_6.html) -->
