@@ -491,13 +491,9 @@ Consider the random variable $X{\sim}F(d_1,d_2)$ with fixed parameters $d_1=5$,
 $d_2=100$.  Given these values of $d_1$ and $d_2$, the following holds true:
 
 $$
-\text{if }X &\sim F(d_1,d_2)\text{ then:}\\
-\\
-\begin{align}
-\mathbb{E}[X] &= \frac{d_2}{d_2 - 2} \\ 
-\\
-\mathbb{V}\text{ar}[X] &= \frac{2 d_2^2 (d_1 + d_2 - 2)}{d_1 (d_2 - 2)^2 (d_2 - 4)}
-\end{align}
+\text{if } X \sim F(d_1,d_2)\text{ then:}\\
+\mathbb{E}[X] = \frac{d_2}{d_2 - 2} \\ 
+\mathbb{V}\text{ar}[X] = \frac{2 d_2^2 (d_1 + d_2 - 2)}{d_1 (d_2 - 2)^2 (d_2 - 4)}
 $$
 
 ```{r, echo=F}
