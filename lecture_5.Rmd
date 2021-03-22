@@ -24,6 +24,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, echo=F}
 library(data.table)
 library(ggplot2)
+library(ggpubr)
+rm(list=ls())
 ```
 
 ## Learning objectives
@@ -55,22 +57,22 @@ We will unpack each of these 5 steps in the examples that
 follow. They are listed here for reference.
 
 1. Specify the null and alternative hypotheses ($H_0$ and
-   $H_1$) in terms of a population parameter.
+   $H_1$) in terms of a population parameter $\theta$.
 
 2. Specify the type I error rate -- denoted by the symbol
    $\alpha$) -- you are willing to tolerate.
 
-3. Specify the sample statistic that you will use to
-   estimate the population parameter in step 1 and state how
+3. Specify the sample statistic $\widehat{\theta}$ that you will use to
+   estimate the population parameter $\theta$ in step 1 and state how
    it is distributed under the assumption that $H_0$ is
    true.
 
 4. Obtain a random sample and use it to compute the sample
    statistic from step 3. Call this value
-   $\widehat{\theta}_{\text{obs}}$
+   $\widehat{\theta}_{\text{obs}}$.
 
-5. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
-   occur under the assumption that $H_0$ is true, then
+5. If $\widehat{\theta}_{\text{obs}}$ or a more extreme outcome 
+   is very unlikely to occur under the assumption that $H_0$ is true, then
    reject $H_0$. Otherwise, do not reject $H_0$.
 
 ## Binomial Test
@@ -106,12 +108,17 @@ number of trials $n$ and (2) the probability of success $p$.
 The number of trials is fixed for us by our experiment
 ($n=100$), and $p$ is the very thing we are trying to reason
 about. If $p=0.5$ then the rat is just guessing at the
-levers. If $p>0.5$ then the rat is doing better than
-guessing and we would say that it has learned.
+levers. This corresponds to a null result, and therefore
+to the null hypothesis $H_0$. If $p>0.5$ then the rat is doing better than
+guessing and we would say that it has learned. Therefore, 
+this corresponds to the alternative hypothesis $H_1$.
+Let $X$ be the binomial random variable that generates
+the results in the above experiment. Then, 
 
 $$
-H_0: p_{\text{success}} = 0.5 \\
-H_1: p_{\text{success}} > 0.5
+X \sim binomial(n=100, p) \\
+H_0: p = 0.5 \\
+H_1: p > 0.5
 $$
 
 <h4>2\. Specify the type I error rate -- denoted by the symbol
@@ -132,30 +139,29 @@ $$
    true.</h4>
 
 We are trying to make an inference about the population
-parameter $p_{\text{success}}$. An intuitive estimate of
-this parameter is the proportion of successful trials
-relative to all trials performed.
-
-For convenience, allow the following definitions:
-
-* $n_{\text{success}} = x$
-* $n_{\text{total}} = n$
-* $p_{\text{success}} = p$
-* $\widehat{p}=\frac{x}{n}$
-
-We know that $x$ is Binomial, but what about $\widehat{p}$?
-With some careful thinking, we can see that $\widehat{p}$ is
-also Binomial. The possible outcomes of $x$ just need to be
-normalised by the total number of observations and the
-probabilities associated with these outcomes are the same
-Binomial probabilities that corresponded to the $x$
-distribution. Another approach (not taken here) is to
-rephrase the hypotheses to be in terms of counts instead of
-proportions. The **sampling distribution** looks as follows:
+parameter $p$. An intuitive estimate of this parameter is 
+the proportion of successful trials relative to all trials 
+performed. Let $x$ be the be the count of successful trials.
+Then, 
 
 $$
-x \sim binomial(n, p) \\
-\widehat{p} = \frac{x}{n} \sim binomial(n, p), x \rightarrow \frac{x}{n}
+\widehat{p}=\frac{x}{n}
+$$
+
+We know that $X$ is Binomial, but what about $\widehat{p}$?
+With some careful thinking, we can see that $\widehat{p}$ is
+also Binomial. The possible outcomes of $X$ just need to be
+normalised by the total number of observations $n$. The
+probabilities associated with each outcome are the same
+as those that corresponded to the $X$ distribution. 
+Another approach (not taken here) is to
+rephrase the hypotheses to be in terms of counts instead of
+proportions (e.g., $H_0: np = 50; H_0: np > 50$). 
+The **sampling distribution** of $\widehat{p}$ under the null 
+is as follows:
+
+$$
+\widehat{p} = \frac{X}{n} \sim binomial(n=100, p=0.5), x \rightarrow \frac{x}{n}
 $$
 
 ```{r, echo=F}
@@ -175,7 +181,7 @@ ggplot(d, aes(x, fx, colour=region)) +
                linetype=2) +
   annotate('text', x=xobs+0.2, y=d[x==xobs, fx],
            label='xobs or more extreme',
-           colour='black') +
+           colour='#00AFBB') +
   scale_x_continuous(breaks=seq(0,n,10)/n) +
   ylab('P(X=x)') +
   xlab('x_successes / n_total') +
@@ -188,11 +194,10 @@ ggplot(d, aes(x, fx, colour=region)) +
 
 This was given to us in the formulation of the example. The
 key is to understand that in this example,
-$\widehat{\theta}_{\text{obs}} = \widehat{p}$
+$\widehat{\theta}_{\text{obs}} = \widehat{p}_{\text{obs}}$.
 
 $$
-\widehat{p}=\frac{63}{100} \\
-\widehat{p}=0.63
+\widehat{p}_{\text{obs}}=\frac{61}{100}
 $$
 
 <h4>5\. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
@@ -202,8 +207,14 @@ $$
 Compute the probability of $\widehat{\theta}_{\text{obs}}$
 **or a more extreme outcome** occurring under the
 assumption that $H_0$ is true. This value is called the
-**p-value** in NHST. If the p-value is very small then
-reject $H_0$. Otherwise, fail to reject $H_0$.
+**p-value** in NHST. If the p-value is very small (less than \alpha) 
+then reject $H_0$. Otherwise, fail to reject $H_0$. Formally, we write
+our decision rule as follows:
+
+$$
+\text{if } P(\widehat{\theta} \geq \widehat{\theta}_{\text{obs}} | H_0) \leq \alpha \rightarrow \text{Reject } H_0\\
+\text{otherwise fail to reject } H_0
+$$
 
 **Notice that our logic only allows to reject or fail to
 reject the null hypothesis.** We can't make any inference
@@ -213,21 +224,42 @@ null. The purpose of including an alternative hypothesis is
 to give meaning to what sorts of outcomes correspond to more
 extreme than what we observed.
 
+To proceed, note again that in this example 
+$\widehat{\theta}_{\text{obs}} = \widehat{p}_{\text{obs}}$.
+We therefore need to compute 
+
+$$
+P(\widehat{p} \geq \widehat{p}_{\text{obs}} | H_0)
+$$
+
 When actually computing the p-value, we will turn to
 `pbinom()`. From the plot above, and from reasoning about
 the alternative hypothesis, we see that we need
 `lower.tail=FALSE`.
 
 ```{r}
-pval <- pbinom(xobs * n - 1, n, p, lower.tail=FALSE)
+n <- 100
+xobs <- 61 # observed count
+phatobs <- xobs / n # observed proporion
+
+## `xobs-1` because `lower.tail=FALSE` give P(X > x)
+## but we want P(X >= x)
+pval <- pbinom(xobs-1, n, p, lower.tail=FALSE)
 pval
+
+## Notice that in the above we used `xobs` and not `phatobs`.
+## This is becuase `pbinom()` needs counts, not proportions 
+## to functino properly. The probability it returns for `xobs`
+## will perfectly correspond to the probabiliy of `phatobs` 
+## because of the notes discussed above in step 3
 ```
 
 The decision rule above can also be expressed in terms of a
-**critical value**. The critical value in NHST is the value
-which corresponds to $\widehat{\theta}_{\text{obs}} = 0.05$. As
-such, any observed outcome equal to the critical value or
-more extreme than the critical value should lead to the
+**critical value**. The critical value $\widehat{\theta}_{\text{crit}}$ in NHST is the outcome
+such that $P(\widehat{\theta} \geq \widehat{\theta}_{\text{crit}} | H_0) \leq \alpha$.
+
+As such, any observed outcome equal to the critical value or
+more extreme than the critical value will lead to the
 rejection of the null. For this reason, values more extreme
 than the critical value are said reside in the **rejection
 region**.
@@ -237,31 +269,38 @@ corresponds to a specific probability. This is given to us
 by the `qbinom()` function, again with `lower.tail=FALSE`.
 
 ```{r}
-# Have to divide by n because we are working with
-# proportions not counts
-xcrit <- qbinom(0.05, n, p, lower.tail=FALSE) / n
+n <- 100
+p <- 0.5
+xcrit <- qbinom(0.05, n, p, lower.tail=FALSE)
+## Have to divide by n because we are working with
+## proportions not counts
+phatcrit <- xcrit / n
+
 xcrit
+phatcrit
 ```
 
 ```{r, echo=F}
 d <- data.table(x,
                 fx,
-                pregion=factor(x>=xcrit, labels=c('x < xobs', 'x >= xobs')),
-                rregion=factor(x>=xcrit, labels=c('x < xcrit', 'x >= xcrit'))
+                pregion=factor(x>=phatcrit, labels=c('x < xobs', 'x >= xobs')),
+                rregion=factor(x>=phatcrit, labels=c('x < xcrit', 'x >= xcrit'))
                 )
 ggplot(d, aes(x, fx, colour=rregion)) +
   geom_point() +
-  geom_segment(aes(x=xobs, xend=xobs, y=0, yend=d[x==xobs, fx]),
+  geom_segment(aes(x=phatobs, xend=phatobs, y=0, yend=d[x==phatobs, fx]),
                colour='black',
                linetype=2) +
-  geom_segment(aes(x=xcrit, xend=xcrit, y=0, yend=d[x==xcrit, fx]),
+  geom_segment(aes(x=phatcrit, xend=phatcrit, y=0, yend=d[x==phatcrit, fx]),
                linetype=2) +
-  annotate('text', x=xobs+0.05, y=d[x==xobs, fx],
-           label='xobs',
-           colour='black') +
-  annotate('text', x=xobs+0.2, y=d[x==xcrit, fx],
-           label='rejection region',
-           colour='#00AFBB') +
+  annotate('text', x=phatobs+0.01, y=d[x==phatobs, fx],
+           label='observed outcome',
+           colour='black',
+           hjust=0) +
+  annotate('text', x=phatcrit+0.01, y=d[x==phatcrit, fx],
+           label='critical value (rejection region)',
+           colour='#00AFBB',
+           hjust=0) +
   scale_x_continuous(breaks=seq(0,n,10)/n) +
   ylab('P(X=x)') +
   xlab('x_successes / n_total') +
@@ -375,35 +414,76 @@ $$
 \sigma_{\bar{x}} = \frac{\sigma_{x}}{\sqrt{n}}
 $$
 
+We can now inspect the sampling distribution
+under the assumption that $H_0$ is true, and inspect how likely the observed 
+$\bar{x}$ is to be sampled from this distribution.
+
+```{r, echo=F, fig.width=10}
+xbarobs <- mean(xobs)
+muxbar <- 90
+sigxbar <- sigx / sqrt(n)
+xbarcrit <- qnorm(0.05, muxbar, sigxbar, lower.tail=TRUE)
+x <- seq(muxbar-4*sigxbar, muxbar+4*sigxbar, 0.01)
+fx <- dnorm(x, muxbar, sigxbar)
+d <- data.table(x,
+                fx,
+                region=factor(x<=xbarobs, labels=c('x > xbarobs', 'x <= xbarobs')),
+                cregion=factor(x<=xbarcrit, labels=c('x > xbarcrit', 'x <= xbarcrit')))
+
+g1 <- ggplot(d, aes(x, fx, colour=region)) +
+  geom_line() +
+  geom_vline(xintercept=xbarobs, colour='black', linetype=2) +
+  geom_ribbon(aes(ymin=0, ymax=dnorm(x, muxbar, sigxbar), fill=region), alpha=0.5) +
+  annotate('text', x=xbarobs-0.1, y=dnorm(xbarobs, muxbar, sigxbar),
+           label='xobs or \n more extreme',
+           colour='#00AFBB',
+           hjust=1) +
+  ylab('f(xbar)') +
+  xlab('xbar') +
+  ggtitle('p-value approach') +
+  theme(legend.position = "non")
+
+g2 <- ggplot(d, aes(x, fx, colour=cregion)) +
+  geom_line() +
+  geom_vline(xintercept=xbarobs, colour='black', linetype=2) +
+  geom_vline(xintercept=xbarcrit, colour='black', linetype=2) +
+  geom_ribbon(aes(ymin=0, ymax=dnorm(x, muxbar, sigxbar), fill=cregion), alpha=0.5) +
+  annotate('text', x=xbarcrit-0.1, y=dnorm(xbarcrit, muxbar, sigxbar),
+           label='critical value\n(rejection region)',
+           colour='#00AFBB',
+           hjust=1) +
+  annotate('text', x=xbarobs+0.1, y=dnorm(xbarobs, muxbar, sigxbar),
+           label='observed outcome',
+           colour='black',
+           hjust=0) +
+  ylab('f(xbar)') +
+  xlab('xbar') +
+  ggtitle('Critical value approach') +
+  theme(legend.position = "non")
+
+ggarrange(g1, g2, ncol=2)
+```
+
 <h4>4\. Obtain a random sample and use it to compute the sample
    statistic from step 3. Call this value
    $\widehat{\theta}_{\text{obs}}$</h4>
 
 In this example, $\widehat{\theta}_{\text{obs}}$ corresponds to the
-observed sample mean, which for this sample works out to be
-$\bar{x}$ `r mean(xobs)`. We can now inspect the sampling distribution
-under the assumption that $H_0$ is true, and inspect how likely the observed $\bar{x}$ is to be sampled from this distribution.
+observed sample mean. The data, sampled from the random variable $X$ is 
+given by the following times:
 
-```{r, echo=F}
-xbarobs <- mean(xobs)
-muxbar <- 90
-sigxbar <- sigx / sqrt(n)
-x <- seq(muxbar-4*sigxbar, muxbar+4*sigxbar, 0.01)
-fx <- dnorm(x, muxbar, sigxbar)
-d <- data.table(x,
-                fx,
-                region=factor(x<=xbarobs, labels=c('x <= xobs', 'x > xobs')))
-ggplot(d, aes(x, fx, colour=region)) +
-  geom_line() +
-  geom_vline(xintercept=xbarobs, colour='black', linetype=2) +
-  geom_ribbon(aes(ymin=0, ymax=dnorm(x, muxbar, sigxbar), fill=region), alpha=0.5) +
-  annotate('text', x=75, y=0.05,
-           label='xobs or more extreme',
-           colour='#00AFBB') +
-  ylab('f(x)') +
-  xlab('x') +
-  theme(legend.title = element_blank())
+```{r} 
+xobs
 ```
+
+Thus, the observed sample mean $\bar{x}_{\text{obs}}$, sampled from
+the random variable $\bar{X}$, is obtained as follows:
+
+```{r} 
+xbarobs <- mean(xobs)
+```
+
+* Therefore, $\bar{x}_{\text{obs}}=$ `r mean(xobs)`
 
 <h4>5\. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
    occur under the assumption that $H_0$ is true, then
@@ -414,6 +494,12 @@ plot above, and from reasoning about the alternative hypothesis,
 we see that we need `lower.tail=TRUE`.
 
 ```{r}
+mux <- 90
+sigx <- 20
+
+muxbar <- mux
+sigxbar <- sigx / sqrt(n)
+
 ## p-value
 pval <- pnorm(xbarobs, muxbar, sigxbar, lower.tail=TRUE)
 pval
@@ -508,7 +594,7 @@ $$
 
 In this example we do not know $\sigma_{x}$, and so we
 must estimate it. This means that we do not want to reason using
-and observed $\bar{x}$ value and corresponding sampling distribution,
+the observed $\bar{x}$ value and corresponding sampling distribution,
 but instead want to reason using an observed $t$ value and corresponding
 t-distribution.
 
@@ -516,19 +602,9 @@ $$
 t_{obs} = \frac{\bar{x} - \mu_x}{\frac{s_x}{\sqrt{n}}} \sim t(n-1)
 $$
 
-<h4>4\. Obtain a random sample and use it to compute the sample
-   statistic from step 3. Call this value
-   $\widehat{\theta}_{\text{obs}}$</h4>
-
-For our data, the following is true:
-
-* $n=15$,
-* $\bar{x} =$ `r mean(xobs)`,
-* $s_x =$ `r sd(xobs)`
-* $t_{obs} =$ `r (mean(xobs)-90)/(sd(xobs)/sqrt(n))`.
-
 ```{r, echo=F, warning=F}
 tobs <- (mean(xobs)-90)/(sd(xobs)/sqrt(n))
+tcrit <- qt(0.05, n-1, lower.tail=TRUE)
 mu <- 0
 t <- seq(-4, 4, 0.01)
 ft <- dt(x, n-1)
@@ -546,18 +622,45 @@ d <- data.table(t,
                 fz,
                 region=factor(t<=tobs, labels=c('t <= tobs', 't > tobs')))
 
-ggplot(d, aes(t, ft, colour=region)) +
+g1 <- ggplot(d, aes(t, ft, colour=region)) +
   geom_line() +
   geom_line(aes(z, fz), colour='black') +
   geom_vline(xintercept=tobs, colour='black', linetype=2) +
   geom_ribbon(aes(ymin=0, ymax=dt(t, n-1), fill=region), alpha=0.5) +
   annotate('text', x=-3, y=0.1,
-           label='tobs or more extreme',
+           label='tobs \n or more extreme',
            colour='#00AFBB') +
   ylab('f(t)') +
   xlab('t') +
-  theme(legend.title = element_blank())
+  ggtitle('p-value value approach') +
+  theme(legend.position="none")
+
+g2 <- ggplot(d, aes(t, ft, colour=region)) +
+  geom_line() +
+  geom_line(aes(z, fz), colour='black') +
+  geom_vline(xintercept=tcrit, colour='black', linetype=2) +
+  geom_ribbon(aes(ymin=0, ymax=dt(t, n-1), fill=region), alpha=0.5) +
+  annotate('text', x=-3, y=0.1,
+           label='tcrit \n (rejection region)',
+           colour='#00AFBB') +
+  ylab('f(t)') +
+  xlab('t') +
+  ggtitle('Critical value approach') +
+  theme(legend.position="none")
+
+ggarrange(g1, g2, ncol=2)
 ```
+
+<h4>4\. Obtain a random sample and use it to compute the sample
+   statistic from step 3. Call this value
+   $\widehat{\theta}_{\text{obs}}$</h4>
+
+For our data, the following is true:
+
+* $n=15$,
+* $\bar{x} =$ `r mean(xobs)`,
+* $s_x =$ `r sd(xobs)`
+* $t_{obs} =$ `r (mean(xobs)-90)/(sd(xobs)/sqrt(n))`.
 
 The above plot shows the $t(n-1)$ sampling distribution in
 colour, and the $Z\sim\mathcal{N}(0,1)$ in black. The $t$
@@ -634,6 +737,10 @@ t.test(xobs, mu=90, alternative='less')
 
 * Must do everything long-form if dealing with a Normal
   sampling distribution (known variance).
+  
+* If the standard deviation of the original sampling distribution 
+  is not known, then it must be estimated, and the appropriate 
+  test to use is a t-test.
   
 * A $t$ distribution has higher tails than a $Z$ distribution
   but is otherwise very similar.
