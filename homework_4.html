@@ -375,28 +375,61 @@ div.tocify {
 </div>
 <div id="problem-1" class="section level2">
 <h2>Problem 1</h2>
-<p>Researchers are studying the membrane characteristics of an important neuron type. They perform an experiment in which they isolate a single neuron, and then inject a small pulse of current through its membrane. They are trying to determine the smallest amount of current required to induce an action potential. For any amplitude and duration of applied current, the neuron sometimes fires an action potential and sometimes does not. This is because there are many sources of randomness and noise in biological cellular environments. Similarly, the neuron fires an action potential sometimes even when no current is applied. Let <span class="math inline">\(X\)</span> be the random variable that determines whether or not an action potential is fired due to the applied current. Furthermore, let the probability that the neuron fires an action potential even in the absence of applied current be <span class="math inline">\(p=0.1\)</span>. The researchers perform 100 trials and find that an action potential was fired on 23 of this trials. Test the hypothesis that the applied external current increased the firing probability above baseline level.</p>
-<p>1. Specify the null and alternative hypotheses (<span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span>) in terms of a population parameter <span class="math inline">\(\theta\)</span>.</p>
-<p><span class="math display">\[
-H_0: p = 0.1 \\
-H_1: p &gt; 0.1
-\]</span></p>
-<p>2. Specify the type I error rate – denoted by the symbol <span class="math inline">\(\alpha\)</span>) – you are willing to tolerate.</p>
-<p><span class="math display">\[
-\alpha = 0.05
-\]</span></p>
-<p>3. Specify the sample statistic <span class="math inline">\(\widehat{\theta}\)</span> that you will use to estimate the population parameter <span class="math inline">\(\theta\)</span> in step 1 and state how it is distributed under the assumption that <span class="math inline">\(H_0\)</span> is true.</p>
-<p>Create a vector named <code>theta</code> that contains the possible outcomes of <span class="math inline">\(\widehat{\theta}\)</span>.</p>
-<p>If <span class="math inline">\(\widehat{\theta}\)</span> is discrete with a finite range then use <code>seq(x0, xn, 1)</code>.</p>
-<p>If <span class="math inline">\(\widehat{\theta}\)</span> is continuous with a finite range then use <code>seq(x0, xn, 0.01)</code>.</p>
-<p>If <span class="math inline">\(\widehat{\theta}\)</span> is continuous with an infinite range then use <code>seq(mu_theta-4*sd_theta, mu_theta+4sd_theta, 0.01)</code>.</p>
-<p>Create a variable named <code>f_theta</code> and set its value to the probability mass (if discrete) or probability density (if continuous) corresponding to each value of <span class="math inline">\(\widehat{\theta}\)</span>.</p>
-<p>4. Obtain a random sample and use it to compute the sample statistic from step 3. Call this value <span class="math inline">\(\widehat{\theta}_{\text{obs}}\)</span>.</p>
-<p>Create a variable named <code>theta_hat_obs</code> and set its value to <span class="math inline">\(\widehat{\theta}_{\text{obs}}\)</span>.</p>
-<p>5. If <span class="math inline">\(\widehat{\theta}_{\text{obs}}\)</span> or a more extreme outcome is very unlikely to occur under the assumption that <span class="math inline">\(H_0\)</span> is true, then reject <span class="math inline">\(H_0\)</span>. Otherwise, do not reject <span class="math inline">\(H_0\)</span>.</p>
-<p>Create a variable named <code>p_val</code> and set its value to <span class="math inline">\(P(\widehat{\theta}_{\text{obs}} | H_0)\)</span>.</p>
-<p>Create a variable named <code>theta_hat_crit</code> and set its value to the critical value.</p>
-<p>Create a value named <code>decision</code> and set its value either to <code>reject H0</code> or <code>fail to reject H0</code>.</p>
+<p>Researchers are studying the membrane characteristics of an important neuron type. They perform an experiment in which they isolate a single neuron, and then inject a small pulse of current through its membrane. They are trying to determine the smallest amount of current required to induce an action potential. For any amplitude and duration of applied current, the neuron sometimes fires an action potential and sometimes does not. This is because there are many sources of randomness and noise in biological cellular environments. Similarly, the neuron fires an action potential sometimes even when no current is applied.</p>
+<p>Let <span class="math inline">\(X \sim Binomial(n, p)\)</span> be the random variable that determines whether or not an action potential is fired due to the applied current. Furthermore, let the probability that the neuron fires an action potential even in the absence of applied current (i.e., baseline firing) be <span class="math inline">\(p=0.1\)</span>. The researchers perform 100 trials and find the following results:</p>
+<pre class="r"><code>## 1 corresponds to action potential fired on that trial
+## 0 corresponds to no action potential on that trial
+xobs &lt;- c(1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0,
+          1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0,
+          0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+          0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0,
+          0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1,
+          0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0)</code></pre>
+<p>Test the hypothesis that the applied external current increased the firing probability <span class="math inline">\(p\)</span> above baseline level. Ensure that your inference reflects <span class="math inline">\(95\%\)</span> confidence.</p>
+<!-- 1\. Specify the null and alternative hypotheses ($H_0$ and -->
+<!--    $H_1$) in terms of a population parameter $\theta$. -->
+<ul>
+<li>What is the correct alternative hypothesis?
+<ul>
+<li><code>ans</code> <span class="math inline">\(H_1: p &gt; 0.1\)</span></li>
+<li><code>ans</code> <span class="math inline">\(H_1: p &lt; 0.1\)</span></li>
+<li><code>ans</code> <span class="math inline">\(H_1: p = 0.1\)</span></li>
+</ul></li>
+</ul>
+<!-- 2\. Specify the type I error rate -- denoted by the symbol -->
+<!--     $\alpha$) -- you are willing to tolerate. -->
+<ul>
+<li>Create a variable named <code>alph</code> and set its value to <span class="math inline">\(\alpha\)</span>.</li>
+</ul>
+<!-- 3\. Specify the sample statistic $\widehat{\theta}$ that you will use to -->
+<!--    estimate the population parameter $\theta$ in step 1 and state how -->
+<!--    it is distributed under the assumption that $H_0$ is -->
+<!--    true. -->
+<ul>
+<li><p>Create a vector named <code>theta</code> that contains the possible outcomes of <span class="math inline">\(\widehat{\theta}\)</span>.</p>
+<ul>
+<li><p>If <span class="math inline">\(\widehat{\theta}\)</span> is discrete with a finite range then use <code>seq(x0, xn, 1)</code>.</p></li>
+<li><p>If <span class="math inline">\(\widehat{\theta}\)</span> is continuous with a finite range then use <code>seq(x0, xn, 0.01)</code>.</p></li>
+<li><p>If <span class="math inline">\(\widehat{\theta}\)</span> is continuous with an infinite range then use <code>seq(mu_theta-4*sd_theta, mu_theta+4sd_theta, 0.01)</code>.</p></li>
+</ul></li>
+<li><p>Create a variable named <code>f_theta</code> and set its value to the probability mass (if discrete) or probability density (if continuous) corresponding to each value of <span class="math inline">\(\widehat{\theta}\)</span> stored in variable <code>theta</code>.</p></li>
+<li><p>Plot the <span class="math inline">\(\widehat{\theta}\)</span> sampling distribution using <code>ggplot()</code> and `<code>geom_line()</code> (if continuous) or <code>geom_point()</code> (if discrete). You should use this plot to contextualize the p-value and critical value computed below (i.e., use it to check your work!).</p></li>
+</ul>
+<!-- 4\. Obtain a random sample and use it to compute the sample -->
+<!--    statistic from step 3. Call this value -->
+<!--    $\widehat{\theta}_{\text{obs}}$. -->
+<ul>
+<li>Create a variable named <code>theta_hat_obs</code> and set its value to <span class="math inline">\(\widehat{\theta}_{\text{obs}}\)</span>.</li>
+</ul>
+<!-- 5\. If $\widehat{\theta}_{\text{obs}}$ or a more extreme outcome  -->
+<!--    is very unlikely to occur under the assumption that $H_0$ is true, then -->
+<!--    reject $H_0$. Otherwise, do not reject $H_0$. -->
+<ul>
+<li><p>Create a variable named <code>p_val</code> and set its value to <span class="math inline">\(P(\widehat{\theta}_{\text{obs}} | H_0)\)</span>.</p></li>
+<li><p>Create a variable named <code>theta_hat_crit</code> and set its value to the critical value.</p></li>
+<li><p>Create a value named <code>decision</code> and set its value either to <code>reject H0</code> or <code>fail to reject H0</code>.</p></li>
+<li><p>Repeat this inference using <code>binom.test()</code></p></li>
+</ul>
 </div>
 
 

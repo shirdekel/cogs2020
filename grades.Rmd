@@ -21,12 +21,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Homework 1 Grades
-
-* You can download and inspect homework 1 grades here:
-
-  * `'https://crossley.github.io/cogs2020/data/grades/hw_1_table.csv'`
   
-
 ```{r}
 library(data.table)
 library(ggplot2)

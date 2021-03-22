@@ -59,6 +59,11 @@ equal to a **character** vector (i.e., letters surrounded by
 
 ## Problem 1
 
+TODO: Interpret plot. Identify critical values, rejection regions,
+p-vales, etc.
+
+## Problem 2
+
 Researchers are studying the membrane characteristics of an
 important neuron type. They perform an experiment in which
 they isolate a single neuron, and then inject a small pulse
@@ -69,72 +74,89 @@ applied current, the neuron sometimes fires an action
 potential and sometimes does not. This is because there are
 many sources of randomness and noise in biological cellular
 environments. Similarly, the neuron fires an action
-potential sometimes even when no current is applied. Let $X$
-be the random variable that determines whether or not an
-action potential is fired due to the applied current.
+potential sometimes even when no current is applied. 
+
+Let $X \sim Binomial(n, p)$ be the random variable that determines 
+whether or not an action potential is fired due to the applied current.
 Furthermore, let the probability that the neuron fires an
-action potential even in the absence of applied current be
-$p=0.1$. The researchers perform 100 trials and find that an
-action potential was fired on 23 of this trials. Test the
-hypothesis that the applied external current increased the
-firing probability above baseline level.
+action potential even in the absence of applied current
+(i.e., baseline firing) be $p=0.1$. The researchers perform 
+100 trials and find the following results:
 
-1\. Specify the null and alternative hypotheses ($H_0$ and
-   $H_1$) in terms of a population parameter $\theta$.
+```{r}
+## 1 corresponds to action potential fired on that trial
+## 0 corresponds to no action potential on that trial
+xobs <- c(1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0,
+          1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0,
+          0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+          0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0,
+          0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1,
+          0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0)
+```
 
-$$
-H_0: p = 0.1 \\
-H_1: p > 0.1
-$$
+Test the hypothesis that the applied external current increased 
+the firing probability $p$ above baseline level. Ensure that your
+inference reflects $95\%$ confidence.
 
-2\. Specify the type I error rate -- denoted by the symbol
-   $\alpha$) -- you are willing to tolerate.
+<!-- 1\. Specify the null and alternative hypotheses ($H_0$ and -->
+<!--    $H_1$) in terms of a population parameter $\theta$. -->
+
+* What is the correct alternative hypothesis?
+   * `ans` $H_1: p > 0.1$
+   * `ans` $H_1: p < 0.1$
+   * `ans` $H_1: p = 0.1$
+
+<!-- 2\. Specify the type I error rate -- denoted by the symbol -->
+<!--     $\alpha$) -- you are willing to tolerate. -->
+
+* Create a variable named `alph` and set its value to $\alpha$.
+
+<!-- 3\. Specify the sample statistic $\widehat{\theta}$ that you will use to -->
+<!--    estimate the population parameter $\theta$ in step 1 and state how -->
+<!--    it is distributed under the assumption that $H_0$ is -->
+<!--    true. -->
    
-$$
-\alpha = 0.05
-$$
-
-3\. Specify the sample statistic $\widehat{\theta}$ that you will use to
-   estimate the population parameter $\theta$ in step 1 and state how
-   it is distributed under the assumption that $H_0$ is
-   true.
-   
-Create a vector named `theta` that contains the possible
+* Create a vector named `theta` that contains the possible
 outcomes of $\widehat{\theta}$.
 
-If $\widehat{\theta}$ is discrete with a finite range then
-use `seq(x0, xn, 1)`.
+   * If $\widehat{\theta}$ is discrete with a finite range then
+   use `seq(x0, xn, 1)`.
 
-If $\widehat{\theta}$ is continuous with a finite range then
-use `seq(x0, xn, 0.01)`.
+   * If $\widehat{\theta}$ is continuous with a finite range then
+   use `seq(x0, xn, 0.01)`.
 
-If $\widehat{\theta}$ is continuous with an infinite range then use
-`seq(mu_theta-4*sd_theta, mu_theta+4sd_theta, 0.01)`.
+   * If $\widehat{\theta}$ is continuous with an infinite range then use
+   `seq(mu_theta-4*sd_theta, mu_theta+4sd_theta, 0.01)`.
 
-Create a variable named `f_theta` and set its value to the
+* Create a variable named `f_theta` and set its value to the
 probability mass (if discrete) or probability density (if
 continuous) corresponding to each value of
-$\widehat{\theta}$.
+$\widehat{\theta}$ stored in variable `theta`.
 
-Plot the $\widehat{\theta}$ sampling distribution using `ggplot()` and
-``geom_line()` (if continuous) or `geom_point()` (if discrete).
+* Plot the $\widehat{\theta}$ sampling distribution using `ggplot()` and
+``geom_line()` (if continuous) or `geom_point()` (if discrete). You should
+use this plot to contextualize the p-value and critical value computed below
+(i.e., use it to check your work!).
 
-4\. Obtain a random sample and use it to compute the sample
-   statistic from step 3. Call this value
-   $\widehat{\theta}_{\text{obs}}$.
+<!-- 4\. Obtain a random sample and use it to compute the sample -->
+<!--    statistic from step 3. Call this value -->
+<!--    $\widehat{\theta}_{\text{obs}}$. -->
 
-Create a variable named `theta_hat_obs` and set its value to
+* Create a variable named `theta_hat_obs` and set its value to
 $\widehat{\theta}_{\text{obs}}$.
 
-5\. If $\widehat{\theta}_{\text{obs}}$ or a more extreme outcome 
-   is very unlikely to occur under the assumption that $H_0$ is true, then
-   reject $H_0$. Otherwise, do not reject $H_0$.
+<!-- 5\. If $\widehat{\theta}_{\text{obs}}$ or a more extreme outcome  -->
+<!--    is very unlikely to occur under the assumption that $H_0$ is true, then -->
+<!--    reject $H_0$. Otherwise, do not reject $H_0$. -->
 
-Create a variable named `p_val` and set its value to
+* Create a variable named `p_val` and set its value to
 $P(\widehat{\theta}_{\text{obs}} | H_0)$.
 
-Create a variable named `theta_hat_crit` and set its value
+* Create a variable named `theta_hat_crit` and set its value
 to the critical value.
 
-Create a value named `decision` and set its value either to
+* Create a value named `decision` and set its value either to
 `reject H0` or `fail to reject H0`.
+
+* Repeat this inference using `binom.test()`
+
