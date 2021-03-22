@@ -1,0 +1,140 @@
+---
+title: "Homework 4"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: true
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+<div style="color:#990000">
+**Note that this homework is not yet finalised. I am posting
+it here for practice purposes only.**
+<br></br>
+</div>
+
+<style type="text/css">
+.table {
+    width: 40%;
+***
+</style>
+
+
+```{r, echo=F}
+library(data.table)
+library(ggplot2)
+library(ggpubr)
+```
+
+## Problem 0
+
+* Load `data.table` and `ggplot2` but no other packages.
+
+* Do not call `install.packages` anywhere in this script.
+Once you installed them once, there is no need to install
+them again. If you need to install some other package in the
+future, do so by using `install.packages` function in the
+console.
+
+* Make sure you are starting with a clean environment by
+running `rm(list=ls())`. Running this line of code will
+erase any variable defined before it. Do not put this line
+of code after anything important to keep for grading.
+
+* Create a variable named `my_name` and set its value equal
+to a **character** vector (i.e., letters surrounded by `""`)
+containing your name.
+
+* Create a variable named `my_student_id` and set its value
+equal to a **character** vector (i.e., letters surrounded by
+`""`) containing your student id.
+
+## Problem 1
+
+Researchers are studying the membrane characteristics of an
+important neuron type. They perform an experiment in which
+they isolate a single neuron, and then inject a small pulse
+of current through its membrane. They are trying to
+determine the smallest amount of current required to induce
+an action potential. For any amplitude and duration of
+applied current, the neuron sometimes fires an action
+potential and sometimes does not. This is because there are
+many sources of randomness and noise in biological cellular
+environments. Similarly, the neuron fires an action
+potential sometimes even when no current is applied. Let $X$
+be the random variable that determines whether or not an
+action potential is fired due to the applied current.
+Furthermore, let the probability that the neuron fires an
+action potential even in the absence of applied current be
+$p=0.1$. The researchers perform 100 trials and find that an
+action potential was fired on 23 of this trials. Test the
+hypothesis that the applied external current increased the
+firing probability above baseline level.
+
+1\. Specify the null and alternative hypotheses ($H_0$ and
+   $H_1$) in terms of a population parameter $\theta$.
+
+$$
+H_0: p = 0.1 \\
+H_1: p > 0.1
+$$
+
+2\. Specify the type I error rate -- denoted by the symbol
+   $\alpha$) -- you are willing to tolerate.
+   
+$$
+\alpha = 0.05
+$$
+
+3\. Specify the sample statistic $\widehat{\theta}$ that you will use to
+   estimate the population parameter $\theta$ in step 1 and state how
+   it is distributed under the assumption that $H_0$ is
+   true.
+   
+Create a vector named `theta` that contains the possible
+outcomes of $\widehat{\theta}$.
+
+If $\widehat{\theta}$ is discrete with a finite range then
+use `seq(x0, xn, 1)`.
+
+If $\widehat{\theta}$ is continuous with a finite range then
+use `seq(x0, xn, 0.01)`.
+
+If $\widehat{\theta}$ is continuous with an infinite range then use
+`seq(mu_theta-4*sd_theta, mu_theta+4sd_theta, 0.01)`.
+
+Create a variable named `f_theta` and set its value to the
+probability mass (if discrete) or probability density (if
+continuous) corresponding to each value of
+$\widehat{\theta}$.
+
+Plot the $\widehat{\theta}$ sampling distribution using `ggplot()` and
+``geom_line()` (if continuous) or `geom_point()` (if discrete).
+
+4\. Obtain a random sample and use it to compute the sample
+   statistic from step 3. Call this value
+   $\widehat{\theta}_{\text{obs}}$.
+
+Create a variable named `theta_hat_obs` and set its value to
+$\widehat{\theta}_{\text{obs}}$.
+
+5\. If $\widehat{\theta}_{\text{obs}}$ or a more extreme outcome 
+   is very unlikely to occur under the assumption that $H_0$ is true, then
+   reject $H_0$. Otherwise, do not reject $H_0$.
+
+Create a variable named `p_val` and set its value to
+$P(\widehat{\theta}_{\text{obs}} | H_0)$.
+
+Create a variable named `theta_hat_crit` and set its value
+to the critical value.
+
+Create a value named `decision` and set its value either to
+`reject H0` or `fail to reject H0`.

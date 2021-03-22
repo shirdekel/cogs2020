@@ -130,7 +130,7 @@ means that 5 out of every 100 times we think the rat has
 learned, we will have made an incorrect conclusion.
 
 $$
-\alpha=0.5
+\alpha=0.05
 $$
 
 <h4>3\. Specify the sample statistic that you will use to

@@ -12,9 +12,16 @@ output:
     fig_caption: yes
     number_sections: false
     theme: cosmo
-fontsize: 14pt
+fontsize: 18pt
 ---
+```{r global-options, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE)
+```
 
+<style type="text/css">
+  body{
+  font-size: 18pt;
+}
 <!-- <div style="color:#990000"> -->
 <!-- **Note that this homework is not yet finalised. I am posting -->
 <!-- it here for practice purposes only.** -->
@@ -25,8 +32,7 @@ fontsize: 14pt
 .table {
 
     width: 40%;
-
-***
+}
 </style>
 
 
@@ -34,6 +40,7 @@ fontsize: 14pt
 library(data.table)
 library(ggplot2)
 library(ggpubr)
+library(latex2exp)
 ```
 
 ## Problem 0
@@ -65,7 +72,7 @@ Consider the following two random variables:
 
 * $X\sim\mathcal{N}(\mu=0,\sigma=1)$ 
 
-* $Y{\sim}binom(n=10,p=0.2)$ 
+* $Y{\sim}Binom(n=10,p=0.2)$ 
 
 The $X$ probability distribution (pdf since X is continuous) and
 the $Y$ probability distribution (pmf since Y is discrete) are 
@@ -90,8 +97,8 @@ ga <- ggplot(d, aes(x, fx)) +
               aes(x=x, ymin=0, ymax=fx),
               fill='green',
               alpha=0.25) +
-  annotate("text", x=-0.5, y=0.05, label="P(X<=x)") +
-  annotate("text", x=1.5, y=0.05, label="P(X>x)") +
+  annotate("text", x=-0.5, y=0.05, label=TeX("$P(X\\leq x)$")) +
+  annotate("text", x=1.5, y=0.05, label=TeX("$P(X>x)$"))+
   ylab('f(x)')
 
 n <- 10
@@ -102,7 +109,7 @@ d <- data.table(y, fy)
 gb <- ggplot(d, aes(y, fy)) +
   geom_segment(data=d[y<=3], aes(x=y, xend=y, y=0, yend=dbinom(y,n,p)), colour='blue') +
   geom_segment(data=d[y>3], aes(x=y, xend=y, y=0, yend=dbinom(y,n,p)), colour='green') +
-  annotate("text", x=3, y=0.21, label="P(Y<=y)") +
+  annotate("text", x=3, y=0.21, label=TeX("$P(Y\\leq y)$")) +
   annotate("text", x=4, y=0.1, label="P(Y>y)") +
   scale_x_continuous(breaks=0:10) +
   ylab('f(y)')
@@ -122,13 +129,13 @@ Do this by performing the following steps:
   if `p1` is equal to `p2` and set its value to `FALSE`
   otherwise.
 
-**(b)** Verify that $p(X<x){\neq}p(X{\leq}x)$ for $y=3$.
+**(b)** Verify that $p(Y < y) \neq p(Y\leq y)$ for $y=3$.
 Do this by performing the following steps:
 
-  * Define a variable `p1` and set its value to $p(X{<}x)$.
+  * Define a variable `p1` and set its value to $p(X < x)$.
   
   * Define a variable `p2` and set its value to
-  $p(X{\leq}x)$.
+  $p(X \leq x)$.
   
   * Define a variable `ans_1b` and set its value to `TRUE`
   if `p1` is equal to `p2` and set its value to `FALSE`
@@ -140,7 +147,7 @@ Consider the following random variables:
 
 * $X{\sim}\mathcal{N}(\mu_X=15,\sigma_X=2.74)$ 
 
-* $Y{\sim}Binomial(n=30,p=0.5)$.
+* $Y{\sim}Binom(n=30,p=0.5)$.
 
 The $X$ and $Y$ distributions are illustrated in the
 following figure:
@@ -313,7 +320,7 @@ gd2n <- ggplot(d, aes(x, 1-fxp)) +
                y=pnorm(xcrit, mu, sigma, lower.tail=F),
                yend=pnorm(xcrit, mu, sigma, lower.tail=F),
                linetype=2) +
-  ylab('P(X<=x)')
+  ylab(TeX('P(X\\leq x)'))
 
 n <- 30
 p <- 0.5
@@ -480,18 +487,23 @@ in problem 2h? Please store your answer in a variable named
 
 ## Problem 4
 
-Consider the random variable $X{\sim}F(d1,d2)$ for $d1=5$,
-$d2=100$.  For these values of $d1$ and $d2$,
+Consider the random variable $X{\sim}F(d_1,d_2)$ with fixed parameters $d_1=5$,
+$d_2=100$.  Given these values of $d_1$ and $d_2$, the following holds true:
 
-$E[X] = \frac{d2}{d2 - 2}$
-
-$Var[X] = \frac{2 d2^2 (d1 + d2 - 2)}{d1 (d2 - 2)^2 (d2 - 4)}$
+$$
+\text{if }X &\sim F(d_1,d_2)\text{ then:}\\
+\\
+\begin{align}
+\mathbb{E}[X] &= \frac{d_2}{d_2 - 2} \\ 
+\\
+\mathbb{V}\text{ar}[X] &= \frac{2 d_2^2 (d_1 + d_2 - 2)}{d_1 (d_2 - 2)^2 (d_2 - 4)}
+\end{align}
+$$
 
 ```{r, echo=F}
 d1 <- 5
 d2 <- 100
 ```
-
 
 **(a1)** Compute the population mean for $X$ ans
 store your result in a variable named `ans_4a1`.
@@ -619,43 +631,4 @@ sample means? Store your answer in a variable named
 **(e)** What is the population variance of this distribution
 of sample means? Store your answer in a variable named
 `ans_4e`.
-
-<!-- **(f)** The plots above were generated from the data.table `d` -->
-<!-- which is defined in the above code chunk. This data.table contains -->
-<!-- three columns: -->
-
-<!--   * `exp` indicates the experiment (we ran 1000 of them) -->
-
-<!--   * `n` indicates the number of samples drawn from $X$ in  -->
-<!--   a given experiment.  -->
-
-<!--   * `x` contains the sample mean obtained in experiment `exp`  -->
-<!--   with sample size `n`. -->
-
-<!-- ```{r} -->
-<!-- # inspect d by printing to console -->
-<!-- d -->
-<!-- ``` -->
-
-<!--   * Starting with `d`, create a new data.table named `dd` that  -->
-<!--   contains the mean of `x` per level of `n`. Please be sure that -->
-<!--   you set the column names of `dd` to `n` and `x`, where `x`  -->
-<!--   the mean values just computed. The resulting data.table should -->
-<!--   look eactly as follows. -->
-
-<!-- ```{r, echo=False} -->
-<!-- dd <- d[, .(x=mean(x)), .(n)] -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- # inspect dd by printing to console -->
-<!-- dd -->
-<!-- ``` -->
-
-<!-- How does increasing $n$ influence your sample mean -->
-<!-- estimate of the population mean? -->
-
-<!--   * `ans_4f <- "estimate approaches the population value"` -->
-<!--   * `ans_4f <- "no effect"` -->
-<!--   * `ans_4f <- "population value decreases variance"` -->
 
