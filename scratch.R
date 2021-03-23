@@ -3,24 +3,16 @@ library(ggplot2)
 
 rm(list=ls())
 
-x <- c("A", "A", "A", "B", "B", "B" )
-y <- c("I", "I", "II", "II", "III", "III")
-z <- rnorm(6)
-d <- data.table(x, y, z)
+# X ~ N(mu=7, sig=2)
+x <- seq(7 - 6, 7 + 6, 0.01)
+fx <- dnorm(x, 7, 2)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+  geom_line()
 
-ans_1e <- ggplot(data=d, aes(x=x, y=z)) +
-  geom_point()
-ans_1e
+# P(X > 4)
+pnorm(4, 7, 2, lower.tail=F)
 
-d[x=="A", mean(z)]
-d[x=="B", mean(z)]
-
-dd <- d[, mean(z), .(x, y)]
-setnames(dd, "V1", "z")
-
-# shallow copy
-d2 <- d
-
-# deep copy
-d2 <- data.table(d)
+# P( >= 4)
+pnorm(4, 7, 2, lower.tail=F)
 

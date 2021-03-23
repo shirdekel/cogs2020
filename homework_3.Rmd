@@ -132,10 +132,10 @@ Do this by performing the following steps:
 **(b)** Verify that $p(Y < y) \neq p(Y\leq y)$ for $y=3$.
 Do this by performing the following steps:
 
-  * Define a variable `p1` and set its value to $p(X < x)$.
+  * Define a variable `p1` and set its value to $p(Y < y)$.
   
   * Define a variable `p2` and set its value to
-  $p(X \leq x)$.
+  $p(Y \leq y)$.
   
   * Define a variable `ans_1b` and set its value to `TRUE`
   if `p1` is equal to `p2` and set its value to `FALSE`
