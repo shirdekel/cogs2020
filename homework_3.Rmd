@@ -513,6 +513,9 @@ results of each experiment. Please copy and paste the the
 code below into your homework .R file and then run the code.
 
 ```{r}
+d1 <- 5
+d2 <- 100
+
 # Define the number of experiments to run
 n_exp <- 6
 
