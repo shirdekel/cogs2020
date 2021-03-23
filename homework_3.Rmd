@@ -452,6 +452,10 @@ ggarrange(
 For each of the following problems, please respond by
 setting the appropriate variable to one of `"I"`, `"II"`,
 `"III"`, `"IV"`, `"V"`, `"VI"`, `"VII"`, or `"VIII"`.
+When responding to the questions below, please note that 
+the x and y axis labels in the above plots all use 'X' or 
+'x' but may correspond to either the X or the Y random variable 
+from problem 2.
 
 **(a)** Which plot corresponds to the quantity requested 
 in problem 2a? Please store your answer in a variable named
