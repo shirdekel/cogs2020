@@ -120,24 +120,24 @@ ggarrange(ga, gb, ncol=2)
 **(a)** Verify that $p(X{<}x)=p(X{\leq}x)$ for $x=1$.
 Do this by performing the following steps:
 
-  * Define a variable `p1` and set its value to $p(X{<}x)$.
-  
-  * Define a variable `p2` and set its value to
+* Define a variable `p1` and set its value to $p(X{<}x)$.
+
+* Define a variable `p2` and set its value to
   $p(X{\leq}x)$.
-  
-  * Define a variable `ans_1a` and set its value to `TRUE`
+
+* Define a variable `ans_1a` and set its value to `TRUE`
   if `p1` is equal to `p2` and set its value to `FALSE`
   otherwise.
 
 **(b)** Verify that $p(Y < y) \neq p(Y\leq y)$ for $y=3$.
 Do this by performing the following steps:
 
-  * Define a variable `p1` and set its value to $p(Y < y)$.
-  
-  * Define a variable `p2` and set its value to
+* Define a variable `p1` and set its value to $p(Y < y)$.
+
+* Define a variable `p2` and set its value to
   $p(Y \leq y)$.
-  
-  * Define a variable `ans_1b` and set its value to `TRUE`
+
+* Define a variable `ans_1b` and set its value to `TRUE`
   if `p1` is equal to `p2` and set its value to `FALSE`
   otherwise.
 
@@ -622,16 +622,18 @@ means as $n$ increases?
   * `ans_4c1 <- "Decreases"`
 
 * What happens to the skew of the distribution of sample
-means as $n$ increases?
+means as $n$ increases? 
   * `ans_4c2 <- "Stays the same"`
   * `ans_4c2 <- "Increases"`
   * `ans_4c2 <- "Decreases"`
 
-**(d)** What is the population mean of this distribution of
-sample means? Store your answer in a variable named
-`ans_4d`.
+**(d)** If $X{\sim}F(d_1,d_2)$ as defined at the top of the
+problem, and $n=1000$, what is the population mean of $\bar{X}$ (the
+distribution of sample means)? Store your answer in a
+variable named `ans_4d`.
 
-**(e)** What is the population variance of this distribution
-of sample means? Store your answer in a variable named
-`ans_4e`.
+**(e)** If $X{\sim}F(d_1,d_2)$ as defined at the top of the
+problem, and $n=1000$, what is the population variance of
+$\bar{X}$ (the distribution of sample means)? Store your
+answer in a variable named `ans_4e`.
 
