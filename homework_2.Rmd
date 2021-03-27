@@ -60,10 +60,11 @@ equal to a **character** vector (i.e., letters surrounded by
 Consider an experiment in which two four-sided die are
 thrown.
 
-**(a)** Create a `data.table` named `ans_1a` with two columns
-labelled `die1` and `die2` where these columns encode the
-**sample space** of this experiment. See below for the
-**first** eight rows of the resulting `data.table`.
+**(a)** Create a `data.table` named `ans_1a` with two
+columns labelled `die1` and `die2` where these columns
+encode the **sample space** of this experiment. See below
+for **only the first** eight rows of the resulting
+`data.table`.
 
 ```{r echo=FALSE}
 die1 <- rep(c(1, 2, 3, 4), 4)
