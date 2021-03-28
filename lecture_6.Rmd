@@ -33,39 +33,472 @@ rm(list=ls())
 * Define and understand how to perform a **two-tailed**
 hypothesis test.
 
-* In the context of two-tailed hypothesis tests, define and
-understand the following:
+* In the context of **two-tailed hypothesis tests**, define
+and understand the following:
 
-  * **p-values**
+  * p-values
   
-  * **more extreme outcomes** 
+  * more extreme outcomes*
   
-  * **critical value**
+  * critical value
   
-  * **rejection region**
+  * rejection region
   
-  * **$1-\alpha\%$ confidence interval**
+  * $1-\alpha\%$ confidence interval
 
-* Be able to perform two-tailed binomial tests and t-tests
-manually (i.e., run through the 5 steps).
+* Be able to perform two-tailed binomial tests, Normal, and
+t-tests manually (i.e., run through the 5 steps).
 
-* Understand when and how to use `binom.test()`.
+* Understand when and how to use `binom.test()` to perform
+two-tailed binomial tests.
 
-* Understand when and how to use `t.test()`.
+* Understand when and how to use `t.test()` to perform
+two-tailed t-tests.
+
+* Define, understand, and reason about type I error, type II
+error, and power.
 
 
-## Two-tailed tests
+## Two-tailed tests introduction
 
-TODO: PULL FROM PREVIOUS LECTURE EXAMPLES
+- Last lecture, we learned how to perform one-tailed
+hypothesis tests. The hypothesis framing in those tests
+was as follows:
 
-- In the previous example, what if instead of testing the hypothesis that
-  $\mu_X$ is greater than $.15$, we wanted to test the hypothesis that $\mu_X$
-  is simply different than $.15$?
+$$
+H_0: \theta = c \\
+H_1: \theta < c \\
+\text{or} \\
+H_0: \theta = c \\
+H_1: \theta > c
+$$
 
-- As we will see in the following example, the main difference is that the
-  p-value gets contributions from both the lower and upper tail of the sampling
-  distribution.
-  
+- The hypotheses of a two-tailed test takes the following
+form:
+
+$$
+H_0: \theta = c \\
+H_1: \theta \neq c  \\
+H_1: \theta < c \text{ or } \theta > c
+$$
+
+- As we will see in the following examples, the main
+difference between one-tailed and two-tailed tests is that
+the p-value gets contributions from both the lower and the
+upper tail of the sampling distribution.
+
+## Two-tailed Binomial test
+
+In the binomial test example from last lecture  we
+considered an experiment in which researchers are trying to
+determine if a particular rat has learned to press one of
+two levers whenever they are placed inside of an
+experimental apparatus. Suppose that the experiment
+contained $n=100$ trials and the number of trials in which
+the rat pressed the correct lever was
+$n_{\text{pressed}}=61$. 
+
+Did the rat learn or not? 
+
+In answering this question, suppose that we are concerned
+that the rat may have learned to press the wrong lever
+(perhaps through experimenter error). This puts us into a
+two-tailed test scenario.
+
+<b>1\. Specify the null and alternative hypotheses ($H_0$ and
+   $H_1$) in terms of a distribution and population
+   parameter.</b>
+   
+$$
+X \sim binomial(n=100, p) \\
+H_0: p = 0.5 \\
+H_1: p \neq 0.5
+$$
+
+<b>2\. Specify the type I error rate -- denoted by the symbol
+   $\alpha$ -- you are willing to tolerate.</b>
+   
+$$
+\alpha = 0.05
+$$
+   
+<b>3\. Specify the sample statistic that you will use to
+   estimate the population parameter in step 1 and state how
+   it is distributed under the assumption that $H_0$ is
+   true.</b>
+   
+$$
+\widehat{p} = \frac{X}{n} \sim binomial(n=100, p=0.5) \\ 
+x \rightarrow \frac{x}{n}\\
+$$
+
+<b>4\. Obtain a random sample and use it to compute the
+   sample statistic from step 3. Call this value
+   $\widehat{\theta}_{\text{obs}}$</b>
+
+$$   
+\begin{align}
+\widehat{\theta}_{\text{obs}} &= \widehat{p}_{\text{obs}} \\
+                              &= \frac{x_{\text{obs}}}{n} \\
+                              &= \frac{61}{100}
+\end{align}
+$$
+   
+<b>5\. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
+   occur under the assumption that $H_0$ is true, then
+   reject $H_0$. Otherwise, do not reject $H_0$.</b>
+   
+* Below, we compute the critical values and p-values and plot
+them on the sampling distribution.
+
+* Because this is a two-tailed test, we have critical values
+above and below the mean.
+
+* Similarly, in two-tailed tests, what counts as *more
+extreme values* extends in both directions.
+
+* To get the p-value from a two-tailed test, you need to
+compute one p-value for the probability of getting more
+extreme results in one direction, and also compute a
+separate p-value for the probability of getting more extreme
+results in the other direction.
+
+* In the plot below, I have written `x_obs_lower` and
+`x_obs_upper` to faciliate thinking about this, but keep in
+mind that we only acutally observed `x_obs_upper`.
+
+* `x_obs_lower` is obtained from `x_obs_upper` by reflecting
+it around the mean of the sampling distribution.
+
+* Critical values are obtained by splitting $\alpha$ in half
+and using one half in the lower tail and one half in the
+upper tail.
+   
+```{r}
+n <- 100
+p <- 0.5
+
+xobs <- 61/n
+xobs_upper <- xobs
+xobs_lower <- -(xobs_upper - 0.5) + 0.5
+
+x_crit_upper <- qbinom(0.05/2, n, p, lower.tail=FALSE) / n
+x_crit_lower <- qbinom(0.05/2, n, p, lower.tail=TRUE) / n
+```
+
+```{r, echo=F, fig.width=8}
+n <- 100
+p <- 0.5
+
+xobs_upper <- 61/n
+xobs_lower <- -(xobs_upper - 0.5) + 0.5
+x_crit_upper <- qbinom(0.05/2, n, p, lower.tail=FALSE) / n
+x_crit_lower <- qbinom(0.05/2, n, p, lower.tail=TRUE) / n
+
+x <- 0:n
+fx <- dbinom(x, n, p)
+x <- x/n
+d <- data.table(x,
+                fx,
+                region=factor((x>x_crit_lower) & (x < x_crit_upper), 
+                              labels=c('rejection region', 'failed rejection region')))
+ggplot(d, aes(x, fx, colour=region)) +
+  geom_point() +
+  geom_segment(aes(x=xobs_lower, xend=xobs_lower, y=0, yend=d[, max(fx)]),
+               colour='black',
+               linetype=2) +
+  geom_segment(aes(x=xobs_upper, xend=xobs_upper, y=0, yend=d[, max(fx)]),
+               colour='black',
+               linetype=2) +
+  geom_segment(aes(x=x_crit_lower, xend=x_crit_lower, y=0, yend=d[, max(fx)]),
+               colour='#CC6666',
+               linetype=2) +
+  geom_segment(aes(x=x_crit_upper, xend=x_crit_upper, y=0, yend=d[, max(fx)]),
+               colour='#CC6666',
+               linetype=2) +
+  annotate('text', x=xobs_lower-0.09, y=d[x==xobs_lower, fx],
+           label='xobs \n (xobs_lower)',
+           colour='black') +
+  annotate('text', x=xobs_upper+0.09, y=d[x==xobs_upper, fx],
+           label='xobs \n (xobs_upper)',
+           colour='black') +
+  annotate('text', x=x_crit_lower, y=-0.0025,
+           label='x_crit_lower',
+           colour='#CC6666') +
+  annotate('text', x=x_crit_upper, y=-0.0025,
+           label='x_crit_upper',
+           colour='#CC6666') +
+  scale_x_continuous(breaks=seq(0,n,10)/n) +
+  ylab('P(X=x)') +
+  xlab('x_successes / n_total') +
+  theme(legend.title = element_blank())
+```
+
+```{r}
+# compute p-value by hand
+pval_upper <- pbinom(xobs_upper*n-1, n, p, lower.tail=FALSE)
+pval_lower <- pbinom(xobs_lower*n, n, p, lower.tail=TRUE)
+pval <- pval_upper + pval_lower
+pval
+
+# check with binom.test
+binom.test(xobs_upper*n, n, p, alternative = "two.sided")
+```
+
+## Two-tailed Normal test
+
+Last lecture we considered an experiment in which a rat is
+placed into a maze and given the chance to search for a bit
+of cheese hidden somewhere in the maze. The researchers know
+that rats without any training whatsoever find the cheese on
+average in 90 seconds with a standard deviation of 20
+seconds. After much training, the researchers are interested
+in assessing whether or not the animal has learned where the
+cheese is hidden or on the contrary, if the animal has
+become frustrated and is taking longer than baseline.
+
+<b>1\. Specify the null and alternative hypotheses ($H_0$ and
+   $H_1$) in terms of a distribution and population
+   parameter.</b>
+   
+$$
+H_0: \mu = 90 \\
+H_1: \mu \neq 90
+$$
+
+<b>2\. Specify the type I error rate -- denoted by the symbol
+   $\alpha$ -- you are willing to tolerate.</b>
+   
+$$
+\alpha = 0.05
+$$
+   
+<b>3\. Specify the sample statistic that you will use to
+   estimate the population parameter in step 1 and state how
+   it is distributed under the assumption that $H_0$ is
+   true.</b>
+   
+$$
+\widehat{\mu} = \bar{x} \\
+\bar{x} \sim \mathcal{N}(\mu_{\bar{x}}, \sigma_{\bar{x}}) \\
+\mu_{\bar{x}} = \mu_{x} \\
+\sigma_{\bar{x}} = \frac{\sigma_{x}}{\sqrt{n}}
+$$
+
+<b>4\. Obtain a random sample and use it to compute the
+   sample statistic from step 3. Call this value
+   $\widehat{\theta}_{\text{obs}}$</b>
+   
+The researchers perform 15 trials and measure the time to
+cheese on each trial. The data are as follows:
+
+```{r}
+xobs <- c(105.25909, 73.47533, 106.59599, 105.44859, 88.29283,
+          49.20100, 61.42866, 74.10559, 79.88466, 128.09307,
+          95.27187 ,64.01982 ,57.04686 ,74.21077, 74.01570)
+xbarobs <- mean(xobs)
+```
+   
+<b>5\. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
+   occur under the assumption that $H_0$ is true, then
+   reject $H_0$. Otherwise, do not reject $H_0$.</b>
+   
+```{r}
+n <- 15
+mux <-90
+
+sigx <- 20
+muxbar <- 90
+sigxbar <- sigx / sqrt(n)
+
+xbarobs_upper <- -(xbarobs - mux) + mux
+xbarobs_lower <- xbarobs
+
+xbar_crit_upper <- qnorm(0.05/2, muxbar, sigxbar, lower.tail=FALSE)
+xbar_crit_lower <- qnorm(0.05/2, muxbar, sigxbar, lower.tail=TRUE)
+```
+
+```{r, echo=F, fig.width=10}
+x <- seq(muxbar-4*sigxbar, muxbar+4*sigxbar, 0.01)
+fx <- dnorm(x, muxbar, sigxbar)
+d <- data.table(x,
+                fx,
+                region=factor(
+                  (x>xbar_crit_lower) & (x < xbar_crit_upper), 
+                  labels=c('rejection region', 'failed rejection region'))
+                )
+
+ggplot(d, aes(x, fx)) +
+  geom_line() +
+  geom_segment(x=xbarobs_lower, xend=xbarobs_lower, y= 0, yend=d[, max(fx)], colour='black', linetype=2) +
+  geom_segment(x=xbarobs_upper, xend=xbarobs_upper, y= 0, yend=d[, max(fx)], colour='black', linetype=2) +
+  geom_segment(x=xbar_crit_lower, xend=xbar_crit_lower, y= 0, yend=d[, max(fx)], colour='red', linetype=2) +
+  geom_segment(x=xbar_crit_upper, xend=xbar_crit_upper, y= 0, yend=d[, max(fx)], colour='red', linetype=2) +
+  geom_ribbon(data=d[x<xbar_crit_lower], 
+              aes(ymin=0, ymax=dnorm(x, muxbar, sigxbar), fill=region), alpha=0.5) +
+  geom_ribbon(data=d[x>xbar_crit_lower & x<xbar_crit_upper], 
+              aes(ymin=0, ymax=dnorm(x, muxbar, sigxbar), fill=region), alpha=0.5) +
+  geom_ribbon(data=d[x>xbar_crit_upper], 
+              aes(ymin=0, ymax=dnorm(x, muxbar, sigxbar), fill=region), alpha=0.5) +
+  annotate('text', 
+           x=xbarobs_lower, 
+           y=dnorm(xbarobs_lower, muxbar, sigxbar),
+           label='xobs lower',
+           colour='black',
+           hjust=0) +
+  annotate('text', 
+           x=xbarobs_upper, 
+           y=dnorm(xbarobs_upper, muxbar, sigxbar),
+           label='xobs upper',
+           colour='black',
+           hjust=1) +
+  annotate('text', x=xbar_crit_lower, y=-0.005,
+           label='xbar_crit_lower',
+           colour='black',
+           hjust=1) +
+  annotate('text', x=xbar_crit_upper, y=-0.005,
+           label='xbar_crit_upper',
+           colour='black',
+           hjust=0) +
+  ylab('f(xbar)') +
+  xlab('xbar')
+```
+
+```{r}
+# compute p-value by hand
+pval_upper <- pnorm(xbarobs_upper, muxbar, sigxbar, lower.tail=FALSE)
+pval_lower <- pnorm(xbarobs_lower, muxbar, sigxbar, lower.tail=TRUE)
+pval <- pval_upper + pval_lower
+pval
+```
+
+
+## Two-tailed t-test
+
+* t-test arises from the Normal test scenarios in which the
+sample variance $\sigma_X$ is unknown.
+
+<b>1\. Specify the null and alternative hypotheses ($H_0$ and
+   $H_1$) in terms of a distribution and population
+   parameter.</b>
+   
+$$
+H_0: \mu = 90 \\
+H_1: \mu \neq 90
+$$
+
+<b>2\. Specify the type I error rate -- denoted by the symbol
+   $\alpha$ -- you are willing to tolerate.</b>
+   
+$$
+\alpha = 0.05
+$$
+   
+<b>3\. Specify the sample statistic that you will use to
+   estimate the population parameter in step 1 and state how
+   it is distributed under the assumption that $H_0$ is
+   true.</b>
+   
+$$
+\widehat{\mu} = \bar{x} \\
+\bar{x} \sim \mathcal{N}(\mu_{\bar{x}}, \sigma_{\bar{x}}) \\
+\mu_{\bar{x}} = \mu_{x} \\
+\sigma_{\bar{x}} = \frac{\sigma_{x}}{\sqrt{n}} \rightarrow
+\widehat{\sigma}_{\bar{x}} = \frac{s_{x}}{\sqrt{n}} \\
+t = \frac{\bar{x} - \mu_x}{\frac{s_x}{\sqrt{n}}} \sim t(n-1)
+$$
+
+<b>4\. Obtain a random sample and use it to compute the
+   sample statistic from step 3. Call this value
+   $\widehat{\theta}_{\text{obs}}$</b>
+   
+The researchers perform 15 trials and measure the time to
+cheese on each trial. The data are as follows:
+
+```{r}
+xobs <- c(105.25909, 73.47533, 106.59599, 105.44859, 88.29283,
+          49.20100, 61.42866, 74.10559, 79.88466, 128.09307,
+          95.27187 ,64.01982 ,57.04686 ,74.21077, 74.01570)
+
+n <- length(xobs)
+xbarobs <- mean(xobs)
+sigxbarobs <- sd(xobs) / sqrt(n)
+
+mux <-90
+muxbar <- 90
+
+tobs <- (xbarobs - muxbar) / sigxbarobs
+```
+   
+<b>5\. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
+   occur under the assumption that $H_0$ is true, then
+   reject $H_0$. Otherwise, do not reject $H_0$.</b>
+   
+```{r}
+tobs_upper <- -tobs
+tobs_lower <- tobs
+
+t_crit_upper <- qt(0.05/2, n-1, lower.tail=FALSE)
+t_crit_lower <- qt(0.05/2, n-1, lower.tail=TRUE)
+```
+
+```{r, echo=F, fig.width=10}
+x <- seq(-4, 4, 0.01)
+fx <- dt(x, n-1)
+d <- data.table(x,
+                fx,
+                region=factor(
+                  (x>t_crit_lower) & (x < t_crit_upper), 
+                  labels=c('rejection region', 'failed rejection region'))
+                )
+
+ggplot(d, aes(x, fx)) +
+  geom_line() +
+  geom_segment(x=tobs_lower, xend=tobs_lower, y=0, yend=d[, max(fx)], colour='black', linetype=2) +
+  geom_segment(x=tobs_upper, xend=tobs_upper, y=0, yend=d[, max(fx)], colour='black', linetype=2) +
+  geom_segment(x=t_crit_lower, xend=t_crit_lower, y=0, yend=d[, max(fx)], colour='red', linetype=2) +
+  geom_segment(x=t_crit_upper, xend=t_crit_upper, y=0, yend=d[, max(fx)], colour='red', linetype=2) +
+  geom_ribbon(data=d[x<t_crit_lower], 
+              aes(ymin=0, ymax=dt(x, n-1), fill=region), alpha=0.5) +
+  geom_ribbon(data=d[x>t_crit_lower & x<t_crit_upper], 
+              aes(ymin=0, ymax=dt(x, n-1), fill=region), alpha=0.5) +
+  geom_ribbon(data=d[x>t_crit_upper], 
+              aes(ymin=0, ymax=dt(x, n-1), fill=region), alpha=0.5) +
+  annotate('text', 
+           x=tobs_lower, 
+           y=dt(tobs_lower, n-1),
+           label='tobs lower',
+           colour='black',
+           hjust=0) +
+  annotate('text', 
+           x=tobs_upper, 
+           y=dt(tobs_upper, n-1),
+           label='tobs upper',
+           colour='black',
+           hjust=1) +
+  annotate('text', x=t_crit_lower, y=-0.005,
+           label='t_crit_lower',
+           colour='black',
+           hjust=1) +
+  annotate('text', x=t_crit_upper, y=-0.005,
+           label='t_crit_upper',
+           colour='black',
+           hjust=0) +
+  ylab('f(t)') +
+  xlab('t')
+```
+
+```{r}
+# compute p-value by hand
+pval_upper <- pt(tobs_upper, n-1, lower.tail=FALSE)
+pval_lower <- pt(tobs_lower, n-1, lower.tail=TRUE)
+pval <- pval_upper + pval_lower
+pval
+
+# check with t.test
+t.test(xobs, mu=mux, alternative='two.sided')
+```
+
 
 ## Confidence intervals
 
@@ -97,8 +530,7 @@ TODO: PULL FROM PREVIOUS LECTURE EXAMPLES
 - Then the confidence interval estimate of $\mu_X$ is given by $CI = \left[
   \bar{x}-w \text{, } \bar{x}+w \right]$
 
-```{r}
-
+```{r, echo=F}
 ## Choose a confidence level
 alph <- 0.05
 
@@ -135,12 +567,19 @@ CI_half_width <- (x_bar_upper - x_bar_lower)/2
 ## interval that capture 1 - alpha percent of the distribution.
 ggplot(d, aes(x, fx)) +
   geom_line() +
-  geom_vline(xintercept=x_bar_lower, linetype=2, colour='grey') +
-  geom_vline(xintercept=x_bar_upper, linetype=2, colour='grey') +
+  geom_vline(xintercept=x_bar_lower, linetype=2, colour='black') +
+  geom_vline(xintercept=x_bar_upper, linetype=2, colour='black') +
   geom_vline(xintercept=x_bar_obs-CI_half_width, linetype=2, colour='red') +
   geom_vline(xintercept=x_bar_obs+CI_half_width, linetype=2, colour='red')
-
 ```
+
+- In the above plot, red vertical lines mark the confidence
+interval and black vertical lines mark the critical values.
+
+- CI is always centred around the observed value.
+
+- Critical values are always centred around the mean of the
+null sampling distribution.
 
 - This can all be written concisely as follows:
 
@@ -173,8 +612,7 @@ CI_{.95}    &= \left[ \bar{x} - \Phi_{X}^{-1}(1-0.025),
 - We can demonstrate this by repeating the procedure for three experiments in
   the following code chunk.
 
-```{r}
-
+```{r, echo=F, fig.width=10}
 ## Choose a confidence level
 alph <- 0.05
 
@@ -223,13 +661,12 @@ CI_half_width <- (x_bar_upper - x_bar_lower)/2
 ## interval that capture 1 - alpha percent of the distribution.
 ggplot(d, aes(x, fx)) +
   geom_line() +
-  geom_vline(xintercept=x_bar_lower, linetype=2, colour='grey') +
-  geom_vline(xintercept=x_bar_upper, linetype=2, colour='grey') +
+  geom_vline(xintercept=x_bar_lower, linetype=2, colour='black') +
+  geom_vline(xintercept=x_bar_upper, linetype=2, colour='black') +
   geom_vline(aes(xintercept=value-CI_half_width), linetype=2, colour='red') +
   geom_vline(aes(xintercept=value+CI_half_width), linetype=2, colour='red') +
   facet_wrap(~variable, ncol=3) +
   theme(aspect.ratio=1)
-
 ```
 
 
@@ -247,32 +684,21 @@ ggplot(d, aes(x, fx)) +
   decision and two ways to make an incorrect decision. These are summarised in
   the following table.
 
-<div class = "row">
-<div class = "col-md-6">
-|                   | H0 True      | H1 True       |
-|-------------------|--------------|---------------|
-| Reject H0         | Type I error | Power         |
-| Fail to reject H0 | Confidence   | Type II error |
-</div>
-<div class = "col-md-6">
+|                   | H0 True                 | H1 True                 |
+|:------------------|:------------------------|:------------------------|
+| Reject H0         | Type I error ($\alpha$) | Power ($1-\beta$)        |
+| Fail to reject H0 | Confidence ($1-\alpha$) | Type II error ($\beta$) |
 
-|                   | H0 True    | H1 True   |
-|-------------------|------------|-----------|
-| Reject H0         | $\alpha$   | $1-\beta$ |
-| Fail to reject H0 | $1-\alpha$ | $\beta$   |
-</div>
-</div>
 
 - Here, we have introduced the concept of **power**.
 
 - Power is the probability of correctly rejecting $H_0$.
 
-- Power can only be computed with respect to some fully specified $H1$.
+- Power can only be computed with respect to some fully specified $H_1$.
 
 - This is best seen with a visualisation.
 
-```{r}
-
+```{r, echo=F}
 mu_x_0 <- 2
 mu_x_1 <- 7
 
@@ -330,15 +756,12 @@ g4 <- ggplot(d, aes(x=x)) +
   theme(plot.title = element_text(size=36))
 
 ## ggarrange(g2, g4, g1, g3, ncol=2, nrow=2)
-
 ```
 <div class = "row">
 <div class = "col-md-6">
 
 ```{r echo=F}
-
 g2
-
 ```
 
 - Type I error is given by $\alpha$
@@ -352,9 +775,7 @@ g2
 <div class = "col-md-6">
 
 ```{r echo=F}
-
 g4
-
 ```
 
 - Power is given by $1 - \beta$
@@ -362,15 +783,12 @@ g4
 - Power can depends on both $H_0$ and $H_1$
 -
 -
--
 
 </div>
 <div class = "col-md-6">
 
 ```{r echo=F}
-
 g1
-
 ```
 
 - Confidence is given by $1 - \alpha$
@@ -384,9 +802,7 @@ g1
 <div class = "col-md-6">
 
 ```{r echo=F}
-
 g3
-
 ```
 
 - Type II error is given by $\beta$
@@ -400,12 +816,9 @@ g3
 </div>
 </div>
 
-### Changing power
+## power
 
-- Power:
-
-```{r}
-
+```{r, echo=F}
 mu_x_0 <- 2
 mu_x_1 <- 7
 
@@ -429,17 +842,15 @@ ggplot(d, aes(x=x)) +
   ylab('Probability Density') +
   ggtitle(expression(1-beta)) +
   theme(plot.title = element_text(size=36))
-
 ```
 
 - In general, we want as much power as possible.
 - This is because, if $H_0$ isn't true, then we'd really like to reject it.
 - How can we increase power?
 
-#### Increase the distance between $H_0$ and $H_1$
+### Increase the distance between $H_0$ and $H_1$
 
-```{r}
-
+```{r, echo=F}
 mu_x_0 <- 2
 mu_x_1 <- c(7, 10)
 
@@ -480,16 +891,14 @@ g2 <- ggplot(d, aes(x=x)) +
     plot.title = element_text(size=30))
 
 ggarrange(g1, g2, ncol=2)
-
 ```
 
 - The closer together the $H_0$ and $H_1$ distributions, the less power we have.
 
 
-#### Decrease the variance of $H_0$ and $H_1$
+### Decrease the variance of $H_0$ and $H_1$
 
-```{r}
-
+```{r, echo=F}
 mu_x_0 <- 2
 mu_x_1 <- 7
 
@@ -533,13 +942,12 @@ g2 <- ggplot(d, aes(x=x)) +
     plot.title = element_text(size=30))
 
 ggarrange(g1, g2, ncol=2)
-
 ```
 
 - The smaller the variance of $H_0$ and $H_1$, the greater power we have
 
 
-#### Power as a function of sample size
+### Power as a function of sample size
 
 - The key point here is that, when dealing with the distribution of sample
   means, variance is inversely proportional to sample size.
@@ -548,8 +956,7 @@ ggarrange(g1, g2, ncol=2)
 
 - This means that power increases with increased sample size.
 
-```{r}
-
+```{r, echo=F}
 mu_x_0 <- 20
 mu_x_1 <- 70
 
@@ -569,5 +976,4 @@ d <- data.table(n, power)
 
 ggplot(d, aes(n, power)) +
   geom_line()
-
 ```
