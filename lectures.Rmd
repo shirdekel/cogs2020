@@ -16,26 +16,19 @@ output:
 fontsize: 14pt
 ---
 
-<!-- #### Lecture 1: Course intro, `R`, `data.table` and `ggplot2` -->
 #### [Lecture 1: Course intro, `R`, `data.table` and `ggplot2`](lecture_1.html)
 
-<!-- #### Lecture 2: Descriptive statistics, data types, experiment design -->
 #### [Lecture 2: Descriptive statistics, data types, experiment design](lecture_2.html)
 
-<!-- #### Lecture 3: Probability, random variables, distribution of sample means -->
 #### [Lecture 3: Probability, random variables, distribution of sample means](lecture_3.html)
 
-<!-- #### Lecture 4: Binomial distribution, Normal distribution, central limit theorem -->
 #### [Lecture 4: Binomial distribution, Normal distribution, central limit theorem](lecture_4.html)
 
-<!-- #### Lecture 5: Null hypothesis significance testing -->
-<!-- #### Lecture 5: Critical values, two-tailed tests, confidence intervals, Type I vs type II errors -->
-#### [Lecture 5: Null hypothesis significance testings](lecture_5.html)
+#### [Lecture 5: Binomial test, Normal test, t-test](lecture_5.html)
 
-#### Lecture 6: Binomial test, one-sample t-test
-<!-- #### [Lecture 6: Binomial test, one-sample t-test](lecture_6.html) -->
+#### [Lecture 6: Two-tailed tests, confidence intervals, Type I vs type II errors](lecture_6.html)
 
-#### Lecture 7: independent samples and paired samples t-test
+#### Lecture 7: Independent samples and paired samples t-test
 <!-- #### [Lecture 7: independent samples and paired samples t-test](lecture_7.html) -->
 
 #### Lecture 8: Correlation, regression

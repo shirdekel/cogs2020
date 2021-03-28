@@ -1,0 +1,573 @@
+---
+title: "Lecture 6 - Hypothesis testing II"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 2
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=F}
+library(data.table)
+library(ggplot2)
+library(ggpubr)
+rm(list=ls())
+```
+
+## Learning objectives
+
+* Define and understand how to perform a **two-tailed**
+hypothesis test.
+
+* In the context of two-tailed hypothesis tests, define and
+understand the following:
+
+  * **p-values**
+  
+  * **more extreme outcomes** 
+  
+  * **critical value**
+  
+  * **rejection region**
+  
+  * **$1-\alpha\%$ confidence interval**
+
+* Be able to perform two-tailed binomial tests and t-tests
+manually (i.e., run through the 5 steps).
+
+* Understand when and how to use `binom.test()`.
+
+* Understand when and how to use `t.test()`.
+
+
+## Two-tailed tests
+
+TODO: PULL FROM PREVIOUS LECTURE EXAMPLES
+
+- In the previous example, what if instead of testing the hypothesis that
+  $\mu_X$ is greater than $.15$, we wanted to test the hypothesis that $\mu_X$
+  is simply different than $.15$?
+
+- As we will see in the following example, the main difference is that the
+  p-value gets contributions from both the lower and upper tail of the sampling
+  distribution.
+  
+
+## Confidence intervals
+
+- Way back in the beginning of the class we covered descriptive statistics, and
+  more recently we have used some of these descriptive statistics as **estimates**
+  of population parameters.
+
+- For example, we have used the sample mean $\bar{x}$ as an estimate of the
+  population mean $\mu_X$.
+
+- This is an example of a **point estimate** of a population parameter, and it
+  represents our single best guess about the true value of the parameter in
+  question.
+
+- An alternative approach to point estimation is to instead try to estimate a
+  range of values in which the true value of the parameter is likely to reside.
+
+- This is called **interval estimation** and it is accomplished by constructing
+  a **confidence interval**.
+
+- To construct a confidence interval for the population mean $\mu_X$ (assuming
+  the population variance $\sigma_X^2$ is known), first compute the sample mean
+  $\bar{x}$.
+
+- Next, the width of the CI is the same as the width of the distribution of
+  sample means required to cover $1-\alpha$ percent of it's probability. Call
+  this width $w$.
+
+- Then the confidence interval estimate of $\mu_X$ is given by $CI = \left[
+  \bar{x}-w \text{, } \bar{x}+w \right]$
+
+```{r}
+
+## Choose a confidence level
+alph <- 0.05
+
+## specify a hypothetical distribution for an experiment
+mu_x <- 5
+sigma_x <- 3
+
+## specify the number of samples to take from X
+n <- 10
+
+## take n samples from x
+sample_x <- rnorm(n, mu_x, sigma_x)
+
+## compute the observed sample mean
+x_bar_obs <- mean(sample_x)
+
+## specify the distribution of sample means
+mu_x_bar <- mu_x
+sigma_x_bar <- sigma_x / sqrt(n)
+
+## do some routine stuff to plot x-bar sitribution
+x <- seq(mu_x_bar - 5*sigma_x_bar, mu_x_bar + 5*sigma_x_bar, 0.01)
+fx <- dnorm(x, mu_x_bar, sigma_x_bar)
+d <- data.table(x, fx)
+
+## Compute 1-alpha width of the x-bar distribution
+x_bar_lower <- qnorm(alph/2, mu_x_bar, sigma_x_bar)
+x_bar_upper <- qnorm(1-alph/2, mu_x_bar, sigma_x_bar)
+
+## Compute the width of the confidence interval
+CI_half_width <- (x_bar_upper - x_bar_lower)/2
+
+## Plot the distribution of sample means, and show with vertical lines the
+## interval that capture 1 - alpha percent of the distribution.
+ggplot(d, aes(x, fx)) +
+  geom_line() +
+  geom_vline(xintercept=x_bar_lower, linetype=2, colour='grey') +
+  geom_vline(xintercept=x_bar_upper, linetype=2, colour='grey') +
+  geom_vline(xintercept=x_bar_obs-CI_half_width, linetype=2, colour='red') +
+  geom_vline(xintercept=x_bar_obs+CI_half_width, linetype=2, colour='red')
+
+```
+
+- This can all be written concisely as follows:
+
+$$
+CI_{1-\alpha} = \left[ \bar{x} - \Phi_{X}^{-1}(1-\frac{\alpha}{2}),
+                \text{ }
+                \bar{x} + \Phi_{X}^{-1}(1-\frac{\alpha}{2}) \right]
+$$
+
+- For example, the 95% confidence interval for the population mean of $X \sim
+  N(\mu_X, \sigma_X)$ is given by:
+
+\begin{align}
+CI_{1-0.05} &= \left[ \bar{x} - \Phi_{X}^{-1}(1-\frac{0.05}{2}),
+                \text{ }
+                \bar{x} + \Phi_{X}^{-1}(1-\frac{0.05}{2}) \right]
+\\ \\
+CI_{.95}    &= \left[ \bar{x} - \Phi_{X}^{-1}(1-0.025),
+                \text{ }
+                \bar{x} + \Phi_{X}^{-1}(1-0.025) \right]
+\\ \\
+            &= \left[ \bar{x} - \Phi_{X}^{-1}(0.975),
+                \text{ }
+                \bar{x} + \Phi_{X}^{-1}(0.975) \right]
+\end{align}
+
+- Notice that just like the point estimate $\bar{x}$, a confidence interval is
+  also a random variable, and so changes with every experiment performed.
+
+- We can demonstrate this by repeating the procedure for three experiments in
+  the following code chunk.
+
+```{r}
+
+## Choose a confidence level
+alph <- 0.05
+
+## specify a hypothetical distribution for an experiment
+mu_x <- 5
+sigma_x <- 3
+
+## specify the number of samples to take from X
+n <- 10
+
+## take n samples from x
+sample_x_1 <- rnorm(n, mu_x, sigma_x)
+sample_x_2 <- rnorm(n, mu_x, sigma_x)
+sample_x_3 <- rnorm(n, mu_x, sigma_x)
+
+## compute the observed sample mean
+x_bar_obs_1 <- mean(sample_x_1)
+x_bar_obs_2 <- mean(sample_x_2)
+x_bar_obs_3 <- mean(sample_x_3)
+
+## specify the distribution of sample means
+mu_x_bar <- mu_x
+sigma_x_bar <- sigma_x / sqrt(n)
+
+## do some routine stuff to plot x-bar sitribution
+x <- seq(mu_x_bar - 5*sigma_x_bar, mu_x_bar + 5*sigma_x_bar, 0.01)
+fx <- dnorm(x, mu_x_bar, sigma_x_bar)
+d <- data.table(x, fx)
+
+## add sample mean results to d for plotting purposes
+d[, x_bar_obs_1 := x_bar_obs_1]
+d[, x_bar_obs_2 := x_bar_obs_2]
+d[, x_bar_obs_3 := x_bar_obs_3]
+
+## Convert d from wide to long
+d <- melt(d, measure.vars=c('x_bar_obs_1', 'x_bar_obs_2', 'x_bar_obs_3'))
+
+## Compute 1-alpha width of the x-bar distribution
+x_bar_lower <- qnorm(alph/2, mu_x_bar, sigma_x_bar)
+x_bar_upper <- qnorm(1-alph/2, mu_x_bar, sigma_x_bar)
+
+## Compute the width of the confidence interval
+CI_half_width <- (x_bar_upper - x_bar_lower)/2
+
+## Plot the distribution of sample means, and show with vertical lines the
+## interval that capture 1 - alpha percent of the distribution.
+ggplot(d, aes(x, fx)) +
+  geom_line() +
+  geom_vline(xintercept=x_bar_lower, linetype=2, colour='grey') +
+  geom_vline(xintercept=x_bar_upper, linetype=2, colour='grey') +
+  geom_vline(aes(xintercept=value-CI_half_width), linetype=2, colour='red') +
+  geom_vline(aes(xintercept=value+CI_half_width), linetype=2, colour='red') +
+  facet_wrap(~variable, ncol=3) +
+  theme(aspect.ratio=1)
+
+```
+
+
+## Type I versus Type II errors
+
+### Definitions
+
+- Hypothesis testing is about using noisy data to make decisions about what we
+  think the true state of the universe is.
+
+- Sometimes, our procedure for making these decisions will lead us to make the
+  correct decision, but sometimes we will make the wrong decision.
+
+- In the context of hypothesis testing, there are two ways to make a correct
+  decision and two ways to make an incorrect decision. These are summarised in
+  the following table.
+
+<div class = "row">
+<div class = "col-md-6">
+|                   | H0 True      | H1 True       |
+|-------------------|--------------|---------------|
+| Reject H0         | Type I error | Power         |
+| Fail to reject H0 | Confidence   | Type II error |
+</div>
+<div class = "col-md-6">
+
+|                   | H0 True    | H1 True   |
+|-------------------|------------|-----------|
+| Reject H0         | $\alpha$   | $1-\beta$ |
+| Fail to reject H0 | $1-\alpha$ | $\beta$   |
+</div>
+</div>
+
+- Here, we have introduced the concept of **power**.
+
+- Power is the probability of correctly rejecting $H_0$.
+
+- Power can only be computed with respect to some fully specified $H1$.
+
+- This is best seen with a visualisation.
+
+```{r}
+
+mu_x_0 <- 2
+mu_x_1 <- 7
+
+sigma_x <- 2
+
+n <- 10
+x_crit <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=TRUE)
+
+x <- seq(mu_x_0 - 5*sigma_x, mu_x_1 + 5*sigma_x, 0.01)
+fx0 <- dnorm(x, mu_x_0, sigma_x)
+fx1 <- dnorm(x, mu_x_1, sigma_x)
+
+d <- data.table(x, fx0, fx1)
+
+g1 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx1), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x<x_crit], aes(x=x, ymin=0, ymax=fx0), fill='red', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(1-alpha)) +
+  theme(plot.title = element_text(size=36))
+
+g2 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx1), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx0), fill='red', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(alpha)) +
+  theme(plot.title = element_text(size=36))
+
+
+g3 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx1), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x<x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(beta)) +
+  theme(plot.title = element_text(size=36))
+
+
+g4 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx1), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(1 - beta)) +
+  theme(plot.title = element_text(size=36))
+
+## ggarrange(g2, g4, g1, g3, ncol=2, nrow=2)
+
+```
+<div class = "row">
+<div class = "col-md-6">
+
+```{r echo=F}
+
+g2
+
+```
+
+- Type I error is given by $\alpha$
+- The probability of a type I error is given by the area under the $H_0$ curve
+  in the rejection region.
+- A type I error is the probability of incorrectly rejecting $H_0$
+- Type I error is completely determined by $H_0$
+- Type I error does not depend on $H_1$
+
+</div>
+<div class = "col-md-6">
+
+```{r echo=F}
+
+g4
+
+```
+
+- Power is given by $1 - \beta$
+- Power is given by the area under the $H_1$ curve in the rejection region.
+- Power can depends on both $H_0$ and $H_1$
+-
+-
+-
+
+</div>
+<div class = "col-md-6">
+
+```{r echo=F}
+
+g1
+
+```
+
+- Confidence is given by $1 - \alpha$
+- Confidence is given by the area under the $H_0$ curve outside the rejection region.
+- Confidence depends only on $H_0$
+-
+-
+-
+
+</div>
+<div class = "col-md-6">
+
+```{r echo=F}
+
+g3
+
+```
+
+- Type II error is given by $\beta$
+- The probability of a type II error is given by the area under the $H_1$ curve
+  outside the rejection region.
+- A type II error is the probability of incorrectly failing to reject $H_0$
+- Type II error depends on both $H_0$ and $H1$
+-
+
+
+</div>
+</div>
+
+### Changing power
+
+- Power:
+
+```{r}
+
+mu_x_0 <- 2
+mu_x_1 <- 7
+
+sigma_x <- 2
+
+n <- 10
+x_crit <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=TRUE)
+
+x <- seq(mu_x_0 - 5*sigma_x, mu_x_1 + 5*sigma_x, 0.01)
+fx0 <- dnorm(x, mu_x_0, sigma_x)
+fx1 <- dnorm(x, mu_x_1, sigma_x)
+
+d <- data.table(x, fx0, fx1)
+
+ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx1), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(1-beta)) +
+  theme(plot.title = element_text(size=36))
+
+```
+
+- In general, we want as much power as possible.
+- This is because, if $H_0$ isn't true, then we'd really like to reject it.
+- How can we increase power?
+
+#### Increase the distance between $H_0$ and $H_1$
+
+```{r}
+
+mu_x_0 <- 2
+mu_x_1 <- c(7, 10)
+
+sigma_x <- 2
+
+n <- 10
+x_crit <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=TRUE)
+
+x <- seq(mu_x_0 - 5*sigma_x, mu_x_1[2] + 5*sigma_x, 0.01)
+fx0 <- dnorm(x, mu_x_0, sigma_x)
+fx1 <- dnorm(x, mu_x_1[1], sigma_x)
+fx2 <- dnorm(x, mu_x_1[2], sigma_x)
+
+d <- data.table(x, fx0, fx1, fx2)
+
+g1 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx1), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(1-beta)) +
+  theme(
+    aspect.ratio=0.85,
+    plot.title = element_text(size=30))
+
+g2 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx2), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx2), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(1-beta)) +
+  theme(
+    aspect.ratio=0.85,
+    plot.title = element_text(size=30))
+
+ggarrange(g1, g2, ncol=2)
+
+```
+
+- The closer together the $H_0$ and $H_1$ distributions, the less power we have.
+
+
+#### Decrease the variance of $H_0$ and $H_1$
+
+```{r}
+
+mu_x_0 <- 2
+mu_x_1 <- 7
+
+sigma_x <- c(2, 4)
+
+n <- 10
+x_crit_1 <- qnorm(0.95, mu_x_0, sigma_x[1], lower.tail=TRUE)
+x_crit_2 <- qnorm(0.95, mu_x_0, sigma_x[2], lower.tail=TRUE)
+
+x <- seq(mu_x_0 - 5*sigma_x[2], mu_x_1 + 5*sigma_x[2], 0.01)
+fx01 <- dnorm(x, mu_x_0, sigma_x[1])
+fx11 <- dnorm(x, mu_x_1, sigma_x[1])
+fx02 <- dnorm(x, mu_x_0, sigma_x[2])
+fx12 <- dnorm(x, mu_x_1, sigma_x[2])
+
+
+d <- data.table(x, fx01, fx11, fx02, fx12)
+
+g1 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx01), colour='red') +
+  geom_line(aes(y=fx11), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx11), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(1-beta)) +
+  theme(
+    aspect.ratio=0.85,
+    plot.title = element_text(size=30))
+
+g2 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx02), colour='red') +
+  geom_line(aes(y=fx12), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx12), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(1-beta)) +
+  theme(
+    aspect.ratio=0.85,
+    plot.title = element_text(size=30))
+
+ggarrange(g1, g2, ncol=2)
+
+```
+
+- The smaller the variance of $H_0$ and $H_1$, the greater power we have
+
+
+#### Power as a function of sample size
+
+- The key point here is that, when dealing with the distribution of sample
+  means, variance is inversely proportional to sample size.
+
+- $\sigma_\bar{X} = \frac{\sigma_X}{\sqrt{n}}$
+
+- This means that power increases with increased sample size.
+
+```{r}
+
+mu_x_0 <- 20
+mu_x_1 <- 70
+
+sigma_x <- 30
+
+n <- 1:10
+
+mu_x_bar_0 <- mu_x_0
+mu_x_bar_1 <- mu_x_1
+
+sigma_x_bar <- sigma_x / sqrt(n)
+
+x_crit <- qnorm(0.95, mu_x_bar_0, sigma_x_bar, lower.tail=TRUE)
+power <- pnorm(x_crit, mu_x_bar_1, sigma_x_bar, lower.tail=FALSE)
+
+d <- data.table(n, power)
+
+ggplot(d, aes(n, power)) +
+  geom_line()
+
+```
