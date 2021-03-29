@@ -59,10 +59,151 @@ equal to a **character** vector (i.e., letters surrounded by
 
 ## Problem 1
 
-TODO: Interpret plot. Identify critical values, rejection regions,
-p-vales, etc.
+**(a)** Load the data `ii_gabor.csv` into a data.table
+
+The data file can be found here:
+https://crossley.github.io/cogs2020/data/nhp_cat_learn/ii_gabor.csv
+
+This data file contains the results from a monkey performing
+a category learning experiment similar to those that we have
+seen a handful of times already in this class. On each trial
+of the experiment the monkey sees a sine-wave grating and
+must learn through trial and error whether that grating is a
+member of category A or category B.
+
+**(b)** Change the column names to the following
+
+`col_names <- c('cat', 'x', 'y', 'resp', 'rt', 'phase')`
+
+**(c)** Add a column to the data.table that indicates the
+trial of the experiment.
+
+**(d)** Add a column to the `data.table` that indicates the
+block of the experiment, assuming a block size of 100 trials
+per block. You may need to use the `length.out` argument of
+the `rep()` function to deal with using a block size of 100,
+which does not divide evenly into the number of rows in the
+data table.
+
+**(e)** Add a column to the `data.table` that indicates
+whether the response on each trial was correct or incorrect
+(e.g., `cat == resp`).
+
+**(f)** Create a new data.table (I'll call it `dd`) that
+contains columns for the mean accuracy per block and the SEM
+(standard error of the mean) per block, grouped by each
+unique combination of block and phase.
+
+**(g)** Add a column to the data.table that indicates
+whether the phase of the experiment has changed (i.e., is
+different in the current row than it was in the previous
+row).
+
+**(h)** Plot the mean accuracy per block (`block` on the
+x-axis, `acc_mean` on the y-axis). Include error bars at
+each data point that represent SEM. Plot phase 1 and phase 2
+in different colours.
 
 ## Problem 2
+
+In the dataset you have worked with in Problem 2, each trial
+is a Bernouli trial with probability of success $p$. This
+means that trials are distributed $X \sim Bernoulli(p)$.
+This also means that blocks of trials are distributed $X
+\sim Binomial(n,p)$, where `n = block_size`.
+
+**(a)** Test the hypothesis that, for the first 100 trials
+of phase 1, the monkey is doing no better and no worse than
+guessing (i.e., $p = .5$). Do this with and without
+`binom.test()` and make sure that your answers agree with
+each other. Also, plot the Null distribution (distribution
+assumed by the Null hypothesis) and use vertical lines to
+indicate critical values and both point and interval
+estimates of observed values.
+
+**(b)** Test the hypothesis that, for the last 100 trials of
+phase 1, the monkey is doing better than guessing (i.e., $p
+= .5$). Do this with and without `binom.test()` and make
+sure that your answers agree with each other. Also, plot the
+Null distribution and use vertical lines to indicate
+critical values and both point and interval estimates of
+observed values.
+
+**(c)** Test the hypothesis that, for the first 100 trials
+of phase 2, the monkey is doing worse than guessing (i.e.,
+$p = .5$). Do this with and without `binom.test()` and make
+sure that your answers agree with each other. Also, plot the
+Null distribution and use vertical lines to indicate
+critical values and both point and interval estimates of
+observed values.
+
+**(d)** What accounts for the drop in accuracy between phase
+1 and phase 2? To answer this question, investigate the
+stimuli the monkey was required to learn between phase 1 and
+phase 2. Make a plot of stimuli (`x=x, y=y`) coloured by
+category membership label. Inlcude a seperate version of
+this plot for each phase in different `facets`.
+
+## Problem 3
+
+Above, we viewed each trial as $Bernoulli(p)$, and each $n$
+trials as $Binomial(n,p)$. An alternative framing is to
+ignore each individual trial, and instead consider the
+random variable
+
+$X = \text{mean accuracy per block}$
+
+In this framing, the experiment results are sampled from
+blocks of trials, not from individual trials.
+
+**(a)** Redefine the block column of your original
+`data.table` `d` to use 25 trials per block instead of 100.
+
+**(b)** Redefine `dd` to incorporate the new block size,
+i.e. add columns for the mean accuracy per block and the SEM
+per block, grouped by each unique combination of block and
+phase (see Problem 2F for reminder).
+
+**(c)** Repeat the mean accuray plot using the new block
+size (see Problem 2H for reminder). Be warned that this plot
+will look pretty "busy"... too busy for a paper or a report,
+but fine for our purposes below.
+
+**(d)** Is the mean accuracy in the first 16 blocks of phase
+1 greater than or worse than chance (i.e. 50% correct
+responses)? Do this with and without `t.test()` and make
+sure that your answers agree with each other. Also, plot the
+Null distribution and use vertical lines to indicate
+critical values and both point and interval estimates of
+observed values.
+
+**(e)** Is the mean accuracy in the last 16 blocks of phase
+1 greater than chance? Do this with and without `t.test()`
+and make sure that your answers agree with each other. Also,
+plot the Null distribution and use vertical lines to
+indicate critical values and both point and interval
+estimates of observed values.
+
+**(f)** Is the mean accuracy in the first 16 blocks of phase
+2 less than chance? Do this with and without `t.test()` and
+make sure that your answers agree with each other. Also,
+plot the Null distribution and use vertical lines to
+indicate critical values and both point and interval
+estimates of observed values.
+
+**(g)** Assume that the true state of the universe is $\mu =
+.6$ for the first 16 blocks of phase 1. Compute $\alpha$,
+$\beta$, and $power$ for $H_0: \mu = .5$.
+
+**(h)** Plot the Null and Alternative distributions.
+Indicate the critical value, observed value, and color the
+areas corresponding to $\alpha$, $\beta$, and $power$.
+
+**(i)** Plot power as a function of $n$ (number of blocks in
+the first 16 blocks)
+
+
+## Problem 4
 
 Researchers are studying the membrane characteristics of an
 important neuron type. They perform an experiment in which
@@ -76,12 +217,13 @@ many sources of randomness and noise in biological cellular
 environments. Similarly, the neuron fires an action
 potential sometimes even when no current is applied. 
 
-Let $X \sim Binomial(n, p)$ be the random variable that determines 
-whether or not an action potential is fired due to the applied current.
-Furthermore, let the probability that the neuron fires an
-action potential even in the absence of applied current
-(i.e., baseline firing) be $p=0.1$. The researchers perform 
-100 trials and find the following results:
+Let $X \sim Binomial(n, p)$ be the random variable that
+determines whether or not an action potential is fired due
+to the applied current. Furthermore, let the probability
+that the neuron fires an action potential even in the
+absence of applied current (i.e., baseline firing) be
+$p=0.1$. The researchers perform 100 trials and find the
+following results:
 
 ```{r}
 ## 1 corresponds to action potential fired on that trial
@@ -102,14 +244,15 @@ inference reflects $95\%$ confidence.
 <!--    $H_1$) in terms of a population parameter $\theta$. -->
 
 * What is the correct alternative hypothesis?
-   * `ans` $H_1: p > 0.1$
-   * `ans` $H_1: p < 0.1$
-   * `ans` $H_1: p = 0.1$
+   * `H1 <- a` $H_1: p > 0.1$
+   * `H1 <- b` $H_1: p < 0.1$
+   * `H1 <- c` $H_1: p = 0.1$
 
 <!-- 2\. Specify the type I error rate -- denoted by the symbol -->
 <!--     $\alpha$) -- you are willing to tolerate. -->
 
-* Create a variable named `alph` and set its value to $\alpha$.
+* Create a variable named `type_I_rate` ($\alpha$) and set
+its value to `0.05`.
 
 <!-- 3\. Specify the sample statistic $\widehat{\theta}$ that you will use to -->
 <!--    estimate the population parameter $\theta$ in step 1 and state how -->
@@ -133,9 +276,10 @@ probability mass (if discrete) or probability density (if
 continuous) corresponding to each value of
 $\widehat{\theta}$ stored in variable `theta`.
 
-* Plot the $\widehat{\theta}$ sampling distribution using `ggplot()` and
-``geom_line()` (if continuous) or `geom_point()` (if discrete). You should
-use this plot to contextualize the p-value and critical value computed below
+* Plot the $\widehat{\theta}$ sampling distribution using
+only `ggplot()` and `geom_line()` (if continuous) or
+`geom_point()` (if discrete). You should use this plot to
+contextualize the p-value and critical value computed below
 (i.e., use it to check your work!).
 
 <!-- 4\. Obtain a random sample and use it to compute the sample -->
@@ -158,5 +302,60 @@ to the critical value.
 * Create a value named `decision` and set its value either to
 `reject H0` or `fail to reject H0`.
 
-* Repeat this inference using `binom.test()`
+* Repeat this inference using `binom.test_result <-
+binom.test(...)` where you replace the `...` in
+`binom.test()` with appropriate arguments.
+
+
+## Problem 5
+
+```{r, echo=F, fig.width=10}
+n <- 2
+
+mu_x_0 <- 5
+sigma_x <- 2 / sqrt(n)
+x_crit <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=F)
+mu_x_1 <- x_crit
+
+x <- seq(mu_x_0 - 5*sigma_x, mu_x_1 + 5*sigma_x, 0.01)
+fx0 <- dnorm(x, mu_x_0, sigma_x)
+fx1 <- dnorm(x, mu_x_1, sigma_x)
+d <- data.table(x, fx0, fx1)
+d[x <= x_crit, region0 := 'I'] # confidence
+d[x > x_crit, region0 := 'II'] # alpha
+d[x <= x_crit, region1 := 'III'] # beta
+d[x > x_crit, region1 := 'IV'] # power
+
+ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0)) +
+  geom_line(aes(y=fx1)) +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d, aes(x=x, ymin=0, ymax=fx0, fill=region0), alpha=0.25) +
+  geom_ribbon(data=d, aes(x=x, ymin=0, ymax=fx0, fill=region0), alpha=0.25) +
+  geom_ribbon(data=d, aes(x=x, ymin=0, ymax=fx1, fill=region1), alpha=0.25) +
+  geom_ribbon(data=d, aes(x=x, ymin=0, ymax=fx1, fill=region1), alpha=0.25) +
+  scale_x_continuous(breaks=c(mu_x_1, mu_x_0), labels=c('H1', 'H0')) +
+  ylab('Probability Density') +
+  theme(legend.title = element_blank())
+```
+
+Please respond by assigning `"confidence"`, `"alpha"`,
+`"beta"`, or `"power"` to the variables requested below.
+
+* What quantity does region I in the above plot correspond to?
+
+* What quantity does region II in the above plot correspond to?
+
+* What quantity does region III in the above plot correspond to?
+
+* What quantity does region IV in the above plot correspond to?
+
+* What is the numeric value (to one decimal place) of the
+power in this example?
+
+* Assuming a type I error rate of 0.05, what is the numeric
+value (to one decimal place) of confidence of this example?
+
+* Will increasing the sample size increase the distance
+between the mean of H1 and H0 distributions?
 
