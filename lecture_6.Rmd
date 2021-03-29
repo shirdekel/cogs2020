@@ -924,6 +924,7 @@ g1 <- ggplot(d, aes(x=x)) +
   geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx11), fill='blue', alpha=0.5) +
   scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
   ylab('Probability Density') +
+  ylim(0, 0.2) +
   ggtitle(expression(1-beta)) +
   theme(
     aspect.ratio=0.85,
@@ -936,6 +937,7 @@ g2 <- ggplot(d, aes(x=x)) +
   geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx12), fill='blue', alpha=0.5) +
   scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
   ylab('Probability Density') +
+  ylim(0, 0.2) +
   ggtitle(expression(1-beta)) +
   theme(
     aspect.ratio=0.85,
