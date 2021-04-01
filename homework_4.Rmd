@@ -86,7 +86,7 @@ which does not divide evenly into the number of rows in the
 data table.
 
 **(e)** Add a column to the `data.table` that indicates
-whether the response on each trial was correct or incorrect
+whether the response on each trial was correct oxr incorrect
 (e.g., `cat == resp`).
 
 **(f)** Create a new data.table (I'll call it `dd`) that

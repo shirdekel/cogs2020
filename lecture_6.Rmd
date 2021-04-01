@@ -859,7 +859,7 @@ sigma_x <- 2
 n <- 10
 x_crit <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=TRUE)
 
-x <- seq(mu_x_0 - 5*sigma_x, mu_x_1[2] + 5*sigma_x, 0.01)
+x <- seq(mu_x_0 - 4*sigma_x, mu_x_1[2] + 4*sigma_x, 0.01)
 fx0 <- dnorm(x, mu_x_0, sigma_x)
 fx1 <- dnorm(x, mu_x_1[1], sigma_x)
 fx2 <- dnorm(x, mu_x_1[2], sigma_x)
@@ -900,15 +900,15 @@ ggarrange(g1, g2, ncol=2)
 
 ```{r, echo=F}
 mu_x_0 <- 2
-mu_x_1 <- 7
+mu_x_1 <- 10
 
-sigma_x <- c(2, 4)
+sigma_x <- c(2, 20)
 
 n <- 10
 x_crit_1 <- qnorm(0.95, mu_x_0, sigma_x[1], lower.tail=TRUE)
 x_crit_2 <- qnorm(0.95, mu_x_0, sigma_x[2], lower.tail=TRUE)
 
-x <- seq(mu_x_0 - 5*sigma_x[2], mu_x_1 + 5*sigma_x[2], 0.01)
+x <- seq(mu_x_0 - 4*sigma_x[2], mu_x_1 + 4*sigma_x[2], 0.01)
 fx01 <- dnorm(x, mu_x_0, sigma_x[1])
 fx11 <- dnorm(x, mu_x_1, sigma_x[1])
 fx02 <- dnorm(x, mu_x_0, sigma_x[2])
