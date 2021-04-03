@@ -54,3 +54,7 @@ ggplot(dt, aes(t, ft)) +
   geom_line()
 
 t.test(x, mu=0.5, alternative='greater')
+
+
+
+

@@ -34,6 +34,140 @@ library(ggplot2)
 library(ggpubr)
 ```
 
+## General instructions
+When responding to every question that requires you to
+perform a hypothesis test, please follow the instructions
+laid out below.
+
+<b>1\. Specify the null and alternative hypotheses ($H_0$ and
+   $H_1$) in terms of a distribution and population
+   parameter.</b>
+
+You will need to perform this step in order to correctly
+perform any hypothesis test, but for the homework, just
+writing it in comments is adequate (your comments won't be
+graded).
+   
+<b>2\. Specify the type I error rate -- denoted by the symbol
+   $\alpha$ -- you are willing to tolerate.</b>
+
+For every problem in this homework use $\alpha=0.05$. Again,
+writing this in comments is adequate (your comments won't be
+graded).
+   
+<b>3\. Specify the sample statistic that you will use to
+   estimate the population parameter in step 1 and state how
+   it is distributed under the assumption that $H_0$ is
+   true.</b>
+
+* Create a vector named `theta` that contains the possible
+outcomes of $\widehat{\theta}$.
+
+   * If $\widehat{\theta}$ is discrete with a finite range
+   then `theta_hat_x` must contain all possible outcomes.
+   
+   * If $\widehat{\theta}$ is continuous with a finite range
+   then use `theta_hat_x` must start at the minimum valued
+   outcome, end at the maximum valued outcome, and contain
+   all the values between these two endpoints in increments
+   of `0.01`.
+   
+   * If $\widehat{\theta}$ is discrete with an infinite
+   range then `theta_hat_x` must start 4 standard deviations
+   below the the mean, end 3 standard deviations above the
+   mean, and must contain all the values between these two
+   endpoints in increments of `0.01`.
+   
+   * If $\widehat{\theta}$ is continuous with an infinite
+   range then `theta_hat_x` must start 4 standard deviations
+   below the the mean, end 3 standard deviations above the
+   mean, and must contain all the values between these two
+   endpoints in increments of `0.01`.
+
+* Create a variable named `theta_hat_p` and set its value to
+the probability mass (if discrete) or probability density
+(if continuous) corresponding to each possible outcome of
+$\widehat{\theta}$ stored in variable `theta_hat_x`.
+
+* Plot the $\widehat{\theta}$ sampling distribution. Put the
+possible outcomes of $\widehat{\theta}$ on the x-axis and
+put the probability density or mass (whichever is
+appropriate) on the y-axis. Use only `ggplot()` and
+`geom_line()` (if continuous) or `geom_point()` (if
+discrete). You should use this plot to contextualize the
+p-value and critical value computed below (i.e., use it to
+check your work!).
+   
+<b>4\. Obtain a random sample and use it to compute the
+   sample statistic from step 3. Call this value
+   $\widehat{\theta}_{\text{obs}}$</b>
+
+* Create a variable named `theta_hat_obs` and set its value to
+$\widehat{\theta}_{\text{obs}}$.
+
+<b>5\. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
+   occur under the assumption that $H_0$ is true, then
+   reject $H_0$. Otherwise, do not reject $H_0$.</b>
+
+* Create a variable named `p_val` and set its value to
+$P(\widehat{\theta}_{\text{obs}} | H_0)$.
+
+* Create a value named `decision` and set its value either to
+`reject H0` or `fail to reject H0`.
+
+* If performing a one-tailed test, create a variable named
+`theta_hat_crit` and set its value to the critical value. If
+performing a 2-tailed test, create two variables,
+`theta_hat_crit_lower` and `theta_hat_crit_upper` and set
+their values to the corresponding critical values.
+
+* Calculate the 95% confidence interval estimate of the
+parameter in step 1. Create a variable named `ci_lower` and
+set its value to the lower bound of this confidence
+interval, and create a variable named `ci_upper` and set its
+value to the upper bound of this confidence interval. Make
+sure that the decision you reach on the basis of this
+confidence interval is the same as you reached using the
+p-value.
+
+6\. If there is a built-in R function that will perform the
+test in question, use and verify that it returns the same
+results as running through steps 1 through 5 in long form. 
+
+* Create a variable named `r_result` and set its value to
+the result of the built-in R function. If no built-in
+function exists, set `r_result <- "does not exist"`.
+
+7\. Create problem-specific variables to store the work form
+the previous steps to facilitate grading.
+
+* For a one-tailed test use:
+```{r, eval=F}
+prob_xa <- theta_hat_x
+prob_xb <- theta_hat_p
+prob_xc <- theta_hat_obs
+prob_xd <- pval
+prob_xe <- theta_hat_crit
+prob_xf <- ci_lower
+prob_xg <- ci_upper
+```
+
+* For a two-tailed test use:
+```{r, eval=F}
+prob_xa <- theta_hat_x
+prob_xb <- theta_hat_p
+prob_xc <- theta_hat_obs
+prob_xd <- pval_lower
+prob_xe <- pval_upper
+prob_xf <- theta_hat_crit_lower
+prob_xg <- theta_hat_crit_upper
+prob_xh <- ci_lower
+prob_xi <- ci_upper
+```
+
+* Be sure to replace the `x` in the `prob_x` above with the
+problem number.
+
 ## Problem 0
 
 * Load `data.table` and `ggplot2` but no other packages.
@@ -59,9 +193,9 @@ equal to a **character** vector (i.e., letters surrounded by
 
 ## Problem 1
 
-**(a)** Load the data `ii_gabor.csv` into a data.table
+**(a)** load the data located in the csv file linked below
+into a data.table named `d`.
 
-The data file can be found here:
 https://crossley.github.io/cogs2020/data/nhp_cat_learn/ii_gabor.csv
 
 This data file contains the results from a monkey performing
@@ -75,77 +209,58 @@ member of category A or category B.
 
 `col_names <- c('cat', 'x', 'y', 'resp', 'rt', 'phase')`
 
-**(c)** Add a column to the data.table that indicates the
-trial of the experiment.
+**(c)** Add a column named `trial` to the data.table that
+indicates the trial of the experiment. Note that `trial`
+should start at 1 and increment by 1 all the way to the
+number of total rows in `d`.
 
-**(d)** Add a column to the `data.table` that indicates the
-block of the experiment, assuming a block size of 100 trials
-per block. You may need to use the `length.out` argument of
-the `rep()` function to deal with using a block size of 100,
-which does not divide evenly into the number of rows in the
-data table.
+**(d)** Add a column named `block` to the `data.table` that
+indicates the block of the experiment, assuming a block size
+of 100 trials per block. Note that a block size of 100 does
+not divide evenly into the number of rows in `d`, so you
+will have to be careful and clever in dealing with this.
+However you deal with it, the final trials in `d` should
+correspond to a block value of 82.
 
-**(e)** Add a column to the `data.table` that indicates
-whether the response on each trial was correct oxr incorrect
-(e.g., `cat == resp`).
+**(e)** Add a column named `acc` to the `data.table` that
+indicates whether the response on each trial was correct or
+incorrect (e.g., `cat == resp`).
 
-**(f)** Create a new data.table (I'll call it `dd`) that
-contains columns for the mean accuracy per block and the SEM
-(standard error of the mean) per block, grouped by each
-unique combination of block and phase.
+**(f)** Create a new data.table named `dd` that contains
+columns for the mean accuracy per block (name this column
+`acc_mean`) and the SEM (name this column `acc_err`) per
+`block`, grouped by each unique combination of `block` and
+`phase`.
 
-**(g)** Add a column to the data.table that indicates
-whether the phase of the experiment has changed (i.e., is
-different in the current row than it was in the previous
-row).
-
-**(h)** Plot the mean accuracy per block (`block` on the
+**(g)** Plot the mean accuracy per block (`block` on the
 x-axis, `acc_mean` on the y-axis). Include error bars at
 each data point that represent SEM. Plot phase 1 and phase 2
 in different colours.
 
+## Note on problem 2 - 4
+In the dataset from Problem 1, each trial is a Bernoulli
+trial with probability of success $p$. This means that
+trials are distributed $X \sim Bernoulli(p)$. This also
+means that blocks of trials are distributed $X \sim
+Binomial(n,p)$, where $n$ is the block size (i.e., number of
+trials per block).
+
 ## Problem 2
-
-In the dataset you have worked with in Problem 2, each trial
-is a Bernouli trial with probability of success $p$. This
-means that trials are distributed $X \sim Bernoulli(p)$.
-This also means that blocks of trials are distributed $X
-\sim Binomial(n,p)$, where `n = block_size`.
-
-**(a)** Test the hypothesis that, for the first 100 trials
-of phase 1, the monkey is doing no better and no worse than
-guessing (i.e., $p = .5$). Do this with and without
-`binom.test()` and make sure that your answers agree with
-each other. Also, plot the Null distribution (distribution
-assumed by the Null hypothesis) and use vertical lines to
-indicate critical values and both point and interval
-estimates of observed values.
-
-**(b)** Test the hypothesis that, for the last 100 trials of
-phase 1, the monkey is doing better than guessing (i.e., $p
-= .5$). Do this with and without `binom.test()` and make
-sure that your answers agree with each other. Also, plot the
-Null distribution and use vertical lines to indicate
-critical values and both point and interval estimates of
-observed values.
-
-**(c)** Test the hypothesis that, for the first 100 trials
-of phase 2, the monkey is doing worse than guessing (i.e.,
-$p = .5$). Do this with and without `binom.test()` and make
-sure that your answers agree with each other. Also, plot the
-Null distribution and use vertical lines to indicate
-critical values and both point and interval estimates of
-observed values.
-
-**(d)** What accounts for the drop in accuracy between phase
-1 and phase 2? To answer this question, investigate the
-stimuli the monkey was required to learn between phase 1 and
-phase 2. Make a plot of stimuli (`x=x, y=y`) coloured by
-category membership label. Inlcude a seperate version of
-this plot for each phase in different `facets`.
+* Test the hypothesis that, for the first 100 trials of
+phase 1, the monkey is doing no better and no worse than
+guessing (i.e., $p = .5$).
 
 ## Problem 3
+* Test the hypothesis that, for the last 100 trials of phase
+1, the monkey is doing better than guessing (i.e., $p =
+.5$).
 
+## Problem 4
+* Test the hypothesis that, for the first 100 trials of
+phase 2, the monkey is doing worse than guessing (i.e., $p =
+.5$).
+
+## Note on problems 5-8
 Above, we viewed each trial as $Bernoulli(p)$, and each $n$
 trials as $Binomial(n,p)$. An alternative framing is to
 ignore each individual trial, and instead consider the
@@ -156,158 +271,66 @@ $X = \text{mean accuracy per block}$
 In this framing, the experiment results are sampled from
 blocks of trials, not from individual trials.
 
-**(a)** Redefine the block column of your original
-`data.table` `d` to use 25 trials per block instead of 100.
-
-**(b)** Redefine `dd` to incorporate the new block size,
-i.e. add columns for the mean accuracy per block and the SEM
-per block, grouped by each unique combination of block and
-phase (see Problem 2F for reminder).
-
-**(c)** Repeat the mean accuray plot using the new block
-size (see Problem 2H for reminder). Be warned that this plot
-will look pretty "busy"... too busy for a paper or a report,
-but fine for our purposes below.
-
-**(d)** Is the mean accuracy in the first 16 blocks of phase
-1 greater than or worse than chance (i.e. 50% correct
-responses)? Do this with and without `t.test()` and make
-sure that your answers agree with each other. Also, plot the
-Null distribution and use vertical lines to indicate
-critical values and both point and interval estimates of
-observed values.
-
-**(e)** Is the mean accuracy in the last 16 blocks of phase
-1 greater than chance? Do this with and without `t.test()`
-and make sure that your answers agree with each other. Also,
-plot the Null distribution and use vertical lines to
-indicate critical values and both point and interval
-estimates of observed values.
-
-**(f)** Is the mean accuracy in the first 16 blocks of phase
-2 less than chance? Do this with and without `t.test()` and
-make sure that your answers agree with each other. Also,
-plot the Null distribution and use vertical lines to
-indicate critical values and both point and interval
-estimates of observed values.
-
-**(g)** Assume that the true state of the universe is $\mu =
-.6$ for the first 16 blocks of phase 1. Compute $\alpha$,
-$\beta$, and $power$ for $H_0: \mu = .5$.
-
-**(h)** Plot the Null and Alternative distributions.
-Indicate the critical value, observed value, and color the
-areas corresponding to $\alpha$, $\beta$, and $power$.
-
-**(i)** Plot power as a function of $n$ (number of blocks in
-the first 16 blocks)
-
-
-## Problem 4
-
-Researchers are studying the membrane characteristics of an
-important neuron type. They perform an experiment in which
-they isolate a single neuron, and then inject a small pulse
-of current through its membrane. They are trying to
-determine the smallest amount of current required to induce
-an action potential. For any amplitude and duration of
-applied current, the neuron sometimes fires an action
-potential and sometimes does not. This is because there are
-many sources of randomness and noise in biological cellular
-environments. Similarly, the neuron fires an action
-potential sometimes even when no current is applied. 
-
-Let $X \sim Binomial(n, p)$ be the random variable that
-determines whether or not an action potential is fired due
-to the applied current. Furthermore, let the probability
-that the neuron fires an action potential even in the
-absence of applied current (i.e., baseline firing) be
-$p=0.1$. The researchers perform 100 trials and find the
-following results:
-
-```{r}
-## 1 corresponds to action potential fired on that trial
-## 0 corresponds to no action potential on that trial
-xobs <- c(1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0,
-          1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0,
-          0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-          0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0,
-          0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1,
-          0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0)
-```
-
-Test the hypothesis that the applied external current increased 
-the firing probability $p$ above baseline level. Ensure that your
-inference reflects $95\%$ confidence.
-
-<!-- 1\. Specify the null and alternative hypotheses ($H_0$ and -->
-<!--    $H_1$) in terms of a population parameter $\theta$. -->
-
-* What is the correct alternative hypothesis?
-   * `H1 <- a` $H_1: p > 0.1$
-   * `H1 <- b` $H_1: p < 0.1$
-   * `H1 <- c` $H_1: p = 0.1$
-
-<!-- 2\. Specify the type I error rate -- denoted by the symbol -->
-<!--     $\alpha$) -- you are willing to tolerate. -->
-
-* Create a variable named `type_I_rate` ($\alpha$) and set
-its value to `0.05`.
-
-<!-- 3\. Specify the sample statistic $\widehat{\theta}$ that you will use to -->
-<!--    estimate the population parameter $\theta$ in step 1 and state how -->
-<!--    it is distributed under the assumption that $H_0$ is -->
-<!--    true. -->
-   
-* Create a vector named `theta` that contains the possible
-outcomes of $\widehat{\theta}$.
-
-   * If $\widehat{\theta}$ is discrete with a finite range then
-   use `seq(x0, xn, 1)`.
-
-   * If $\widehat{\theta}$ is continuous with a finite range then
-   use `seq(x0, xn, 0.01)`.
-
-   * If $\widehat{\theta}$ is continuous with an infinite range then use
-   `seq(mu_theta-4*sd_theta, mu_theta+4sd_theta, 0.01)`.
-
-* Create a variable named `f_theta` and set its value to the
-probability mass (if discrete) or probability density (if
-continuous) corresponding to each value of
-$\widehat{\theta}$ stored in variable `theta`.
-
-* Plot the $\widehat{\theta}$ sampling distribution using
-only `ggplot()` and `geom_line()` (if continuous) or
-`geom_point()` (if discrete). You should use this plot to
-contextualize the p-value and critical value computed below
-(i.e., use it to check your work!).
-
-<!-- 4\. Obtain a random sample and use it to compute the sample -->
-<!--    statistic from step 3. Call this value -->
-<!--    $\widehat{\theta}_{\text{obs}}$. -->
-
-* Create a variable named `theta_hat_obs` and set its value to
-$\widehat{\theta}_{\text{obs}}$.
-
-<!-- 5\. If $\widehat{\theta}_{\text{obs}}$ or a more extreme outcome  -->
-<!--    is very unlikely to occur under the assumption that $H_0$ is true, then -->
-<!--    reject $H_0$. Otherwise, do not reject $H_0$. -->
-
-* Create a variable named `p_val` and set its value to
-$P(\widehat{\theta}_{\text{obs}} | H_0)$.
-
-* Create a variable named `theta_hat_crit` and set its value
-to the critical value.
-
-* Create a value named `decision` and set its value either to
-`reject H0` or `fail to reject H0`.
-
-* Repeat this inference using `binom.test_result <-
-binom.test(...)` where you replace the `...` in
-`binom.test()` with appropriate arguments.
-
-
 ## Problem 5
+* Make a deep copy of `d` named `d2`, and then redefine the
+block column of `d2` to reflect a block size of 25 trials
+per block instead of 100. Then, using `d2` as a base, create
+a new data.table named `dd2` that contains columns for the
+mean accuracy per block (name this column `acc_mean`) and
+the SEM (name this column `acc_err`) per `block`, grouped by
+each unique combination of `block` and `phase`. Repeat the
+mean accuracy plot using the new block size to visually
+check that your work is doing what you think it's doing
+(this plot will not be graded).
+
+## Problem 6
+* Test the hypothesis that the mean accuracy in the first 16
+blocks of phase 1 is no greater or worse than chance (i.e.
+50% correct responses).
+
+## Problem 7
+* Test the hypothesis that the mean accuracy in the last 16
+blocks of phase 1 is greater than chance.
+
+## Problem 8
+* Test the hypothesis that the mean accuracy in the first 16
+blocks of phase 2 less than chance.
+
+## Problem 9
+What accounts for the drop in accuracy between phase 1 and
+phase 2? To answer this question, investigate the stimuli
+the monkey was required to learn between phase 1 and phase
+2. Using `ggplot()` and `geom_point()`, make a plot of
+stimuli (`x=x, y=y`) coloured by category membership label
+(`cat`). Include a separate version of this plot for each
+phase in different panels by using `facet_wrap()`. Save the
+resulting plot to a variable named `g`.
+
+## problem 10
+For the first 16 blocks of phase 1, assume that the true
+state of the universe is $\mu=.6$. Given $H_0:\mu=.5$
+
+* compute $\alpha$ and store its value in a variable named `ans_9a`
+
+* compute $\beta$ and store its value in a variable named `ans_9b`
+
+* compute $power$ and store its value in a variable named `ans_9c`
+
+## Problem 11
+The number of action potentials generated from a given
+neuron in its baseline state when observed for a fixed
+period of time is well described by a Poisson distribution.
+The Poisson distribution is fully characterised by a single
+parameter $\lambda$ called the rate parameter. It turns out
+that $\lambda$ is also the mean of the Poisson distribution.
+Suppose a group of researchers measured a particular neuron
+and observed 5 action potentials in a given time period. Let
+$X$ be the Poisson random variable that generated this
+result. Test the hypothesis that $\lambda > 4$. You will
+need to search the web or use the built-in R help to look
+for functions that tell you about Poisson probabilities etc.
+
+## Problem 12
 
 ```{r, echo=F, fig.width=10}
 n <- 2
@@ -342,20 +365,29 @@ ggplot(d, aes(x=x)) +
 Please respond by assigning `"confidence"`, `"alpha"`,
 `"beta"`, or `"power"` to the variables requested below.
 
-* What quantity does region I in the above plot correspond to?
+* What quantity does region I in the above plot correspond
+to? Store your answer in a variable named `ans_12a`.
 
-* What quantity does region II in the above plot correspond to?
+* What quantity does region II in the above plot correspond
+to? Store your answer in a variable named `ans_12b`.
 
-* What quantity does region III in the above plot correspond to?
+* What quantity does region III in the above plot correspond
+to? Store your answer in a variable named `ans_12c`.
 
-* What quantity does region IV in the above plot correspond to?
+* What quantity does region IV in the above plot correspond
+to? Store your answer in a variable named `ans_12d`.
 
 * What is the numeric value (to one decimal place) of the
-power in this example?
+power in this example? Store your answer in a variable named
+`ans_12e`.
 
 * Assuming a type I error rate of 0.05, what is the numeric
 value (to one decimal place) of confidence of this example?
+Store your answer in a variable named `ans_12f`.
 
-* Will increasing the sample size increase the distance
-between the mean of H1 and H0 distributions?
+* Assuming that the illustrated distributions correspond to
+the distribution of sample means, will increasing the sample
+size increase the distance between the mean of H1 and H0
+distributions? Store your answer using `ans_12g <- "YES"` or
+`ans_12g <- "NO"`.
 
