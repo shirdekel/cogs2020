@@ -366,37 +366,121 @@ div.tocify {
 <div id="general-instructions" class="section level2">
 <h2>General instructions</h2>
 <p>When responding to every question that requires you to perform a hypothesis test, please follow the instructions laid out below.</p>
-<p><b>1. Specify the null and alternative hypotheses (<span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span>) in terms of a distribution and population parameter.</b></p>
-<p>You will need to perform this step in order to correctly perform any hypothesis test, but for the homework, just writing it in comments is adequate (your comments won’t be graded).</p>
+<p><b>1. Specify the null and alternative hypotheses (<span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span>) in terms of a distribution and population parameter <span class="math inline">\(\theta\)</span>.</b></p>
+<p>You will need to perform this step in order to correctly perform any hypothesis test, but for the homework, just writing it in comments is adequate (your comments won’t be graded). E.g., if asked to test the hypothesis that the true mean of a random variable is greater than 0.5, you might write:</p>
+<pre class="r"><code># In this problem, the parameter theta that we are
+# interested in is the population mean mu
+
+# H0: mu = 0.5
+# H1: mu &gt; 0.5</code></pre>
 <p><b>2. Specify the type I error rate – denoted by the symbol <span class="math inline">\(\alpha\)</span> – you are willing to tolerate.</b></p>
-<p>For every problem in this homework use <span class="math inline">\(\alpha=0.05\)</span>. Again, writing this in comments is adequate (your comments won’t be graded).</p>
+<p>For every problem in this homework use <span class="math inline">\(\alpha=0.05\)</span>. Again, writing this in comments is adequate (your comments won’t be graded). E.g., you could write:</p>
+<pre class="r"><code># set type I error rate
+# alpha = 0.05</code></pre>
 <p><b>3. Specify the sample statistic that you will use to estimate the population parameter in step 1 and state how it is distributed under the assumption that <span class="math inline">\(H_0\)</span> is true.</b></p>
 <ul>
-<li><p>Create a vector named <code>theta</code> that contains the possible outcomes of <span class="math inline">\(\widehat{\theta}\)</span>.</p>
+<li>A good way to begin is to again write out some comments. To continue with the example from step 1, you might begin by writing:</li>
+</ul>
+<pre class="r"><code># theta_hat = mu_hat
+# mu_hat = x_bar
+# x_bar ~ N(mu_x_bar, sig_x_bar)
+# mu_x_bar = mu_x
+# sig_x_bar = sig_x
+
+# NOTE: This example assumes sig_x is known.</code></pre>
+<ul>
+<li><p>Create a vector named <code>theta_hat_x</code> that contains the possible outcomes of <span class="math inline">\(\widehat{\theta}\)</span>.</p>
 <ul>
 <li><p>If <span class="math inline">\(\widehat{\theta}\)</span> is discrete with a finite range then <code>theta_hat_x</code> must contain all possible outcomes.</p></li>
 <li><p>If <span class="math inline">\(\widehat{\theta}\)</span> is continuous with a finite range then use <code>theta_hat_x</code> must start at the minimum valued outcome, end at the maximum valued outcome, and contain all the values between these two endpoints in increments of <code>0.01</code>.</p></li>
 <li><p>If <span class="math inline">\(\widehat{\theta}\)</span> is discrete with an infinite range then <code>theta_hat_x</code> must start 4 standard deviations below the the mean, end 3 standard deviations above the mean, and must contain all the values between these two endpoints in increments of <code>0.01</code>.</p></li>
 <li><p>If <span class="math inline">\(\widehat{\theta}\)</span> is continuous with an infinite range then <code>theta_hat_x</code> must start 4 standard deviations below the the mean, end 3 standard deviations above the mean, and must contain all the values between these two endpoints in increments of <code>0.01</code>.</p></li>
 </ul></li>
-<li><p>Create a variable named <code>theta_hat_p</code> and set its value to the probability mass (if discrete) or probability density (if continuous) corresponding to each possible outcome of <span class="math inline">\(\widehat{\theta}\)</span> stored in variable <code>theta_hat_x</code>.</p></li>
-<li><p>Plot the <span class="math inline">\(\widehat{\theta}\)</span> sampling distribution. Put the possible outcomes of <span class="math inline">\(\widehat{\theta}\)</span> on the x-axis and put the probability density or mass (whichever is appropriate) on the y-axis. Use only <code>ggplot()</code> and <code>geom_line()</code> (if continuous) or <code>geom_point()</code> (if discrete). You should use this plot to contextualize the p-value and critical value computed below (i.e., use it to check your work!).</p></li>
+<li><p>Carrying on with the example, you would write:</p></li>
 </ul>
+<pre class="r"><code># theta_hat = mu_hat
+# mu_hat = x_bar
+
+# x_bar is continuous
+
+# NOTE: You will have to think about whether or not x_bar
+# has a finite or infinite range for each particular
+# scenario. For this exampl, lets assume it is infinite
+# range.
+
+theta_hat_x &lt;- seq(-4*sig_x, 4*sigx, 0.01)</code></pre>
+<ul>
+<li>Create a variable named <code>theta_hat_p</code> and set its value to the probability mass (if discrete) or probability density (if continuous) corresponding to each possible outcome of <span class="math inline">\(\widehat{\theta}\)</span> stored in variable <code>theta_hat_x</code>.</li>
+</ul>
+<pre class="r"><code># Since theta_hat = x_bar and x_bar is normal, we use dnorm()
+# Assuming that you have previously defined  mu_x_bar and
+# sig_x_bar, you could write:
+theta_hat_p &lt;- dnorm(theta_hat_x, mu_x_bar, sig_x_bar)</code></pre>
+<ul>
+<li>Plot the <span class="math inline">\(\widehat{\theta}\)</span> sampling distribution. Put the possible outcomes of <span class="math inline">\(\widehat{\theta}\)</span> on the x-axis and put the probability density or mass (whichever is appropriate) on the y-axis. Use only <code>ggplot()</code> and <code>geom_line()</code> (if continuous) or <code>geom_point()</code> (if discrete). You should use this plot to contextualize the p-value and critical value computed below (i.e., use it to check your work!).</li>
+</ul>
+<pre class="r"><code>d &lt;- data.table(theta_hat_x, theta_hat_p)
+ggplot(d, aes(theta_hat_x, theta_hat_p)) +
+   geom_line()  
+   # geom_line() because in this example theta_har is x_bar is continuous</code></pre>
 <p><b>4. Obtain a random sample and use it to compute the sample statistic from step 3. Call this value <span class="math inline">\(\widehat{\theta}_{\text{obs}}\)</span></b></p>
 <ul>
 <li>Create a variable named <code>theta_hat_obs</code> and set its value to <span class="math inline">\(\widehat{\theta}_{\text{obs}}\)</span>.</li>
 </ul>
+<pre class="r"><code># Obtaining the observed value will be matter of wrangling a
+# data.table or maybe simply reading the problem carefully.
+# In this example, look something like:
+x_bar_obs &lt;- dt[, mean(x)]
+theta_hat_obs &lt;- x_bar_obs</code></pre>
 <p><b>5. If <span class="math inline">\(\widehat{\theta}_{\text{obs}}\)</span> is very unlikely to occur under the assumption that <span class="math inline">\(H_0\)</span> is true, then reject <span class="math inline">\(H_0\)</span>. Otherwise, do not reject <span class="math inline">\(H_0\)</span>.</b></p>
 <ul>
-<li><p>Create a variable named <code>p_val</code> and set its value to <span class="math inline">\(P(\widehat{\theta}_{\text{obs}} | H_0)\)</span>.</p></li>
-<li><p>Create a value named <code>decision</code> and set its value either to <code>reject H0</code> or <code>fail to reject H0</code>.</p></li>
-<li><p>If performing a one-tailed test, create a variable named <code>theta_hat_crit</code> and set its value to the critical value. If performing a 2-tailed test, create two variables, <code>theta_hat_crit_lower</code> and <code>theta_hat_crit_upper</code> and set their values to the corresponding critical values.</p></li>
-<li><p>Calculate the 95% confidence interval estimate of the parameter in step 1. Create a variable named <code>ci_lower</code> and set its value to the lower bound of this confidence interval, and create a variable named <code>ci_upper</code> and set its value to the upper bound of this confidence interval. Make sure that the decision you reach on the basis of this confidence interval is the same as you reached using the p-value.</p></li>
+<li>Create a variable named <code>p_val</code> and set its value to <span class="math inline">\(P(\widehat{\theta}_{\text{obs}} | H_0)\)</span>.</li>
 </ul>
+<pre class="r"><code># In this example, p_hat_obs is x_bar_obs which comes from a
+# Normal so we use pnorm() with lower.tail determined by the
+# alternative hypothesis.
+p_val &lt;- pnorm(x_bar_obs, mu_x_bar, sig_x_bar, lower.tail=FALSE)</code></pre>
+<ul>
+<li>Create a value named <code>decision</code> and set its value either to <code>reject H0</code> or <code>fail to reject H0</code>.</li>
+</ul>
+<pre class="r"><code># Lets assume p_val &lt; 0.05. 
+# Then we would write:
+decision &lt;- &#39;reject H0&#39;</code></pre>
+<ul>
+<li>If performing a one-tailed test, create a variable named <code>theta_hat_crit</code> and set its value to the critical value. If performing a 2-tailed test, create two variables, <code>theta_hat_crit_lower</code> and <code>theta_hat_crit_upper</code> and set their values to the corresponding critical values.</li>
+</ul>
+<pre class="r"><code># Our running example is a one-tailed test so we only have
+# one critical value. Furthermore, x_bar is normal so we use
+# the qnorm() function to get the x_bar outcome that
+# corresponds to P(X &gt; x | H0) &lt; 0.05.
+theta_hat_crit &lt;- qnorm(0.05, mu_x_bar, sig_x_bar, lower.tail=FALSE)</code></pre>
+<ul>
+<li>Calculate the 95% confidence interval estimate of the parameter in step 1. Create a variable named <code>ci_lower</code> and set its value to the lower bound of this confidence interval, and create a variable named <code>ci_upper</code> and set its value to the upper bound of this confidence interval. Make sure that the decision you reach on the basis of this confidence interval is the same as you reached using the p-value.</li>
+</ul>
+<pre class="r"><code># The width of the confidence interval is easy to obtain if
+# you remember that it is the same as the width between the
+# two critical values if your test was a two-tailed test.
+x_bar_crit_lower &lt;- qnorm(0.025, mu_x_bar, sig_x_bar, lower.tail=TRUE)
+x_bar_crit_upper &lt;- qnorm(0.025, mu_x_bar, sig_x_bar, lower.tail=FALSE)
+x_bar_ci_width &lt;- x_bar_crit_upper - x_bar_crit_lower
+
+# The centre of the confidence interval is just the
+# theta_hat_obs, which in this case is x_bar_obs.
+x_bar_ci_lower &lt;- x_bar_obs - x_bar_xi_width / 2
+x_bar_ci_upper &lt;- x_bar_obs + x_bar_xi_width / 2</code></pre>
 <p>6. If there is a built-in R function that will perform the test in question, use and verify that it returns the same results as running through steps 1 through 5 in long form.</p>
 <ul>
 <li>Create a variable named <code>r_result</code> and set its value to the result of the built-in R function. If no built-in function exists, set <code>r_result &lt;- &quot;does not exist&quot;</code>.</li>
 </ul>
+<pre class="r"><code># In our running example we know sig_x, and so we are
+# performing a Normal test. There is no built-in R function
+# to perform this test.
+r_result &lt;- &quot;does not exist&quot;
+
+# If you did not know sig_x, and you were consequently
+# performing a t-test, then you would use code similar to:
+x &lt;- dt[, x]
+r_result &lt;- t.test(x, mu=0.5, alternative=&#39;greater&#39;)</code></pre>
 <p>7. Create problem-specific variables to store the work form the previous steps to facilitate grading.</p>
 <ul>
 <li>For a one-tailed test use:</li>
@@ -407,7 +491,9 @@ prob_xc &lt;- theta_hat_obs
 prob_xd &lt;- pval
 prob_xe &lt;- theta_hat_crit
 prob_xf &lt;- ci_lower
-prob_xg &lt;- ci_upper</code></pre>
+prob_xg &lt;- ci_upper
+prob_xh &lt;- decision
+prob_xi &lt;- r_result</code></pre>
 <ul>
 <li>For a two-tailed test use:</li>
 </ul>
@@ -419,7 +505,9 @@ prob_xe &lt;- pval_upper
 prob_xf &lt;- theta_hat_crit_lower
 prob_xg &lt;- theta_hat_crit_upper
 prob_xh &lt;- ci_lower
-prob_xi &lt;- ci_upper</code></pre>
+prob_xi &lt;- ci_upper
+prob_xh &lt;- decision
+prob_xj &lt;- r_result</code></pre>
 <ul>
 <li>Be sure to replace the <code>x</code> in the <code>prob_x</code> above with the problem number.</li>
 </ul>
@@ -444,7 +532,7 @@ prob_xi &lt;- ci_upper</code></pre>
 <p><strong>(c)</strong> Add a column named <code>trial</code> to the data.table that indicates the trial of the experiment. Note that <code>trial</code> should start at 1 and increment by 1 all the way to the number of total rows in <code>d</code>.</p>
 <p><strong>(d)</strong> Add a column named <code>block</code> to the <code>data.table</code> that indicates the block of the experiment, assuming a block size of 100 trials per block. Note that a block size of 100 does not divide evenly into the number of rows in <code>d</code> (i.e., 8196), so you will have to be careful and clever in dealing with this. However you deal with it, the final 96 trials in <code>d</code> should correspond to a block value of 82.</p>
 <p><strong>(e)</strong> Add a column named <code>acc</code> to the <code>data.table</code> that indicates whether the response on each trial was correct or incorrect (e.g., <code>cat == resp</code>).</p>
-<p><strong>(f)</strong> Create a new data.table named <code>dd</code> that contains columns for the mean accuracy per block (name this column <code>acc_mean</code>) and the SEM (name this column <code>acc_err</code>) per <code>block</code>, grouped by each unique combination of <code>block</code> and <code>phase</code>.</p>
+<p><strong>(f)</strong> Create a new data.table named <code>dd</code> that contains columns for the mean accuracy per block (name this column <code>acc_mean</code>) and the SEM (name this column <code>acc_err</code>) per <code>block</code>, grouped by each unique combination of <code>block</code> and <code>phase</code>. Please ensure that <code>dd</code> contains only <code>acc_mean</code>, <code>acc_sem</code>, <code>block</code>, and <code>phase</code> columns.</p>
 <p><strong>(g)</strong> Plot the mean accuracy per block (<code>block</code> on the x-axis, <code>acc_mean</code> on the y-axis). Include error bars at each data point that represent SEM. Plot phase 1 and phase 2 in different colours.</p>
 </div>
 <div id="note-on-problem-2---4" class="section level2">
@@ -478,7 +566,7 @@ prob_xi &lt;- ci_upper</code></pre>
 <div id="problem-5" class="section level2">
 <h2>Problem 5</h2>
 <ul>
-<li>Make a deep copy of <code>d</code> named <code>d2</code>, and then redefine the block column of <code>d2</code> to reflect a block size of 25 trials per block instead of 100. Then, using <code>d2</code> as a base, create a new data.table named <code>dd2</code> that contains columns for the mean accuracy per block (name this column <code>acc_mean</code>) and the SEM (name this column <code>acc_err</code>) per <code>block</code>, grouped by each unique combination of <code>block</code> and <code>phase</code>. Repeat the mean accuracy plot using the new block size to visually check that your work is doing what you think it’s doing (this plot will not be graded).</li>
+<li>Make a deep copy of <code>d</code> named <code>d2</code>, and then redefine the block column of <code>d2</code> to reflect a block size of 25 trials per block instead of 100. Then, using <code>d2</code> as a base, create a new data.table named <code>dd2</code> that contains columns for the mean accuracy per block (name this column <code>acc_mean</code>) and the SEM (name this column <code>acc_err</code>) per <code>block</code>, grouped by each unique combination of <code>block</code> and <code>phase</code>. Please ensure that <code>dd2</code> contains only <code>acc_mean</code>, <code>acc_sem</code>, <code>block</code>, and <code>phase</code> columns. Repeat the mean accuracy plot using the new block size to visually check that your work is doing what you think it’s doing (this plot will not be graded).</li>
 </ul>
 </div>
 <div id="problem-6" class="section level2">
@@ -501,7 +589,7 @@ prob_xi &lt;- ci_upper</code></pre>
 </div>
 <div id="problem-9" class="section level2">
 <h2>Problem 9</h2>
-<p>What accounts for the drop in accuracy between phase 1 and phase 2? To answer this question, investigate the stimuli the monkey was required to learn between phase 1 and phase 2. Using <code>ggplot()</code> and <code>geom_point()</code>, make a plot of stimuli (<code>x=x, y=y</code>) coloured by category membership label (<code>cat</code>). Include a separate version of this plot for each phase in different panels by using <code>facet_wrap()</code>. Save the resulting plot to a variable named <code>g</code>.</p>
+<p>What accounts for the drop in accuracy between phase 1 and phase 2? To answer this question, investigate the stimuli the monkey was required to learn between phase 1 and phase 2. Using <code>ggplot()</code> and <code>geom_point()</code>, make a plot of stimuli (<code>x=x, y=y</code>) coloured by category membership label (<code>cat</code>). Include a separate version of this plot for each phase in different panels by using <code>facet_wrap()</code>. Save the resulting plot to a variable named <code>ans_9</code>.</p>
 </div>
 <div id="problem-10" class="section level2">
 <h2>problem 10</h2>
