@@ -217,10 +217,10 @@ number of total rows in `d`.
 **(d)** Add a column named `block` to the `data.table` that
 indicates the block of the experiment, assuming a block size
 of 100 trials per block. Note that a block size of 100 does
-not divide evenly into the number of rows in `d`, so you
-will have to be careful and clever in dealing with this.
-However you deal with it, the final trials in `d` should
-correspond to a block value of 82.
+not divide evenly into the number of rows in `d` (i.e.,
+8196), so you will have to be careful and clever in dealing
+with this. However you deal with it, the final 96 trials in
+`d` should correspond to a block value of 82.
 
 **(e)** Add a column named `acc` to the `data.table` that
 indicates whether the response on each trial was correct or

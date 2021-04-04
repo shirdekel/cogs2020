@@ -350,7 +350,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Homework 4</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 03 April, 2021</h4>
+<h4 class="date">Last update: 04 April, 2021</h4>
 
 </div>
 
@@ -442,7 +442,7 @@ prob_xi &lt;- ci_upper</code></pre>
 <p><strong>(b)</strong> Change the column names to the following</p>
 <p><code>col_names &lt;- c(&#39;cat&#39;, &#39;x&#39;, &#39;y&#39;, &#39;resp&#39;, &#39;rt&#39;, &#39;phase&#39;)</code></p>
 <p><strong>(c)</strong> Add a column named <code>trial</code> to the data.table that indicates the trial of the experiment. Note that <code>trial</code> should start at 1 and increment by 1 all the way to the number of total rows in <code>d</code>.</p>
-<p><strong>(d)</strong> Add a column named <code>block</code> to the <code>data.table</code> that indicates the block of the experiment, assuming a block size of 100 trials per block. Note that a block size of 100 does not divide evenly into the number of rows in <code>d</code>, so you will have to be careful and clever in dealing with this. However you deal with it, the final trials in <code>d</code> should correspond to a block value of 82.</p>
+<p><strong>(d)</strong> Add a column named <code>block</code> to the <code>data.table</code> that indicates the block of the experiment, assuming a block size of 100 trials per block. Note that a block size of 100 does not divide evenly into the number of rows in <code>d</code> (i.e., 8196), so you will have to be careful and clever in dealing with this. However you deal with it, the final 96 trials in <code>d</code> should correspond to a block value of 82.</p>
 <p><strong>(e)</strong> Add a column named <code>acc</code> to the <code>data.table</code> that indicates whether the response on each trial was correct or incorrect (e.g., <code>cat == resp</code>).</p>
 <p><strong>(f)</strong> Create a new data.table named <code>dd</code> that contains columns for the mean accuracy per block (name this column <code>acc_mean</code>) and the SEM (name this column <code>acc_err</code>) per <code>block</code>, grouped by each unique combination of <code>block</code> and <code>phase</code>.</p>
 <p><strong>(g)</strong> Plot the mean accuracy per block (<code>block</code> on the x-axis, <code>acc_mean</code> on the y-axis). Include error bars at each data point that represent SEM. Plot phase 1 and phase 2 in different colours.</p>
