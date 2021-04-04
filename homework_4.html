@@ -535,57 +535,22 @@ prob_xj &lt;- r_result</code></pre>
 <p><strong>(f)</strong> Create a new data.table named <code>dd</code> that contains columns for the mean accuracy per block (name this column <code>acc_mean</code>) and the SEM (name this column <code>acc_err</code>) per <code>block</code>, grouped by each unique combination of <code>block</code> and <code>phase</code>. Please ensure that <code>dd</code> contains only <code>acc_mean</code>, <code>acc_sem</code>, <code>block</code>, and <code>phase</code> columns.</p>
 <p><strong>(g)</strong> Plot the mean accuracy per block (<code>block</code> on the x-axis, <code>acc_mean</code> on the y-axis). Include error bars at each data point that represent SEM. Plot phase 1 and phase 2 in different colours.</p>
 </div>
-<div id="note-on-problem-2---4" class="section level2">
-<h2>Note on problem 2 - 4</h2>
+<div id="problem-2---4" class="section level2">
+<h2>Problem 2 - 4</h2>
 <p>In the dataset from Problem 1, each trial is a Bernoulli trial with probability of success <span class="math inline">\(p\)</span>. This means that trials are distributed <span class="math inline">\(X \sim Bernoulli(p)\)</span>. This also means that blocks of trials are distributed <span class="math inline">\(X \sim Binomial(n,p)\)</span>, where <span class="math inline">\(n\)</span> is the block size (i.e., number of trials per block).</p>
+<p><strong>Problem 2.</strong> Test the hypothesis that, for the first 100 trials of phase 1, the monkey is doing no better and no worse than guessing (i.e., <span class="math inline">\(p = .5\)</span>).</p>
+<p><strong>Problem 3.</strong> Test the hypothesis that, for the last 100 trials of phase 1, the monkey is doing better than guessing (i.e., <span class="math inline">\(p = .5\)</span>).</p>
+<p><strong>Problem 4.</strong> Test the hypothesis that, for the first 100 trials of phase 2, the monkey is doing worse than guessing (i.e., <span class="math inline">\(p = .5\)</span>).</p>
 </div>
-<div id="problem-2" class="section level2">
-<h2>Problem 2</h2>
-<ul>
-<li>Test the hypothesis that, for the first 100 trials of phase 1, the monkey is doing no better and no worse than guessing (i.e., <span class="math inline">\(p = .5\)</span>).</li>
-</ul>
-</div>
-<div id="problem-3" class="section level2">
-<h2>Problem 3</h2>
-<ul>
-<li>Test the hypothesis that, for the last 100 trials of phase 1, the monkey is doing better than guessing (i.e., <span class="math inline">\(p = .5\)</span>).</li>
-</ul>
-</div>
-<div id="problem-4" class="section level2">
-<h2>Problem 4</h2>
-<ul>
-<li>Test the hypothesis that, for the first 100 trials of phase 2, the monkey is doing worse than guessing (i.e., <span class="math inline">\(p = .5\)</span>).</li>
-</ul>
-</div>
-<div id="note-on-problems-5-8" class="section level2">
-<h2>Note on problems 5-8</h2>
+<div id="problem-5-8" class="section level2">
+<h2>Problem 5-8</h2>
 <p>Above, we viewed each trial as <span class="math inline">\(Bernoulli(p)\)</span>, and each <span class="math inline">\(n\)</span> trials as <span class="math inline">\(Binomial(n,p)\)</span>. An alternative framing is to ignore each individual trial, and instead consider the random variable</p>
 <p><span class="math inline">\(X = \text{mean accuracy per block}\)</span></p>
 <p>In this framing, the experiment results are sampled from blocks of trials, not from individual trials.</p>
-</div>
-<div id="problem-5" class="section level2">
-<h2>Problem 5</h2>
-<ul>
-<li>Make a deep copy of <code>d</code> named <code>d2</code>, and then redefine the block column of <code>d2</code> to reflect a block size of 25 trials per block instead of 100. Then, using <code>d2</code> as a base, create a new data.table named <code>dd2</code> that contains columns for the mean accuracy per block (name this column <code>acc_mean</code>) and the SEM (name this column <code>acc_err</code>) per <code>block</code>, grouped by each unique combination of <code>block</code> and <code>phase</code>. Please ensure that <code>dd2</code> contains only <code>acc_mean</code>, <code>acc_sem</code>, <code>block</code>, and <code>phase</code> columns. Repeat the mean accuracy plot using the new block size to visually check that your work is doing what you think it’s doing (this plot will not be graded).</li>
-</ul>
-</div>
-<div id="problem-6" class="section level2">
-<h2>Problem 6</h2>
-<ul>
-<li>Test the hypothesis that the mean accuracy in the first 16 blocks of phase 1 is no greater or worse than chance (i.e. 50% correct responses).</li>
-</ul>
-</div>
-<div id="problem-7" class="section level2">
-<h2>Problem 7</h2>
-<ul>
-<li>Test the hypothesis that the mean accuracy in the last 16 blocks of phase 1 is greater than chance.</li>
-</ul>
-</div>
-<div id="problem-8" class="section level2">
-<h2>Problem 8</h2>
-<ul>
-<li>Test the hypothesis that the mean accuracy in the first 16 blocks of phase 2 less than chance.</li>
-</ul>
+<p><strong>Problem 5.</strong> Make a deep copy of <code>d</code> named <code>d2</code>, and then redefine the block column of <code>d2</code> to reflect a block size of 25 trials per block instead of 100. Then, using <code>d2</code> as a base, create a new data.table named <code>dd2</code> that contains columns for the mean accuracy per block (name this column <code>acc_mean</code>) and the SEM (name this column <code>acc_err</code>) per <code>block</code>, grouped by each unique combination of <code>block</code> and <code>phase</code>. Please ensure that <code>dd2</code> contains only <code>acc_mean</code>, <code>acc_sem</code>, <code>block</code>, and <code>phase</code> columns. Repeat the mean accuracy plot using the new block size to visually check that your work is doing what you think it’s doing (this plot will not be graded).</p>
+<p><strong>Problem 6.</strong> Test the hypothesis that the mean accuracy in the first 16 blocks of phase 1 is no greater or worse than chance (i.e. 50% correct responses).</p>
+<p><strong>Problem 7.</strong> Test the hypothesis that the mean accuracy in the last 16 blocks of phase 1 is greater than chance.</p>
+<p><strong>Problem 8.</strong> Test the hypothesis that the mean accuracy in the first 16 blocks of phase 2 less than chance.</p>
 </div>
 <div id="problem-9" class="section level2">
 <h2>Problem 9</h2>
