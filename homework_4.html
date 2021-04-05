@@ -350,7 +350,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Homework 4</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 04 April, 2021</h4>
+<h4 class="date">Last update: 05 April, 2021</h4>
 
 </div>
 
@@ -468,7 +468,7 @@ x_bar_ci_width &lt;- x_bar_crit_upper - x_bar_crit_lower
 # theta_hat_obs, which in this case is x_bar_obs.
 x_bar_ci_lower &lt;- x_bar_obs - x_bar_xi_width / 2
 x_bar_ci_upper &lt;- x_bar_obs + x_bar_xi_width / 2</code></pre>
-<p>6. If there is a built-in R function that will perform the test in question, use and verify that it returns the same results as running through steps 1 through 5 in long form.</p>
+<p><b>6. If there is a built-in R function that will perform the test in question, use and verify that it returns the same results as running through steps 1 through 5 in long form.</b></p>
 <ul>
 <li>Create a variable named <code>r_result</code> and set its value to the result of the built-in R function. If no built-in function exists, set <code>r_result &lt;- &quot;does not exist&quot;</code>.</li>
 </ul>
@@ -481,36 +481,39 @@ r_result &lt;- &quot;does not exist&quot;
 # performing a t-test, then you would use code similar to:
 x &lt;- dt[, x]
 r_result &lt;- t.test(x, mu=0.5, alternative=&#39;greater&#39;)</code></pre>
-<p>7. Create problem-specific variables to store the work form the previous steps to facilitate grading.</p>
+<p><b>7. Create problem-specific variables to store the work form the previous steps to facilitate grading.</b></p>
 <ul>
 <li>For a one-tailed test use:</li>
 </ul>
-<pre class="r"><code>prob_xa &lt;- theta_hat_x
-prob_xb &lt;- theta_hat_p
-prob_xc &lt;- theta_hat_obs
-prob_xd &lt;- pval
-prob_xe &lt;- theta_hat_crit
-prob_xf &lt;- ci_lower
-prob_xg &lt;- ci_upper
-prob_xh &lt;- decision
-prob_xi &lt;- r_result</code></pre>
+<pre class="r"><code>prob_x_theta_hat_x &lt;- theta_hat_x
+prob_x_theta_hat_p &lt;- theta_hat_p
+prob_x_theta_hat_obs &lt;- theta_hat_obs
+prob_x_pval &lt;- pval
+prob_x_theta_hat_crit &lt;- theta_hat_crit
+prob_x_ci_lower &lt;- ci_lower
+prob_x_ci_upper &lt;- ci_upper
+prob_x_decision &lt;- decision
+prob_x_r_result &lt;- r_result</code></pre>
 <ul>
 <li>For a two-tailed test use:</li>
 </ul>
-<pre class="r"><code>prob_xa &lt;- theta_hat_x
-prob_xb &lt;- theta_hat_p
-prob_xc &lt;- theta_hat_obs
-prob_xd &lt;- pval_lower
-prob_xe &lt;- pval_upper
-prob_xf &lt;- theta_hat_crit_lower
-prob_xg &lt;- theta_hat_crit_upper
-prob_xh &lt;- ci_lower
-prob_xi &lt;- ci_upper
-prob_xh &lt;- decision
-prob_xj &lt;- r_result</code></pre>
+<pre class="r"><code>prob_x_theta_hat_x &lt;- theta_hat_x
+prob_x_theta_hat_p &lt;- theta_hat_p
+prob_x_theta_hat_obs &lt;- theta_hat_obs
+prob_x_pval_lower &lt;- pval_lower
+prob_x_pval_upper &lt;- pval_upper
+prob_x_theta_hat_crit_lower &lt;- theta_hat_crit_lower
+prob_x_theta_hat_crit_upper &lt;- theta_hat_crit_upper
+prob_x_ci_lower &lt;- ci_lower
+prob_x_ci_upper &lt;- ci_upper
+prob_x_decision &lt;- decision
+prob_x_r_result &lt;- r_result</code></pre>
 <ul>
-<li>Be sure to replace the <code>x</code> in the <code>prob_x</code> above with the problem number.</li>
+<li><p>Be sure to replace the <code>x</code> in the <code>prob_x</code> above with the problem number.</p></li>
+<li><p>Also note that I haven’t shown how to compute confidence interval estimates from Binomial random variables (or any discrete random variable for that matter). It follows the same principles in most ways as our approach for continuous random variables, but it turns out to be a bit more involved. Because of that, I will not ask you to compute CI estimates of a parameter from a discrete distribution. Hence, when performing a hypothesis test from a discrete random variable, use the following:</p></li>
 </ul>
+<pre class="r"><code>prob_x_ci_lower &lt;- NULL
+prob_x_ci_upper &lt;- NULL</code></pre>
 </div>
 <div id="problem-0" class="section level2">
 <h2>Problem 0</h2>

@@ -1,0 +1,409 @@
+---
+title: "Midterm Prep"
+author: "Author: Matthew J. Crossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 18pt
+---
+
+```{r echo=FALSE}
+library(data.table)
+library(ggplot2)
+
+rm(list = ls())
+
+source("util_funcs.R")
+set.seed(0)
+```
+
+## PDF
+
+### Practice 1
+
+```{r echo=FALSE}
+
+l <- generate_pdf_continuous()
+g <- l[[1]]
+d <- l[[2]]
+
+g
+
+## The values in the graph are given by the following:
+x1 <- d[, x][1]
+x2 <- d[, x][2]
+x3 <- d[, x][3]
+x4 <- d[, x][4]
+x5 <- d[, xend][4]
+
+y1 <- 0
+y2 <- d[, sort(density)][1]
+y3 <- d[, sort(density)][2]
+y4 <- d[, sort(density)][3]
+y5 <- d[, sort(density)][4]
+
+```
+
+- Is $X$ continuous or discrete?
+
+- Compute $P(X < `r x3`)$
+
+- Compute $P(X > `r x3`)$
+
+- Compute $P(`r x1` \leq X < `r x3`)$
+
+- Find $x$ such that $P(X < x) = 0.05$
+
+- Find $x$ such that $P(X > x) = 0.05$
+
+### Practice 2
+
+```{r echo=FALSE}
+
+l <- generate_pdf_discrete()
+g <- l[[1]]
+d <- l[[2]]
+
+g
+
+## The values in the graph are given by the following:
+x1 <- d[, x][1]
+x2 <- d[, x][2]
+x3 <- d[, x][3]
+x4 <- d[, x][4]
+
+y1 <- d[, sort(mass)][1]
+y2 <- d[, sort(mass)][2]
+y3 <- d[, sort(mass)][3]
+y4 <- d[, sort(mass)][4]
+
+```
+
+- Is $X$ continuous or discrete?
+
+- Compute $P(X < `r x3`)$
+
+- Compute $P(X > `r x3`)$
+
+- Compute $P(`r x1` \leq X < `r x3`)$
+
+- Compute the mean and variance of $X$
+
+## CDF
+
+### Practice 1
+
+For the random variable $X \sim N(\mu_X=10, \sigma_X=2)$
+
+- Compute $P(X < 12)$
+
+- Compute $P(X > 8)$
+
+- Compute $P(8 \leq X < 12)$
+
+### Practice 2
+
+```{r echo=FALSE}
+
+l <- generate_cdf_discrete()
+
+g <- l[[1]]
+d <- l[[2]]
+
+g
+
+## The values in the graph are given by the following:
+x1 <- d[, x][1]
+x2 <- d[, x][2]
+x3 <- d[, x][3]
+x4 <- d[, x][4]
+
+y1 <- d[, sort(probability)][1]
+y2 <- d[, sort(probability)][2]
+y3 <- d[, sort(probability)][3]
+y4 <- d[, sort(probability)][4]
+
+```
+
+- Compute $P(X < `r x2`)$
+
+- Compute $P(X \geq `r x2`)$
+
+- Compute $P(`r x2` \leq X < `r x3`)$
+
+## Quantile Function
+
+### Practice 1
+
+For the random variable $X \sim N(\mu_x = 5, \sigma_x=3)$
+
+- Find $x$ such that $P(X < x) = 0.5$
+
+- Find $x$ such that $P(X < x) = 0.05$
+
+- Find $x$ such that $P(X \geq x) = 0.05$
+
+### Practice 2
+
+For the random variable $X \sim Poisson(\lambda=4)$
+
+- Find $x$ such that $P(X \leq x) = 0.5$
+
+- Find $x$ such that $P(X < x) = 0.05$
+
+- Find $x$ such that $P(X > x) = 0.05$
+
+## NHST
+
+### Practice 1
+
+Consider an experiment in which participants first learn novel categories, and
+are subsequently asked to perform some other task. The question the researchers
+are interested in is how initial learning affects the subsequent task, and it is
+therefore critical that participants that didn't learn anything be excluded from
+the final analysis. An exclusion criteria is set such that any participant that
+fails to reach at least $60\%$ accuracy by the end of training is excluded.
+Suppose that data is collected from 30 participants, and of these, 5 are
+excluded. Is this greater than would be expected if the true probability of
+meeting the exclusion criteria was 0.1?
+
+- Answer this question going through all 5 steps in long form
+
+- Is there a built in function you can use? If so, use it.
+
+- Report a point estimates for $\hat{p}$
+
+- Report the critical value for $\alpha=0.05$
+
+- Compute power against the alternative $H_1$ that $p$ is .3
+
+### Practice 2
+
+
+```{r echo=FALSE}
+
+n <- 10
+mu_x <- 0.6
+sigma_x <- 0.15
+x <- rnorm(n, mu_x, sigma_x)
+x[x > 1] <- 1
+
+```
+
+Consider an experiment in which participants study a list of words and are
+subsequently asked to recall as many of the studied words as possible. Suppose
+that data is collected from `r n` participants and the percentage of words
+recalled by each participant is given by
+
+\begin{equation}
+x = ( `r round(x, 2)` )
+\end{equation}
+
+Let $X$ be the random variable that each participants performance is drawn from,
+and suppose we know $\sigma_x = `r sigma_x`$.
+
+Is $\mu_x$ significantly greater than $0.6$?
+
+- Answer this question going through all 5 steps in long form
+
+- Is there a built in function you can use? If so, use it.
+
+- Report point and interval estimates for $\hat{\mu_x}$
+
+- Report the critical value for $\alpha=0.05$
+
+- Compute power against the alternative $H_1$ that $\mu_x$ is .62
+
+
+### Practice 3
+
+```{r echo=FALSE}
+
+n <- 15
+
+mu_x <- 0
+sigma_x <- 15
+x <- rnorm(n, mu_x, sigma_x)
+
+```
+
+Consider an experiment in which participants attempt to toss a ping pong ball as
+accurately as possible to a target. Suppose that data is collected from `r n`
+participants and that the mean reach error per participant is given by
+
+\begin{equation}
+x = ( `r round(x, 2)` )
+\end{equation}
+
+Let $X$ be the random variable that each participants performance is drawn from.
+
+Is $\mu_x$ significantly different from $0$?
+
+- Answer this question going through all 5 steps in long form
+
+- Is there a built in function you can use? If so, use it.
+
+- Report point and interval estimates for $\hat{\mu_x}$
+
+- Report the critical value for $\alpha=0.05$
+
+- Compute power against the alternative $H_1$ that $\mu_x$ is 2
+
+## Data Wrangling
+
+```{r echo=FALSE}
+
+## Make data up -- Rats running a maze -- simple wide format
+mu_x <- runif(1, 100, 100)
+sigma_x <- runif(1, 100, 100)
+
+maze_time_rat_1 <- rnorm(5, mu_x, sigma_x)
+maze_time_rat_2 <- rnorm(5, mu_x, sigma_x)
+maze_time_rat_3 <- rnorm(5, mu_x, sigma_x)
+maze_time_rat_4 <- rnorm(5, mu_x, sigma_x)
+maze_time_rat_5 <- rnorm(5, mu_x, sigma_x)
+
+d_wide <- data.table(
+  maze_time_rat_1,
+  maze_time_rat_2,
+  maze_time_rat_3,
+  maze_time_rat_4,
+  maze_time_rat_5
+)
+
+d_wide[, run := 1:.N]
+
+## Make data up -- Rats running a maze -- simple long format
+n_rats <- 5
+n_runs_per_rat <- 5
+n_rows <- n_rats*n_runs_per_rat
+rat <- rep(1:n_rats, n_runs_per_rat)
+
+run <- rep(1:n_runs_per_rat, each=n_rats)
+
+mu_x <- runif(1, 100, 100)
+sigma_x <- runif(1, 100, 100)
+maze_time <- rnorm(n_rows,
+                   mu_x,
+                   sigma_x)
+
+d_long <- data.table(run,
+                     rat,
+                     maze_time)
+
+fwrite(d_wide, '../live_course_material/data/maze/d_wide.csv')
+fwrite(d_long, '../live_course_material/data/maze/d_long.csv')
+
+```
+
+### Practice 1
+
+- Convert the following `data.table` to long format
+- The `data.table` can be found here:
+https://crossley.github.io/cogs2020/data/maze/d_wide.csv
+
+```{r echo=FALSE}
+
+d_wide
+
+```
+
+### Practice 2
+
+- Convert the following `data.table` to wide format
+- The `data.table` can be found here:
+https://crossley.github.io/cogs2020/data/maze/d_long.csv
+
+
+```{r echo=FALSE}
+
+d_long
+
+```
+
+### Practice 3
+
+
+```{r echo=FALSE}
+
+## Make data up -- Rats running a maze -- more complicated long format
+n_rats <- round(runif(1, 20, 50))
+n_mazes <- round(runif(1, 4, 10))
+n_runs <- round(runif(1, 5, 20))
+n_rows <- n_rats*n_mazes*n_runs
+
+rat <- rep(1:n_rats, each=n_mazes*n_runs)
+maze <- rep(1:n_mazes, times=n_rats, each=n_runs)
+run <- rep(1:n_runs, times=n_rats*n_mazes)
+
+time <- c()
+for(i in 1:n_rats) {
+  mu_x <- runif(1, 50, 200)
+  sigma_x <- runif(1, 25, 50)
+  for(j in 1:n_mazes) {
+    mu_x <- mu_x + runif(1, -20, 20)
+    sigma_x <- sigma_x + runif(1, -10, 10)
+    time <- c(time, rnorm(n_runs, mu_x, sigma_x))
+  }
+}
+
+d <- data.table(rat,
+                maze,
+                run,
+                time)
+
+```
+
+```{r echo=FALSE}
+
+fwrite(d, '../live_course_material/data/maze/maze.csv')
+
+```
+
+Consider an experiment in which a set of rats run through a set of mazes some
+number of times each. The researchers running this experiment are interested in
+how quickly rats can run these mazes, and so they record the time in seconds
+each rat takes to complete each run of each maze. The data for the experiment
+they performed can be found here:
+
+https://crossley.github.io/cogs2020/data/maze/maze.csv
+
+- Recreate the following visualisation of their results. Note that error bars
+  represent standard error of the mean (SEM).
+
+```{r echo=FALSE}
+
+dd <- d[, .(mean(time), sd(time)/sqrt(length(unique(rat)))), .(maze, run)]
+
+ggplot(dd, aes(run, V1)) +
+  geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2)) +
+  xlab('run') +
+  ylab('mean maze time') +
+  facet_wrap(~factor(maze, labels=c('Maze ')))
+
+```
+
+- Recreate the following visualisation of their results. Note that error bars
+  represent standard error of the mean (SEM). Also note that to get SEM here,
+  first compute the mean `time` per `maze` for each `rat`. Then, compute the
+  mean and standard error from these values.
+
+```{r echo=FALSE}
+
+dd <- d[, mean(time), .(rat, maze)]
+ddd <- dd[, .(mean(V1), sd(V1)/sqrt(length(unique(rat)))), .(maze)]
+ggplot(ddd, aes(maze, V1)) +
+  geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2)) +
+  xlab('maze') +
+  ylab('mean maze time')
+
+```
+

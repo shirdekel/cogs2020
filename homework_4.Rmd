@@ -234,9 +234,9 @@ x_bar_ci_upper <- x_bar_obs + x_bar_xi_width / 2
 ```
 
 
-6\. If there is a built-in R function that will perform the
+<b>6\. If there is a built-in R function that will perform the
 test in question, use and verify that it returns the same
-results as running through steps 1 through 5 in long form. 
+results as running through steps 1 through 5 in long form.</b>
 
 * Create a variable named `r_result` and set its value to
 the result of the built-in R function. If no built-in
@@ -254,39 +254,54 @@ x <- dt[, x]
 r_result <- t.test(x, mu=0.5, alternative='greater')
 ```
 
-7\. Create problem-specific variables to store the work form
-the previous steps to facilitate grading.
+<b>7\. Create problem-specific variables to store the work form
+the previous steps to facilitate grading.</b>
 
 * For a one-tailed test use:
 ```{r, eval=F}
-prob_xa <- theta_hat_x
-prob_xb <- theta_hat_p
-prob_xc <- theta_hat_obs
-prob_xd <- pval
-prob_xe <- theta_hat_crit
-prob_xf <- ci_lower
-prob_xg <- ci_upper
-prob_xh <- decision
-prob_xi <- r_result
+prob_x_theta_hat_x <- theta_hat_x
+prob_x_theta_hat_p <- theta_hat_p
+prob_x_theta_hat_obs <- theta_hat_obs
+prob_x_pval <- pval
+prob_x_theta_hat_crit <- theta_hat_crit
+prob_x_ci_lower <- ci_lower
+prob_x_ci_upper <- ci_upper
+prob_x_decision <- decision
+prob_x_r_result <- r_result
 ```
 
 * For a two-tailed test use:
 ```{r, eval=F}
-prob_xa <- theta_hat_x
-prob_xb <- theta_hat_p
-prob_xc <- theta_hat_obs
-prob_xd <- pval_lower
-prob_xe <- pval_upper
-prob_xf <- theta_hat_crit_lower
-prob_xg <- theta_hat_crit_upper
-prob_xh <- ci_lower
-prob_xi <- ci_upper
-prob_xh <- decision
-prob_xj <- r_result
+prob_x_theta_hat_x <- theta_hat_x
+prob_x_theta_hat_p <- theta_hat_p
+prob_x_theta_hat_obs <- theta_hat_obs
+prob_x_pval_lower <- pval_lower
+prob_x_pval_upper <- pval_upper
+prob_x_theta_hat_crit_lower <- theta_hat_crit_lower
+prob_x_theta_hat_crit_upper <- theta_hat_crit_upper
+prob_x_ci_lower <- ci_lower
+prob_x_ci_upper <- ci_upper
+prob_x_decision <- decision
+prob_x_r_result <- r_result
 ```
 
 * Be sure to replace the `x` in the `prob_x` above with the
 problem number.
+
+* Also note that I haven't shown how to compute confidence
+interval estimates from Binomial random variables (or any
+discrete random variable for that matter). It follows the
+same principles in most ways as our approach for continuous
+random variables, but it turns out to be a bit more
+involved. Because of that, I will not ask you to compute CI
+estimates of a parameter from a discrete distribution.
+Hence, when performing a hypothesis test from a discrete
+random variable, use the following:
+
+```{r, eval=F}
+prob_x_ci_lower <- NULL
+prob_x_ci_upper <- NULL
+```
 
 ## Problem 0
 
