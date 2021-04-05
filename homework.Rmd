@@ -21,6 +21,7 @@ fontsize: 14pt
 #### [Homework 2](homework_2.html)
 #### [Homework 2 Solutions](homework_2_solutions.html)
 #### [Homework 3](homework_3.html)
+#### [Homework 3 Solutions](homework_3_solutions.html)
 #### [Homework 4](homework_4.html)
 #### [Midterm Prep](midterm_prep.html)
 #### [Midterm Prep Solutions](midterm_prep_solutions.html)
