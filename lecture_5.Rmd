@@ -363,11 +363,11 @@ to cheese on each trial. The data are as follows:
 ```{r, echo=F}
 set.seed(0)
 n <- 15
-mux <- 80
-sigx <- 20
-xobs <- rnorm(n, mux, sigx)
-d <- data.table(xobs)
-ggplot(d, aes(xobs)) +
+mu_x <- 80
+sig_x <- 20
+x_obs <- rnorm(n, mu_x, sig_x)
+d <- data.table(x_obs)
+ggplot(d, aes(x_obs)) +
   geom_histogram(bins=6)
 ```
 
@@ -419,47 +419,47 @@ under the assumption that $H_0$ is true, and inspect how likely the observed
 $\bar{x}$ is to be sampled from this distribution.
 
 ```{r, echo=F, fig.width=10}
-xbarobs <- mean(xobs)
-muxbar <- 90
-sigxbar <- sigx / sqrt(n)
-xbarcrit <- qnorm(0.05, muxbar, sigxbar, lower.tail=TRUE)
-x <- seq(muxbar-4*sigxbar, muxbar+4*sigxbar, 0.01)
-fx <- dnorm(x, muxbar, sigxbar)
+x_bar_obs <- mean(x_obs)
+mu_x_bar <- 90
+sig_x_bar <- sig_x / sqrt(n)
+x_bar_crit <- qnorm(0.05, mu_x_bar, sig_x_bar, lower.tail=TRUE)
+x <- seq(mu_x_bar-4*sig_x_bar, mu_x_bar+4*sig_x_bar, 0.01)
+fx <- dnorm(x, mu_x_bar, sig_x_bar)
 d <- data.table(x,
                 fx,
-                region=factor(x<=xbarobs, labels=c('x > xbarobs', 'x <= xbarobs')),
-                cregion=factor(x<=xbarcrit, labels=c('x > xbarcrit', 'x <= xbarcrit')))
+                region=factor(x<=x_bar_obs, labels=c('x > x_bar_obs', 'x <= x_bar_obs')),
+                cregion=factor(x<=x_bar_crit, labels=c('x > x_bar_crit', 'x <= x_bar_crit')))
 
 g1 <- ggplot(d, aes(x, fx, colour=region)) +
   geom_line() +
-  geom_vline(xintercept=xbarobs, colour='black', linetype=2) +
-  geom_ribbon(aes(ymin=0, ymax=dnorm(x, muxbar, sigxbar), fill=region), alpha=0.5) +
-  annotate('text', x=xbarobs-0.1, y=dnorm(xbarobs, muxbar, sigxbar),
-           label='xobs or \n more extreme',
+  geom_vline(xintercept=x_bar_obs, colour='black', linetype=2) +
+  geom_ribbon(aes(ymin=0, ymax=dnorm(x, mu_x_bar, sig_x_bar), fill=region), alpha=0.5) +
+  annotate('text', x=x_bar_obs-0.1, y=dnorm(x_bar_obs, mu_x_bar, sig_x_bar),
+           label='x_obs or \n more extreme',
            colour='#00AFBB',
            hjust=1) +
   ylab('f(xbar)') +
   xlab('xbar') +
   ggtitle('p-value approach') +
-  theme(legend.position = "non")
+  theme(legend.position = "none")
 
 g2 <- ggplot(d, aes(x, fx, colour=cregion)) +
   geom_line() +
-  geom_vline(xintercept=xbarobs, colour='black', linetype=2) +
-  geom_vline(xintercept=xbarcrit, colour='black', linetype=2) +
-  geom_ribbon(aes(ymin=0, ymax=dnorm(x, muxbar, sigxbar), fill=cregion), alpha=0.5) +
-  annotate('text', x=xbarcrit-0.1, y=dnorm(xbarcrit, muxbar, sigxbar),
+  geom_vline(xintercept=x_bar_obs, colour='black', linetype=2) +
+  geom_vline(xintercept=x_bar_crit, colour='black', linetype=2) +
+  geom_ribbon(aes(ymin=0, ymax=dnorm(x, mu_x_bar, sig_x_bar), fill=cregion), alpha=0.5) +
+  annotate('text', x=x_bar_crit-0.1, y=dnorm(x_bar_crit, mu_x_bar, sig_x_bar),
            label='critical value\n(rejection region)',
            colour='#00AFBB',
            hjust=1) +
-  annotate('text', x=xbarobs+0.1, y=dnorm(xbarobs, muxbar, sigxbar),
+  annotate('text', x=x_bar_obs+0.1, y=dnorm(x_bar_obs, mu_x_bar, sig_x_bar),
            label='observed outcome',
            colour='black',
            hjust=0) +
   ylab('f(xbar)') +
   xlab('xbar') +
   ggtitle('Critical value approach') +
-  theme(legend.position = "non")
+  theme(legend.position = "none")
 
 ggarrange(g1, g2, ncol=2)
 ```
@@ -473,14 +473,14 @@ observed sample mean. The data, sampled from the random variable $X$ is
 given by the following times:
 
 ```{r} 
-xobs
+x_obs
 ```
 
 Thus, the observed sample mean $\bar{x}_{\text{obs}}$, sampled from
 the random variable $\bar{X}$, is obtained as follows:
 
 ```{r} 
-xbarobs <- mean(xobs)
+x_bar_obs <- mean(x_obs)
 ```
 
 * Therefore, $\bar{x}_{\text{obs}}=$ `r mean(xobs)`
@@ -494,19 +494,19 @@ plot above, and from reasoning about the alternative hypothesis,
 we see that we need `lower.tail=TRUE`.
 
 ```{r}
-mux <- 90
-sigx <- 20
+mu_x <- 90
+sig_x <- 20
 
-muxbar <- mux
-sigxbar <- sigx / sqrt(n)
+mu_x_bar <- mu_x
+sig_x_bar <- sig_x / sqrt(n)
 
 ## p-value
-pval <- pnorm(xbarobs, muxbar, sigxbar, lower.tail=TRUE)
+pval <- pnorm(x_bar_obs, mu_x_bar, sig_x_bar, lower.tail=TRUE)
 pval
 
 ## critical value
-xbarcrit <- qnorm(0.05, muxbar, sigxbar, lower.tail=TRUE)
-xbarcrit
+x_bar_crit <- qnorm(0.05, mu_x_bar, sig_x_bar, lower.tail=TRUE)
+x_bar_crit
 ```
 
 It is easy to decide whether or not to reject $H_0$ based on
@@ -557,26 +557,33 @@ $$
   the t-test (later this lecture!).
 
 ```{r}
+# Using Normal distribution
+x_bar_obs <- mean(x_obs)
+sig_x_bar <- sig_x / sqrt(n)
+px <- pnorm(x_bar_obs, mu_x_bar, sig_x_bar, lower.tail=TRUE)
 
-## Our standard method using the information given
-mu_x_bar <- mu_x
-sigma_x_bar <- sigma_x / sqrt(n)
-x_bar_obs <- mean(xobs)
-px <- pnorm(x_bar_obs, mu_x_bar, sigma_x_bar, lower.tail=TRUE)
-
-## Using z-test
-z_obs <- (x_bar_obs - mu_x_bar) / sigma_x_bar
+## Using Z distribution
+z_obs <- (x_bar_obs - 90) / sig_x_bar
 pz <- pnorm(z_obs, 0, 1, lower.tail=TRUE)
 
 ## Compare p-values from different methods
 px
 pz
+```
 
+- How are the p-values the same?
+- The plot below is the X distribution on the left and the Z
+distribution on the right. - Notice that the Z is just a
+scaled version of X, and the that scaling also applied to
+the observed value.
+- This means that all probabilities (area under the curve)
+are the same.
+```{r, echo=F, fig.width=10}
 ## How are the p-values the same?
-x <- seq(mu_x_bar - 5*sigma_x_bar, mu_x_bar + 5*sigma_x_bar, 0.0001)
-fx <- dnorm(x, mu_x_bar, sigma_x_bar)
+x <- seq(90 - 4*sig_x_bar, 90 + 4*sig_x_bar, 0.001)
+fx <- dnorm(x, 90, sig_x_bar)
 
-z <- seq(0 - 5*1, 0 + 5*1, 0.0001)
+z <- seq(0 - 4*1, 0 + 4*1, 0.001)
 fz <- dnorm(z, 0, 1)
 
 d <- data.table(
@@ -586,8 +593,9 @@ d <- data.table(
   obs=rep(c(x_bar_obs, z_obs), c(length(x), length(z)))
 )
 
-## We can see that the observed values and full distributions get transformed in
-## proportion, so we get the same p-values
+## We can see that the observed values and full
+## distributions get transformed in proportion, so we get
+## the same p-values
 ggplot(data=d, aes(x, fx)) +
   geom_line() +
   geom_vline(aes(xintercept=obs), linetype=2) +
@@ -677,51 +685,57 @@ $$
 t_{obs} = \frac{\bar{x} - \mu_x}{\frac{s_x}{\sqrt{n}}} \sim t(n-1)
 $$
 
-```{r, echo=F, warning=F}
-tobs <- (mean(xobs)-90)/(sd(xobs)/sqrt(n))
-tcrit <- qt(0.05, n-1, lower.tail=TRUE)
+```{r, echo=F, fig.width=10}
+t_obs <- (mean(x_obs)-90)/(sd(x_obs)/sqrt(n))
+t_crit <- qt(0.05, n-1, lower.tail=TRUE)
 mu <- 0
 t <- seq(-4, 4, 0.01)
-ft <- dt(x, n-1)
+ft <- dt(t, n-1)
 
-xbarobs <- mean(xobs)
+x_bar_obs <- mean(x_obs)
 muxbar <- 90
-sigxbar <- sigx / sqrt(n)
-zobs <- (xbarobs - 90) / sigxbar
+sig_x_bar <- sig_x / sqrt(n)
+z_obs <- (x_bar_obs - 90) / sig_x_bar
 z <- seq(-4, 4, 0.01)
 fz <- dnorm(z, 0, 1)
 
 d <- data.table(t,
                 ft,
-                z,
+                z, 
                 fz,
-                region=factor(t<=tobs, labels=c('t <= tobs', 't > tobs')))
+                region=factor(t<=t_obs, labels=c('t > t_obs', 't <= t_obs')),
+                cregion=factor(t<=t_crit, labels=c('t > t_crit', 't <= t_crit')))
 
 g1 <- ggplot(d, aes(t, ft, colour=region)) +
   geom_line() +
-  geom_line(aes(z, fz), colour='black') +
-  geom_vline(xintercept=tobs, colour='black', linetype=2) +
-  geom_ribbon(aes(ymin=0, ymax=dt(t, n-1), fill=region), alpha=0.5) +
-  annotate('text', x=-3, y=0.1,
-           label='tobs \n or more extreme',
-           colour='#00AFBB') +
+  geom_vline(xintercept=t_obs, colour='black', linetype=2) +
+  geom_ribbon(aes(ymin=0, ymax=dnorm(t, 0, 1), fill=region), alpha=0.5) +
+  annotate('text', x=t_obs-0.1, y=dnorm(t_obs, 0, 1),
+           label='t_obs or \n more extreme',
+           colour='#00AFBB',
+           hjust=1) +
   ylab('f(t)') +
   xlab('t') +
-  ggtitle('p-value value approach') +
-  theme(legend.position="none")
+  ggtitle('p-value approach') +
+  theme(legend.position = "none")
 
-g2 <- ggplot(d, aes(t, ft, colour=region)) +
+g2 <- ggplot(d, aes(t, ft, colour=cregion)) +
   geom_line() +
-  geom_line(aes(z, fz), colour='black') +
-  geom_vline(xintercept=tcrit, colour='black', linetype=2) +
-  geom_ribbon(aes(ymin=0, ymax=dt(t, n-1), fill=region), alpha=0.5) +
-  annotate('text', x=-3, y=0.1,
-           label='tcrit \n (rejection region)',
-           colour='#00AFBB') +
+  geom_vline(xintercept=t_obs, colour='black', linetype=2) +
+  geom_vline(xintercept=t_crit, colour='black', linetype=2) +
+  geom_ribbon(aes(ymin=0, ymax=dnorm(t, 0, 1), fill=cregion), alpha=0.5) +
+  annotate('text', x=t_crit-0.1, y=dnorm(t_crit, 0, 1),
+           label='critical value\n(rejection region)',
+           colour='#00AFBB',
+           hjust=1) +
+  annotate('text', x=t_obs+0.1, y=dnorm(t_obs, 0, 1),
+           label='t observed',
+           colour='black',
+           hjust=0) +
   ylab('f(t)') +
   xlab('t') +
   ggtitle('Critical value approach') +
-  theme(legend.position="none")
+  theme(legend.position = "none")
 
 ggarrange(g1, g2, ncol=2)
 ```
@@ -773,18 +787,18 @@ we see that we need `lower.tail=TRUE`.
 
 ```{r}
 ## p-value
-pval <- pt(tobs, n-1, lower.tail=TRUE)
-pval
+p_val <- pt(t_obs, n-1, lower.tail=TRUE)
+p_val
 
 ## critical value
-tcrit <- qt(0.05, n-1, lower.tail=TRUE)
-tcrit
+t_crit <- qt(0.05, n-1, lower.tail=TRUE)
+t_crit
 ```
 
 Finally, there is a built in function called `t.test()` that
 will do all of this for you.
 ```{r}
-t.test(xobs, mu=90, alternative='less')
+t.test(x_obs, mu=90, alternative='less')
 ```
 
 

@@ -661,7 +661,7 @@ Is $\mu_x$ significantly different from $0$?
 
 ## 1
 ## H0: mux = 0
-## H1: mux > 0
+## H1: mux != 0
 
 ## 2
 # alpha <- 0.05
