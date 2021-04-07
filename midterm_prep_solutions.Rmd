@@ -367,7 +367,7 @@ ggplot(d, aes(x=p, y=qf)) +
   ylab('x') +
   geom_vline(xintercept=0.05, linetype=2)
 
-qpois(0.05, 4, lower.tail=TRUE) + 1
+qpois(0.05, 4, lower.tail=TRUE) - 1
 
 ```
 

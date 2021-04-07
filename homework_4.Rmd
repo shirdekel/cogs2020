@@ -15,12 +15,6 @@ output:
 fontsize: 14pt
 ---
 
-<div style="color:#990000">
-**Note that this homework is not yet finalised. I am posting
-it here for practice purposes only.**
-<br></br>
-</div>
-
 <style type="text/css">
 .table {
     width: 40%;
@@ -188,7 +182,7 @@ p_val <- pnorm(x_bar_obs, mu_x_bar, sig_x_bar, lower.tail=FALSE)
 ```
 
 * Create a value named `decision` and set its value either to
-`reject H0` or `fail to reject H0`.
+`"reject H0"` or `"fail to reject H0"`.
 
 ```{r, eval=F}
 # Lets assume p_val < 0.05. 
@@ -262,10 +256,10 @@ the previous steps to facilitate grading.</b>
 prob_x_theta_hat_x <- theta_hat_x
 prob_x_theta_hat_p <- theta_hat_p
 prob_x_theta_hat_obs <- theta_hat_obs
-prob_x_pval <- pval
+prob_x_pval <- p_val
 prob_x_theta_hat_crit <- theta_hat_crit
-prob_x_ci_lower <- ci_lower
-prob_x_ci_upper <- ci_upper
+prob_x_ci_lower <- theta_hat_ci_lower
+prob_x_ci_upper <- theta_hat_ci_upper
 prob_x_decision <- decision
 prob_x_r_result <- r_result
 ```
@@ -275,12 +269,12 @@ prob_x_r_result <- r_result
 prob_x_theta_hat_x <- theta_hat_x
 prob_x_theta_hat_p <- theta_hat_p
 prob_x_theta_hat_obs <- theta_hat_obs
-prob_x_pval_lower <- pval_lower
-prob_x_pval_upper <- pval_upper
+prob_x_pval_lower <- p_val_lower
+prob_x_pval_upper <- p_val_upper
 prob_x_theta_hat_crit_lower <- theta_hat_crit_lower
 prob_x_theta_hat_crit_upper <- theta_hat_crit_upper
-prob_x_ci_lower <- ci_lower
-prob_x_ci_upper <- ci_upper
+prob_x_ci_lower <- theta_hat_ci_lower
+prob_x_ci_upper <- theta_hat_ci_upper
 prob_x_decision <- decision
 prob_x_r_result <- r_result
 ```
@@ -288,20 +282,20 @@ prob_x_r_result <- r_result
 * Be sure to replace the `x` in the `prob_x` above with the
 problem number.
 
-* Also note that I haven't shown how to compute confidence
-interval estimates from Binomial random variables (or any
-discrete random variable for that matter). It follows the
-same principles in most ways as our approach for continuous
-random variables, but it turns out to be a bit more
-involved. Because of that, I will not ask you to compute CI
-estimates of a parameter from a discrete distribution.
-Hence, when performing a hypothesis test from a discrete
-random variable, use the following:
+<!-- * Also note that I haven't shown how to compute confidence -->
+<!-- interval estimates from Binomial random variables (or any -->
+<!-- discrete random variable for that matter). It follows the -->
+<!-- same principles in most ways as our approach for continuous -->
+<!-- random variables, but it turns out to be a bit more -->
+<!-- involved. Because of that, I will not ask you to compute CI -->
+<!-- estimates of a parameter from a discrete distribution. -->
+<!-- Hence, when performing a hypothesis test from a discrete -->
+<!-- random variable, use the following: -->
 
-```{r, eval=F}
-prob_x_ci_lower <- NULL
-prob_x_ci_upper <- NULL
-```
+<!-- ```{r, eval=F} -->
+<!-- prob_x_ci_lower <- NULL -->
+<!-- prob_x_ci_upper <- NULL -->
+<!-- ``` -->
 
 ## Problem 0
 
@@ -366,12 +360,51 @@ columns for the mean accuracy per block (name this column
 `acc_mean`) and the SEM (name this column `acc_err`) per
 `block`, grouped by each unique combination of `block` and
 `phase`. Please ensure that `dd` contains only `acc_mean`,
-`acc_sem`, `block`, and `phase` columns.
+`acc_err`, `block`, and `phase` columns.
 
-**(g)** Plot the mean accuracy per block (`block` on the
-x-axis, `acc_mean` on the y-axis). Include error bars at
-each data point that represent SEM. Plot phase 1 and phase 2
-in different colours.
+**(g)** Replicate the following plot exactly using only
+`ggplot()`, `geom_line()` and `geom_pointrange()`. Save
+resulting ggplot object as a variable named `g`.
+
+```{r, echo=F}
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+# 1
+# a 
+d <- fread('https://crossley.github.io/cogs2020/data/nhp_cat_learn/ii_gabor.csv')
+
+# b
+col_names <- c('cat', 'x', 'y', 'resp', 'rt', 'phase')
+setnames(d, col_names)
+
+# c
+d[, trial := 1:.N]
+
+# d
+n_trials <- d[, .N]
+block_size = 100
+n_blocks <- n_trials / block_size + 1
+block <- rep(1:n_blocks, each=block_size)
+block <- block[1:n_trials]
+d[, block := block]
+
+# e
+d[, acc := cat == resp]
+
+# f
+dd <- d[, .(acc_mean=mean(acc), acc_err=sd(acc) / sqrt(.N)), .(block, phase)]
+
+# g
+g <- ggplot(dd, aes(block, acc_mean, colour=factor(phase))) + 
+  geom_line() +
+  geom_pointrange(aes(x=block, 
+                      ymin=acc_mean-acc_err, 
+                      ymax=acc_mean+acc_err))
+```
+
 
 ## Problem 2 - 4
 In the dataset from Problem 1, each trial is a Bernoulli
@@ -387,11 +420,13 @@ worse than guessing (i.e., $p = .5$).
 
 **Problem 3.** Test the hypothesis that, for the last 100
 trials of phase 1, the monkey is doing better than guessing
-(i.e., $p = .5$).
+(i.e., $p = .5$). For this problem, only `prob_x_r_result`
+will be graded.
 
 **Problem 4.** Test the hypothesis that, for the first 100
 trials of phase 2, the monkey is doing worse than guessing
-(i.e., $p = .5$).
+(i.e., $p = .5$). For this problem, only `prob_x_r_result`
+will be graded.
 
 ## Problem 5-8
 Above, we viewed each trial as $Bernoulli(p)$, and each $n$
@@ -415,28 +450,40 @@ columns for the mean accuracy per block (name this column
 `acc_sem`, `block`, and `phase` columns. Repeat the mean
 accuracy plot using the new block size to visually check
 that your work is doing what you think it's doing (this plot
-will not be graded).
+will not be graded). 
+
+Also, when reporting confidence intervals, remember that you
+are to report an interval estimate of the parameter in step
+1. This means that if you are performing a t-test, you will
+have to be careful when converting between t and X
+distributions.
 
 **Problem 6.** Test the hypothesis that the mean accuracy in
 the first 16 blocks of phase 1 is no greater or worse than
 chance (i.e. 50% correct responses).
 
 **Problem 7.** Test the hypothesis that the mean accuracy in
-the last 16 blocks of phase 1 is greater than chance.
+the last 16 blocks of phase 1 is greater than chance. For
+this problem, only `prob_x_r_result` will be graded.
 
-**Problem 8.**
-Test the hypothesis that the mean accuracy in the first 16
-blocks of phase 2 less than chance.
+**Problem 8.** Test the hypothesis that the mean accuracy in
+the first 16 blocks of phase 2 less than chance. For this
+problem, only `prob_x_r_result` will be graded.
 
 ## Problem 9
 What accounts for the drop in accuracy between phase 1 and
 phase 2? To answer this question, investigate the stimuli
-the monkey was required to learn between phase 1 and phase
-2. Using `ggplot()` and `geom_point()`, make a plot of
-stimuli (`x=x, y=y`) coloured by category membership label
-(`cat`). Include a separate version of this plot for each
-phase in different panels by using `facet_wrap()`. Save the
-resulting plot to a variable named `ans_9`.
+the monkey was required to learn between phase 1 and phase 2
+by replicating the plot below exactly, and using the
+data.table `d` as a the plot data. The ggplot function
+`facet_wrap()` will be helpful to you. Save the resulting
+plot to a variable named `ans_9`.
+
+```{r, echo=F}
+ggplot(d, aes(x, y, colour=factor(cat))) +
+  geom_point() +
+  facet_wrap(~phase)
+```
 
 ## problem 10
 For the first 16 blocks of phase 1, assume that the true
@@ -509,12 +556,12 @@ to? Store your answer in a variable named `ans_12c`.
 * What quantity does region IV in the above plot correspond
 to? Store your answer in a variable named `ans_12d`.
 
-* What is the numeric value (to one decimal place) of the
+* What is the numeric value (to two decimal places) of the
 power in this example? Store your answer in a variable named
 `ans_12e`.
 
 * Assuming a type I error rate of 0.05, what is the numeric
-value (to one decimal place) of confidence of this example?
+value (to two decimal places) of confidence of this example?
 Store your answer in a variable named `ans_12f`.
 
 * Assuming that the illustrated distributions correspond to
