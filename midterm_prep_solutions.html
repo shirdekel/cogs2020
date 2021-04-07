@@ -356,7 +356,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Midterm Prep Key</h1>
 <h4 class="author">Author: Matthew J. Crossley</h4>
-<h4 class="date">Last update: 05 April, 2021</h4>
+<h4 class="date">Last update: 07 April, 2021</h4>
 
 </div>
 
@@ -843,9 +843,17 @@ t_crit_upper &lt;- qt(0.975, n-1)</code></pre>
 <pre class="r"><code># The insight you have to have here is that to convert
 # between t which has mean 0 and (approximately) sd 1, you
 # have to scale the interval you get from the t by sig_x_bar.
-ci_width &lt;- ( t_crit_upper - t_crit_upper ) * sig_x_bar
+ci_width &lt;- ( t_crit_upper - t_crit_lower) * sig_x_bar
 ci_lower &lt;- x_bar_obs - ci_width / 2
-ci_upper &lt;- x_bar_obs + ci_width / 2</code></pre>
+ci_upper &lt;- x_bar_obs + ci_width / 2
+
+# print out stuff to compare with t.test()
+p_val</code></pre>
+<pre><code>## [1] 0.7428955</code></pre>
+<pre class="r"><code>ci_lower</code></pre>
+<pre><code>## [1] -5.342954</code></pre>
+<pre class="r"><code>ci_upper</code></pre>
+<pre><code>## [1] 7.318086</code></pre>
 <ul>
 <li>Report the critical values for <span class="math inline">\(\alpha=0.05\)</span></li>
 </ul>

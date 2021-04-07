@@ -76,6 +76,6 @@ ans_4b <- "skewed right"
 ans_4c1 <- "Decreases"
 ans_4c2 <- "Decreases"
 ans_4d <- ans_4a1
-ans_4e <- ans_4a2 / sqrt(n)
+ans_4e <- ans_4a2 / n
 ```
 

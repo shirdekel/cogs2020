@@ -558,24 +558,10 @@ $$
 
 ```{r}
 
-## Consider:
-## H0: mu_X = 0.15
-## H1: mu_X > 0.15
-
-alph <- 0.05
-
-extraction <- c(0.1460184, 0.1650378, 0.1577203, 0.1396865, 0.1731472,
-                0.1713292, 0.1823381, 0.1505338, 0.1726549, 0.1522668)
-
-n <- length(extraction)
-
-mu_x <- 0.15 ## given H0
-sigma_x <- 0.02 ## for now, just assume that we know this
-
 ## Our standard method using the information given
 mu_x_bar <- mu_x
 sigma_x_bar <- sigma_x / sqrt(n)
-x_bar_obs <- mean(extraction)
+x_bar_obs <- mean(xobs)
 px <- pnorm(x_bar_obs, mu_x_bar, sigma_x_bar, lower.tail=TRUE)
 
 ## Using z-test

@@ -710,9 +710,14 @@ t.test(x, mu=0, alternative='two.sided')
 # The insight you have to have here is that to convert
 # between t which has mean 0 and (approximately) sd 1, you
 # have to scale the interval you get from the t by sig_x_bar.
-ci_width <- ( t_crit_upper - t_crit_upper ) * sig_x_bar
+ci_width <- ( t_crit_upper - t_crit_lower) * sig_x_bar
 ci_lower <- x_bar_obs - ci_width / 2
 ci_upper <- x_bar_obs + ci_width / 2
+
+# print out stuff to compare with t.test()
+p_val
+ci_lower
+ci_upper
 
 ```
 
