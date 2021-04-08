@@ -31,20 +31,20 @@ fontsize: 14pt
 #### Lecture 7: Independent samples and paired samples t-test
 <!-- #### [Lecture 7: independent samples and paired samples t-test](lecture_7.html) -->
 
-#### Lecture 8: Correlation, regression
-<!-- #### [Lecture 8: Correlation, regression](lecture_8.html) -->
+#### Lecture 8: Testing hypotheses about variance
+<!-- #### [Lecture 8: Testing hypotheses about variance](lecture_9.html) -->
 
-#### Lecture 9: Testing hypotheses about variance, Comparing the variance of two Normal populations
-<!-- #### [Lecture 9: Testing hypotheses about variance, Comparing the variance of two Normal populations](lecture_9.html) -->
+#### Lecture 9: One-way ANOVA
+<!-- #### [Lecture 9: One-way ANOVA](lecture_10.html) -->
 
-#### Lecture 10: One-way ANOVA
-<!-- #### [Lecture 10: One-way ANOVA](lecture_10.html) -->
+#### Lecture 10: Two-way ANOVA
+<!-- #### [Lecture 10: Two-way ANOVA](lecture_11.html) -->
 
-#### Lecture 11: Two-way ANOVA
-<!-- #### [Lecture 11: Two-way ANOVA](lecture_11.html) -->
+#### Lecture 11: Repeated Measures ANOVA
+<!-- #### [Lecture 11: Repeated Measures ANOVA](lecture_12.html) -->
 
-#### Lecture 12: Repeated Measures ANOVA
-<!-- #### [Lecture 12: Repeated Measures ANOVA](lecture_12.html) -->
+#### Lecture 12: Mixed-design ANOVA
+<!-- #### [Lecture 12: Mixed-design ANOVA](lecture_12.html) -->
 
-#### Lecture 13: Mixed-design ANOVA
-<!-- #### [Lecture 13: Mixed-design ANOVA](lecture_12.html) -->
+#### Lecture 13: Correlation, regression
+<!-- #### [Lecture 13: Correlation, regression](lecture_8.html) -->

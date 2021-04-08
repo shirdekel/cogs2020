@@ -403,6 +403,7 @@ g <- ggplot(dd, aes(block, acc_mean, colour=factor(phase))) +
   geom_pointrange(aes(x=block, 
                       ymin=acc_mean-acc_err, 
                       ymax=acc_mean+acc_err))
+g
 ```
 
 
