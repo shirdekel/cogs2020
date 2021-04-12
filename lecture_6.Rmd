@@ -606,11 +606,13 @@ CI_{.95}    &= \left[ \bar{x} - \Phi_{X}^{-1}(1-0.025),
                 \bar{x} + \Phi_{X}^{-1}(0.975) \right]
 \end{align}
 
-- Notice that just like the point estimate $\bar{x}$, a confidence interval is
-  also a random variable, and so changes with every experiment performed.
+- Notice that just like the point estimate $\bar{x}$, a
+confidence interval is also a random variable, and so
+changes with every experiment performed.
 
-- We can demonstrate this by repeating the procedure for three experiments in
-  the following code chunk.
+- We can demonstrate this by repeating the procedure and
+observing that the obtained confidence intervals are
+different with each repetition.
 
 ```{r, echo=F, fig.width=10}
 ## Choose a confidence level

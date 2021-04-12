@@ -87,25 +87,31 @@ writing:
 outcomes of $\widehat{\theta}$.
 
    * If $\widehat{\theta}$ is discrete with a finite range
-   then `theta_hat_x` must contain all possible outcomes.
+   then `theta_hat_x` must contain all possible outcomes of
+   $\widehat{\theta}$.
    
    * If $\widehat{\theta}$ is continuous with a finite range
    then use `theta_hat_x` must start at the minimum valued
-   outcome, end at the maximum valued outcome, and contain
-   all the values between these two endpoints in increments
-   of `0.01`.
+   outcome of $\widehat{\theta}$, end at the maximum valued
+   outcome of $\widehat{\theta}$, and contain all the values
+   between these two endpoints in increments of `0.01`.
    
    * If $\widehat{\theta}$ is discrete with an infinite
    range then `theta_hat_x` must start 4 standard deviations
-   below the the mean, end 3 standard deviations above the
-   mean, and must contain all the values between these two
-   endpoints in increments of `0.01`.
+   below the the mean of the $\widehat{\theta}$ sampling
+   distribution assuming the null hypothesis is true, end 3
+   standard deviations above the mean of the
+   $\widehat{\theta}$ sampling distribution, and must
+   contain all the values between these two endpoints in
+   increments of `0.01`.
    
    * If $\widehat{\theta}$ is continuous with an infinite
    range then `theta_hat_x` must start 4 standard deviations
-   below the the mean, end 3 standard deviations above the
-   mean, and must contain all the values between these two
-   endpoints in increments of `0.01`.
+   below the the mean of the $\widehat{\theta}$ sampling
+   distribution, end 3 standard deviations above the mean of
+   the $\widehat{\theta}$ sampling distribution, and must
+   contain all the values between these two endpoints in
+   increments of `0.01`.
    
 * Carrying on with the example, you would write:
 
@@ -282,20 +288,11 @@ prob_x_r_result <- r_result
 * Be sure to replace the `x` in the `prob_x` above with the
 problem number.
 
-<!-- * Also note that I haven't shown how to compute confidence -->
-<!-- interval estimates from Binomial random variables (or any -->
-<!-- discrete random variable for that matter). It follows the -->
-<!-- same principles in most ways as our approach for continuous -->
-<!-- random variables, but it turns out to be a bit more -->
-<!-- involved. Because of that, I will not ask you to compute CI -->
-<!-- estimates of a parameter from a discrete distribution. -->
-<!-- Hence, when performing a hypothesis test from a discrete -->
-<!-- random variable, use the following: -->
-
-<!-- ```{r, eval=F} -->
-<!-- prob_x_ci_lower <- NULL -->
-<!-- prob_x_ci_upper <- NULL -->
-<!-- ``` -->
+* **NOTE:** In all cases, but especially when performing
+t-tests, please think carefully about what
+$\widehat{\theta}_{\text{obs}}$ is estimating. In
+particular, be sure that the variable `theta_hat_obs`
+contains a number that estimates the parameter in step 1.
 
 ## Problem 0
 
@@ -487,7 +484,8 @@ ggplot(d, aes(x, y, colour=factor(cat))) +
 ```
 
 ## problem 10
-For the first 16 blocks of phase 1, assume that the true
+For the first 16 blocks of phase 1, assuming that you are
+performing a one-tailed test, and assuming that the true
 state of the universe is $\mu=.6$. Given $H_0:\mu=.5$
 
 * compute $\alpha$ and store its value in a variable named `ans_9a`
@@ -499,16 +497,21 @@ state of the universe is $\mu=.6$. Given $H_0:\mu=.5$
 ## Problem 11
 The number of action potentials generated from a given
 neuron in its baseline state when observed for a fixed
-period of time is well described by a Poisson distribution.
-The Poisson distribution is fully characterised by a single
-parameter $\lambda$ called the rate parameter. It turns out
-that $\lambda$ is also the mean of the Poisson distribution.
-Suppose a group of researchers measured a particular neuron
-and observed 5 action potentials in a given time period. Let
-$X$ be the Poisson random variable that generated this
-result. Test the hypothesis that $\lambda > 4$. You will
-need to search the web or use the built-in R help to look
-for functions that tell you about Poisson probabilities etc.
+period of time (1 second) is well described by a Poisson
+distribution. The Poisson distribution is fully
+characterised by a single parameter $\lambda$ called the
+rate parameter. It turns out that $\lambda$ is also the mean
+of the Poisson distribution. Suppose a group of researchers
+measured a particular neuron and observed 5 action
+potentials in a given time period. Let $X$ be the Poisson
+random variable that generated this result. Test the
+hypothesis that $\lambda > 4 events per second$. You will
+need to search the web or use the built-in R help to look or
+functions that tell you about Poisson probabilities etc. You
+ought to find an R function that will do the entre test for
+you, and it would be wise to use this function to check your
+work, but please perform all 5 steps as indicated in the
+general instructions at the top of this homework.
 
 ## Problem 12
 
@@ -544,6 +547,8 @@ ggplot(d, aes(x=x)) +
 
 Please respond by assigning `"confidence"`, `"alpha"`,
 `"beta"`, or `"power"` to the variables requested below.
+Note that the dashed line in the above figure is the
+critical value.
 
 * What quantity does region I in the above plot correspond
 to? Store your answer in a variable named `ans_12a`.

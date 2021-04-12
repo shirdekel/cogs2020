@@ -235,9 +235,10 @@ x <- rnorm(n, mu_x, sigma_x)
 
 ```
 
-Consider an experiment in which participants attempt to toss a ping pong ball as
-accurately as possible to a target. Suppose that data is collected from `r n`
-participants and that the mean reach error per participant is given by
+Consider an experiment in which participants attempt to toss
+a ping pong ball as accurately as possible to a target.
+Suppose that data is collected from `r n` participants and
+that the mean reach error per participant is given by
 
 \begin{equation}
 x = ( `r round(x, 2)` )
@@ -255,7 +256,9 @@ Is $\mu_x$ significantly different from $0$?
 
 - Report the critical value for $\alpha=0.05$
 
-- Compute power against the alternative $H_1$ that $\mu_x$ is 2
+- Compute power against the alternative $H_1$ that $\mu_x$
+is 2 assuming that the population standard deviation is
+equal to the sample standard deviation.
 
 ## Data Wrangling
 
