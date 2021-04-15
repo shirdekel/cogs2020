@@ -356,7 +356,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Homework 3 Solutions</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 07 April, 2021</h4>
+<h4 class="date">Last update: 15 April, 2021</h4>
 
 </div>
 
@@ -387,10 +387,10 @@ ans_2d &lt;- pnorm(13, mu, sigma, lower.tail=T)
 
 n &lt;- 30
 p &lt;- 0.5
-ans_2e &lt;- pnorm(17, n, p, lower.tail=F)
-ans_2f &lt;- pnorm(14, n, p, lower.tail=T)
-ans_2g &lt;- pnorm(20-1, n, p, lower.tail=F)
-ans_2h &lt;- pnorm(13-1, n, p, lower.tail=T)
+ans_2e &lt;- pbinom(17, n, p, lower.tail=F)
+ans_2f &lt;- pbinom(14, n, p, lower.tail=T)
+ans_2g &lt;- pbinom(20-1, n, p, lower.tail=F)
+ans_2h &lt;- pbinom(13-1, n, p, lower.tail=T)
 
 # i
 # Binomial(n, p) is well approximated by a Normal with mean

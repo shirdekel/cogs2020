@@ -46,10 +46,10 @@ ans_2d <- pnorm(13, mu, sigma, lower.tail=T)
 
 n <- 30
 p <- 0.5
-ans_2e <- pnorm(17, n, p, lower.tail=F)
-ans_2f <- pnorm(14, n, p, lower.tail=T)
-ans_2g <- pnorm(20-1, n, p, lower.tail=F)
-ans_2h <- pnorm(13-1, n, p, lower.tail=T)
+ans_2e <- pbinom(17, n, p, lower.tail=F)
+ans_2f <- pbinom(14, n, p, lower.tail=T)
+ans_2g <- pbinom(20-1, n, p, lower.tail=F)
+ans_2h <- pbinom(13-1, n, p, lower.tail=T)
 
 # i
 # Binomial(n, p) is well approximated by a Normal with mean
