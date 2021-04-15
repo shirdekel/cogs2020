@@ -350,7 +350,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Homework 4</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 12 April, 2021</h4>
+<h4 class="date">Last update: 15 April, 2021</h4>
 
 </div>
 
@@ -391,7 +391,7 @@ div.tocify {
 <li><p>If <span class="math inline">\(\widehat{\theta}\)</span> is discrete with a finite range then <code>theta_hat_x</code> must contain all possible outcomes of <span class="math inline">\(\widehat{\theta}\)</span>.</p></li>
 <li><p>If <span class="math inline">\(\widehat{\theta}\)</span> is continuous with a finite range then use <code>theta_hat_x</code> must start at the minimum valued outcome of <span class="math inline">\(\widehat{\theta}\)</span>, end at the maximum valued outcome of <span class="math inline">\(\widehat{\theta}\)</span>, and contain all the values between these two endpoints in increments of <code>0.01</code>.</p></li>
 <li><p>If <span class="math inline">\(\widehat{\theta}\)</span> is discrete with an infinite range then <code>theta_hat_x</code> must start 4 standard deviations below the the mean of the <span class="math inline">\(\widehat{\theta}\)</span> sampling distribution assuming the null hypothesis is true, end 3 standard deviations above the mean of the <span class="math inline">\(\widehat{\theta}\)</span> sampling distribution, and must contain all the values between these two endpoints in increments of <code>0.01</code>.</p></li>
-<li><p>If <span class="math inline">\(\widehat{\theta}\)</span> is continuous with an infinite range then <code>theta_hat_x</code> must start 4 standard deviations below the the mean of the <span class="math inline">\(\widehat{\theta}\)</span> sampling distribution, end 3 standard deviations above the mean of the <span class="math inline">\(\widehat{\theta}\)</span> sampling distribution, and must contain all the values between these two endpoints in increments of <code>0.01</code>.</p></li>
+<li><p>If <span class="math inline">\(\widehat{\theta}\)</span> is continuous with an infinite range then <code>theta_hat_x</code> must start 4 standard deviations below the the mean of the <span class="math inline">\(\widehat{\theta}\)</span> sampling distribution, end 4 standard deviations above the mean of the <span class="math inline">\(\widehat{\theta}\)</span> sampling distribution, and must contain all the values between these two endpoints in increments of <code>0.01</code>.</p></li>
 </ul></li>
 <li><p>Carrying on with the example, you would write:</p></li>
 </ul>
@@ -405,7 +405,7 @@ div.tocify {
 # scenario. For this exampl, lets assume it is infinite
 # range.
 
-theta_hat_x &lt;- seq(-4*sig_x, 4*sigx, 0.01)</code></pre>
+theta_hat_x &lt;- seq(-4*sig_x, 4*sig_x, 0.01)</code></pre>
 <ul>
 <li>Create a variable named <code>theta_hat_p</code> and set its value to the probability mass (if discrete) or probability density (if continuous) corresponding to each possible outcome of <span class="math inline">\(\widehat{\theta}\)</span> stored in variable <code>theta_hat_x</code>.</li>
 </ul>
@@ -425,8 +425,9 @@ ggplot(d, aes(theta_hat_x, theta_hat_p)) +
 <li>Create a variable named <code>theta_hat_obs</code> and set its value to <span class="math inline">\(\widehat{\theta}_{\text{obs}}\)</span>.</li>
 </ul>
 <pre class="r"><code># Obtaining the observed value will be matter of wrangling a
-# data.table or maybe simply reading the problem carefully.
-# In this example, look something like:
+# data.table (named dt in the code example below) or maybe
+# simply reading the problem carefully. In this example,
+# look something like:
 x_bar_obs &lt;- dt[, mean(x)]
 theta_hat_obs &lt;- x_bar_obs</code></pre>
 <p><b>5. If <span class="math inline">\(\widehat{\theta}_{\text{obs}}\)</span> is very unlikely to occur under the assumption that <span class="math inline">\(H_0\)</span> is true, then reject <span class="math inline">\(H_0\)</span>. Otherwise, do not reject <span class="math inline">\(H_0\)</span>.</b></p>
