@@ -108,7 +108,7 @@ outcomes of $\widehat{\theta}$.
    * If $\widehat{\theta}$ is continuous with an infinite
    range then `theta_hat_x` must start 4 standard deviations
    below the the mean of the $\widehat{\theta}$ sampling
-   distribution, end 3 standard deviations above the mean of
+   distribution, end 4 standard deviations above the mean of
    the $\widehat{\theta}$ sampling distribution, and must
    contain all the values between these two endpoints in
    increments of `0.01`.
@@ -126,7 +126,7 @@ outcomes of $\widehat{\theta}$.
 # scenario. For this exampl, lets assume it is infinite
 # range.
 
-theta_hat_x <- seq(-4*sig_x, 4*sigx, 0.01)
+theta_hat_x <- seq(mu_x_bar - 4*sig_x_bar, mu_x_bar + 4*sig_x_bar, 0.01)
 ```
 
 * Create a variable named `theta_hat_p` and set its value to
@@ -167,8 +167,9 @@ $\widehat{\theta}_{\text{obs}}$.
 
 ```{r, eval=F}
 # Obtaining the observed value will be matter of wrangling a
-# data.table or maybe simply reading the problem carefully.
-# In this example, look something like:
+# data.table (named dt in the code example below) or maybe
+# simply reading the problem carefully. In this example,
+# look something like:
 x_bar_obs <- dt[, mean(x)]
 theta_hat_obs <- x_bar_obs
 ```
@@ -229,8 +230,8 @@ x_bar_ci_width <- x_bar_crit_upper - x_bar_crit_lower
 
 # The centre of the confidence interval is just the
 # theta_hat_obs, which in this case is x_bar_obs.
-x_bar_ci_lower <- x_bar_obs - x_bar_ci_width / 2
-x_bar_ci_upper <- x_bar_obs + x_bar_ci_width / 2
+x_bar_ci_lower <- x_bar_obs - x_bar_xi_width / 2
+x_bar_ci_upper <- x_bar_obs + x_bar_xi_width / 2
 ```
 
 
@@ -355,7 +356,7 @@ incorrect (e.g., `cat == resp`).
 **(f)** Create a new data.table named `dd` that contains
 columns for the mean accuracy per block (name this column
 `acc_mean`) and the SEM (name this column `acc_err`) per
-`block`, grouped by each unique combination of `block` and
+block, grouped by each unique combination of `block` and
 `phase`. Please ensure that `dd` contains only `acc_mean`,
 `acc_err`, `block`, and `phase` columns.
 
@@ -488,11 +489,11 @@ For the first 16 blocks of phase 1, assuming that you are
 performing a one-tailed test, and assuming that the true
 state of the universe is $\mu=.6$. Given $H_0:\mu=.5$
 
-* compute $\alpha$ and store its value in a variable named `ans_9a`
+* compute $\alpha$ and store its value in a variable named `ans_10a`
 
-* compute $\beta$ and store its value in a variable named `ans_9b`
+* compute $\beta$ and store its value in a variable named `ans_10b`
 
-* compute $power$ and store its value in a variable named `ans_9c`
+* compute $power$ and store its value in a variable named `ans_10c`
 
 ## Problem 11
 The number of action potentials generated from a given

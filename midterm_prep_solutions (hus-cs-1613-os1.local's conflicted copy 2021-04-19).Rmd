@@ -600,14 +600,8 @@ x_bar_crit <- qnorm(0.05, mu_x_bar, sig_x_bar, lower.tail=FALSE)
 # point estimate
 x_bar_obs
 
-# interval estimate (90% interval)
+# interval estimate
 ci_width <- qnorm(0.95, mu_x_bar, sig_x_bar) - qnorm(0.05, mu_x_bar, sig_x_bar)
-ci_lower <- x_bar_obs - ci_width / 2
-ci_upper <- x_bar_obs + ci_width / 2
-
-
-# interval estimate (95% interval)
-ci_width <- qnorm(0.975, mu_x_bar, sig_x_bar) - qnorm(0.025, mu_x_bar, sig_x_bar)
 ci_lower <- x_bar_obs - ci_width / 2
 ci_upper <- x_bar_obs + ci_width / 2
 ```
@@ -736,8 +730,7 @@ t_crit_upper
 ```
 
 - Compute power against the alternative $H_1$ that $\mu_x$
-is 2 assuming that the population standard deviation is
-equal to the sample standard deviation.
+is 2. 
 
 ```{r}
 # In x_bar units the mean of the null and the alternative
@@ -764,8 +757,8 @@ ggplot(dd) +
 
 # contribution from upper tail
 typeI <- pt(t_crit_upper, n-1, lower.tail=FALSE)
-typeII <- pt(t_crit_upper-2, n-1, lower.tail=TRUE)
-power <- pt(t_crit_upper-2, n-1, lower.tail=FALSE)
+typeII <- pt(t_crit_upper-2/sig_x_bar, n-1, lower.tail=TRUE)
+power <- pt(t_crit_upper-2/sig_x_bar, n-1, lower.tail=FALSE)
 
 # contribution from lower tail
 # TODO:...
@@ -909,6 +902,7 @@ https://crossley.github.io/cogs2020/data/maze/maze.csv
 
 ```{r echo=TRUE}
 
+d <- fread("https://crossley.github.io/cogs2020/data/maze/maze.csv")
 dd <- d[, .(mean(time), sd(time)/sqrt(length(unique(rat)))), .(maze, run)]
 
 ggplot(dd, aes(run, V1)) +
@@ -916,7 +910,6 @@ ggplot(dd, aes(run, V1)) +
   xlab('run') +
   ylab('mean maze time') +
   facet_wrap(~factor(maze, labels=c('Maze ')))
-
 ```
 
 - Recreate the following visualisation of their results. Note that error bars
