@@ -20,6 +20,40 @@ fontsize: 14pt
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## How to check your grades
+
+* If the following code returns empty data.tables, then please
+double check that you have entered your student ID correctly
+**as an integer**.
+
+* If you still get empty data.tables then it may be because
+there was a fatal error in your homework submission that
+crashed my grading program. Please email me directly to
+inquire.
+
+```{r, eval=F}
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+# Enter your student ID below as an integer
+sid <- 3.14159
+
+# HW 1
+d1 <- fread('https://crossley.github.io/cogs2020/grades/hw_1_table.csv')
+d1[student_id == sid]
+
+# HW 2
+d2 <- fread('https://crossley.github.io/cogs2020/grades/hw_2_table.csv')
+d2[student_id == sid]
+
+# HW 3
+d3 <- fread('https://crossley.github.io/cogs2020/grades/hw_3_table.csv')
+d3[student_id == sid]
+```
+
+
 ## Homework 1 Grades
   
 ```{r}
