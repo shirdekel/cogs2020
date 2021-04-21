@@ -39,7 +39,7 @@ rm(list=ls())
 
 # Enter your student ID below as an integer
 sid <- 3.14159
-sid <- 0.4856
+sid <- 46374558
 
 # HW 1
 d1 <- fread('https://crossley.github.io/cogs2020/grades/hw_1_table.csv')
