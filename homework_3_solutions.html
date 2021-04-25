@@ -356,7 +356,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Homework 3 Solutions</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 21 April, 2021</h4>
+<h4 class="date">Last update: 25 April, 2021</h4>
 
 </div>
 
@@ -369,12 +369,12 @@ library(ggplot2)
 rm(list=ls())
 
 # 1
-p1 &lt;- 1 - pnorm(2, 0, 1, lower.tail=F)
-p2 &lt;- pnorm(2, 0, 1, lower.tail=T)
+p1 &lt;- 1 - pnorm(1, 0, 1, lower.tail=F)
+p2 &lt;- pnorm(1, 0, 1, lower.tail=T)
 ans_1a &lt;- p1 == p2
 
-p1 &lt;- 1 - pbinom(1, 10, 0.2, lower.tail=F)
-p2 &lt;- pbinom(2, 10, 0.2, lower.tail=T)
+p1 &lt;- 1 - pbinom(2, 10, 0.2, lower.tail=F)
+p2 &lt;- pbinom(3, 10, 0.2, lower.tail=T)
 ans_1b &lt;- p1 == p2
 
 # 2
