@@ -171,7 +171,11 @@ pre code {
 </div>
 
 
-<p>This exam is open book, open internet, and open just about everything. However, please complete this exam “on your own”. This means please do not ask your classmates for help, or post questions to internet forms etc. On the other hand, if you feel that a question is too vague or ambiguous to correctly answer, please feel free to speak to me directly over Zoom or to post to iLearn. Thanks and good luck!</p>
+<ul>
+<li><p>This exam is open book, open internet, and open just about everything. However, please complete this exam “on your own”. This means please do not ask your classmates for help, or post questions to internet forms etc. On the other hand, if you feel that a question is too vague or ambiguous to correctly answer, please feel free to speak to me directly over Zoom or to post to iLearn. Thanks and good luck!</p></li>
+<li><p>This exam uses random number generation. This means that every time you run the code chunks provided below, you will get slightly different numbers. So, please don’t run the code chunks provided below more than once, unless you run the entire script over again from scratch.</p></li>
+<li><p>Please feel free to check your work where possible with built-in tests such as <code>t.test()</code> and <code>binom.test()</code>, but please perform the 5 step process in long form to obtain your answers.</p></li>
+</ul>
 <hr />
 <p><strong>0.</strong> To initialise your file correctly, use the following code chunk to start your script. Be sure to replace <code>set.seed(0)</code> with <code>set.seed(YOUR_MQ_ID_NUMBER)</code> where <code>YOUR_MQ_ID_NUMBER</code> is your MQ student ID as an integer. If you do not already have <code>EnvStats</code> installed, then please install it by executing <code>install.packages(&#39;EnvStats&#39;)</code> in your console. Please do not include any <code>install.packages</code> commands in the midterm .R file that you submit.</p>
 <pre class="r"><code>library(data.table)
@@ -253,7 +257,7 @@ d &lt;- data.table(subject, trial, observation)</code></pre>
 <ul>
 <li><p><code>exam</code> indicates the name of the examination from which each row of data was observed from.</p></li>
 <li><p><code>trial</code> indicates the trial per participant each row of data was observed from.</p></li>
-<li><p><code>observation</code> indicates the value that was observed on each trial per participant.</p></li>
+<li><p><code>observation</code> indicates the value that was observed on each trial per participant. A success is coded by a one, and a failure is coded by a zero.</p></li>
 </ul></li>
 </ul>
 <pre class="r"><code>exams &lt;- c(&#39;exam_1&#39;, &#39;exam_2&#39;, &#39;exam_3&#39;)
