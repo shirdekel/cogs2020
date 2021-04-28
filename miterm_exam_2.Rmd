@@ -1,0 +1,208 @@
+---
+title: "Midterm 2"
+author: "Author: Matthew J. Crossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: false
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 18pt
+---
+
+```{r echo=FALSE, message=F}
+library(data.table)
+library(ggplot2)
+library(EnvStats)
+rm(list = ls())
+```
+
+**0.** To initialise your file correctly, use the following
+code chunk to start your script. Be sure to replace
+`set.seed(0)` with `set.seed(YOUR_MQ_ID_NUMBER)` where
+`YOUR_MQ_ID_NUMBER` is your MQ student ID as an integer. If
+you do not already have `EnvStats` installed, then please
+install it by executing `install.packages('EnvStats')` in
+your console. Please do not include any `install.packages`
+commands in the midterm .R file that you submit.
+
+```{r, message=F}
+library(data.table)
+library(ggplot2)
+library(EnvStats)
+
+rm(list=ls())
+
+my_name <- "ENTER YOUR NAME HERE AS A STRING"
+my_student_id <-"ENTER YOUR STUDENT ID AS A STRING"
+
+# replace 314159 with your student id number AS AN INTEGER 
+id_as_integer <- 314159
+```
+
+--- 
+
+**1.** Test the hypothesis that $\theta$ is non-zero, where
+$\theta$ is a parameter of a random variable $X$. Ensure
+that the type I error rate of your test is $\alpha=0.05$.
+
+* Copy and run the following code chunk to create a plot of
+the sampling distribution of $\widehat{\theta}$. The dashed
+line in the resulting plot indicates the observed value of
+$\widehat{\theta}$.
+
+```{r, eval=F}
+set.seed(id_as_integer)
+offset <- runif(1, min=-100, max=100)
+x <- round(seq(-3+offset, 3+offset, 1))
+fx <- sample(1:length(x), size=length(x), replace=F)
+fx <- fx / sum(fx)
+d <- data.table(x, fx)
+x_obs <- sample(x, 1)
+ggplot(d, aes(x, fx)) + 
+  geom_point() +
+  geom_segment(aes(x=, xend=x, y=0, yend=fx)) +
+  geom_vline(xintercept=x_obs, linetype=2) +
+  scale_x_continuous(breaks=x,
+                     minor_breaks=F) +
+  scale_y_continuous(breaks=fx,
+                     minor_breaks=F,
+                     limits=c(0, max(fx)))
+```
+
+* Create a variable named `p_val_1` and set its value to the
+p-value of this test.
+
+* Create a variable named `ci_lower_1` and set its value to
+the lower confidence interval limit.
+
+* Create a variable named `ci_upper_1` and set its value to
+the upper confidence interval limit.
+
+* Create a variable named `decision_1` and set its value to
+`"reject"` if you reject the null hypothesis or to `"fail to
+reject"` if you fail to reject the null.
+
+--- 
+
+**2.** Consider an experiment in which, over the course of
+several heats organised over multiple days, participants run
+several 100 meter dashes as fast as they can. Consider the
+random variable $X$ which is defined as a process that
+yields the largest 100 meter dash time produced by a
+participant across the entire experiment. Test the
+hypothesis that $\mu_{X}$ is different than 40 seconds.
+Ensure that the type I error rate of your test is
+$\alpha=0.05$.
+
+* Copy and run the following code chunk to create a
+`data.table` named `d` that contains the result of the
+experiment described above. The columns of `d` are as
+follows:
+
+  * `subject` indicates the participant each row of data was
+  observed from.
+  
+  * `day` indicates the day of the races.
+  
+  * `heat` indicates the heat within each day.
+  
+  * `trial` indicates the order of the race within each day
+  and heat.
+  
+  * `observation` indicates the value that was observed from
+  each race per participant.
+
+```{r, eval=F}
+set.seed(id_as_integer)
+n_subs <- 10
+n_days <- 2
+n_heats <- 3
+n_trials <- 10
+n_obs <- 1
+subject <- rep(1:n_subs, each=n_days*n_heats*n_trials*n_obs)
+day <- rep(1:n_days, n_subs, each=n_heats*n_trials*n_obs)
+heat <- rep(1:n_heats, n_subs*n_days, each=n_trials*n_obs)
+trial <- rep(1:n_trials, n_subs*n_days*n_heats, each=n_obs)
+mu <- runif(1, 40, 60)
+sig <- runif(1, 5, 10)
+observation <- rnorm(n_subs*n_days*n_heats*n_trials*n_obs, mu, sig)
+d <- data.table(subject, day, heat, trial, observation)
+```
+
+* Create a variable named `p_val_2` and set its value to the
+p-value of this test.
+
+* Create a variable named `ci_lower_2` and set its value to
+the lower confidence interval limit.
+
+* Create a variable named `ci_upper_2` and set its value to
+the upper confidence interval limit.
+
+* Create a variable named `decision_2` and set its value to
+`"reject"` if you reject the null hypothesis or to `"fail to
+reject"` if you fail to reject the null.
+
+--- 
+
+**3.** Consider the random variable $X$ which is defined as
+a process that yields the number of false starts occurring
+on day 2 of the experiment described in question 2 above.
+Test the hypothesis that the probability of a false start on
+day 2, $p$ is different than $0.5$. Ensure that the type I
+error rate of your test is $\alpha=0.05$.
+
+* Copy and run the following code chunk to create a
+`data.table` named `d` that contains the result of the
+experiment described above. The columns of `d` are as
+follows:
+
+  * `false_start` indicates whether or not there was a false
+  start on a given trial.
+  
+  * All other columns are defined the same way that they
+  were defined in problem 2.
+
+```{r, eval=F}
+set.seed(id_as_integer)
+n_subs <- 10
+n_days <- 2
+n_heats <- 3
+n_trials <- 10
+n_obs <- 1
+subject <- rep(1:n_subs, each=n_days*n_heats*n_trials*n_obs)
+day <- rep(1:n_days, n_subs, each=n_heats*n_trials*n_obs)
+heat <- rep(1:n_heats, n_subs*n_days, each=n_trials*n_obs)
+trial <- rep(1:n_trials, n_subs*n_days*n_heats, each=n_obs)
+mu <- runif(1, 40, 60)
+sig <- runif(1, 5, 10)
+observation <- rnorm(n_subs*n_days*n_heats*n_trials*n_obs, mu, sig)
+d <- data.table(subject, day, heat, trial, observation)
+d[, false_start := rbinom(n_subs*n_days*n_heats*n_trials*n_obs,  1,  0.5)]
+```
+
+* Create a variable named `p_val_3` and set its value to the
+p-value of this test.
+
+* Create a variable named `ci_lower_3` and set its value to
+the lower confidence interval limit. Note that your result
+may differ slightly from the result given by `binom.test`.
+Here, I will be looking for the value obtained when using
+the method taught in lecture, and covered in the midterm
+prep and homework assignments.
+
+* Create a variable named `ci_upper_3` and set its value to
+the upper confidence interval limit. Note that your result
+may differ slightly from the result given by `binom.test`.
+Here, I will be looking for the value obtained when using
+the method taught in lecture, and covered in the midterm
+prep and homework assignments.
+
+* Create a variable named `decision_3` and set its value to
+`"reject"` if you reject the null hypothesis or to `"fail to
+reject"` if you fail to reject the null.
