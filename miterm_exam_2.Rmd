@@ -57,22 +57,23 @@ line in the resulting plot indicates the observed value of
 $\widehat{\theta}$.
 
 ```{r, eval=F}
-set.seed(id_as_integer)
+# set.seed(id_as_integer)
 offset <- runif(1, min=-100, max=100)
-x <- round(seq(-3+offset, 3+offset, 1))
-fx <- sample(1:length(x), size=length(x), replace=F)
+x <- 1:16 + offset
+fx <- c(1:8, 8:1)
 fx <- fx / sum(fx)
 d <- data.table(x, fx)
 x_obs <- sample(x, 1)
 ggplot(d, aes(x, fx)) + 
   geom_point() +
   geom_segment(aes(x=, xend=x, y=0, yend=fx)) +
-  geom_vline(xintercept=x_obs, linetype=2) +
+  geom_vline(xintercept=x_obs, linetype=2, colour='red') +
   scale_x_continuous(breaks=x,
                      minor_breaks=F) +
   scale_y_continuous(breaks=fx,
                      minor_breaks=F,
-                     limits=c(0, max(fx)))
+                     limits=c(0, max(fx))) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
 ```
 
 * Create a variable named `p_val_1` and set its value to the

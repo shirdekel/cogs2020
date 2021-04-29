@@ -469,8 +469,10 @@ if(p_hat_obs > p_hat_crit) {
 ## random variable for that matter). It follows the same
 ## principles in most ways as our approach for continuous
 ## random variables, but it turns out to be a bit more
-## involved. Because of that, I will not ask you to compute
-## CI estimates of a parameter from a discrete distribution.
+## involved. Because of that, I will not expect the CI
+## intervals that you compute by hand to exactly match those
+## from R. You will, however, need to be careful to properly
+## deal with lower.tail=F issues.
 
 ```
 

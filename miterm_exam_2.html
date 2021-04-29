@@ -274,7 +274,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Midterm 2</h1>
 <h4 class="author">Author: Matthew J. Crossley</h4>
-<h4 class="date">Last update: 28 April, 2021</h4>
+<h4 class="date">Last update: 29 April, 2021</h4>
 
 </div>
 
@@ -296,22 +296,23 @@ id_as_integer &lt;- 314159</code></pre>
 <ul>
 <li>Copy and run the following code chunk to create a plot of the sampling distribution of <span class="math inline">\(\widehat{\theta}\)</span>. The dashed line in the resulting plot indicates the observed value of <span class="math inline">\(\widehat{\theta}\)</span>.</li>
 </ul>
-<pre class="r"><code>set.seed(id_as_integer)
+<pre class="r"><code># set.seed(id_as_integer)
 offset &lt;- runif(1, min=-100, max=100)
-x &lt;- round(seq(-3+offset, 3+offset, 1))
-fx &lt;- sample(1:length(x), size=length(x), replace=F)
+x &lt;- 1:16 + offset
+fx &lt;- c(1:8, 8:1)
 fx &lt;- fx / sum(fx)
 d &lt;- data.table(x, fx)
 x_obs &lt;- sample(x, 1)
 ggplot(d, aes(x, fx)) + 
   geom_point() +
   geom_segment(aes(x=, xend=x, y=0, yend=fx)) +
-  geom_vline(xintercept=x_obs, linetype=2) +
+  geom_vline(xintercept=x_obs, linetype=2, colour=&#39;red&#39;) +
   scale_x_continuous(breaks=x,
                      minor_breaks=F) +
   scale_y_continuous(breaks=fx,
                      minor_breaks=F,
-                     limits=c(0, max(fx)))</code></pre>
+                     limits=c(0, max(fx))) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))</code></pre>
 <ul>
 <li><p>Create a variable named <code>p_val_1</code> and set its value to the p-value of this test.</p></li>
 <li><p>Create a variable named <code>ci_lower_1</code> and set its value to the lower confidence interval limit.</p></li>
