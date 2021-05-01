@@ -57,11 +57,12 @@ line in the resulting plot indicates the observed value of
 $\widehat{\theta}$.
 
 ```{r, eval=F}
-# set.seed(id_as_integer)
+set.seed(id_as_integer)
 offset <- runif(1, min=-100, max=100)
-x <- 1:16 + offset
-fx <- c(1:8, 8:1)
+x <- 1:17 + offset * 0
+fx <- c(1:9, 8:1)
 fx <- fx / sum(fx)
+x <- x - 9
 d <- data.table(x, fx)
 x_obs <- sample(x, 1)
 ggplot(d, aes(x, fx)) + 
