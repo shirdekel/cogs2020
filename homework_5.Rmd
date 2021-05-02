@@ -1,0 +1,71 @@
+---
+title: "Homework 5"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: true
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+**General Instructions:** Please follow the general
+instructions written at length in homework 4. You will also
+need to run the following code chunk to be set up for this
+homework. Note that you may have to install the `stringr`
+package. As usual, do not include any `install.packages`
+commands in the script that you turn in. Thank you and good
+luck!
+
+```{r}
+## Basic setup code that you will need for this problem
+library(data.table)
+library(ggplot2)
+library(stringr)
+
+d <-fread('https://crossley.github.io/cogs2020/data/eeg/epochs.txt')
+
+## The column names that come from this file have spaces
+## This line removes those spaces (depends on the `stringr` package)
+names(d) <- str_replace_all(names(d), c(" " = "." , "," = "" ))
+```
+
+**1.**
+Consider two random variables $X \sim \mathcal{N}(\mu_X,
+\sigma_X)$ and $Y \sim \mathcal{N}(\mu_Y, \sigma_Y)$. Let
+$X$ generate data for MEG channel 133 and $Y$ generate data
+for MEG channel 135. Test the hypothesis that the mean MEG
+signal for $t > 0$ in these two channels are significantly
+different. When computing the mean MEG signal, keep epochs
+separate and average over everything else. You should be
+left with one observation per epoch. Assume that $\sigma_X =
+\sigma_Y$ and also assume that $X$ and $Y$ are independent.
+
+**2.**
+Consider two random variables $X \sim \mathcal{N}(\mu_X,
+\sigma_X)$ and $Y \sim \mathcal{N}(\mu_Y, \sigma_Y)$. Let
+$X$ generate data for MEG channel 039 during the first 30
+epochs and $Y$ generate data for MEG channel 039 during the
+remaining epochs. Test the hypothesis that the mean MEG
+signal for $t > 0$ in these two signals are significantly
+different. Assume $X$ and $Y$ are independent but do not
+assume that $\sigma_X=\sigma_Y$.
+
+**3.**
+Do you think assuming that two different MEG channels on the
+same persons head are likely to be independent? Explain your
+reasoning.
+
+**4.**
+Consider two random variables $X \sim \mathcal{N}(\mu_X,
+\sigma_X)$ and $Y \sim \mathcal{N}(\mu_Y, \sigma_Y)$. Let
+$X$ generate data for MEG channel 039 and $Y$ generate data
+for MEG channel 135. Test the hypothesis that the mean MEG
+signal for $t > 0$ in these two channels are significantly
+different. Do not assume $X$ and $Y$ are independent.

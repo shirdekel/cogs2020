@@ -31,9 +31,11 @@ fontsize: 14pt
 #### Lecture 7: Midterm preparation
 
 #### Lecture 8: Take midterm + lecture video recording: Independent samples and paired samples t-test
-<!-- #### [Lecture 7: independent samples and paired samples t-test](lecture_7.html) -->
+<!-- #### [Lecture 8: independent samples and paired samples t-test](lecture_7.html) -->
 
-#### Lecture 9: Testing hypotheses about variance, one-way ANOVA
+
+<!-- #### Lecture 9: Testing hypotheses about variance, one-way ANOVA -->
+#### [Lecture 9: Independent samples and paired samples t-test](lecture_7.html)
 <!-- #### [Lecture 9: Testing hypotheses about variance, one-way ANOVA](lecture_9.html) -->
 
 #### Lecture 10: Two-way ANOVA
