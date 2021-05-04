@@ -356,7 +356,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 12 - Comparing two treatments</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 03 May, 2021</h4>
+<h4 class="date">Last update: 04 May, 2021</h4>
 
 </div>
 
@@ -672,20 +672,20 @@ t.test(x=x,
        y=y,
        alternative=&#39;greater&#39;,
        mu=0,
-       paired=FALSE,
+       paired=TRUE,
        var.equal=TRUE,
        conf.leve=0.95)</code></pre>
 <pre><code>## 
-##  Two Sample t-test
+##  Paired t-test
 ## 
 ## data:  x and y
-## t = -0.37831, df = 60, p-value = 0.6467
+## t = -0.35423, df = 30, p-value = 0.6372
 ## alternative hypothesis: true difference in means is greater than 0
 ## 95 percent confidence interval:
-##  -55.38327       Inf
+##  -59.2225      Inf
 ## sample estimates:
-## mean of x mean of y 
-##  77.93548  88.16129</code></pre>
+## mean of the differences 
+##               -10.22581</code></pre>
 </div>
 </div>
 
