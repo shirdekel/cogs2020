@@ -150,6 +150,7 @@ distribution.
 estimate the population parameter in step 1 and state how it
 is distributed under the assumption that $H_0$ is true.</b>
 
+### Equal sample size and equal variance
 $$
 \begin{align}
 s^2_\overline{W} &= s^2_\overline{X} + s^2_\overline{Y} \\
@@ -195,7 +196,7 @@ df &= (n_X-1) + (n_Y-1) \\
 \end{align}
 $$
 
-### Equal or unequal sample sizes, but equal variances
+### Unequal sample sizes and equal variances
 
 With unequal sample sizes, the pooled variance is weighted
 more towards the sample with the larger size:
@@ -281,7 +282,7 @@ t.test(x=x,
        y=y,
        alternative='greater',
        mu=0,
-       parired=FALSE,
+       paired=FALSE,
        var.equal=TRUE,
        conf.leve=0.95)
 ```
@@ -312,7 +313,7 @@ t.test(x=x,
        y=y,
        alternative='greater',
        mu=0,
-       parired=FALSE,
+       paired=FALSE,
        var.equal=TRUE,
        conf.leve=0.95)
 ```
@@ -428,10 +429,20 @@ if(pval < 0.05) {
   print(pval)
 }
 
+# pass the difference scores and set paired to FALSE
 t.test(x=D,
        alternative='greater',
        mu=0,
-       parired=TRUE,
+       paired=FALSE,
+       var.equal=TRUE,
+       conf.leve=0.95)
+
+# pass both x and y and set paried to TRUE
+t.test(x=x,
+       y=y,
+       alternative='greater',
+       mu=0,
+       paired=FALSE,
        var.equal=TRUE,
        conf.leve=0.95)
 ```

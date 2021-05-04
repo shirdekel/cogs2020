@@ -356,7 +356,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 12 - Comparing two treatments</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 02 May, 2021</h4>
+<h4 class="date">Last update: 03 May, 2021</h4>
 
 </div>
 
@@ -421,6 +421,8 @@ H_1: \mu_W &gt; 0
 <p>We know that <span class="math inline">\(\sigma^2_W = \sigma^2_X + \sigma^2_Y\)</span>, so if we somehow now <span class="math inline">\(\sigma^2_X\)</span> and <span class="math inline">\(\sigma^2_Y\)</span>, then we can just plug those in a proceed with Normal distributions. Much more commonly, we will not know <span class="math inline">\(\sigma^2_X\)</span> and <span class="math inline">\(\sigma^2_Y\)</span>, so we will have to estimate them, and because of this, <span class="math inline">\(\hat{\mu_W}\)</span> will have a <span class="math inline">\(t\)</span> distribution, not a Normal distribution.</p>
 <p>To figure out exactly how this t-distribution is configured, we need to figure out (1) how to estimate <span class="math inline">\(\sigma_\overline{W}\)</span>, and (2) the degrees of freedom of the resulting <span class="math inline">\(t\)</span> distribution.</p>
 <p><b>3. Specify the sample statistic that you will use to estimate the population parameter in step 1 and state how it is distributed under the assumption that <span class="math inline">\(H_0\)</span> is true.</b></p>
+<div id="equal-sample-size-and-equal-variance" class="section level3">
+<h3>Equal sample size and equal variance</h3>
 <p><span class="math display">\[
 \begin{align}
 s^2_\overline{W} &amp;= s^2_\overline{X} + s^2_\overline{Y} \\
@@ -454,8 +456,9 @@ df &amp;= (n_X-1) + (n_Y-1) \\
    &amp;= 2n - 2
 \end{align}
 \]</span></p>
-<div id="equal-or-unequal-sample-sizes-but-equal-variances" class="section level3">
-<h3>Equal or unequal sample sizes, but equal variances</h3>
+</div>
+<div id="unequal-sample-sizes-and-equal-variances" class="section level3">
+<h3>Unequal sample sizes and equal variances</h3>
 <p>With unequal sample sizes, the pooled variance is weighted more towards the sample with the larger size:</p>
 <p><span class="math display">\[
 s^2_p = \frac{(n_X-1)s^2_X + (n_Y-1)s^2_Y}{n_X + n_Y - 2}
@@ -523,7 +526,7 @@ t.test(x=x,
        y=y,
        alternative=&#39;greater&#39;,
        mu=0,
-       parired=FALSE,
+       paired=FALSE,
        var.equal=TRUE,
        conf.leve=0.95)</code></pre>
 <pre><code>## 
@@ -563,7 +566,7 @@ if(pval &lt; 0.05) {
        y=y,
        alternative=&#39;greater&#39;,
        mu=0,
-       parired=FALSE,
+       paired=FALSE,
        var.equal=TRUE,
        conf.leve=0.95)</code></pre>
 <pre><code>## 
@@ -646,10 +649,11 @@ if(pval &lt; 0.05) {
 ## [1] -0.3542251
 ## [1] 30
 ## [1] 0.6371761</code></pre>
-<pre class="r"><code>t.test(x=D,
+<pre class="r"><code># pass the difference scores and set paired to FALSE
+t.test(x=D,
        alternative=&#39;greater&#39;,
        mu=0,
-       parired=TRUE,
+       paired=FALSE,
        var.equal=TRUE,
        conf.leve=0.95)</code></pre>
 <pre><code>## 
@@ -663,6 +667,25 @@ if(pval &lt; 0.05) {
 ## sample estimates:
 ## mean of x 
 ## -10.22581</code></pre>
+<pre class="r"><code># pass both x and y and set paried to TRUE
+t.test(x=x,
+       y=y,
+       alternative=&#39;greater&#39;,
+       mu=0,
+       paired=FALSE,
+       var.equal=TRUE,
+       conf.leve=0.95)</code></pre>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  x and y
+## t = -0.37831, df = 60, p-value = 0.6467
+## alternative hypothesis: true difference in means is greater than 0
+## 95 percent confidence interval:
+##  -55.38327       Inf
+## sample estimates:
+## mean of x mean of y 
+##  77.93548  88.16129</code></pre>
 </div>
 </div>
 
