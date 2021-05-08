@@ -30,22 +30,22 @@ fontsize: 14pt
 
 #### Lecture 7: Midterm preparation
 
-#### Lecture 8: Take midterm + lecture video recording: Independent samples and paired samples t-test
-<!-- #### [Lecture 8: independent samples and paired samples t-test](lecture_7.html) -->
+#### Lecture 8: Take midterm
 
-
-<!-- #### Lecture 9: Testing hypotheses about variance, one-way ANOVA -->
 #### [Lecture 9: Independent samples and paired samples t-test](lecture_7.html)
-<!-- #### [Lecture 9: Testing hypotheses about variance, one-way ANOVA](lecture_9.html) -->
 
-#### Lecture 10: Two-way ANOVA
-<!-- #### [Lecture 11: Two-way ANOVA](lecture_11.html) -->
+<!-- #### [Lecture 10: Testing hypotheses about variance](lecture_8.html) -->
 
-#### Lecture 11: Repeated Measures ANOVA
-<!-- #### [Lecture 12: Repeated Measures ANOVA](lecture_12.html) -->
+#### [Lecture 10: One-way ANOVA](lecture_8.html)
 
-#### Lecture 12: Mixed-design ANOVA
-<!-- #### [Lecture 13: Mixed-design ANOVA](lecture_12.html) -->
+#### Lecture 11: Two-way ANOVA
+<!-- #### [Lecture 11: Two-way ANOVA](lecture_9.html) -->
 
-#### Lecture 13: Correlation, regression
-<!-- #### [Lecture 14: Correlation, regression](lecture_8.html) -->
+#### Lecture 12: Repeated Measures ANOVA
+<!-- #### [Lecture 12: Repeated Measures ANOVA](lecture_10.html) -->
+
+#### Lecture 13: Mixed-design ANOVA
+<!-- #### [Lecture 13: Mixed-design ANOVA](lecture_11.html) -->
+
+<!-- #### Lecture 14: Correlation, regression -->
+<!-- #### [Lecture 14: Correlation, regression](lecture_12.html) -->

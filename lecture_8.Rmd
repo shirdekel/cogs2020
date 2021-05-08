@@ -1,0 +1,379 @@
+---
+title: "Lecture 8 - One-way ANOVA"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 2
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=F, message=F, warning=F}
+
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+```
+
+## Introduction
+
+Suppose you have $k$ different treatment groups. A **one-way
+ANOVA** asks if there are any differences in the effects of
+treatment between any of the groups. This type of test is
+called an *omnibus* test.
+
+In raw form, the H's look like this:
+
+$\begin{align}
+& H_0: \mu1 = \mu2 = \mu3 \ldots \\
+& H_1: \lnot H_0 \\
+\end{align}$
+
+Usually, we have spent time in steps 1 and 3 of our
+hypothesis testing procedure to rewrite our hypotheses such
+that we can come up with a single statistic that is a good
+estimate of a single all-encompassing parameter. This case
+seems harder than most, we are interested in so many darn
+means! It turns out that the primary method used in this
+situation actually rests on *variances*. This can certainly
+seem a bit strange given that the test is concerned with
+*means*. Lets see how this all pans out.
+
+## Intuition
+
+The logic of an ANOVA can be understood intuitively as
+follows:
+
+- between-group variation --- how different are group means from each other?
+- within-group variation --- how noisy is your data in general?
+
+If the means are all the same (i.e., $H_0$ is true), then
+between-group and within-group variation will be very
+similar.
+
+If $H_0$ is not true, then between-group variation will be
+larger than within-group variation.
+
+Another good blurb for intuition can be read here:
+
+https://stats.stackexchange.com/questions/40549/how-can-i-explain-the-intuition-behind-anova
+
+>ANOVA is statistical technique used to determine whether a particular
+>classification of the data is useful in understanding the variation of an
+>outcome. Think about dividing people into buckets or classes based on some
+>criteria, like suburban and urban residence. The total variation in the
+>dependent variable (the outcome you care about, like responsiveness to an
+>advertising campaign) can be decomposed into the variation between classes and
+>the variation within classes. When the within-class variation is small relative
+>to the between-class variation, your classification scheme is in some sense
+>meaningful or useful for understanding the world. Members of each cluster behave
+>similarly to one another, but people from different clusters behave
+>distinctively. This decomposition is used to create a formal F test of this
+>hypothesis.
+
+Replacing the word *variance* in the above with the word
+*similarity* might be helpful / more intuitive.
+
+Armed with this intuition, we come up with the following
+test statistic form.
+$\begin{align}
+& H_0: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} = 1 \\
+& H_1: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} > 1 \\
+\end{align}$
+
+First, notice that an ANOVA always uses an alternative
+hypothesis that is one-sided. This is because we only reject
+the null if the between-group variability is significantly
+greater than the within-group variability, and this always
+corresponds to a "greater than" in $H_1$.
+
+Second, what the heck is $\sigma^2_{between-group}$ and
+$\sigma^2_{within-group}$? We will unpack this more formally
+below.
+
+## Formal treatment
+
+| Treatment 1 | Treatment 2 | Treatment 3 |
+|:------------|:------------|:------------|
+| $x_1$       | $y_1$       | $z_1$       |
+| $x_2$       | $y_2$       | $z_2$       |
+| $\ldots$    | $\ldots$    | $\ldots$    |
+| $x_l$       | $y_m$       | $z_n$       |
+
+- If $l=m=n$ then we have an equal number of observations for each group. When
+  this is the case, we say that we have a **balanced design**.
+
+* Grand mean:
+$$
+G = \frac{\bar{x} + \bar{y} + \bar{z}}{3}
+$$
+
+* Between-group variation:
+$$
+\text{ss}_{between} = 
+  l (\bar{x} - G)^2 + 
+  m (\bar{y} - G)^2 + 
+  n (\bar{z} - G)^2
+$$
+
+* Within-group variation:
+$$
+\text{ss}_{within} = 
+  \sum_{i=1}^l (x_i-\bar{x})^2 + 
+  \sum_{i=1}^m (y_i-\bar{y})^2 + 
+  \sum_{i=1}^n (z_i-\bar{z})^2
+$$
+
+### Test statistic
+With the formal maths defined above, we can state our
+hypotheses a bit more precisely.
+
+$\begin{align}
+& H_0: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} = 1 \\
+& H_1: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} \neq 1 \\
+\end{align}$
+
+This is pretty much correct. All we need to do to make it
+exactly correct carefully factor in the fact that we don't
+exactly have a ratio of variances. Rather, we have a ratio
+of a *sum of variances*. This will get factored in (1) via
+the degrees of freedom and (2) by using *mean squared*
+deviations instead of sum of squared deviations in the
+ratio.
+
+$\begin{align}
+& n_{total} = l + m + n \\\\
+& df_{between} = n_{groups} - 1 \\
+& df_{within} = n_{total} - n_{groups} \\\\
+& \text{ms}_{between} = \frac{\text{ss}_{between}}{df_{between}} \\
+& \text{ms}_{within} = \frac{\text{ss}_{within}}{df_{within}} \\\\
+& \widehat{\frac{\sigma^2_{between-group}}{\sigma^2_{within-group}}} = 
+                      \frac{\text{ms}_{between}}{\text{ms}_{within}} \\\\
+& F_{obs} = \frac{\text{ms}_{between}}{\text{ms}_{within}} \\
+& F_{obs} \sim F(df_{between}, df_{within}) \\
+\end{align}$
+
+**I have not shown how we know that the ratio of variances
+has an F distribution. For now, just trust me.**
+
+### Assumptions
+- The observations are obtained independently and randomly
+from the population defined by the factor levels.
+- The data of each factor level are normally distributed.
+- These normal populations have a common variance
+(homogeneity of variance).
+
+## Example 1: Made up data
+```{r, echo=F}
+library(data.table)
+library(ggplot2)
+
+rm(list = ls())
+
+## Let X, Y, and Z be iid Normal with the following parameters
+mux <- 10
+sdx <- 5
+
+muy <- 15
+sdy <- 5
+
+muz <- 20
+sdz <- 5
+
+## NOTE: sdx=sdy=sdz is the assumption of homogeneity of variance
+
+n_obs <- 5 ## define sample size
+n_groups <- 3 ## degine number of groups
+
+set.seed(1)
+x <- rnorm(n_obs, mux, sdx) ## sample from X
+y <- rnorm(n_obs, muy, sdy) ## sample from Y
+z <- rnorm(n_obs, muz, sdz) ## sample from Z
+
+d <- data.table(x, y, z)
+
+## NOTE: We are also constructing an example such that there
+## are true differences in the population means, so if our
+## test works out, we will reject the null.
+```
+
+Consider the following data:
+```{r, echo=F}
+d
+```
+
+Test the hypothesis that the population means $\mu_X$,
+$\mu_Y$, $\mu_Z$ are different.
+
+```{r, warning=F, message=F}
+## step 1
+## H0: sig_between / sig_within = 1
+## H1: sig_between / sig_within != 1
+
+## step 2
+alph <- 0.05
+
+## step 3
+## ss_ratio_hat = ss_between / ss_within
+
+## step 4
+x <- c(6.867731, 10.918217,  5.821857, 17.976404, 11.647539)
+y <- c(10.89766, 17.43715, 18.69162, 17.87891, 13.47306)
+z <- c(27.558906, 21.949216, 16.893797,  8.926501, 25.624655)
+
+nx <- length(x)
+ny <- length(y)
+nz <- length(z)
+  
+## mean of each group
+mean_x <- mean(x)
+mean_y <- mean(y)
+mean_z <- mean(z)
+
+## grand mean
+grand_mean <- mean(c(x, y, z))
+
+## ss-between
+ss_between <- nx*(mean_x - grand_mean)^2 + 
+  ny*(mean_y - grand_mean)^2 + 
+  nz*(mean_z - grand_mean)^2
+
+## ss-within
+ss_within_x <- 0
+for(i in 1:nx) {
+  ss_within_x <- ss_within_x + (x[i] - mean_x)^2
+}
+ss_within_y <- 0
+for(i in 1:ny) {
+  ss_within_y <- ss_within_y + (y[i] - mean_y)^2
+}
+ss_within_z <- 0
+for(i in 1:nz) {
+  ss_within_z <- ss_within_z + (z[i] - mean_z)^2
+}
+ss_within <- ss_within_x + ss_within_y + ss_within_z
+
+## ss-within --- a better way
+ss_within <- sum((x - mean_x)^2) +
+             sum((y - mean_y)^2) +
+             sum((z - mean_z)^2)
+
+## dfs
+df_between <- n_groups-1
+df_within <- n_groups*(n_obs-1)
+
+## mean squares
+ms_between <- ss_between / df_between
+ms_within <- ss_within / df_within
+
+## observed F-value
+fobs <- ms_between / ms_within
+
+## compute pval
+pval <- pf(fobs, df_between, df_within, lower.tail=F)
+
+## report results
+print(c(ss_between, ss_within, df_between, df_within, fobs, pval))
+
+## Check our work using a builtin R function
+d <- data.table(x,y,z)
+d <- melt(d, measure.var=c('x', 'y', 'z'))
+d[, variable := factor(variable)]
+fm <- lm(value ~ variable, data = d)
+anova(fm)
+
+# We will ultimately be using the ez library for ANOVAs, so
+# might as well get started now.
+library(ez)
+d[, subject := factor(1:.N)]
+ezANOVA(
+  data=d,
+  dv=value,
+  wid=subject,
+  between=.(variable),
+  type=3
+) 
+```
+
+## Example 2: Criterion learning data
+
+```{r}
+fp <- 'https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv'
+
+d <- fread(fp)
+
+## redefine d for simplification
+d <- d[cnd %in% c('Delay', 'Long ITI', 'Short ITI')][, mean(unique(t2c)), .(cnd, sub)]
+setnames(d, 'V1', 't2c')
+
+ggplot(d, aes(x=cnd, y=t2c)) +
+  geom_boxplot() +
+  theme(aspect.ratio = 1)
+
+# Calculate the number of groups and observations per group
+d[, n_cnds := length(unique(cnd))]
+d[, n_obs := .N, .(cnd)]
+
+## Calculate the mean within each cnd:
+d[, t2c_mean_cnd := mean(t2c), .(cnd)]
+
+## Calculate the overall mean:
+d[, t2c_mean_grand := mean(t2c)]
+
+## Calculate the between-cnd sum of squared differences:
+d[, ss_between := sum((t2c_mean_cnd - t2c_mean_grand)^2)]
+
+## Calculate the "within-cnd" sum of squared differences.
+d[, ss_within := sum((t2c - t2c_mean_cnd)^2)]
+
+## Compute degrees of freedom
+d[, df_between := n_cnds-1]
+d[, df_within := .N - n_cnds]
+
+## Calculate MSE terms
+d[, mse_between := ss_between / df_between]
+d[, mse_within := ss_within / df_within]
+
+## Calculate the F-ratio
+d[, fobs := mse_between / mse_within]
+
+## Calculate p-val
+d[, pval := pf(fobs, df_between, df_within, lower.tail=FALSE)]
+
+print(round(
+  c(d[, unique(ss_between)],
+    d[, unique(ss_within)],
+    d[, unique(df_between)],
+    d[, unique(df_within)],
+    d[, unique(fobs)],
+    d[, unique(pval)]
+    ), 4))
+
+## Do it with built-in R functions
+fm <- lm(t2c ~ cnd, data = d)
+anova(fm)
+
+# We will ultimately be using the ez library for ANOVAs, so
+# might as well get started now.
+library(ez)
+d[, sub := factor(sub)]
+d[, cnd := factor(cnd)]
+ezANOVA(
+  data=d,
+  dv=t2c,
+  wid=sub,
+  between=.(cnd),
+  type=3
+) 
+```

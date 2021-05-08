@@ -1,5 +1,5 @@
 ---
-title: "Lecture 12 - Comparing two treatments"
+title: "Lecture 7 - Comparing two treatments"
 author: "Author: Matthew J. Cossley"
 date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 output:

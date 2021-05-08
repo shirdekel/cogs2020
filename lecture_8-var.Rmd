@@ -1,0 +1,317 @@
+---
+title: "Lecture 8 - Comparing variances"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 2
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+editor_options:
+  chunk_output_type: console
+---
+
+```{r message=F, warning=F}
+
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+```
+
+
+## Comparing the variance of two Normal populations
+
+Let $X \sim \mathcal{N}(\mu_X, \sigma_X)$ and $Y \sim
+\mathcal{N}(\mu_Y, \sigma_Y)$.
+
+Test the hypothesis that $\sigma^2_X \neq \sigma^2_Y$.
+
+
+##### step 1
+$\begin{align}
+& H_0: \sigma^2_X = \sigma^2_Y \\
+& H_1: \sigma^2_X \neq \sigma^2_Y \\
+\end{align}$
+
+We need to restate these hypotheses in a form that allows us
+to find and use a friendly test statistic.
+
+How about the usual (so far)?
+
+$\begin{align}
+& H_0: \sigma^2_X - \sigma^2_Y = 0 \\
+& H_1: \sigma^2_X - \sigma^2_Y \neq 0 \\
+\end{align}$
+
+If you thought that, then good job! However, that turns out
+to not be what's used. Instead, we will look at the ratio of
+variances.
+
+$\begin{align}
+& H_0: \frac{\sigma^2_X}{\sigma^2_Y} = 1 \\
+& H_1: \frac{\sigma^2_X}{\sigma^2_Y} \neq 1 \\
+\end{align}$
+
+##### step 2
+$\alpha = 0.05$
+
+##### step 3
+$\begin{align}
+\widehat{\frac{\sigma^2_X}{\sigma^2_Y}} = \frac{s^2_X}{s^2_Y} \\
+\widehat{\frac{\sigma^2_X}{\sigma^2_Y}} \sim ??? \\
+\end{align}$
+
+##### step 3 detour
+How is $\widehat{\frac{\sigma^2_X}{\sigma^2_Y}}$
+distributed? Lets try to answer this question by simulating
+many experiments, and estimating the distribution of
+$\widehat{\frac{\sigma^2_X}{\sigma^2_Y}}$ with a histogram.
+
+```{r warning=F, message=F}
+
+muX <- 0
+varX <- 5
+sigmaX <- sqrt(varX)
+
+muY <- 0
+varY <- 5
+sigmaY <- sqrt(varY)
+
+n <- c(2,5,10,20) ## the sample sizes per experiment to explore
+d_rec <- list()
+for(j in n) {
+  for(i in 1:5000) { ## the number of experiments to perform
+    x <- rnorm(j, muX, sigmaX)
+    y <- rnorm(j, muY, sigmaY)
+    var_ratio <- var(x) / var(y)
+    d_rec[[i + j*1000]] <- data.table(exp=i, n=j, var_ratio)
+  }
+}
+
+d <- rbindlist(d_rec)
+
+## var_ratio = varx / vary is definitely not Normally distributed
+ggplot(d, aes(var_ratio)) +
+  xlim(0,3) +
+  geom_histogram(aes(y=..density..), bins=100) +
+  geom_density(colour='red') +
+  facet_wrap(~n) +
+  theme(aspect.ratio = 1)
+
+```
+
+It's pretty clear that
+$\widehat{\frac{\sigma^2_X}{\sigma^2_Y}}$ is not normally
+distributed. It turns out, if $X \sim N(\mu_X,\sigma_X)$,
+and $Y \sim N(\mu_Y,\sigma_Y)$, and $X$ and $Y$ are
+independent, then an $F(df_X,df_Y)$ distribution with
+degrees of freedom $df_X=n_X-1$, $df_Y=n_Y-1$ is a nice
+model for the sampling distribution of
+$\widehat{\frac{\sigma^2_X}{\sigma^2_Y}}$.
+
+Here is what an F-distribution looks like.
+
+```{r warning=F, message=F}
+
+x <- seq(0.001, 5, 0.01)
+fx1 <- df(x, 1, 1)
+fx2 <- df(x, 1, 2)
+fx3 <- df(x, 5, 2)
+fx4 <- df(x, 10, 1)
+fx5 <- df(x, 10, 5)
+fx6 <- df(x, 100, 100)
+
+d <- data.table(x, fx1, fx2, fx3, fx4, fx5, fx6)
+dd <- melt(d, id.vars='x')
+
+ggplot(dd, aes(x=x, y=value, colour=variable)) +
+  geom_line() +
+  ylim(0,2.5) +
+  theme(aspect.ratio = 1)
+
+```
+
+To the casual eye, the F and Chisq don't appear all that
+different. (1) If you look closely (as in, think very
+carefully about the properties of each distribution) we will
+find important differences. (2) They actually aren't all
+that different. In fact, Normal, Chisq, and t distributions
+are all very closely related. You can google it and see for
+yourself.
+
+##### step 3 continued
+To complete step 3, the test statistic is as follows:
+
+\begin{align}
+F_{obs} & = \frac{\frac{s^2_X}{s^2_Y}}{\frac{\sigma^2_Y}{\sigma^2_X}} \\
+F_{obs} & \sim F(df_X, df_Y) \\
+\end{align}
+
+##### step 4 and step 5
+There is nothing or different in steps 4 and 5 for this
+test, so lets skip to running through an example in R. So
+far, since, this is just a toy example for comparing
+variance from two random variables, lets make up some data.
+
+```{r warning=F, message=F}
+
+## H0: sigmasqX/sigmasqY = 1
+## H1: sigmasqX/sigmasqY < 1
+var_ratio_H0 <- 1
+
+## 2. choose confidence
+alph <- 0.05
+
+## 3. choose a statistic to estimate the parameter in H0 and determine its
+## sampling distribution.
+## fobs <- ( s2x / s2y ) / ( var_ratio_H0 )
+
+## 4. conduct / simulate an experiment
+n <- 30
+muX <- 0
+varX <- 5
+sigmaX <- sqrt(varX)
+x <- rnorm(n, muX, sigmaX)
+
+muY <- 0
+varY <- 6
+sigmaY <- sqrt(varY)
+y <- rnorm(n, muY, sigmaY)
+
+dfx <- n - 1
+dfy <- n - 1
+fobs = var(x) / var(y)
+
+## 4. compute p- and critical- values
+## NOTE: Notive I am not using abs() in the following lines. This is because F
+## is not symmetric and strictly positive.
+pval_lower <- pf(fobs, dfx, dfy, lower.tail = TRUE)
+pval_upper <- pf(fobs, dfx, dfy, lower.tail = FALSE)
+
+## NOTE: The overall p-value in a two-tailed F-test is just two times the
+## smaller of the two p-values computed above.
+if(pval_lower < pval_upper) {
+  pval <- 2 * pval_lower
+} else {
+  pval <- 2 * pval_upper
+}
+
+crit_lower <- qf(alph/2, dfx, dfy, lower.tail = TRUE)
+crit_upper <- qf(alph/2, dfx, dfy, lower.tail = FALSE)
+
+## 4.5 visualise our results to make sure everything makes sense
+f <- seq(0.001, 5, 0.01)
+ff <- df(f, dfx, dfy)
+
+d <- data.table(f, ff)
+ggplot(d, aes(x=f, y=ff)) +
+  geom_line() +
+  geom_vline(xintercept=fobs, linetype=2, colour='red') +
+  geom_vline(xintercept=crit_lower, linetype=2) +
+  geom_vline(xintercept=crit_upper, linetype=2)
+
+## 5. Make a decision
+if(pval < alph) {
+  print('reject H0')
+} else {
+  print('fail to reject H0')
+}
+
+## 6. lastly check our work with R function
+var.test(x,
+         y,
+         ratio = 1,
+         alternative = "two.sided",
+         conf.level = 1 - alph)
+
+print(c(fobs, dfx, dfy, pval))
+
+```
+
+#### Comparing variances with real data
+
+Lets turn back to the criterion learning data. We have
+visited this data numerous times in this course, so if you
+don't remember it, just look back!
+
+Is the variance in the mean `t2c` per `sub` in the *Delay*
+condition different from the variance in the mean `t2c` per
+`sub` in the *Long ITI* condition?
+
+```{r message=F, warning=F}
+
+fp <- 'https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv'
+
+d <- fread(fp)
+
+## 1.
+## H0: var_delay / var_long = 1
+## H1: var_delay / var_long != 1
+
+## 2.
+alph <- 0.05
+
+## 3.
+## fobs <- varx / vary
+
+## 4.
+x <- d[cnd=='Delay', mean(t2c), .(sub)][, V1]
+y <- d[cnd=='Long ITI', mean(t2c), .(sub)][, V1]
+
+nx <- length(x)
+ny <- length(y)
+
+dfx <- nx - 1
+dfy <- ny - 1
+fobs = var(x) / var(y)
+
+## 4. compute p- and critical- values
+pval_lower <- pf(fobs, dfx, dfy, lower.tail = TRUE)
+pval_upper <- pf(fobs, dfx, dfy, lower.tail = FALSE)
+
+if(pval_lower < pval_upper) {
+  pval <- 2 * pval_lower
+} else {
+  pval <- 2 * pval_upper
+}
+
+crit_lower <- qf(alph/2, dfx, dfy, lower.tail = TRUE)
+crit_upper <- qf(alph/2, dfx, dfy, lower.tail = FALSE)
+
+## 4.5 visualise our results to make sure everything makes sense
+f <- seq(0.001, 5, 0.01)
+ff <- df(f, dfx, dfy)
+
+d <- data.table(f, ff)
+ggplot(d, aes(x=f, y=ff)) +
+  geom_line() +
+  geom_vline(xintercept=fobs, linetype=2, colour='red') +
+  geom_vline(xintercept=crit_lower, linetype=2) +
+  geom_vline(xintercept=crit_upper, linetype=2)
+
+## 5. Make a decision
+if(pval < alph) {
+  print('reject H0')
+} else {
+  print('fail to reject H0')
+}
+
+## 6. lastly check our work with R function
+var.test(x,
+         y,
+         ratio = 1,
+         alternative = "two.sided",
+         conf.level = 1 - alph)
+
+print(c(fobs, dfx, dfy, pval))
+
+
+```
