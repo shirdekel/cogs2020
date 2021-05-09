@@ -23,6 +23,7 @@ fontsize: 14pt
 #### [Homework 3](homework_3.html)
 #### [Homework 3 Solutions](homework_3_solutions.html)
 #### [Homework 4](homework_4.html)
+#### [Homework 4 Solutions](homework_4_solutions.html)
 
 ---
 

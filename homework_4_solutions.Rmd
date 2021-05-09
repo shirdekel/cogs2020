@@ -1,0 +1,272 @@
+---
+title: "Homework 4 Solutions"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Solutions
+
+```{r}
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+# 1
+# a 
+d <- fread('https://crossley.github.io/cogs2020/data/nhp_cat_learn/ii_gabor.csv')
+
+# b
+col_names <- c('cat', 'x', 'y', 'resp', 'rt', 'phase')
+setnames(d, col_names)
+
+# c
+d[, trial := 1:.N]
+
+# d
+n_trials <- d[, .N]
+block_size = 100
+n_blocks <- n_trials / block_size + 1
+block <- rep(1:n_blocks, each=block_size)
+block <- block[1:n_trials]
+d[, block := block]
+
+# e
+d[, acc := cat == resp]
+
+# f
+dd <- d[, .(acc_mean=mean(acc), acc_err=sd(acc) / sqrt(.N)), .(block, phase)]
+
+# g
+g <- ggplot(dd, aes(block, acc_mean, colour=factor(phase))) + 
+  geom_line() +
+  geom_pointrange(aes(x=block, 
+                      ymin=acc_mean-acc_err, 
+                      ymax=acc_mean+acc_err))
+
+
+# Problem 2. Test the hypothesis that, for the first 100
+# trials of phase 1, the monkey is doing no better and no
+# worse than guessing (i.e., p = 0.5).
+
+# step 1
+# X ~ binomial(n=100, p)
+# p = 0.5
+# p != 0.5
+
+# step 2
+# alpha = 0.05
+
+# step 3
+# theta = p
+# theta_hat = p_hat
+# theta_hat = x / n, where x is the number of successes
+# theta_hat ~ binomial(n, p), theta_hat_x -> x / n
+n <- 100
+x <- 0:n
+theta_hat_x <- x / n
+theta_hat_p <- dbinom(x, n, 0.5)
+
+dd <- data.table(theta_hat_x, theta_hat_p)
+ggplot(dd, aes(theta_hat_x, theta_hat_p)) + 
+  geom_point()
+
+# step 4
+x <- d[phase == 1][(trial %in% min(trial):(min(trial)+99))][, sum(acc)]
+theta_hat_obs <- x / n
+
+theta_hat_obs_lower <- theta_hat_obs
+theta_hat_obs_upper <- -(theta_hat_obs - 0.5) + 0.5
+
+# step 5
+p_val_lower <- pbinom(theta_hat_obs_lower*n, n, 0.5, lower.tail=TRUE)
+p_val_upper <- pbinom(theta_hat_obs_upper*n-1, n, 0.5, lower.tail=FALSE)
+p_val <- p_val_lower + p_val_upper
+
+theta_hat_crit_lower <- qbinom(0.025, n, 0.5, lower.tail=TRUE) / n
+theta_hat_crit_upper <- (qbinom(0.025, n, 0.5, lower.tail=FALSE) + 1) / n
+
+ci_width <- theta_hat_crit_upper - theta_hat_crit_lower
+ci_lower <- theta_hat_obs - ci_width / 2
+ci_upper <- theta_hat_obs + ci_width / 2
+
+if(p_val < 0.05) {
+  decision <- 'reject H0'
+} else {
+  decision <- 'fail to reject H0'
+}
+
+r_result <- binom.test(theta_hat_obs * n, 
+                       n, 
+                       p=0.5, 
+                       alternative='two.sided')
+
+prob_2_theta_hat_x <- theta_hat_x
+prob_2_theta_hat_p <- theta_hat_p
+prob_2_theta_hat_obs <- theta_hat_obs
+prob_2_pval_lower <- p_val_lower
+prob_2_pval_upper <- p_val_upper
+prob_2_theta_hat_crit_lower <- theta_hat_crit_lower
+prob_2_theta_hat_crit_upper <- theta_hat_crit_upper
+prob_2_ci_lower <- ci_lower
+prob_2_ci_upper <- ci_upper
+prob_2_decision <- decision
+prob_2_r_result <- r_result
+
+# Problem 3. Test the hypothesis that, for the last 100
+# trials of phase 1, the monkey is doing better than
+# guessing (i.e., p=0.5). For this problem, only
+# prob_x_r_result will be graded.
+x <- d[phase == 1][trial %in% max(trial):(max(trial)-99)][, sum(acc)]
+theta_hat_obs <- x / n
+prob_3_r_result <- binom.test(theta_hat_obs * n,  
+                              n, 
+                              p=0.5, 
+                              alternative='greater')
+
+# Problem 4. Test the hypothesis that, for the first 100
+# trials of phase 2, the monkey is doing worse than guessing
+# (i.e., p=0.5). For this problem, only prob_x_r_result will
+# be graded.
+x <- d[phase == 2][trial %in% min(trial):(min(trial)+99)][, sum(acc)]
+theta_hat_obs <- x / n
+prob_4_r_result <- binom.test(theta_hat_obs * n,  
+                              n,  
+                              p=0.5,  
+                              alternative='less')
+
+# Problem 5. Make a deep copy of d named d2, and then
+# redefine the block column of d2 to reflect a block size of
+# 25 trials per block instead of 100. Then, using d2 as a
+# base, create a new data.table named dd2 that contains
+# columns for the mean accuracy per block (name this column
+# acc_mean) and the SEM (name this column acc_err) per
+# block, grouped by each unique combination of block and
+# phase. Please ensure that dd2 contains only acc_mean,
+# acc_sem, block, and phase columns. Repeat the mean
+# accuracy plot using the new block size to visually check
+# that your work is doing what you think it’s doing (this
+# plot will not be graded).
+d2 <- copy(d)
+d2[, block := NULL]
+block_size = 25
+n_blocks <- n_trials / block_size + 1
+block <- rep(1:n_blocks, each=block_size)
+block <- block[1:n_trials]
+d2[, block := block]
+dd2 <- d2[, .(acc_mean=mean(acc), acc_err=sd(acc) / sqrt(.N)), .(block, phase)]
+ggplot(dd2, aes(block, acc_mean, colour=factor(phase))) + 
+  geom_line() +
+  geom_pointrange(aes(x=block, 
+                      ymin=acc_mean-acc_err, 
+                      ymax=acc_mean+acc_err))
+
+# Problem 6. Test the hypothesis that the mean accuracy in
+# the first 16 blocks of phase 1 is no greater or worse than
+# chance (i.e. 50% correct responses).
+
+# step 1
+# X ~ N(mu_x, sig_x)
+# H0: mu_x = 0.5
+# H1: mu_x != 0.5
+
+# step 2
+# alpha = 0.05
+
+# step 3
+# theta = mu
+# theta_hat = mu_hat
+# theta_hat = x_bar
+# theta_hat ~ N(mu_x_bar, sig_x_bar)
+# mu_x_bar = mu_x
+# sig_x_bar = sig_x
+# sig_x is unknown --> t-test
+# Our new test statistic is:
+# (x_bar - mu_x_bar) / s_x ~ t(n-1)
+theta_hat_x <- seq(-4, 4, 0.01)
+theta_hat_p <- dt(theta_hat_x, n-1)
+
+dd <- data.table(theta_hat_x, theta_hat_p)
+ggplot(dd, aes(theta_hat_x, theta_hat_p)) + 
+  geom_line()
+
+# step 4
+x <- dd2[phase==1][block %in% min(block):(min(block)+15)][, acc_mean]
+n <- length(x)
+theta_hat_obs <- (mean(x) - 0.5) / (sd(x)/sqrt(n)) 
+
+theta_hat_obs_lower <- -theta_hat_obs
+theta_hat_obs_upper <- theta_hat_obs
+
+# step 5
+p_val_lower <- pt(theta_hat_obs_lower, n-1, lower.tail=TRUE)
+p_val_upper <- pt(theta_hat_obs_upper, n-1, lower.tail=FALSE)
+p_val <- p_val_lower + p_val_upper
+
+theta_hat_crit_lower <- qt(0.025, n, 0.5, lower.tail=TRUE)
+theta_hat_crit_upper <- qt(0.025, n, 0.5, lower.tail=FALSE)
+
+ci_width <- (theta_hat_crit_upper - theta_hat_crit_lower) * sd(x)/sqrt(n)
+ci_lower <- mean(x) - ci_width / 2
+ci_upper <- mean(x) + ci_width / 2
+
+if(p_val < 0.05) {
+  decision <- 'reject H0'
+} else {
+  decision <- 'fail to reject H0'
+}
+
+r_result <- t.test(x, mu=0.5, alternative='two.sided')
+
+prob_6_theta_hat_x <- theta_hat_x
+prob_6_theta_hat_p <- theta_hat_p
+prob_6_theta_hat_obs <- theta_hat_obs
+prob_6_pval_lower <- p_val_lower
+prob_6_pval_upper <- p_val_upper
+prob_6_theta_hat_crit_lower <- theta_hat_crit_lower
+prob_6_theta_hat_crit_upper <- theta_hat_crit_upper
+prob_6_ci_lower <- ci_lower
+prob_6_ci_upper <- ci_upper
+prob_6_decision <- decision
+prob_6_r_result <- r_result
+
+# Problem 7. Test the hypothesis that the mean accuracy in
+# the last 16 blocks of phase 1 is greater than chance. For
+# this problem, only prob_x_r_result will be graded.
+x <- dd2[phase == 1][block %in% max(block):(max(block)-15)][, acc_mean]
+prob_7_r_result <- t.test(x, mu=0.5, alternative='greater')
+
+# Problem 8. Test the hypothesis that the mean accuracy in
+# the first 16 blocks of phase 2 less than chance. For this
+# problem, only prob_x_r_result will be graded.
+x <- dd2[phase == 2][block %in% min(block):(min(block)+15)][, acc_mean]
+prob_8_r_result <- t.test(x, mu=0.5, alternative='less')
+
+# Problem 9. What accounts for the drop in accuracy between
+# phase 1 and phase 2? To answer this question, investigate
+# the stimuli the monkey was required to learn between phase
+# 1 and phase 2. Using ggplot() and geom_point(), make a
+# plot of stimuli (x=x, y=y) coloured by category membership
+# label (cat). Include a separate version of this plot for
+# each phase in different panels by using  facet_wrap().
+# Save the resulting plot to a variable named ans_9.
+ans_9 <- ggplot(d, aes(x, y, colour=factor(cat))) +
+  geom_point() +
+  facet_wrap(~phase)
+```
+

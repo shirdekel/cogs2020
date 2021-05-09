@@ -350,25 +350,55 @@ div.tocify {
 
 <h1 class="title toc-ignore">Homework 5</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 02 May, 2021</h4>
+<h4 class="date">Last update: 09 May, 2021</h4>
 
 </div>
 
 
 <p><strong>General Instructions:</strong> Please follow the general instructions written at length in homework 4. You will also need to run the following code chunk to be set up for this homework. Note that you may have to install the <code>stringr</code> package. As usual, do not include any <code>install.packages</code> commands in the script that you turn in. Thank you and good luck!</p>
-<pre class="r"><code>## Basic setup code that you will need for this problem
+<pre class="r"><code># Example of how to store your responses for problem 1:
+
+# All problems in this homework ask you compare two random
+# variables, X and Y.
+
+# Following the lecture notes, set W = X - Y, and then store
+# all answers following HW4 guidelines using W as the
+# relevant random variable.
+
+# E.g., if the question asks about the population mean of W,
+# then &quot;theta&quot; will represent &quot;mu_W&quot;
+
+prob_1_theta_hat_x &lt;- theta_hat_x
+prob_1_theta_hat_p &lt;- theta_hat_p
+prob_1_theta_hat_obs &lt;- theta_hat_obs
+prob_1_pval_lower &lt;- p_val_lower
+prob_1_pval_upper &lt;- p_val_upper
+prob_1_theta_hat_crit_lower &lt;- theta_hat_crit_lower
+prob_1_theta_hat_crit_upper &lt;- theta_hat_crit_upper
+prob_1_ci_lower &lt;- theta_hat_ci_lower
+prob_1_ci_upper &lt;- theta_hat_ci_upper
+prob_1_decision &lt;- decision
+prob_1_r_result &lt;- r_result
+
+# Please follow the same convention for subsequent problems.</code></pre>
+<ul>
+<li>Please use the following code chunk to start your script.</li>
+</ul>
+<pre class="r"><code># Basic setup code that you will need for this problem
 library(data.table)
 library(ggplot2)
 library(stringr)
 
+rm(list=ls())
+
 d &lt;-fread(&#39;https://crossley.github.io/cogs2020/data/eeg/epochs.txt&#39;)
 
-## The column names that come from this file have spaces
-## This line removes those spaces (depends on the `stringr` package)
+# The column names that come from this file have spaces
+# This line removes those spaces (depends on the `stringr` package)
 names(d) &lt;- str_replace_all(names(d), c(&quot; &quot; = &quot;.&quot; , &quot;,&quot; = &quot;&quot; ))</code></pre>
 <p><strong>1.</strong> Consider two random variables <span class="math inline">\(X \sim \mathcal{N}(\mu_X, \sigma_X)\)</span> and <span class="math inline">\(Y \sim \mathcal{N}(\mu_Y, \sigma_Y)\)</span>. Let <span class="math inline">\(X\)</span> generate data for MEG channel 133 and <span class="math inline">\(Y\)</span> generate data for MEG channel 135. Test the hypothesis that the mean MEG signal for <span class="math inline">\(t &gt; 0\)</span> in these two channels are significantly different. When computing the mean MEG signal, keep epochs separate and average over everything else. You should be left with one observation per epoch. Assume that <span class="math inline">\(\sigma_X = \sigma_Y\)</span> and also assume that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent.</p>
 <p><strong>2.</strong> Consider two random variables <span class="math inline">\(X \sim \mathcal{N}(\mu_X, \sigma_X)\)</span> and <span class="math inline">\(Y \sim \mathcal{N}(\mu_Y, \sigma_Y)\)</span>. Let <span class="math inline">\(X\)</span> generate data for MEG channel 039 during the first 30 epochs and <span class="math inline">\(Y\)</span> generate data for MEG channel 039 during the remaining epochs. Test the hypothesis that the mean MEG signal for <span class="math inline">\(t &gt; 0\)</span> in these two signals are significantly different. Assume <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent but do not assume that <span class="math inline">\(\sigma_X=\sigma_Y\)</span>.</p>
-<p><strong>3.</strong> Do you think assuming that two different MEG channels on the same persons head are likely to be independent? Explain your reasoning.</p>
+<p><strong>3.</strong> Do you think two different MEG channels on the same persons head are likely to be independent? Explain your reasoning in a brief comment (no more than a sentence or two).</p>
 <p><strong>4.</strong> Consider two random variables <span class="math inline">\(X \sim \mathcal{N}(\mu_X, \sigma_X)\)</span> and <span class="math inline">\(Y \sim \mathcal{N}(\mu_Y, \sigma_Y)\)</span>. Let <span class="math inline">\(X\)</span> generate data for MEG channel 039 and <span class="math inline">\(Y\)</span> generate data for MEG channel 135. Test the hypothesis that the mean MEG signal for <span class="math inline">\(t &gt; 0\)</span> in these two channels are significantly different. Do not assume <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent.</p>
 
 

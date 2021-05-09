@@ -584,9 +584,9 @@ null sampling distribution.
 - This can all be written concisely as follows:
 
 $$
-CI_{1-\alpha} = \left[ \bar{x} - \Phi_{X}^{-1}(1-\frac{\alpha}{2}),
+CI_{1-\alpha} = \left[ \bar{x} - \Phi_{\bar{X}}^{-1}(1-\frac{\alpha}{2}),
                 \text{ }
-                \bar{x} + \Phi_{X}^{-1}(1-\frac{\alpha}{2}) \right]
+                \bar{x} + \Phi_{\bar{X}}^{-1}(1-\frac{\alpha}{2}) \right]
 $$
 
 - For example, the 95% confidence interval for the population mean of $X \sim

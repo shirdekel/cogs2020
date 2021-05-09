@@ -23,16 +23,50 @@ package. As usual, do not include any `install.packages`
 commands in the script that you turn in. Thank you and good
 luck!
 
+```{r, eval=F}
+# Example of how to store your responses for problem 1:
+
+# All problems in this homework ask you compare two random
+# variables, X and Y.
+
+# Following the lecture notes, set W = X - Y, and then store
+# all answers following HW4 guidelines using W as the
+# relevant random variable.
+
+# E.g., if the question asks about the population mean of W,
+# then "theta" will represent "mu_W"
+
+prob_1_theta_hat_x <- theta_hat_x
+prob_1_theta_hat_p <- theta_hat_p
+prob_1_theta_hat_obs <- theta_hat_obs
+prob_1_pval_lower <- p_val_lower
+prob_1_pval_upper <- p_val_upper
+prob_1_theta_hat_crit_lower <- theta_hat_crit_lower
+prob_1_theta_hat_crit_upper <- theta_hat_crit_upper
+prob_1_ci_lower <- theta_hat_ci_lower
+prob_1_ci_upper <- theta_hat_ci_upper
+prob_1_decision <- decision
+prob_1_r_result <- r_result
+
+# Please follow the same convention for subsequent problems.
+```
+
+
+
+* Please use the following code chunk to start your script.
+
 ```{r}
-## Basic setup code that you will need for this problem
+# Basic setup code that you will need for this problem
 library(data.table)
 library(ggplot2)
 library(stringr)
 
+rm(list=ls())
+
 d <-fread('https://crossley.github.io/cogs2020/data/eeg/epochs.txt')
 
-## The column names that come from this file have spaces
-## This line removes those spaces (depends on the `stringr` package)
+# The column names that come from this file have spaces
+# This line removes those spaces (depends on the `stringr` package)
 names(d) <- str_replace_all(names(d), c(" " = "." , "," = "" ))
 ```
 
@@ -58,9 +92,9 @@ different. Assume $X$ and $Y$ are independent but do not
 assume that $\sigma_X=\sigma_Y$.
 
 **3.**
-Do you think assuming that two different MEG channels on the
-same persons head are likely to be independent? Explain your
-reasoning.
+Do you think two different MEG channels on the same persons
+head are likely to be independent? Explain your reasoning in
+a brief comment (no more than a sentence or two).
 
 **4.**
 Consider two random variables $X \sim \mathcal{N}(\mu_X,
