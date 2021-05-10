@@ -59,8 +59,8 @@ prob_1_r_result <- r_result
 ```
 
 **2.** Consider the following sampling distribution of an
-$F_{obs}$ test statistic, with $df_{between} = 10$ and
-$df_{within} = 100$.
+$F_{obs}$ test statistic (indicated by the dashed line in
+the plot), with $df_{between} = 10$ and $df_{within} = 100$.
 
 ```{r, echo=F}
 set.seed(1)
