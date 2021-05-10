@@ -46,21 +46,19 @@ a random variable $D \sim \mathcal{N}(\mu_D, \sigma_D)$.
 
 * Test the hypothesis that $\mu_A$, $\mu_B$, $\mu_C$, and
 $\mu_D$ are different. Please populate the following
-variables following the homework 4 convention.
+variables.
 
 ```{r, eval=F}
-prob_x_theta_hat_x <- theta_hat_x
-prob_x_theta_hat_p <- theta_hat_p
-prob_x_theta_hat_obs <- theta_hat_obs
-prob_x_pval <- p_val
-prob_x_theta_hat_crit <- theta_hat_crit
-prob_x_decision <- decision
-prob_x_r_result <- r_result
+prob_1_theta_hat_x <- theta_hat_x # possible outcomes of your test statistic
+prob_1_theta_hat_p <- theta_hat_p # corresponding probabilities of outcomes
+prob_1_theta_hat_obs <- theta_hat_obs # observed value of test statistic
+prob_1_pval <- p_val
+prob_1_theta_hat_crit <- theta_hat_crit # critical value of test statistic
+prob_1_decision <- decision
+prob_1_r_result <- r_result
 ```
 
-**2.**
-
-* Consider the following sampling distribution of an
+**2.** Consider the following sampling distribution of an
 $F_{obs}$ test statistic, with $df_{between} = 10$ and
 $df_{within} = 100$.
 
@@ -110,4 +108,4 @@ marked for this problem.
 
 **4.** Repeat problem 3 but this time use an appropriate
 t-test. For this problem, only `prob_4_r_result` will be
-graded.
+marked for this problem.
