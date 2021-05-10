@@ -56,6 +56,17 @@ prob_1_pval <- p_val
 prob_1_theta_hat_crit <- theta_hat_crit # critical value of test statistic
 prob_1_decision <- decision
 prob_1_r_result <- r_result
+
+# NOTE: when determining the possible outcomes of your test
+# statistic, it is okay to truncate. For example, if your
+# test statistic has a minimum outcome that is less than 4
+# standard deviations away from the mean, then just stop at
+# the minimum value.
+
+# NOTE: the population mean of an F distribution (if
+# df_denominator > 2) is:
+
+# df_denominator/(df_denominator - 2)
 ```
 
 **2.** Consider the following sampling distribution of an
@@ -107,5 +118,6 @@ performing a one-way ANOVA. Only `prob_3_r_result` will be
 marked for this problem.
 
 **4.** Repeat problem 3 but this time use an appropriate
-t-test. For this problem, only `prob_4_r_result` will be
-marked for this problem.
+t-test (assuming there is equal variance in different
+conditions). For this problem, only `prob_4_r_result` will
+be marked for this problem.
