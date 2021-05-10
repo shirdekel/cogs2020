@@ -141,7 +141,7 @@ hypotheses a bit more precisely.
 
 $\begin{align}
 & H_0: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} = 1 \\
-& H_1: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} \neq 1 \\
+& H_1: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} > 1 \\
 \end{align}$
 
 This is pretty much correct. All we need to do to make it
@@ -235,6 +235,9 @@ z <- c(27.558906, 21.949216, 16.893797,  8.926501, 25.624655)
 nx <- length(x)
 ny <- length(y)
 nz <- length(z)
+
+n_total <- nx + ny + nz
+n_groups <- 3
   
 ## mean of each group
 mean_x <- mean(x)
@@ -271,7 +274,7 @@ ss_within <- sum((x - mean_x)^2) +
 
 ## dfs
 df_between <- n_groups-1
-df_within <- n_groups*(n_obs-1)
+df_within <- n_total - n_groups
 
 ## mean squares
 ms_between <- ss_between / df_between

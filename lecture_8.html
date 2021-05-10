@@ -356,7 +356,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 8 - One-way ANOVA</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 08 May, 2021</h4>
+<h4 class="date">Last update: 10 May, 2021</h4>
 
 </div>
 
@@ -441,7 +441,7 @@ n (\bar{z} - G)^2
 <div id="test-statistic" class="section level3">
 <h3>Test statistic</h3>
 <p>With the formal maths defined above, we can state our hypotheses a bit more precisely.</p>
-<p><span class="math inline">\(\begin{align} &amp; H_0: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} = 1 \\ &amp; H_1: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} \neq 1 \\ \end{align}\)</span></p>
+<p><span class="math inline">\(\begin{align} &amp; H_0: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} = 1 \\ &amp; H_1: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} &gt; 1 \\ \end{align}\)</span></p>
 <p>This is pretty much correct. All we need to do to make it exactly correct carefully factor in the fact that we don’t exactly have a ratio of variances. Rather, we have a ratio of a <em>sum of variances</em>. This will get factored in (1) via the degrees of freedom and (2) by using <em>mean squared</em> deviations instead of sum of squared deviations in the ratio.</p>
 <p><span class="math inline">\(\begin{align} &amp; n_{total} = l + m + n \\\\ &amp; df_{between} = n_{groups} - 1 \\ &amp; df_{within} = n_{total} - n_{groups} \\\\ &amp; \text{ms}_{between} = \frac{\text{ss}_{between}}{df_{between}} \\ &amp; \text{ms}_{within} = \frac{\text{ss}_{within}}{df_{within}} \\\\ &amp; \widehat{\frac{\sigma^2_{between-group}}{\sigma^2_{within-group}}} =  \frac{\text{ms}_{between}}{\text{ms}_{within}} \\\\ &amp; F_{obs} = \frac{\text{ms}_{between}}{\text{ms}_{within}} \\ &amp; F_{obs} \sim F(df_{between}, df_{within}) \\ \end{align}\)</span></p>
 <p><strong>I have not shown how we know that the ratio of variances has an F distribution. For now, just trust me.</strong></p>
@@ -483,6 +483,9 @@ z &lt;- c(27.558906, 21.949216, 16.893797,  8.926501, 25.624655)
 nx &lt;- length(x)
 ny &lt;- length(y)
 nz &lt;- length(z)
+
+n_total &lt;- nx + ny + nz
+n_groups &lt;- 3
   
 ## mean of each group
 mean_x &lt;- mean(x)
@@ -519,7 +522,7 @@ ss_within &lt;- sum((x - mean_x)^2) +
 
 ## dfs
 df_between &lt;- n_groups-1
-df_within &lt;- n_groups*(n_obs-1)
+df_within &lt;- n_total - n_groups
 
 ## mean squares
 ms_between &lt;- ss_between / df_between

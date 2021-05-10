@@ -350,26 +350,32 @@ div.tocify {
 
 <h1 class="title toc-ignore">Homework 6</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 08 May, 2021</h4>
+<h4 class="date">Last update: 10 May, 2021</h4>
 
 </div>
 
 
-<p><strong>General Instructions:</strong> Please follow the general instructions written at length in homework 4.</p>
 <p><strong>1.</strong> Consider the following data:</p>
-<pre><code>##            a         b        c         d
-## 1:  7.986654 11.184922 14.20354  9.220874
-## 2: 10.041158  8.810680 12.67634 11.849785
-## 3: 11.988840 13.345219 15.45929  9.291969
-## 4:  7.399139 14.365443 12.66688 10.867077
-## 5: 10.475381  9.531818 10.90540 10.340014</code></pre>
+<pre><code>##            a        b        c         d
+## 1: 11.009437 12.43240 14.63961  9.397085
+## 2: 11.691308 10.78288 15.53815  7.989722
+## 3: 10.243965 11.73936 14.13907 11.529119
+## 4:  9.026320 10.30212 13.25440 10.173401
+## 5:  9.447934 16.89916 13.55931 12.656410</code></pre>
 <ul>
 <li><p>Assume that the observations in columns <code>a</code> are drawn from a random variable <span class="math inline">\(A \sim \mathcal{N}(\mu_A, \sigma_A)\)</span>.</p></li>
 <li><p>Assume that the observations in columns <code>b</code> are drawn from a random variable <span class="math inline">\(B \sim \mathcal{N}(\mu_B, \sigma_B)\)</span>.</p></li>
 <li><p>Assume that the observations in columns <code>c</code> are drawn from a random variable <span class="math inline">\(C \sim \mathcal{N}(\mu_C, \sigma_C)\)</span>.</p></li>
 <li><p>Assume that the observations in columns <code>d</code> are drawn from a random variable <span class="math inline">\(D \sim \mathcal{N}(\mu_D, \sigma_D)\)</span>.</p></li>
-<li><p>Test the hypothesis that <span class="math inline">\(\mu_A\)</span>, <span class="math inline">\(\mu_B\)</span>, <span class="math inline">\(\mu_C\)</span>, and <span class="math inline">\(\mu_D\)</span> are different.</p></li>
+<li><p>Test the hypothesis that <span class="math inline">\(\mu_A\)</span>, <span class="math inline">\(\mu_B\)</span>, <span class="math inline">\(\mu_C\)</span>, and <span class="math inline">\(\mu_D\)</span> are different. Please populate the following variables following the homework 4 convention.</p></li>
 </ul>
+<pre class="r"><code>prob_x_theta_hat_x &lt;- theta_hat_x
+prob_x_theta_hat_p &lt;- theta_hat_p
+prob_x_theta_hat_obs &lt;- theta_hat_obs
+prob_x_pval &lt;- p_val
+prob_x_theta_hat_crit &lt;- theta_hat_crit
+prob_x_decision &lt;- decision
+prob_x_r_result &lt;- r_result</code></pre>
 <p><strong>2.</strong></p>
 <ul>
 <li>Consider the following sampling distribution of an <span class="math inline">\(F_{obs}\)</span> test statistic, with <span class="math inline">\(df_{between} = 10\)</span> and <span class="math inline">\(df_{within} = 100\)</span>.</li>
@@ -388,7 +394,7 @@ div.tocify {
 <p><a href="https://crossley.github.io/cogs2020/data/mis/mis_data.csv" class="uri">https://crossley.github.io/cogs2020/data/mis/mis_data.csv</a></p>
 <ul>
 <li><p>Please consult HW1 for a detailed description of this data. Please also note that this is a between subjects design with respect to <code>condition</code>. This means that different subjects are in each level of <code>condition</code>. This is true despite the <code>subject</code> numbers being identical. They are only identical because of an error in how the data were processed.</p></li>
-<li><p>Is the mean <code>error</code> per <code>subject</code> different across different levels of <code>condition</code>? Answer this question by performing a one-way ANOVA.</p></li>
+<li><p>Is the mean <code>error</code> per <code>subject</code> different across different levels of <code>condition</code>? Answer this question by performing a one-way ANOVA. Only <code>prob_3_r_result</code> will be marked for this problem.</p></li>
 </ul>
 <p><strong>4.</strong> Repeat problem 3 but this time use an appropriate t-test. For this problem, only <code>prob_4_r_result</code> will be graded.</p>
 
