@@ -219,6 +219,8 @@ $$
 
 ### Unequal sample size and unequal variance
 
+**NOTE: This works for equal sample size as well.**
+
 It turns out that the expression for our observed t-value and estimated variance
 is quite simple, but the degrees of freedom for the test looks a bit more
 complicated.
