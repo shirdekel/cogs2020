@@ -38,8 +38,7 @@ fontsize: 14pt
 
 #### [Lecture 10: One-way ANOVA](lecture_8.html)
 
-#### Lecture 11: Two-way ANOVA
-<!-- #### [Lecture 11: Two-way ANOVA](lecture_9.html) -->
+#### [Lecture 11: Two-way ANOVA](lecture_9.html)
 
 #### Lecture 12: Repeated Measures ANOVA
 <!-- #### [Lecture 12: Repeated Measures ANOVA](lecture_10.html) -->
