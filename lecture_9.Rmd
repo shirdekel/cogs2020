@@ -1,0 +1,550 @@
+---
+title: "Lecture 9 - Two-way ANOVA"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 2
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=F, message=F, warning=F}
+library(data.table)
+library(ggplot2)
+library(ggpubr)
+library(ez)
+
+rm(list=ls())
+
+gen_exp <- function(muA1, muA2, muB1, muB2, sig, n) {
+
+  ## generate obervations
+  y_A1 <- rnorm(n, muA1, sig)
+  y_A2 <- rnorm(n, muA2, sig)
+  y_B1 <- rnorm(n, muB1, sig)
+  y_B2 <- rnorm(n, muB2, sig)
+
+  ## store observations plus relevant indicators in data.table
+  d <- data.table(y=c(y_A1, y_A2, y_B1, y_B2),
+                  treatment=rep(c('A', 'B'), each=2*n),
+                  dose=rep(c(1, 2), n, each=n))
+
+  d[, treatment := factor(treatment)]
+  d[, dose := factor(dose)]
+
+  ## main effect of treatment (A vs B)
+  dd <- d[, .(mean(y), sd(y)/sqrt(length(unique(dose)))), .(treatment)]
+  g1 <- ggplot(dd, aes(treatment, V1)) +
+    geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2)) +
+    theme_classic() +
+    theme(aspect.ratio=1) +
+    ylab('Observed mean effect') +
+    ggtitle('Main effect')
+
+  ## main effect of dose (1 vs 2)
+  dd <- d[, .(mean(y), sd(y)/sqrt(length(unique(treatment)))), .(dose)]
+  g2 <- ggplot(dd, aes(dose, V1)) +
+    geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2)) +
+    theme_classic() +
+    theme(aspect.ratio=1) +
+    ylab('Observed mean effect') +
+    ggtitle('Main effect')
+
+  ## interaction between treatment and dose
+  dd <- d[, .(mean(y), sd(y)/sqrt(length(unique(treatment))*length(unique(dose)))), .(treatment, dose)]
+  g3 <- ggplot(dd, aes(dose, V1, colour=treatment)) +
+    geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2)) +
+    geom_line(aes(as.integer(dose), V1, colour=treatment)) +
+    theme_classic() +
+    theme(aspect.ratio=1) +
+    ylab('Observed mean effect') +
+    ggtitle('Interaction')
+
+  return(list(g1, g2, g3, unique(d)))
+}
+```
+
+## Two-way ANOVA
+
+Consider an experiment in which one of two different
+**treatments** are administered at one of two different
+**doses**. A two-way ANOVA attempts to answer the following
+three questions:
+
+1. Do different treatments lead to different outcomes?
+2. Do different doses lead to different outcomes?
+3. Does treatment and dose interact?
+
+## Two-way ANOVA Intuition
+
+The logic of a two-way ANOVA is essentially the same as for
+a one-way ANOVA. That is, if between-group variation is
+significantly larger than within-group variation, then we
+have evidence that different groups have different means.
+However, with a two-way ANOVA, between-group and
+withing-group aren't quite as easily defined, because there
+are many groups for observations to fall between or within.
+The basic approach to dealing with this is to see that a
+two-way ANOVA is actually testing three null hypotheses
+simultaneously (i.e., the three statements above).
+
+## Visualising the three null hypotheses
+
+Consider the simple example of two treatments $A$ and $B$,
+both with two treatment doses.
+
+```{r echo=FALSE}
+res <- gen_exp(20, 20, 20, 20, 0.1, 10)
+g1 <- res[[1]]
+g2 <- res[[2]]
+g3 <- res[[3]]
+```
+
+<div class = "row">
+### Example 1 - No main effects and no interaction
+<div class = "col-md-4">
+```{r echo=F}
+g1
+```
+</div>
+<div class = "col-md-4">
+```{r echo=F}
+g2
+```
+</div>
+<div class = "col-md-4">
+```{r echo=F}
+g3
+```
+</div>
+</div>
+
+```{r echo=FALSE}
+res <- gen_exp(10, 30, 30, 10, 0.1, 10)
+g1 <- res[[1]]
+g2 <- res[[2]]
+g3 <- res[[3]]
+```
+
+<div class = "row">
+### Example 2 - No main effects but with an interaction
+<div class = "col-md-4">
+```{r echo=F}
+g1
+```
+</div>
+<div class = "col-md-4">
+```{r echo=F}
+g2
+```
+</div>
+<div class = "col-md-4">
+```{r echo=F}
+g3
+```
+</div>
+</div>
+
+```{r echo=FALSE}
+res <- gen_exp(10, 30, 20, 40, 0.1, 10)
+g1 <- res[[1]]
+g2 <- res[[2]]
+g3 <- res[[3]]
+```
+
+<div class = "row">
+### Example 3 - Two main effects but no interaction
+<div class = "col-md-4">
+
+```{r echo=F}
+g1
+```
+
+</div>
+<div class = "col-md-4">
+
+```{r echo=F}
+g2
+```
+
+</div>
+<div class = "col-md-4">
+```{r echo=F}
+g3
+```
+</div>
+</div>
+
+
+```{r echo=FALSE}
+res <- gen_exp(20, 30, 50, 10, 0.1, 10)
+g1 <- res[[1]]
+g2 <- res[[2]]
+g3 <- res[[3]]
+```
+
+<div class = "row">
+### Example 4 - Two main effects and an interaction
+<div class = "col-md-4">
+
+```{r echo=F}
+g1
+```
+
+</div>
+<div class = "col-md-4">
+
+```{r echo=F}
+g2
+```
+
+</div>
+<div class = "col-md-4">
+```{r echo=F}
+g3
+```
+</div>
+
+## Two-way ANOVA more formally
+To talk about a two-way ANOVA clearly, it is helpful to
+introduce the following new nomenclature:
+
+- Let $y_{ijk}$ be the $k^{th}$ observation obtained for
+treatment $i$ and dose $j$. In this example, $i \in \{A,
+B\}$, $j \in \{1, 2\}$, and $k \in \{1,2,...,n_{i,j}\}$,
+where $n_{i,j}$ is the number of observations in the
+corresponding condition.
+
+- Let $\bar{y}_{ij \bullet}$ indicate the mean effect
+observed for treatment $i$ and dose $j$.
+
+- Let $\bar{y}_{\bullet j \bullet}$ indicate the mean effect
+observed for dose $j$, averaged over all possible
+treatments.
+
+- Let $\bar{y}_{i \bullet \bullet}$ indicate the mean effect
+observed for treatment $i$, averaged over all possible
+doses.
+
+- Let $\bar{y}_{\bullet \bullet \bullet}$ indicate the mean
+averaged over all possible treatments and doses.
+
+For this simple case in which we have only two treatments
+$A$ and $B$, only two doses, and we have exactly $n$
+observations for each treatment at each dose, our data looks
+as follows:
+
+|             | Treatment A                                                      | Treatment B                                                      |                                     |
+| :---------: | :-------------:                                                  | :-------------:                                                  | :-------------:                     |
+| Dose 1      | $\bar{y}_{11\bullet} = \frac{y_{111}+y_{112}+\ldots+y_{11n}}{n}$ | $\bar{y}_{12\bullet} = \frac{y_{121}+y_{122}+\ldots+y_{12n}}{n}$ | $\bar{y}_{\bullet 1 \bullet}$       |
+| Dose 2      | $\bar{y}_{21\bullet} = \frac{y_{211}+y_{212}+\ldots+y_{11n}}{n}$ | $\bar{y}_{22\bullet} = \frac{y_{221}+y_{222}+\ldots+y_{22n}}{n}$ | $\bar{y}_{\bullet 2 \bullet}$       |
+|             | $\bar{y}_{1 \bullet \bullet}$                                    | $\bar{y}_{2 \bullet \bullet}$                                    | $\bar{y}_{\bullet \bullet \bullet}$ |
+
+Please note that this is called a **[full factorial
+experiment](https://en.wikipedia.org/wiki/Factorial_experiment)**.
+
+With this convention, we can write the H's as follows:
+
+$\begin{align}
+& H_{0_1}: \mu_{Treatment_A} = \mu_{Treatment_B} \\
+& H_{0_2}: \mu_{Dose_1} = \mu_{Dose_2} \\
+& H_{0_3}: \mu_{Treatment_i | Dose_j} = \mu_{Treatment_i | Dose_j} \\\\
+& H_1: \lnot H_0 \\
+\end{align}$
+
+### Using variance to test the null hypotheses
+
+- $SS_{total}$ is the total variability between all
+observations.
+- $SS_{treatment}$ is the variability between different
+treatments.
+- $SS_{dose}$ is the variability between different doses.
+- $SS_{treatment \times dose}$ is the variability between
+different treatments at different dose levels.
+- $SS_{error}$ is the variability not accounted for by
+$SS_{treatment}$, $SS_{dose}$, and $SS_{treatment \times
+dose}$
+
+### Variability terms akin to *between-factor* variability
+- $n_{treatment} =$ number of unique treatment levels.
+- $n_{dose} =$ number of unique dose levels.
+- $n_{total} =$ number of observations at each treatment
+$\times$ dose combination level
+
+\begin{align}
+SS_{treatment} &= n_{dose} n_{total} \sum_i^{ n_{treatment} }
+                               (\bar{y}_{i \bullet \bullet} -
+                                \bar{y}_{\bullet \bullet \bullet})^2 \\
+
+SS_{dose} &= n_{treatment} n_{total} \sum_j^{ n_{dose} } (\bar{y}_{\bullet j \bullet} -
+                                \bar{y}_{\bullet \bullet \bullet})^2 \\
+
+SS_{treatment \times dose} &= n_{total} \sum_i^{ n_{treatment} } \sum_j^{ n_{dose} }
+                                  \left(
+                                  \bar{y}_{i j \bullet} -
+                                  (\bar{y}_{i \bullet \bullet} +
+                                  \bar{y}_{\bullet j \bullet} -
+                                  \bar{y}_{\bullet \bullet \bullet} )
+                                  \right)^2 \\
+\end{align}
+
+### Variability terms akin to *within-factor* variability
+\begin{align}
+SS_{error} &= \sum_i^{ n_{treatment} } \sum_j^{ n_{dose} } \sum_k^{ n_{total} }
+                             \left(
+                             \bar{y}_{i j k} -
+                             \bar{y}_{i j \bullet}
+                             \right)^2 \\
+\end{align}
+
+### Total variability
+\begin{align}
+SS_{Total} &= \sum_i^{ n_{treatment} } \sum_j^{ n_{dose} } \sum_k^{ n_{total} }
+                             \left(
+                             \bar{y}_{i j k} -
+                             \bar{y}_{\bullet \bullet \bullet}
+                             \right)^2 \\
+\end{align}
+
+- Note that you can think of the $n_{treatment}$,
+$n_{dose}$, and $n_{total}$ multipliers above serve to cast
+each $SS$ term into the same units so that they can be
+meaningfully compared. You can also think of them as
+ensuring that $SS_{total}$ is the sum of all the other
+sources of variability.
+
+$$SS_{total} = SS_{treatment} + SS_{dose} + SS_{treatment \times dose} + SS_{error}$$
+
+### Degrees of freedom and building F-ratios
+| Effect                  | $df$                                            | $SS$        | $MS$                                                            | $F$                                             |
+| :---------:             | :---------:                                     | :---------: | :---------:                                                     | :---------:                                     |
+| $Treatment$             | $n_{treatment} - 1$                             | see above   | $\frac{SS_{treatment}}{df_{treatment}}$                         | $\frac{MS_{treatment}}{MS_{error}}$            |
+| $Dose$                  | $n_{dose} - 1$                                  | see above   | $\frac{SS_{dose}}{df_{dose}}$                                   | $\frac{MS_{dose}}{MS_{error}}$                  |
+| $Treatment \times Dose$ | $(n_{treatment} - 1)(n_{dose} - 1)$             | see above   | $\frac{SS_{treatment \times dose}}{df_{treatment \times dose}}$ | $\frac{MS_{treatment \times dose}}{MS_{error}}$ |
+| $Error$                 | $N - n_{treatment}n_{dose}$     | see above   | $\frac{SS_{error}}{df_{error}}$                                 |                                                 |
+
+- From here, we compute p-values from the observed $F$
+scores in the table above, and we are off to the hypothesis
+testing races.
+
+### More general experiment and data structure
+
+More generally, two-way ANOVA deals with any two factors of
+an experiment that contain an arbitrary number of levels.
+Consider a full factorial experiment with two factors:
+Factor 1 containing $n_1$ levels and Factor 2 containing
+$n_2$ levels.
+
+|                      | Factor 2 level 1              | Factor 2 level 2              | $\ldots$        | Factor 2 level $n_1$            |                                     |
+| :---------:          | :-------------:               | :-------------:               | :-------------: | :-------------:                 | :-------------:                     |
+| Factor 1 level 1     | $\bar{y}_{11\bullet}$         | $\bar{y}_{12\bullet}$         | $\ldots$        | $\bar{y}_{1 n_2 \bullet}$       | $\bar{y}_{1 \bullet \bullet}$       |
+| Factor 1 level 2     | $\bar{y}_{21\bullet}$         | $\bar{y}_{22\bullet}$         | $\ldots$        | $\bar{y}_{2 n_2 \bullet}$       | $\bar{y}_{2 \bullet \bullet}$       |
+| $\vdots$             | $\vdots$                      | $\vdots$                      | $\vdots$        | $\vdots$                        | $\vdots$                            |
+| Factor 1 level $n_1$ | $\bar{y}_{n_1 1 \bullet}$     | $\bar{y}_{n_1 2 \bullet}$     | $\ldots$        | $\bar{y}_{n_1 n_2 \bullet}$     | $\bar{y}_{n_1 \bullet \bullet}$     |
+|                      | $\bar{y}_{\bullet 1 \bullet}$ | $\bar{y}_{\bullet 2 \bullet}$ | $\ldots$        | $\bar{y}_{\bullet n_2 \bullet}$ | $\bar{y}_{\bullet \bullet \bullet}$ |
+
+- This more general situation doesn't change our method at all.
+- We still proceed by generating the ANOVA table:
+
+| Effect                     | $df$                                               | $SS$        | $MS$                                                                  | $F$                                                |
+| :---------:                | :---------:                                        | :---------: | :---------:                                                           | :---------:                                        |
+| $Factor 1$                 | $n_{Factor 1} - 1$                                 | see above   | $\frac{SS_{Factor 1}}{df_{Factor 1}}$                                 | $\frac{MS_{Factor 1}}{MS_{error}}$                 |
+| $Factor 2$                 | $n_{Factor 2} - 1$                                 | see above   | $\frac{SS_{Factor 2}}{df_{Factor 2}}$                                 | $\frac{MS_{Factor 2}}{MS_{error}}$                 |
+| $Factor 1 \times Factor 2$ | $(n_{Factor 1}-1) (n_{Factor 2}-1)$                  | see above   | $\frac{SS_{Factor 1 \times Factor 2}}{df_{Factor 1 \times Factor 2}}$ | $\frac{MS_{Factor 1 \times Factor 2}}{MS_{error}}$ |
+| $Error$                    | $N - n_{Factor 1}n_{Factor 2}$ | see above   | $\frac{SS_{error}}{df_{error}}$                                       |                                                    |
+
+## Two-way ANOVA in R
+Consider the following data:
+```{r}
+## Generate data where both main effects are significant but
+## the interaction is not significant
+set.seed(0)
+n <- 4
+res <- gen_exp(10, 30, 20, 40, 5, n)
+g1 <- res[[1]]
+g2 <- res[[2]]
+g3 <- res[[3]]
+d <- res[[4]]
+d
+```
+
+```{r}
+y <- c(16.314771, 8.368833, 16.648996, 16.362147, 
+       32.073207, 22.300250, 25.357165, 28.526398, 
+       19.971164, 32.023267, 23.817967, 16.004954, 
+       34.261715, 38.552692, 38.503924, 37.942446)
+
+treatment <- c( "A", "A", "A", "A", "A", "A", "A", "A",
+                "B", "B",  "B", "B", "B", "B", "B", "B")
+
+dose <- c( 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 2)
+
+d <- data.table(y=y, 
+                treatment=as.factor(treatment), 
+                dose=as.factor(dose))
+
+# generate intuition about results before doing the analysis
+# (looks like two main effects but no interaction)
+dd <- d[, .(mean(y), sd(y)/sqrt(.N)), .(treatment, dose)]
+ggplot(dd, aes(treatment, V1, colour=dose)) +
+  geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2))
+
+## define number of levels in each factor
+n_treatment <- d[, length(unique(treatment))]
+n_dose <- d[, length(unique(dose))]
+
+## define Df terms
+df_treatment <- n_treatment - 1
+df_dose <- n_dose - 1
+df_interaction <- df_treatment * df_dose
+df_error <- d[, .N] - n_treatment*n_dose
+
+## Define SS terms
+ss_treatment <- 0
+for(i in d[, unique(treatment)]) {
+  ss_treatment <- ss_treatment + (d[treatment==i, mean(y)] - d[, mean(y)])^2
+}
+ss_treatment <- n_dose * n * ss_treatment
+
+ss_dose <- 0
+for(i in d[, unique(dose)]) {
+  ss_dose <- ss_dose + (d[dose==i, mean(y)] - d[, mean(y)])^2
+}
+ss_dose <- n_dose * n * ss_dose
+
+ss_interaction <- 0
+for(i in d[, unique(treatment)]) {
+  for(j in d[, unique(dose)]) {
+    ss_interaction <- ss_interaction +
+      (d[treatment==i & dose==j, mean(y)] -
+       (d[treatment==i, mean(y)] + d[dose==j, mean(y)] - d[, mean(y)]))^2
+  }
+}
+ss_interaction <- n * ss_interaction
+
+ss_error <- 0
+for(i in d[, unique(treatment)]) {
+  for(j in d[, unique(dose)]) {
+    for(k in 1:n) {
+      ss_error <- ss_error + (d[treatment==i & dose==j][k, y] -
+                              d[treatment==i & dose==j, mean(y)])^2
+    }
+  }
+}
+ss_error <- ss_error
+
+## Define MS terms
+ms_treatment <- ss_treatment / df_treatment
+ms_dose <- ss_dose / df_dose
+ms_interaction <- ss_interaction / df_interaction
+ms_error <- ss_error / df_error
+
+## Define F terms
+f_treatment <- ms_treatment / ms_error
+f_dose <- ms_dose / ms_error
+f_interaction <- ms_interaction / ms_error
+
+## Define Pr(>F)
+p_treatment <- pf(f_treatment, df_treatment, df_error, lower.tail=F)
+p_dose <- pf(f_dose, df_dose, df_error, lower.tail=F)
+p_interaction <- pf(f_interaction, df_interaction, df_error, lower.tail=F)
+
+## NOTE: Lots of things to print out here, so I'll leave
+## this to a live demo and your own personal tinkering
+## around to see the actual values and confirm that they
+## match the anova() method below.
+
+## Verify results
+fm <- lm(y ~ treatment*dose, data=d)
+anova(fm)
+
+# Using ezANOVA
+d[, subject := 1:.N]
+ezANOVA(data=d,
+        dv=y,
+        wid=subject,
+        between=.(treatment, dose),
+        type=3)
+```
+
+## Two-way ANOVA in R using real data
+```{r}
+d <- fread('https://crossley.github.io/cogs2020/data/mis/mis_data.csv')
+
+d <- d[phase=='Base', .(subject, group, target, error)]
+d[, group := factor(group)]
+d[, target := factor(target)]
+
+## First, get one observation per subject per group per target
+dd <- d[, mean(error), .(subject, group, target)]
+
+## Do different groups have different mean errors?
+## Do different targets have different mean errors?
+## Does target and group interact?
+
+## begin by making diagnostic plots
+ddd <- dd[, .(mean(V1), sd(V1)/sqrt(length(unique(target)))), .(group)]
+ggplot(ddd, aes(group, V1)) +
+  geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2))
+
+ddd <- dd[, .(mean(V1), sd(V1)/sqrt(length(unique(group)))), .(target)]
+ggplot(ddd, aes(target, V1)) +
+  geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2))
+
+ddd <- dd[, .(mean(V1), sd(V1)/sqrt(length(unique(target))*length(unique(group)))), .(group, target)]
+ggplot(ddd, aes(target, V1, colour=group)) +
+  geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2), position=position_dodge(width=.1))
+
+## To my eye, it looks like the effect of group ought to be
+## significant, or pretty close to it, but that's probably
+## about it.
+
+## Verify results
+options(contrasts = c("contr.sum","contr.poly")) # type 3 ss
+fm <- lm(V1 ~ group * target, data=dd)
+anova(fm)
+
+ezANOVA(data=dd,
+        dv=V1,
+        wid=subject,
+        between=.(group, target),
+        type=3)
+```
+
+## Unbalanced designs
+A **balanced design** means that there exactly the same
+amount of observations (denoted by $n$ in the previous
+examples of this lecture) in every possible combination of
+factors explored by an experiment. Well, it turns out that
+it is fairly common to have an **unbalanced design**, which
+just means that there are different numbers of observations
+per factor level combination. Furthermore, it turns that for
+balanced designs, the sums of squares calculations I showed
+are unambiguous and everybody agrees how to go about
+computing them. For unbalanced designs, however, it turns
+out that there are more than one way of going about
+calculating sums of squares. This is often the reason why
+various statistical software packages (e.g., R, SAS, SPSS,
+etc) produce slightly different results. A good discussion
+can be found
+[here](https://www.r-bloggers.com/anova-%E2%80%93-type-iiiiii-ss-explained/**,
+but we won't go into it here. The important thing to
+remember is that in psychology and neuroscience, the
+standard is to apply **Type III sums of squares**, and to do
+that, you just need to execute the line `options(contrasts =
+c("contr.sum","contr.poly"))` anywhere before you fit your
+linear model and generate your ANOVA summary. Also note that
+`options(contrasts = c("contr.sum","contr.poly"))` doesn't
+do anything at all to balanced designs, so there is no harm
+in just doing it all the time if you care for that approach.
+Finally, note that whether or not a design is balanced or
+not only matters for designs with at least two factors.

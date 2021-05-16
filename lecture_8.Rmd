@@ -225,7 +225,7 @@ $\mu_Y$, $\mu_Z$ are different.
 alph <- 0.05
 
 ## step 3
-## ss_ratio_hat = ss_between / ss_within
+## ms_ratio_hat = ms_between / ms_within
 
 ## step 4
 x <- c(6.867731, 10.918217,  5.821857, 17.976404, 11.647539)

@@ -1,0 +1,512 @@
+## step 2
+alph <- 0.05
+## step 3
+## ss_ratio_hat = ss_between / ss_within
+## step 4
+x <- c(6.867731, 10.918217,  5.821857, 17.976404, 11.647539)
+y <- c(10.89766, 17.43715, 18.69162, 17.87891, 13.47306)
+z <- c(27.558906, 21.949216, 16.893797,  8.926501, 25.624655)
+nx <- length(x)
+ny <- length(y)
+nz <- length(z)
+## mean of each group
+mean_x <- mean(x)
+mean_y <- mean(y)
+mean_z <- mean(z)
+## grand mean
+grand_mean <- mean(c(x, y, z))
+## ss-between
+ss_between <- nx*(mean_x - grand_mean)^2 +
+ny*(mean_y - grand_mean)^2 +
+nz*(mean_z - grand_mean)^2
+## ss-within
+ss_within_x <- 0
+for(i in 1:nx) {
+ss_within_x <- (x[i] - mean_x)^2
+}
+ss_within_y <- 0
+for(i in 1:ny) {
+ss_within_y <- (y[i] - mean_y)^2
+}
+ss_within_z <- 0
+for(i in 1:nz) {
+ss_within_z <- (z[i] - mean_z)^2
+}
+ss_within <- ss_within_x + ss_within_y + ss_within_z
+## ss-within --- a better way
+ss_within <- sum((x - mean_x)^2) +
+sum((y - mean_y)^2) +
+sum((z - mean_z)^2)
+## dfs
+df_between <- n_groups-1
+df_within <- n_groups*(n_obs-1)
+## mean squares
+ms_between <- ss_between / df_between
+ms_within <- ss_within / df_within
+## observed F-value
+fobs <- ms_between / ms_within
+## compute pval
+pval <- pf(fobs, df_between, df_within, lower.tail=F)
+## report results
+print(c(ss_between, ss_within, df_between, df_within, fobs, pval))
+## Check our work using a builtin R function
+d <- data.table(x,y,z)
+d <- melt(d, measure.var=c('x', 'y', 'z'))
+d[, variable := factor(variable)]
+fm <- lm(value ~ variable, data = d)
+anova(fm)
+ss_within <- ss_within_x + ss_within_y + ss_within_z
+ss_within
+ss_between
+ss_within <- sum((x - mean_x)^2) +
+sum((y - mean_y)^2) +
+sum((z - mean_z)^2)
+ww_within
+ss_within
+## ss-within
+ss_within_x <- 0
+for(i in 1:nx) {
+ss_within_x <- ss_within_x + (x[i] - mean_x)^2
+}
+ss_within_y <- 0
+for(i in 1:ny) {
+ss_within_y <- ss_within_y + (y[i] - mean_y)^2
+}
+ss_within_z <- 0
+for(i in 1:nz) {
+ss_within_z <- ss_within_z + (z[i] - mean_z)^2
+}
+ss_within <- ss_within_x + ss_within_y + ss_within_z
+ss_within
+d <- data.table(x,y,z)
+d <- melt(d, measure.var=c('x', 'y', 'z'))
+d[, variable := factor(variable)]
+fm <- lm(value ~ variable, data = d)
+anova(fm)
+d
+d
+library(ez)
+d
+library(ez)
+ezANOVA(
+data=d,
+dv=value,
+# wid=subject,
+# within=.(phase),
+between=.(variable),
+type=3
+)
+library(ez)
+d[, subject := 1:.N]
+ezANOVA(
+data=d,
+dv=value,
+wid=subject,
+# within=.(phase),
+between=.(variable),
+type=3
+)
+fm <- lm(value ~ variable, data = d)
+anova(fm)
+fp <- 'https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv'
+d <- fread(fp)
+## redefine d for simplification
+d <- d[cnd %in% c('Delay', 'Long ITI', 'Short ITI')][, mean(unique(t2c)), .(cnd, sub)]
+setnames(d, 'V1', 't2c')
+ggplot(d, aes(x=cnd, y=t2c)) +
+geom_boxplot() +
+theme(aspect.ratio = 1)
+# Calculate the number of groups and observations per group
+d[, n_cnds := length(unique(cnd))]
+d[, n_obs := .N, .(cnd)]
+## Calculate the mean within each cnd:
+d[, t2c_mean_cnd := mean(t2c), .(cnd)]
+## Calculate the overall mean:
+d[, t2c_mean_grand := mean(t2c)]
+## Calculate the between-cnd sum of squared differences:
+d[, ss_between := sum((t2c_mean_cnd - t2c_mean_grand)^2)]
+## Calculate the "within-cnd" sum of squared differences.
+d[, ss_within := sum((t2c - t2c_mean_cnd)^2)]
+## Compute degrees of freedom
+d[, df_between := n_cnds-1]
+d[, df_within := .N - n_cnds]
+## Calculate MSE terms
+d[, mse_between := ss_between / df_between]
+d[, mse_within := ss_within / df_within]
+## Calculate the F-ratio
+d[, fobs := mse_between / mse_within]
+## Calculate p-val
+d[, pval := pf(fobs, df_between, df_within, lower.tail=FALSE)]
+print(round(
+c(d[, unique(ss_between)],
+d[, unique(ss_within)],
+d[, unique(df_between)],
+d[, unique(df_within)],
+d[, unique(fobs)],
+d[, unique(pval)]
+), 4))
+## Do it with built-in R functions
+fm <- lm(t2c ~ cnd, data = d)
+anova(fm)
+# We will ultimately be using the ez library for ANOVAs, so
+# might as well get started now.
+library(ez)
+d[, subject := 1:.N]
+ezANOVA(
+data=d,
+dv=value,
+wid=subject,
+# within=.(phase),
+between=.(variable),
+type=3
+)
+d
+d
+library(ez)
+ezANOVA(
+data=d,
+dv=value,
+wid=sub,
+between=.(cnd),
+type=3
+)
+d
+library(ez)
+ezANOVA(
+data=d,
+dv=t2c,
+wid=sub,
+between=.(cnd),
+type=3
+)
+fm <- lm(t2c ~ cnd, data = d)
+anova(fm)
+d
+d <- fread('https://crossley.github.io/cogs2020/data/mis/mis_data.csv')
+d
+d[, unique(phase)]
+a <- rnorm(5, 10, 2)
+b <- rnorm(5, 12, 2)
+c <- rnorm(5, 14, 2)
+d <- rnorm(5, 10, 2)
+d <- data.table(a, b, c, d)
+d
+x <- seq(0, 10, 0.01)
+fx <- df(30, 100)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line()
+x <- seq(0, 10, 0.01)
+fx <- df(x, 30, 100)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line()
+x <- seq(0, 5, 0.01)
+fx <- df(x, 30, 100)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line()
+x <- seq(0, 3, 0.01)
+fx <- df(x, 30, 100)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line()
+x <- seq(0, 3, 0.01)
+fx <- df(x, 20, 100)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line()
+x <- seq(0, 3, 0.01)
+fx <- df(x, 20, 150)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line()
+x <- seq(0, 3, 0.01)
+fx <- df(x, 20, 500)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line()
+x <- seq(0, 3, 0.01)
+fx <- df(x, 10, 100)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line()
+x <- seq(0, 5, 0.01)
+fx <- df(x, 10, 100)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line()
+x <- seq(0, 4, 0.01)
+fx <- df(x, 10, 100)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line()
+x <- seq(0, 4, 0.01)
+fx <- df(x, 10, 100)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line()
+set.seed(1)
+x <- seq(0, 4, 0.01)
+fx <- df(x, 10, 100)
+f_obs <- rf(1, 10, 100)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line()
+set.seed(1)
+x <- seq(0, 4, 0.01)
+fx <- df(x, 10, 100)
+f_obs <- rf(1, 10, 100)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line() +
+geom_vline(xintercept = f_obs, linetype=2)
+set.seed(1)
+x <- seq(0, 4, 0.01)
+fx <- df(x, 10, 100)
+f_obs <- rf(1, 10, 100)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line() +
+geom_vline(xintercept = f_obs, linetype=2)
+set.seed(1)
+x <- seq(0, 4, 0.01)
+fx <- df(x, 10, 100)
+f_obs <- rf(1, 10, 100)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+geom_line() +
+geom_vline(xintercept = f_obs, linetype=2) +
+scale_x_continuous(breaks=c(0, f_obs, 1, 2, 3, 4))
+d
+d <- fread("https://crossley.github.io/cogs2020/data/mis/mis_data.csv")
+d
+d[, unique(condition)]
+d
+library(ez)
+exANOVA
+ezANOVA
+ezANOVA(data=d)
+d
+ezANOVA(data=d, dv=error, wid=subject, between=.(condition), type=3)
+t.test(error~condition, data=d)
+source('~/Dropbox/teaching/2021/cogs2020/live_course_material/scratch.R', echo=TRUE)
+source('~/Dropbox/teaching/2021/cogs2020/live_course_material/scratch.R', echo=TRUE)
+source('~/Dropbox/teaching/2021/cogs2020/live_course_material/scratch.R', echo=TRUE)
+n_groups <- 4
+source('~/Dropbox/teaching/2021/cogs2020/live_course_material/scratch.R', echo=TRUE)
+n_groups
+n_total
+na <- length(a_obs)
+nb <- length(b_obs)
+nc <- length(c_obs)
+nd <- length(d_obs)
+n_total <- na + nb + nc + nd
+n_groups <- 4
+na
+nb
+nc
+nd
+n_groups
+n_total
+## dfs
+df_between <- n_groups-1
+df_within <- n_total - n_groups
+source('~/Dropbox/teaching/2021/cogs2020/live_course_material/scratch.R', echo=TRUE)
+source('~/Dropbox/teaching/2021/cogs2020/live_course_material/scratch.R', echo=TRUE)
+source('~/Dropbox/teaching/2021/cogs2020/live_course_material/scratch.R', echo=TRUE)
+pval
+pval
+prob_1_theta_hat_x <- seq(0, 5, 0.01) # possible outcomes of your test statistic
+prob_1_theta_hat_p <- df(prob_1_theta_hat_x, df_between, df_within) # corresponding probabilities of outcomes
+dfx <- data.table(x=prob_1_theta_hat_x, fx=prob_1_theta_hat_p)
+dfx
+prob_1_theta_hat_x <- seq(0, 5, 0.01) # possible outcomes of your test statistic
+prob_1_theta_hat_p <- df(prob_1_theta_hat_x, df_between, df_within) # corresponding probabilities of outcomes
+dfx <- data.table(x=prob_1_theta_hat_x, fx=prob_1_theta_hat_p)
+ggplot(dfx, aes(x, fx)) +
+geom_line()
+## compute critical value
+crit_val <- qf(0.05, df_between, df_within, lower.tail=F)
+crit_val
+pval
+d <- data.table(a_obs, b_obs, c_obs, d_obs)
+d[, subject := factor(1:.N)]
+d
+d <- data.table(a_obs, b_obs, c_obs, d_obs)
+d <- melt(d, measure.var=c('a', 'b', 'c', 'd'))
+d[, variable := factor(variable)]
+d[, subject := factor(1:.N)]
+d <- data.table(a_obs, b_obs, c_obs, d_obs)
+d <- melt(d, measure.var=c('a', 'b', 'c', 'd'))
+d[, variable := factor(variable)]
+d[, subject := factor(1:.N)]
+d <- data.table(a_obs, b_obs, c_obs, d_obs)
+d <- data.table(a_obs, b_obs, c_obs, d_obs)
+d <- melt(d, measure.var=c('a_obs', 'b_obs', 'c_obs', 'd_obs'))
+d[, variable := factor(variable)]
+d[, subject := factor(1:.N)]
+d
+prob_1_r_result <-  ezANOVA(
+data=d,
+dv=value,
+wid=subject,
+between=.(variable),
+type=3
+)
+prob_1_r_result
+df_between
+pval
+ezANOVA(
+data=d,
+dv=value,
+wid=subject,
+between=.(variable),
+type=3
+)
+ezANOVA(
+data=d,
+dv=value,
+wid=subject,
+between=.(variable),
+type=2
+)
+d <- fread("https://crossley.github.io/cogs2020/data/mis/mis_data.csv")
+d
+d[, unique(subject), .(condition)]
+d[condition==1, subject := subject+10 ]
+d[, unique(subject), .(condition)]
+d
+dd[, mean(error), .(condition, subject)]
+d[, mean(error), .(condition, subject)]
+dd <- d[, .(mean_error = mean(error)), .(condition, subject)]
+dd
+prob_3_r_result <- ezANOVA(
+data=dd,
+dv=mean_error,
+wid=subject,
+between=.(condition),
+type=3
+)
+d <- fread("https://crossley.github.io/cogs2020/data/mis/mis_data.csv")
+d[condition==1, subject := subject+10]
+dd <- d[, .(mean_error = mean(error)), .(condition, subject)]
+prob_3_r_result <- ezANOVA(
+data=dd,
+dv=mean_error,
+wid=subject,
+between=.(condition),
+type=3
+)
+prob_3_r_result
+dd
+x <- dd[condition==0, mean_error]
+y <- dd[condition==1, mean_error]
+prob_4_r_result <- t.test(x, y, mu=0, alternative='two.sided', confidence=0.95)
+prob_4_r_result
+source('~/Dropbox/teaching/2021/cogs2020/live_course_material/scratch.R', echo=TRUE)
+d <- fread('https://crossley.github.io/cogs2020/data/mis/mis_data.csv')
+d
+d[, unique(subject), .(condition)]
+d[condition==1]
+d[condition==1, subject]
+d[, unique(subject), .(condition)]
+d[condition==1, subject := subject + 100]
+d[, unique(subject), .(condition)]
+library(ez)
+dd <- d[, .(mean_error = mean(error)), .(condition, subject)]
+dd
+prob_3_r_result <- ezANOVA(data=dd,
+dv=mean_error,
+wid=subject,
+between=.(condition),
+type=3)
+prob_3_r_result
+str(dd)
+dd[, condition := as.factor(condition)]
+dd[, subject := as.factor(subject)]
+str(dd)
+prob_3_r_result <- ezANOVA(data=dd,
+dv=mean_error,
+wid=subject,
+between=.(condition),
+type=3)
+prob_3_r_result
+d
+d[, error, subject]
+dd
+d[, error, subject]
+dd
+x <- dd[condition==0, mean_error]
+x
+x <- dd[condition==1, mean_error]
+y
+y <- dd[condition==1, mean_error]
+x <- dd[condition==0, mean_error]
+y <- dd[condition==1, mean_error]
+x
+y
+x <- dd[condition==0, mean_error]
+y <- dd[condition==1, mean_error]
+prob_4_r_result <- t.test(x,
+y,
+paired=F,
+var.equal=T,
+mu=0)
+prob_4_r_result <- t.test(x,
+y,
+paired=F,
+var.equal=T,
+mu=0,
+alternative='two.sided')
+prob_4_r_result
+prob_3_r_result
+library(data.table)
+library(ggplot2)
+library(ez)
+rm(list=ls())
+d <- fread('https://crossley.github.io/cogs2020/data/mis/mis_data.csv')
+d
+d[, unique(subject), condition]
+d[condition==1, subject := subject + 100]
+d
+d[, unique(subject), condition]
+d
+dd <- d[, .(mean_error = mean(error)), .(condition, subject)]
+dd
+dd <- d[, .(mean_error = mean(error)), .(condition, subject)]
+prob_3_r_result <- ezANOVA(data=dd,
+dv=mean_error,
+wid=subject,
+between=.(condition),
+type=3)
+prob_3_r_result
+dd[, condition := as.factor(condition)]
+dd[, subject := as.factor(subject)]
+prob_3_r_result <- ezANOVA(data=dd,
+dv=mean_error,
+wid=subject,
+between=.(condition),
+type=3)
+prob_3_r_result
+dd
+x <- dd[condition==0, mean_error]
+y <- dd[condition==1, mean_error]
+xy
+x
+y
+x <- dd[condition==0, mean_error]
+y <- dd[condition==1, mean_error]
+prob_4_r_result <- t.test(x,
+y,
+paired=F,
+var.equal=T,
+mu=0,
+alternative='two.sided')
+prob_3_r_result
+prob_4_r_result
+?pf
+pf(0.5, 10, 100, F)
+pf(0.5, 10, 100, lower.tail=F)
+pf(x=0.5, df1=10, df2=100, lower.tail=F)
+pf(q=0.5, df1=10, df2=100, lower.tail=F)
