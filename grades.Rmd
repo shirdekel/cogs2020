@@ -51,6 +51,14 @@ d2[student_id == sid]
 # HW 3
 d3 <- fread('https://crossley.github.io/cogs2020/grades/hw_3_table.csv')
 d3[student_id == sid]
+
+# Midterm recovery 1
+d3 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv')
+d3[student_id == sid]
+
+# Midterm recovery 2
+d3 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv')
+d3[student_id == sid]
 ```
 
 
