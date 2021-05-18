@@ -58,6 +58,7 @@ g <- ggplot(dd, aes(block, acc_mean, colour=factor(phase))) +
   geom_pointrange(aes(x=block, 
                       ymin=acc_mean-acc_err, 
                       ymax=acc_mean+acc_err))
+g
 
 
 # Problem 2. Test the hypothesis that, for the first 100
@@ -133,8 +134,7 @@ prob_2_r_result <- r_result
 # guessing (i.e., p=0.5). For this problem, only
 # prob_x_r_result will be graded.
 x <- d[phase == 1][trial %in% max(trial):(max(trial)-99)][, sum(acc)]
-theta_hat_obs <- x / n
-prob_3_r_result <- binom.test(theta_hat_obs * n,  
+prob_3_r_result <- binom.test(x,  
                               n, 
                               p=0.5, 
                               alternative='greater')
@@ -144,8 +144,7 @@ prob_3_r_result <- binom.test(theta_hat_obs * n,
 # (i.e., p=0.5). For this problem, only prob_x_r_result will
 # be graded.
 x <- d[phase == 2][trial %in% min(trial):(min(trial)+99)][, sum(acc)]
-theta_hat_obs <- x / n
-prob_4_r_result <- binom.test(theta_hat_obs * n,  
+prob_4_r_result <- binom.test(x,  
                               n,  
                               p=0.5,  
                               alternative='less')
@@ -268,5 +267,65 @@ prob_8_r_result <- t.test(x, mu=0.5, alternative='less')
 ans_9 <- ggplot(d, aes(x, y, colour=factor(cat))) +
   geom_point() +
   facet_wrap(~phase)
+
+# problem 10. For the first 16 blocks of phase 1, assuming
+# that you are performing a one-tailed test, and assuming
+# that the true state of the universe is μ=.6 . Given
+# H0:μ=.5
+x <- dd2[phase==1 & block %in% 1:16, acc_mean]
+n <- length(x)
+sig_x <- sd(x)
+sig_x_bar <- sig_x / sqrt(n)
+
+mu_h0 <- 0
+mu_h1 <- .1 / sig_x_bar
+t_crit <- qt(0.05, n-1, lower.tail=F)
+
+t <- seq(-4, 4+mu_h1, 0.01)
+dt_h0 <- dt(t, n-1)
+dt_h1 <- dt(t-mu_h1, n-1)
+d <- data.table(t, dt_h0, dt_h1)
+ggplot(d) +
+  geom_line(aes(x=t, y=dt_h0), colour='red') +
+  geom_line(aes(x=t, y=dt_h1), colour='blue') +
+  geom_vline(xintercept=t_crit, linetype=2)
+
+ans_10a <- 0.05
+ans_10b <- pt(t_crit-mu_h1, n-1, lower.tail=T)
+ans_10c <- 1 - ans_10b
+
+# Problem 11. The number of action potentials generated from
+# a given neuron in its baseline state when observed for a
+# fixed period of time (1 second) is well described by a
+# Poisson distribution. The Poisson distribution is fully
+# characterised by a single parameter λ called the rate
+# parameter. It turns out that λ is also the mean of the
+# Poisson distribution. Suppose a group of researchers
+# measured a particular neuron and observed 5 action
+# potentials in a given time period. Let X be the Poisson
+# random variable that generated this result. Test the
+# hypothesis that λ>4eventspersecond . You will need to
+# search the web or use the built-in R help to look or
+# functions that tell you about Poisson probabilities etc.
+# You ought to find an R function that will do the entre
+# test for you, and it would be wise to use this function to
+# check your work, but please perform all 5 steps as
+# indicated in the general instructions at the top of this
+# homework.
+
+# TODO: This one was extra credit so it's not a high
+# priority for me to write out.
+
+# Problem 12. Please respond by assigning "confidence",
+# "alpha", "beta", or "power" to the variables requested
+# below. Note that the dashed line in the above figure is
+# the critical value.
+ans_12a <- 'alpha'
+ans_12b <- 'confidence'
+ans_12c <- 'power'
+ans_12d <- 'beta'
+ans_12e <- 0.5
+ans_12f <- 0.95
+ans_12g <- "No"
 ```
 
