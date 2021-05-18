@@ -547,20 +547,24 @@ ggplot(dd, aes(theta_hat_x, theta_hat_p)) +
 <pre class="r"><code># step 4
 x &lt;- dd2[phase==1][block %in% min(block):(min(block)+15)][, acc_mean]
 n &lt;- length(x)
-theta_hat_obs &lt;- (mean(x) - 0.5) / (sd(x)/sqrt(n)) 
+theta_hat_obs &lt;- mean(x)
+theta_hat_obs_t &lt;- (mean(x) - 0.5) / (sd(x)/sqrt(n)) 
 
-theta_hat_obs_lower &lt;- -theta_hat_obs
-theta_hat_obs_upper &lt;- theta_hat_obs
+theta_hat_obs_lower &lt;- -theta_hat_obs_t
+theta_hat_obs_upper &lt;- theta_hat_obs_t
 
 # step 5
 p_val_lower &lt;- pt(theta_hat_obs_lower, n-1, lower.tail=TRUE)
 p_val_upper &lt;- pt(theta_hat_obs_upper, n-1, lower.tail=FALSE)
 p_val &lt;- p_val_lower + p_val_upper
 
-theta_hat_crit_lower &lt;- qt(0.025, n, 0.5, lower.tail=TRUE)
-theta_hat_crit_upper &lt;- qt(0.025, n, 0.5, lower.tail=FALSE)
+theta_hat_crit_lower_t &lt;- qt(0.025, n-1, lower.tail=TRUE)
+theta_hat_crit_upper_t &lt;- qt(0.025, n-1, lower.tail=FALSE)
 
-ci_width &lt;- (theta_hat_crit_upper - theta_hat_crit_lower) * sd(x)/sqrt(n)
+theta_hat_crit_lower &lt;- theta_hat_crit_lower_t * sd(x) / sqrt(n) + 0.5
+theta_hat_crit_upper &lt;- theta_hat_crit_upper_t * sd(x) / sqrt(n) + 0.5
+
+ci_width &lt;- (theta_hat_crit_upper_t - theta_hat_crit_lower_t) * sd(x)/sqrt(n)
 ci_lower &lt;- mean(x) - ci_width / 2
 ci_upper &lt;- mean(x) + ci_width / 2
 
@@ -666,7 +670,7 @@ ans_12c &lt;- &#39;power&#39;
 ans_12d &lt;- &#39;beta&#39;
 ans_12e &lt;- 0.5
 ans_12f &lt;- 0.95
-ans_12g &lt;- &quot;No&quot;</code></pre>
+ans_12g &lt;- &quot;NO&quot;</code></pre>
 </div>
 
 

@@ -52,6 +52,10 @@ d2[student_id == sid]
 d3 <- fread('https://crossley.github.io/cogs2020/grades/hw_3_table.csv')
 d3[student_id == sid]
 
+# HW 4
+d4 <- fread('https://crossley.github.io/cogs2020/grades/hw_4_table.csv')
+d4[student_id == sid]
+
 # Midterm recovery 1
 dm1 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv')
 dm1[student_id == sid]
@@ -122,6 +126,31 @@ library(ggplot2)
 rm(list=ls())
 
 d <- fread('https://crossley.github.io/cogs2020/grades/hw_3_table.csv')
+
+dd <- d[, .(score = unique(score)), .(student_id)]
+ggplot(dd, aes(score)) +
+  geom_histogram(bins=10)
+
+
+dd <- d[, .(ans_mean = mean(ans=="correct"),
+            ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
+ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
+  geom_pointrange(aes(x=ans_labels,
+                      ymin=ans_mean-ans_err,
+                      ymax=ans_mean+ans_err)) +
+  xlab('Problem Number') +
+  ylab('Proportion Correct')
+```
+
+## Homework 4 Grades
+
+```{r}
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/grades/hw_4_table.csv')
 
 dd <- d[, .(score = unique(score)), .(student_id)]
 ggplot(dd, aes(score)) +
