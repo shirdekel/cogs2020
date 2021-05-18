@@ -53,12 +53,12 @@ d3 <- fread('https://crossley.github.io/cogs2020/grades/hw_3_table.csv')
 d3[student_id == sid]
 
 # Midterm recovery 1
-d3 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv')
-d3[student_id == sid]
+dm1 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv')
+dm1[student_id == sid]
 
 # Midterm recovery 2
-d3 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv')
-d3[student_id == sid]
+dm2 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv')
+dm2[student_id == sid]
 ```
 
 
@@ -136,4 +136,34 @@ ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
                       ymax=ans_mean+ans_err)) +
   xlab('Problem Number') +
   ylab('Proportion Correct')
+```
+
+## Midterm 1 Grades
+
+```{r}
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv')
+
+dd <- d[, .(score = unique(score)), .(student_id)]
+ggplot(dd, aes(score)) +
+  geom_histogram(bins=10)
+```
+
+## Midterm 2 Grades
+
+```{r}
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv')
+
+dd <- d[, .(score = unique(score)), .(student_id)]
+ggplot(dd, aes(score)) +
+  geom_histogram(bins=10)
 ```

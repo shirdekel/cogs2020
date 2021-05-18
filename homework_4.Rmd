@@ -488,11 +488,11 @@ For the first 16 blocks of phase 1, assuming that you are
 performing a one-tailed test, and assuming that the true
 state of the universe is $\mu=.6$. Given $H_0:\mu=.5$
 
-* compute $\alpha$ and store its value in a variable named `ans_9a`
+* compute $\alpha$ and store its value in a variable named `ans_10a`
 
-* compute $\beta$ and store its value in a variable named `ans_9b`
+* compute $\beta$ and store its value in a variable named `ans_10b`
 
-* compute $power$ and store its value in a variable named `ans_9c`
+* compute $power$ and store its value in a variable named `ans_10c`
 
 ## Problem 11
 The number of action potentials generated from a given

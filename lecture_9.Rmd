@@ -74,7 +74,6 @@ gen_exp <- function(muA1, muA2, muB1, muB2, sig, n) {
 ```
 
 ## Two-way ANOVA
-
 Consider an experiment in which one of two different
 **treatments** are administered at one of two different
 **doses**. A two-way ANOVA attempts to answer the following
@@ -85,7 +84,6 @@ three questions:
 3. Does treatment and dose interact?
 
 ## Two-way ANOVA Intuition
-
 The logic of a two-way ANOVA is essentially the same as for
 a one-way ANOVA. That is, if between-group variation is
 significantly larger than within-group variation, then we
@@ -98,7 +96,6 @@ two-way ANOVA is actually testing three null hypotheses
 simultaneously (i.e., the three statements above).
 
 ## Visualising the three null hypotheses
-
 Consider the simple example of two treatments $A$ and $B$,
 both with two treatment doses.
 
@@ -262,7 +259,6 @@ $\begin{align}
 \end{align}$
 
 ### Using variance to test the null hypotheses
-
 - $SS_{total}$ is the total variability between all
 observations.
 - $SS_{treatment}$ is the variability between different
@@ -277,8 +273,10 @@ dose}$
 ### Variability terms akin to *between-factor* variability
 - $n_{treatment} =$ number of unique treatment levels.
 - $n_{dose} =$ number of unique dose levels.
-- $n_{total} =$ number of observations at each treatment
-$\times$ dose combination level
+- $n_{total} =$ number of observations at level of dose and
+treatment, which in the following we assume is the same for
+all combinations of treatment and dose (i.e., we assume a
+**balanced design**).
 
 \begin{align}
 SS_{treatment} &= n_{dose} n_{total} \sum_i^{ n_{treatment} }
@@ -327,17 +325,16 @@ $$SS_{total} = SS_{treatment} + SS_{dose} + SS_{treatment \times dose} + SS_{err
 ### Degrees of freedom and building F-ratios
 | Effect                  | $df$                                            | $SS$        | $MS$                                                            | $F$                                             |
 | :---------:             | :---------:                                     | :---------: | :---------:                                                     | :---------:                                     |
-| $Treatment$             | $n_{treatment} - 1$                             | see above   | $\frac{SS_{treatment}}{df_{treatment}}$                         | $\frac{MS_{treatment}}{MS_{error}}$            |
+| $Treatment$             | $n_{treatment} - 1$                             | see above   | $\frac{SS_{treatment}}{df_{treatment}}$                         | $\frac{MS_{treatment}}{MS_{error}}$             |
 | $Dose$                  | $n_{dose} - 1$                                  | see above   | $\frac{SS_{dose}}{df_{dose}}$                                   | $\frac{MS_{dose}}{MS_{error}}$                  |
 | $Treatment \times Dose$ | $(n_{treatment} - 1)(n_{dose} - 1)$             | see above   | $\frac{SS_{treatment \times dose}}{df_{treatment \times dose}}$ | $\frac{MS_{treatment \times dose}}{MS_{error}}$ |
-| $Error$                 | $N - n_{treatment}n_{dose}$     | see above   | $\frac{SS_{error}}{df_{error}}$                                 |                                                 |
+| $Error$                 | $N - n_{treatment}n_{dose}$                     | see above   | $\frac{SS_{error}}{df_{error}}$                                 |                                                 |
 
 - From here, we compute p-values from the observed $F$
 scores in the table above, and we are off to the hypothesis
 testing races.
 
 ### More general experiment and data structure
-
 More generally, two-way ANOVA deals with any two factors of
 an experiment that contain an arbitrary number of levels.
 Consider a full factorial experiment with two factors:
@@ -359,12 +356,12 @@ $n_2$ levels.
 | :---------:                | :---------:                                        | :---------: | :---------:                                                           | :---------:                                        |
 | $Factor 1$                 | $n_{Factor 1} - 1$                                 | see above   | $\frac{SS_{Factor 1}}{df_{Factor 1}}$                                 | $\frac{MS_{Factor 1}}{MS_{error}}$                 |
 | $Factor 2$                 | $n_{Factor 2} - 1$                                 | see above   | $\frac{SS_{Factor 2}}{df_{Factor 2}}$                                 | $\frac{MS_{Factor 2}}{MS_{error}}$                 |
-| $Factor 1 \times Factor 2$ | $(n_{Factor 1}-1) (n_{Factor 2}-1)$                  | see above   | $\frac{SS_{Factor 1 \times Factor 2}}{df_{Factor 1 \times Factor 2}}$ | $\frac{MS_{Factor 1 \times Factor 2}}{MS_{error}}$ |
-| $Error$                    | $N - n_{Factor 1}n_{Factor 2}$ | see above   | $\frac{SS_{error}}{df_{error}}$                                       |                                                    |
+| $Factor 1 \times Factor 2$ | $(n_{Factor 1}-1) (n_{Factor 2}-1)$                | see above   | $\frac{SS_{Factor 1 \times Factor 2}}{df_{Factor 1 \times Factor 2}}$ | $\frac{MS_{Factor 1 \times Factor 2}}{MS_{error}}$ |
+| $Error$                    | $N - n_{Factor 1}n_{Factor 2}$                     | see above   | $\frac{SS_{error}}{df_{error}}$                                       |                                                    |
 
 ## Two-way ANOVA in R
 Consider the following data:
-```{r}
+```{r, echo=F}
 ## Generate data where both main effects are significant but
 ## the interaction is not significant
 set.seed(0)
@@ -399,8 +396,9 @@ ggplot(dd, aes(treatment, V1, colour=dose)) +
   geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2))
 
 ## define number of levels in each factor
-n_treatment <- d[, length(unique(treatment))]
-n_dose <- d[, length(unique(dose))]
+n_treatment <- d[, length(unique(treatment))] # number of treatment levels
+n_dose <- d[, length(unique(dose))] # number of dose levels
+n <- d[, .N, .(treatment, dose)][, unique(N)] # number of observations at each level
 
 ## define Df terms
 df_treatment <- n_treatment - 1
@@ -419,7 +417,7 @@ ss_dose <- 0
 for(i in d[, unique(dose)]) {
   ss_dose <- ss_dose + (d[dose==i, mean(y)] - d[, mean(y)])^2
 }
-ss_dose <- n_dose * n * ss_dose
+ss_dose <- n_treatment * n * ss_dose
 
 ss_interaction <- 0
 for(i in d[, unique(treatment)]) {
