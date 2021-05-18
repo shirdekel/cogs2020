@@ -144,7 +144,7 @@ ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
 
 ## Homework 4 Grades
 
-```{r}
+```{r, fig.width=10}
 library(data.table)
 library(ggplot2)
 
@@ -164,7 +164,8 @@ ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
                       ymin=ans_mean-ans_err,
                       ymax=ans_mean+ans_err)) +
   xlab('Problem Number') +
-  ylab('Proportion Correct')
+  ylab('Proportion Correct')+
+  theme(axis.text.x=element_text(angle=45, hjust=1))
 ```
 
 ## Midterm 1 Grades
