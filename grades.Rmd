@@ -80,7 +80,6 @@ dd <- d[, .(score = unique(score)), .(student_id)]
 ggplot(dd, aes(score)) +
   geom_histogram(bins=10)
 
-
 dd <- d[, .(ans_mean = mean(ans=="correct"),
             ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
 ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
@@ -104,7 +103,6 @@ d <- fread('https://crossley.github.io/cogs2020/grades/hw_2_table.csv')
 dd <- d[, .(score = unique(score)), .(student_id)]
 ggplot(dd, aes(score)) +
   geom_histogram(bins=10)
-
 
 dd <- d[, .(ans_mean = mean(ans=="correct"),
             ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
@@ -131,7 +129,6 @@ dd <- d[, .(score = unique(score)), .(student_id)]
 ggplot(dd, aes(score)) +
   geom_histogram(bins=10)
 
-
 dd <- d[, .(ans_mean = mean(ans=="correct"),
             ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
 ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
@@ -155,33 +152,6 @@ d <- fread('https://crossley.github.io/cogs2020/grades/hw_4_table.csv')
 dd <- d[, .(score = unique(score)), .(student_id)]
 ggplot(dd, aes(score)) +
   geom_histogram(bins=10)
-
-
-dd <- d[, .(ans_mean = mean(ans=="correct"),
-            ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
-ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
-  geom_pointrange(aes(x=ans_labels,
-                      ymin=ans_mean-ans_err,
-                      ymax=ans_mean+ans_err)) +
-  xlab('Problem Number') +
-  ylab('Proportion Correct')+
-  theme(axis.text.x=element_text(angle=45, hjust=1))
-```
-
-## Homework 5 Grades
-
-```{r, fig.width=10}
-library(data.table)
-library(ggplot2)
-
-rm(list=ls())
-
-d <- fread('https://crossley.github.io/cogs2020/grades/hw_5_table.csv')
-
-dd <- d[, .(score = unique(score)), .(student_id)]
-ggplot(dd, aes(score)) +
-  geom_histogram(bins=10)
-
 
 dd <- d[, .(ans_mean = mean(ans=="correct"),
             ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
@@ -222,4 +192,54 @@ d <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv')
 dd <- d[, .(score = unique(score)), .(student_id)]
 ggplot(dd, aes(score)) +
   geom_histogram(bins=10)
+```
+
+## Homework 5 Grades
+
+```{r, fig.width=10}
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/grades/hw_5_table.csv')
+
+dd <- d[, .(score = unique(score)), .(student_id)]
+ggplot(dd, aes(score)) +
+  geom_histogram(bins=10)
+
+dd <- d[, .(ans_mean = mean(ans=="correct"),
+            ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
+ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
+  geom_pointrange(aes(x=ans_labels,
+                      ymin=ans_mean-ans_err,
+                      ymax=ans_mean+ans_err)) +
+  xlab('Problem Number') +
+  ylab('Proportion Correct')+
+  theme(axis.text.x=element_text(angle=45, hjust=1))
+```
+
+## Homework 6 Grades
+
+```{r, fig.width=10}
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/grades/hw_6_table.csv')
+
+dd <- d[, .(score = unique(score)), .(student_id)]
+ggplot(dd, aes(score)) +
+  geom_histogram(bins=10)
+
+dd <- d[, .(ans_mean = mean(ans=="correct"),
+            ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
+ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
+  geom_pointrange(aes(x=ans_labels,
+                      ymin=ans_mean-ans_err,
+                      ymax=ans_mean+ans_err)) +
+  xlab('Problem Number') +
+  ylab('Proportion Correct')+
+  theme(axis.text.x=element_text(angle=45, hjust=1))
 ```
