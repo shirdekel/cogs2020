@@ -56,6 +56,14 @@ d3[student_id == sid]
 d4 <- fread('https://crossley.github.io/cogs2020/grades/hw_4_table.csv')
 d4[student_id == sid]
 
+# HW 5
+d5 <- fread('https://crossley.github.io/cogs2020/grades/hw_5_table.csv')
+d5[student_id == sid]
+
+# HW 6
+d6 <- fread('https://crossley.github.io/cogs2020/grades/hw_6_table.csv')
+d6[student_id == sid]
+
 # Midterm recovery 1
 dm1 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv')
 dm1[student_id == sid]
@@ -63,6 +71,47 @@ dm1[student_id == sid]
 # Midterm recovery 2
 dm2 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv')
 dm2[student_id == sid]
+```
+
+## Total grades so far
+
+```{r, eval=T}
+# If you want to know where you are standing currently, run
+# this entire code block and then select your student_id
+# from dd
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+d1 <- fread('https://crossley.github.io/cogs2020/grades/hw_1_table.csv')
+d2 <- fread('https://crossley.github.io/cogs2020/grades/hw_2_table.csv')
+d3 <- fread('https://crossley.github.io/cogs2020/grades/hw_3_table.csv')
+d4 <- fread('https://crossley.github.io/cogs2020/grades/hw_4_table.csv')
+d5 <- fread('https://crossley.github.io/cogs2020/grades/hw_5_table.csv')
+d6 <- fread('https://crossley.github.io/cogs2020/grades/hw_6_table.csv')
+dm1 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv')
+dm2 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv')
+
+d1[, assignment := 'hw1']
+d2[, assignment := 'hw2']
+d3[, assignment := 'hw3']
+d4[, assignment := 'hw4']
+d5[, assignment := 'hw5']
+d6[, assignment := 'hw6']
+dm1[, assignment := 'm1']
+dm2[, assignment := 'm2']
+
+d <- rbindlist(list(d1, d2, d3, d4, d5, d6, dm1, dm2), use.names=T, fill=T)
+dd <- d[, .(score = unique(score)), .(student_id, assignment)]
+dd <- dcast(dd, student_id ~ assignment, value.var = 'score')
+dd[, total_score := sum(0.1 * 1, # quizzes (assuming you got credit for the 3 given)
+                    0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6), na.rm=T), # hw
+                    0.3 * mean(c(m1, m2), na.rm=T), # midterm
+                    0.3 * 1, na.rm=T) # final (assuming perfect score)
+   , .(student_id)]
+ggplot(dd, aes(total_score)) +
+  geom_histogram(bins=10)
 ```
 
 
