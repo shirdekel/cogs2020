@@ -91,7 +91,7 @@ d
 
 ```{r, eval=F}
 # the result of ezANOVA()
-prob_1_r_result <- r_result 
+prob_1_r_result <- ezANOVA(...)
 ```
 
 **2.** Considering the following data and using an
@@ -114,7 +114,7 @@ d
 
 ```{r, eval=F}
 # the result of ezANOVA()
-prob_2_r_result <- r_result 
+prob_2_r_result <- ezANOVA(...)
 ```
 
 **3.** Considering the following data and using an
@@ -137,7 +137,7 @@ d
 
 ```{r, eval=F}
 # the result of ezANOVA()
-prob_3_r_result <- r_result 
+prob_3_r_result <- ezANOVA(...)
 ```
 
 **4.** Considering the following data and using an
@@ -160,7 +160,7 @@ d
 
 ```{r, eval=F}
 # the result of ezANOVA()
-prob_4_r_result <- r_result 
+prob_4_r_result <- ezANOVA(...)
 ```
 
 **5.** Consider the data located here:
