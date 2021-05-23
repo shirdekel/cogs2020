@@ -242,8 +242,8 @@ as follows:
 
 |             | Treatment A                                                      | Treatment B                                                      |                                     |
 | :---------: | :-------------:                                                  | :-------------:                                                  | :-------------:                     |
-| Dose 1      | $\bar{y}_{11\bullet} = \frac{y_{111}+y_{112}+\ldots+y_{11n}}{n}$ | $\bar{y}_{12\bullet} = \frac{y_{121}+y_{122}+\ldots+y_{12n}}{n}$ | $\bar{y}_{\bullet 1 \bullet}$       |
-| Dose 2      | $\bar{y}_{21\bullet} = \frac{y_{211}+y_{212}+\ldots+y_{11n}}{n}$ | $\bar{y}_{22\bullet} = \frac{y_{221}+y_{222}+\ldots+y_{22n}}{n}$ | $\bar{y}_{\bullet 2 \bullet}$       |
+| Dose 1      | $\bar{y}_{11\bullet} = \frac{y_{111}+y_{112}+\ldots+y_{11n}}{n}$ | $\bar{y}_{21\bullet} = \frac{y_{121}+y_{122}+\ldots+y_{12n}}{n}$ | $\bar{y}_{\bullet 1 \bullet}$       |
+| Dose 2      | $\bar{y}_{12\bullet} = \frac{y_{211}+y_{212}+\ldots+y_{11n}}{n}$ | $\bar{y}_{22\bullet} = \frac{y_{221}+y_{222}+\ldots+y_{22n}}{n}$ | $\bar{y}_{\bullet 2 \bullet}$       |
 |             | $\bar{y}_{1 \bullet \bullet}$                                    | $\bar{y}_{2 \bullet \bullet}$                                    | $\bar{y}_{\bullet \bullet \bullet}$ |
 
 Please note that this is called a **[full factorial

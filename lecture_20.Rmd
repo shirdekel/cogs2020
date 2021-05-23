@@ -1,0 +1,503 @@
+---
+title: "Lecture 20"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: true
+        smooth_scroll: true
+    toc_depth: 4
+    fig_caption: yes
+    # code_folding: show
+    number_sections: false
+    theme: cerulean
+fontsize: 14pt
+---
+
+## General Linear Model
+
+### Regression
+
+Simple linear regression models attempt to predict the value of some observed
+outcome random variable $\boldsymbol{Y}$ as a linear function of a predictor
+random variable $\boldsymbol{X}$.
+
+For the $i^{th}$ observation, we can write:
+
+$$
+y_{i} = \beta_{0} + \beta_{1} x_{i} + \epsilon_{i}
+$$
+
+- $y_{i}$ is the $i^{th}$ observed outcome
+- $x_{i}$ is the $i^{th}$ value of the predictor variable
+- $\epsilon_{i} \sim \mathcal{N}(0, \sigma_{\epsilon})$ is called the **residual**
+- $\beta_{0_{i}}$ and $\beta_{1_{i}}$ are parameters of the linear regression
+  model
+
+Now imagine having many observations such that $i \in [1, n]$:
+
+\begin{align}
+\boldsymbol{y} &= \beta_{0} + \beta_{1} \boldsymbol{x} + \boldsymbol{\epsilon} \\\\
+
+\boldsymbol{y} &= \beta_{0}
+               \begin{bmatrix}
+               1\\
+               1\\
+               \vdots\\
+               1
+               \end{bmatrix} +
+               \beta_{1}
+               \begin{bmatrix}
+               x_1\\ x_2\\ \vdots\\ x_n\\
+               \end{bmatrix} +
+               \begin{bmatrix}
+               \epsilon_1\\ \epsilon_2\\ \vdots\\ \epsilon_n\\
+               \end{bmatrix} \\\\
+
+\boldsymbol{y} &= \begin{bmatrix}
+               1 & x_1 \\
+               1 & x_2 \\
+               \vdots & \vdots \\
+               1 & x_n
+               \end{bmatrix}
+               \begin{bmatrix}
+               \beta_{0} \\
+               \beta_{1}
+               \end{bmatrix} +
+                              \begin{bmatrix}
+               \epsilon_1\\ \epsilon_2\\ \vdots\\ \epsilon_n\\
+               \end{bmatrix} \\\\
+
+\boldsymbol{y} &= \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}
+\end{align}
+
+#### How can we pick $\boldsymbol{\beta}$ values that best fit our data?
+
+- let $y_i$ denote observed values
+- let $\hat{y_{i}}$ denote predicted values
+
+\begin{align}
+\hat{y_{i}} &= E[y_{i}]\\
+            &= E[\beta_{0} + \beta_{1} x_{i} + \epsilon_{i}]\\
+            &= \beta_{0} + \beta_{1} x_{i}
+\end{align}
+
+- The best fitting $\boldsymbol{\beta}$ values are those that minimise the
+  discrepancy between $y_{i}$ and $\hat{y_{i}}$.
+
+$$
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\argmin_{\boldsymbol{\beta}} \sum_{i=1}^{n} (y_{i} - \hat{y_{i}})^2
+$$
+
+- The $\boldsymbol{\beta}$ values that do this can be found by using a computer
+  to try out a bunch of different values and recording which ones give the
+  smallest error.
+
+- However, in this case, the $\boldsymbol{\beta}$ values that minimise error
+  can be solved for analytically. I won't go through the derivation here, even
+  though it is fairly simple to go through it. If you want to have a go on your
+  own, the method is to take the derivative with respect to
+  $\boldsymbol{\beta}$, and then find the $\boldsymbol{\beta}$ values that
+  make the resulting expression equal to zero.
+
+
+#### Regression model significance
+
+- Notice that $\sum_{i=1}^{n} (y_{i} - \hat{y_{i}})^2$ is a sum of squares very
+  much in the style of the sums of squares we have seen thus far in ANOVAs.
+
+- $SS_{error} = \sum_{i=1}^{n} (y_{i} - \hat{y_{i}})^2$
+
+- $SS_{error}$ is sometimes called $SS_{residual}$
+
+- $SS_{error}$ is what you get when you compare raw observations against the
+  full model predictions.
+
+- $SS_{total}$ is what you get when you compare raw observations against the
+  grand mean.
+
+- $SS_{total} = \sum_{i=1}^{n} (y_{i} - \bar{y_{i}})^2$
+
+- Just as $SS_{error}$ comes from $\sum_{i=1}^{n} (y_{i} - \hat{y_{i}})^2$ with
+  $\hat{y} = \beta_{0} + \beta_{1} x + \epsilon$, you can think of $SS_{total}$
+  as coming from $\sum_{i=1}^{n} (y_{i} - \hat{y_{i}})^2$ with
+  $\hat{y} = \bar{y} + \epsilon$.
+
+- From this perspective, $SS_{error}$ is the variability of the data around the
+  prediction from the full model, and $SS_{total}$ is the variability of the
+  data around the mean (which is pretty much the simplest possible model and
+  thus serves as a good baseline).
+
+- Finally $SS_{model} = \sum_{i=1}^{n} (\bar{y} - \hat{y_i})^2$ essentially
+  tells you how much the added complexity of the full model reduces the overall
+  variability (i.e., makes better predictions).
+
+- The percent of variability accounted for above the simple model is given by:
+
+$$
+R^2 = \frac{SS_{model}}{SS_{total}}
+$$
+
+- Does the more complex model provide a significantly better fit to the data
+  than the simplest model? This is what the $F$ ratio tells us.
+
+$$
+F = \frac{MS_{model}}{MS_{error}}
+$$
+
+- That is, the regression $F$-ratio tells us how much the regression model has
+  improved the prediction over the simple mean model, relative to the overall
+  inaccuracy in the regression model.
+
+- The $F$ ratio tells us if the overall regression model provides a better fit
+  to the data than the simple model, but we can also ask questions about the best
+  fitting $\beta$ values (i.e., is either $\beta$ different from zero?).
+
+- We won't prove this here, but it turns out the best fitting $\beta$ values
+  (i.e., $\hat{\beta}$) can be tested with a $t$-test.
+
+#### Example: Predict one MEG channel from another
+
+```{r}
+
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/data/eeg/epochs.txt')
+d[, V1 := NULL]
+
+## convert from wide to long format
+dd <- melt(d, id.vars=c('time', 'condition', 'epoch'))
+
+## pick out some columns randomly
+y <- dd[variable=='MEG 001', mean(value), .(epoch)][, V1]
+x <- dd[variable=='MEG 010', mean(value), .(epoch)][, V1]
+
+## visualise possible linear relationship
+ddd <- data.table(x, y)
+ggplot(ddd, aes(x, y)) +
+  geom_point() +
+  geom_smooth(method='lm')
+
+## fit a simple linear regression model
+fm <- lm(y~x, data=ddd)
+summary(fm)
+cor(x, y)^2
+
+```
+
+- A correlation analysis provides information on the strength and direction of the
+  linear relationship between two variables, while a simple linear regression
+  analysis estimates parameters in a linear equation that can be used to predict
+  values of one variable based on the other.
+
+- Note that `Multiple R-squared` is equal to `cor(x,y)^2`
+
+- $R^2 = \rho_{x,y}$
+
+#### Example: Speed-Accuracy trade-off in MIS data
+
+```{r}
+
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/data/mis/mis_data.csv')
+
+## give subjects in different groups unique numbers
+d[group==1, subject := subject + 10]
+
+## define x and y
+x <- d[, mean(error, na.rm=T), .(group, subject)][, V1]
+y <- d[, mean(movement_time, na.rm=T), .(group, subject)][, V1]
+
+## visualise possible linear relationship
+ddd <- data.table(x, y)
+ggplot(ddd, aes(x, y)) +
+  geom_point() +
+  geom_smooth(method='lm')
+
+## fit a simple linear regression model
+fm <- lm(y~x, data=ddd)
+summary(fm)
+cor(x, y)^2
+cor(fm$fitted.values, y)^2
+
+```
+
+### Multiple Regression
+
+- Multiple regression works just like the simple linear regression we just
+  covered, but with multiple predictor variables.
+
+\begin{align}
+y_{i} &= \beta_{0} +
+    \beta_{1} x_{1_i} +
+    \beta_{2} x_{2_i} +
+    \dots +
+    \beta_{k} x_{k_i} +
+    \epsilon_{i} \\\\
+
+\boldsymbol{y} &= \beta_{0}
+               \begin{bmatrix}
+               1\\
+               1\\
+               \vdots\\
+               1
+               \end{bmatrix} +
+               \beta_{1}
+               \begin{bmatrix}
+               x_{1_1}\\ x_{1_2}\\ \vdots\\ x_{1_n}\\
+               \end{bmatrix} +
+               \beta_{2}
+               \begin{bmatrix}
+               x_{2_1}\\ x_{2_2}\\ \vdots\\ x_{2_n}\\
+               \end{bmatrix} +
+               \ldots +
+               \beta_{k}
+               \begin{bmatrix}
+               x_{k_1}\\ x_{k_2}\\ \vdots\\ x_{k_n}\\
+               \end{bmatrix} +
+               \begin{bmatrix}
+               \epsilon_1\\ \epsilon_2\\ \vdots\\ \epsilon_n\\
+               \end{bmatrix} \\\\
+
+\boldsymbol{y} &= \begin{bmatrix}
+               1 & x_{1_1} & x_{2_1} & \ldots & x_{k_1} \\
+               1 & x_{1_2} & x_{2_2} & \ldots & x_{k_2} \\
+               \vdots & \vdots & \dots & \dots \\
+               1 & x_{1_n} & x_{2_n} & \ldots & x_{k_n}
+               \end{bmatrix}
+               \begin{bmatrix}
+               \beta_{0} \\
+               \beta_{1} \\
+               \vdots \\
+               \beta_{k}
+               \end{bmatrix} +
+                              \begin{bmatrix}
+               \epsilon_1\\ \epsilon_2\\ \vdots\\ \epsilon_n\\
+               \end{bmatrix} \\\\
+
+\boldsymbol{y} &= \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}
+\end{align}
+
+- It's powerful to write these equations in matrix form (the last line above)
+  because it highlights how the two situations are essentially the same.. at
+  least mathematically.
+
+#### Example:
+
+```{r}
+
+library(data.table)
+library(ggplot2)
+## install.packages('scatterplot3d') ## If you need to
+library(scatterplot3d)
+
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/data/eeg/epochs.txt')
+d[, V1 := NULL]
+
+## convert from wide to long format
+dd <- melt(d, id.vars=c('time', 'condition', 'epoch'))
+
+## pick out some columns randomly
+y <- dd[variable=='MEG 001', mean(value), .(epoch)][, V1]
+x1 <- dd[variable=='MEG 010', mean(value), .(epoch)][, V1]
+x2 <- dd[variable=='MEG 015', mean(value), .(epoch)][, V1]
+ddd <- data.table(y, x1, x2)
+
+## visualise possible linear relationship
+plot3d <- scatterplot3d(x1,
+                        x2,
+                        y,
+                        angle=55,
+                        scale.y=0.7,
+                        pch=16,
+                        color="red",
+                        main="Regression Plane")
+
+## fit a simple linear regression model
+fm <- lm(y ~ x1 + x2, data=ddd)
+plot3d$plane3d(fm, lty.box = "solid")
+summary(fm)
+cor(fm$fitted.values, y)^2
+
+```
+
+### General linear model: ANOVA and regression have a common base
+
+- The multiple regression model we just considered is an example of the general
+  linear model.
+
+\begin{align}
+y_{i} &= \beta_{0} +
+    \beta_{1} x_{1_i} +
+    \beta_{2} x_{2_i} +
+    \dots +
+    \beta_{k} x_{k_i} +
+    \epsilon_{i} \\\\
+
+\boldsymbol{y} &= \beta_{0}
+               \begin{bmatrix}
+               1\\
+               1\\
+               \vdots\\
+               1
+               \end{bmatrix} +
+               \beta_{1}
+               \begin{bmatrix}
+               x_{1_1}\\ x_{1_2}\\ \vdots\\ x_{1_n}\\
+               \end{bmatrix} +
+               \beta_{2}
+               \begin{bmatrix}
+               x_{2_1}\\ x_{2_2}\\ \vdots\\ x_{2_n}\\
+               \end{bmatrix} +
+               \ldots +
+               \beta_{k}
+               \begin{bmatrix}
+               x_{k_1}\\ x_{k_2}\\ \vdots\\ x_{k_n}\\
+               \end{bmatrix} +
+               \begin{bmatrix}
+               \epsilon_1\\ \epsilon_2\\ \vdots\\ \epsilon_n\\
+               \end{bmatrix} \\\\
+
+\boldsymbol{y} &= \begin{bmatrix}
+               1 & x_{1_1} & x_{2_1} & \ldots & x_{k_1} \\
+               1 & x_{1_2} & x_{2_2} & \ldots & x_{k_2} \\
+               \vdots & \vdots & \dots & \dots \\
+               1 & x_{1_n} & x_{2_n} & \ldots & x_{k_n}
+               \end{bmatrix}
+               \begin{bmatrix}
+               \beta_{0} \\
+               \beta_{1} \\
+               \vdots \\
+               \beta_{k}
+               \end{bmatrix} +
+               \begin{bmatrix}
+               \epsilon_1\\ \epsilon_2\\ \vdots\\ \epsilon_n\\
+               \end{bmatrix} \\\\
+
+\boldsymbol{y} &= \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}
+\end{align}
+
+- In regression, the $x_{i,j}$ values that make up the design matrix
+  $\boldsymbol{X}$ -- i.e., the regressors -- are continuously valued.
+
+- ANOVA can be framed by exactly the same linear model, given that the ANOVA
+  factors are input as "dummy coded" regressors.
+
+- What is dummy coding? Consider a factor with three levels. We can dummy code
+  this as follows:
+
+| Factor level | Dummy variable 1 | Dummy variable 2 |
+|--------------|------------------|------------------|
+|            1 |                0 |                0 |
+|            2 |                1 |                0 |
+|            3 |                0 |                1 |
+
+- This coding leads to the following linear model:
+
+\begin{align}
+\boldsymbol{y} &= \beta_{0}
+               \begin{bmatrix}
+               1\\ 1\\ \vdots\\ 1\\ 1\\ \vdots\\ 1\\ 1\\
+               \end{bmatrix} +
+               \beta_{1}
+               \begin{bmatrix}
+               0\\ 0\\ \vdots\\ 1\\ 1\\ \vdots\\ 0\\ 0
+               \end{bmatrix} +
+               \beta_{2}
+               \begin{bmatrix}
+               0\\ 0\\ \vdots\\ 0\\ 0\\ \vdots\\ 1\\ 1
+               \end{bmatrix} +
+               \begin{bmatrix}
+               \epsilon_1\\ \epsilon_2\\ \vdots\\ \epsilon_{m-1}\\ \epsilon_m\\
+               \vdots\\ \epsilon_{n-1}\\ \epsilon_n
+               \end{bmatrix} \\\\
+
+\boldsymbol{y} &= \begin{bmatrix}
+               1 & 0 & 0 \\
+               1 & 0 & 0 \\
+               \vdots & \vdots & \vdots\\
+               1 & 1 & 0 \\
+               1 & 1 & 0 \\
+               \vdots & \vdots & \vdots\\
+               1 & 0 & 1 \\
+               1 & 0 & 1 \\
+               \end{bmatrix}
+               \begin{bmatrix}
+               \beta_{0} \\
+               \beta_{1} \\
+               \beta_{2}
+               \end{bmatrix} +
+               \begin{bmatrix}
+               \epsilon_1\\ \epsilon_2\\ \vdots\\ \epsilon_{m-1}\\ \epsilon_m\\
+               \vdots\\ \epsilon_{n-1}\\ \epsilon_n\\
+               \end{bmatrix} \\\\
+
+\boldsymbol{y} &= \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}
+\end{align}
+
+- With this coding, it's fairly straight forward to show the following:
+
+$$
+\beta_0 = \bar{x_1} \\
+\beta_1 = \bar{x_2} - \bar{x_1} \\
+\beta_2 = \bar{x_3} - \bar{x_1} \\
+$$
+
+- That is, the $\beta$ estimates corresponds to differences in means, which is
+  exactly what ANOVA is after.
+
+#### Example: Criterion learning data
+
+```{r message=F}
+
+d <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/data_table/data_table_crit_learn.csv')
+
+## We will answer this question: Are there significant differences between the
+## mean `t2c` per subject betweem conditions? For simplicity, only consider the
+## `Delay`, `Long ITI` and `Short ITI` conditions.
+
+## clean up the data (just trsut me this makes sense to do here)
+dd <- unique(d[prob_num <= 3 &
+               nps >= 3 &
+               cnd %in% c('Delay', 'Long ITI', 'Short ITI'),
+               .(cnd, sub, prob_num, t2c, exp)])
+
+ddd <- dd[, .(t2c=mean(t2c)), .(cnd, sub)]
+
+ddd[, sub := factor(sub)]
+ddd[, cnd := factor(cnd)]
+
+ggplot(ddd, aes(x=cnd, y=t2c)) +
+  geom_boxplot() +
+  theme(legend.position='none')
+
+fm <- lm(t2c ~ cnd, data=ddd)
+summary(fm)
+anova(fm)
+
+ddd[cnd=='Delay', mean(t2c)]
+ddd[cnd=='Long ITI', mean(t2c)] - ddd[cnd=='Delay', mean(t2c)]
+ddd[cnd=='Short ITI', mean(t2c)] - ddd[cnd=='Delay', mean(t2c)]
+
+```
+
+- Cool that we can see that R does the dummy coding for us, and automatically
+  sets the baseline value to the `Delay` condition.
+  
+- What if you want to assign a different condition to baseline? Not for this
+  class but you should keep taking classes and learning!
+
+- In summary, an regression with dummy coded factors as regressors is equivalent
+  to a regression, and both and just instances of the general linear model.

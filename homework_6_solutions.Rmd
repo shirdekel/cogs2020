@@ -1,0 +1,173 @@
+---
+title: "Homework 6 Solutions"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Solutions
+
+```{r}
+library(data.table)
+library(ggplot2)
+library(ez)
+
+rm(list = ls())
+
+# 1 - follows lecture notes almost exactly
+a_obs <- c(10.411443,  9.809970,  10.659213,  10.308088,  7.454662)
+b_obs <- c(15.79117,  13.93335,  10.46789,  12.33930,  13.10577)
+c_obs <- c(14.51741,  13.71078, 12.85503, 13.56301, 11.82558)
+d_obs <- c(8.215233, 10.907428,  10.649537, 10.877265, 11.131051)
+
+na <- length(a_obs)
+nb <- length(b_obs)
+nc <- length(c_obs)
+nd <- length(d_obs)
+
+n_total <- na + nb + nc + nd 
+n_groups <- 4
+
+## dfs
+df_between <- n_groups-1
+df_within <- n_total - n_groups
+
+## mean of each group
+mean_a <- mean(a_obs)
+mean_b <- mean(b_obs)
+mean_c <- mean(c_obs)
+mean_d <- mean(d_obs)
+
+## grand mean
+grand_mean <- mean(c(a_obs, b_obs, c_obs, d_obs))
+
+## ss-between
+ss_between <- na*(mean_a - grand_mean)^2 + 
+  nb*(mean_b - grand_mean)^2 + 
+  nc*(mean_c - grand_mean)^2 +
+  nd*(mean_d - grand_mean)^2
+
+## ss-within --- a better way
+ss_within <- sum((a_obs - mean_a)^2) +
+  sum((b_obs - mean_b)^2) +
+  sum((c_obs - mean_c)^2) +
+  sum((d_obs - mean_d)^2)
+
+## mean squares
+ms_between <- ss_between / df_between
+ms_within <- ss_within / df_within
+
+## observed F-value
+f_obs <- ms_between / ms_within
+
+## compute pval
+pval <- pf(f_obs, df_between, df_within, lower.tail=F)
+
+## compute critical value
+crit_val <- qf(0.05, df_between, df_within, lower.tail=F)
+
+
+prob_1_theta_hat_x <- seq(0, 5, 0.01) # possible outcomes of your test statistic
+prob_1_theta_hat_p <- df(prob_1_theta_hat_x, df_between, df_within) # corresponding probabilities of outcomes
+dfx <- data.table(x=prob_1_theta_hat_x, fx=prob_1_theta_hat_p)
+ggplot(dfx, aes(x, fx)) +
+  geom_line()
+
+prob_1_theta_hat_obs <- f_obs # observed value of test statistic
+prob_1_pval <- pval
+prob_1_theta_hat_crit <- crit_val # critical value of test statistic
+
+prob_1_decision <- "reject H0"
+
+d <- data.table(a_obs, b_obs, c_obs, d_obs)
+d <- melt(d, measure.var=c('a_obs', 'b_obs', 'c_obs', 'd_obs'))
+d[, variable := factor(variable)]
+d[, subject := factor(1:.N)]
+prob_1_r_result <-  ezANOVA(
+  data=d,
+  dv=value,
+  wid=subject,
+  between=.(variable),
+  type=3
+)
+
+d[, variable := as.factor(variable)]
+prob_1_r_result_2 <-  anova(
+  lm(
+  value ~ variable,
+  data=d,
+  )
+)
+
+
+# 2
+ans_2a <- "within"
+df_between <- 10
+d_within <- 100
+ans_2b <- pf(0.5513168, df_between, d_within, lower.tail=F)
+ans_2c <- qf(0.05, df_between, d_within, lower.tail=F)
+
+
+# Are the mean squared deviations greater within groups or
+# are they greater between groups? Please respond with one
+# of the following:
+
+# F_obs is equal to 1 when ms_between is equal to ms_within,
+# and can only be less than one when ms_within is larger
+# than ms_between. This comes directly from the definition
+# of F_obs.
+
+# What is the p-value of this test? Please store your answer
+# in a variable named ans_2b.
+
+# Just read f_obs grom the graph and then do:
+pf(f_obs, df_between, df_within, lower.tail=FALSE)
+
+# What is the critical value of this test? Please store your
+# answer in a variable named ans_2c.
+
+# It's a one tailed test so all alpha goes into one tail
+qf(0.05, df_between, df_within, lower.tail=FALSE)
+
+
+# 3
+d <- fread("https://crossley.github.io/cogs2020/data/mis/mis_data.csv")
+d[condition==0, subject := subject+100]
+dd <- d[, .(mean_error = mean(error)), .(condition, subject)]
+prob_3_r_result <- ezANOVA(
+  data=dd,
+  dv=mean_error,
+  wid=subject,
+  between=.(condition),
+  type=3
+)
+
+fm <- lm(mean_error ~ condition, data = dd)
+prob_3_r_result_2 <- anova(fm)
+
+# 4
+x <- dd[condition==0, mean_error]
+y <- dd[condition==1, mean_error]
+prob_4_r_result <- t.test(x, 
+                          y, 
+                          mu=0, 
+                          alternative='two.sided', 
+                          paired=FALSE, 
+                          var.equal=TRUE, 
+                          conf.level=0.95)
+```
+

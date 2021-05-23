@@ -1,0 +1,254 @@
+---
+title: "Homework 8"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: true
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r, echo=F, message=F, warning=F}
+library(data.table)
+library(ggplot2)
+library(ggpubr)
+rm(list = ls())
+
+gen_exp <- function(muA1, muA2, muB1, muB2, muC1, muC2, sig, n) {
+
+  ## generate obervations
+  y_A1 <- rnorm(n, muA1, sig)
+  y_A2 <- rnorm(n, muA2, sig)
+  y_B1 <- rnorm(n, muB1, sig)
+  y_B2 <- rnorm(n, muB2, sig)
+  y_C1 <- rnorm(n, muC1, sig) # new level but same mu
+  y_C2 <- rnorm(n, muC2, sig) # new level but same mu
+
+  ## store observations plus relevant indicators in data.table
+  d <- data.table(y=c(y_A1, y_A2, y_B1, y_B2, y_C1, y_C2),
+                  treatment=rep(c('A', 'B', 'C'), each=2*n),
+                  dose=rep(c(1, 2), 3, each=n))
+
+  d[, treatment := factor(treatment)]
+  d[, dose := factor(dose)]
+
+  ## main effect of treatment (A vs B)
+  dd <- d[, .(mean(y), sd(y)/sqrt(length(unique(dose)))), .(treatment)]
+  g1 <- ggplot(dd, aes(treatment, V1)) +
+    geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2)) +
+    theme_classic() +
+    theme(aspect.ratio=1) +
+    ylab('Observed mean effect') +
+    ggtitle('Main effect')
+
+  ## main effect of dose (1 vs 2)
+  dd <- d[, .(mean(y), sd(y)/sqrt(length(unique(treatment)))), .(dose)]
+  g2 <- ggplot(dd, aes(dose, V1)) +
+    geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2)) +
+    theme_classic() +
+    theme(aspect.ratio=1) +
+    ylab('Observed mean effect') +
+    ggtitle('Main effect')
+
+  ## interaction between treatment and dose
+  dd <- d[, .(mean(y), sd(y)/sqrt(length(unique(treatment))*length(unique(dose)))), .(treatment, dose)]
+  g3 <- ggplot(dd, aes(dose, V1, colour=treatment)) +
+    geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2)) +
+    geom_line(aes(as.integer(dose), V1, colour=treatment)) +
+    theme_classic() +
+    theme(aspect.ratio=1) +
+    ylab('Observed mean effect') +
+    ggtitle('Interaction')
+
+  return(list(g1, g2, g3, unique(d)))
+}
+```
+
+**1.** Considering the following data and using an
+appropriate ANOVA, test the hypothesis that there are any
+significant differences between mean levels of treatment.
+Please populate the following variables.
+
+```{r, echo=F}
+set.seed(1)
+n <- 4
+res <- gen_exp(10, 30, 40, 20, 40, 20, 5, n)
+g1 <- res[[1]]
+g2 <- res[[2]]
+g3 <- res[[3]]
+d <- res[[4]]
+d[, dose := NULL]
+d[, subject := 1:.N]
+d
+```
+
+```{r, eval=F}
+# the result of ezANOVA()
+prob_1_r_result <- r_result 
+```
+
+**2.** Considering the following data and using an
+appropriate ANOVA, test the hypothesis that there are any
+significant differences between mean levels of treatment.
+Please populate the following variables.
+
+```{r, echo=F}
+set.seed(1)
+n <- 4
+res <- gen_exp(10, 30, 40, 20, 40, 20, 5, n)
+g1 <- res[[1]]
+g2 <- res[[2]]
+g3 <- res[[3]]
+d <- res[[4]]
+d[, dose := NULL]
+d[, subject := rep(1:(2*n), 3)]
+d
+```
+
+```{r, eval=F}
+# the result of ezANOVA()
+prob_2_r_result <- r_result 
+```
+
+**3.** Considering the following data and using an
+appropriate ANOVA, test the hypothesis that there are any
+significant differences between mean levels of treatment,
+mean levels of dose, or interactions between treatment and
+dose. Please populate the following variables.
+
+```{r, echo=F}
+set.seed(1)
+n <- 4
+res <- gen_exp(10, 30, 40, 20, 40, 20, 5, n)
+g1 <- res[[1]]
+g2 <- res[[2]]
+g3 <- res[[3]]
+d <- res[[4]]
+d[, subject := rep(1:(2*n), 3)]
+d
+```
+
+```{r, eval=F}
+# the result of ezANOVA()
+prob_3_r_result <- r_result 
+```
+
+**4.** Considering the following data and using an
+appropriate ANOVA, test the hypothesis that there are any
+significant differences between mean levels of treatment,
+mean levels of dose, or interactions between treatment and
+dose. Please populate the following variables.
+
+```{r, echo=F}
+set.seed(1)
+n <- 4
+res <- gen_exp(10, 30, 40, 20, 40, 20, 5, n)
+g1 <- res[[1]]
+g2 <- res[[2]]
+g3 <- res[[3]]
+d <- res[[4]]
+d[, subject := 1:.N]
+d
+```
+
+```{r, eval=F}
+# the result of ezANOVA()
+prob_4_r_result <- r_result 
+```
+
+**5.** Consider the data located here:
+
+https://crossley.github.io/cogs2020/data/maze/maze.csv
+
+This data contains the results of an experiment in which
+researchers examined the effect of maze identity and run
+number (experience with each maze) on maze run time in a
+large sample of rats.
+
+* `rat` contains the id of the rat that gave the data in
+each row.
+
+* `y` contains the amount of time in seconds taken to
+complete the maze.
+
+* `maze` indicates the identity of the maze.
+
+* `run` indicates the run number.
+
+Using an appropriate ANOVA, assess any significant
+differences between runs. If you have multiple observations
+per rat, per run, then be sure to average over these values
+such that you end up with only one (mean) observation per
+rat per run.
+
+```{r, eval=F}
+# You do not have to perform the two-way ANOVA steps
+# manually. Please use ezANOVA() and store the result of
+# this function to a variable named `ans_3`
+ans_5 <- ezANOVA(...)
+```
+
+**6.** Consider the following sampling distributions of two
+$F$ test statistics. One of these sampling distributions
+corresponds to a repeated measures design, while the other
+corresponds to a factorial design. The observed value of the
+F test statistic (indicated by the dashed lines) is 1.5 in
+both cases.
+
+```{r, echo=F, fig.width=10}
+set.seed(7)
+
+n_total <- 24
+n <- 8
+k <- 3
+
+f_obs <- 1.5
+
+# repeated
+df_between <- k-1
+df_error <- (k-1) * (n-1)
+# pf(f_obs, df_between, df_error, lower.tail=F)
+
+x <- seq(0, 4, 0.001)
+fx <- df(x, df_between, df_error)
+d <- data.table(x, fx)
+g1 <- ggplot(d, aes(x, fx)) + 
+  geom_line() +
+  geom_vline(xintercept = f_obs, linetype=2) +
+  scale_x_continuous(breaks=c(0, f_obs, 1, 2, 3, 4)) +
+  geom_ribbon(data=d[x >= f_obs], aes(ymin=0, ymax=fx), alpha=0.25) +
+  annotate("text", x = 1.6, y = 0.1, hjust = 0, label = "Area of shaded region = 0.26") 
+
+# factorial
+df_between <- k-1
+df_error <- n_total - k
+# pf(f_obs, df_between, df_error, lower.tail=F)
+
+x <- seq(0, 4, 0.001)
+fx <- df(x, df_between, df_error)
+d <- data.table(x, fx)
+g2 <- ggplot(d, aes(x, fx)) + 
+  geom_line() +
+  geom_vline(xintercept = f_obs, linetype=2) +
+  scale_x_continuous(breaks=c(0, f_obs, 1, 2, 3, 4)) +
+  geom_ribbon(data=d[x >= f_obs], aes(ymin=0, ymax=fx), alpha=0.25) +
+  annotate("text", x = 1.6, y = 0.1, hjust = 0, label = "Area of shaded region = 0.25")
+
+ggarrange(g1, g2, ncol=2)
+```
+
+* Which distribution corresponds to the repeated measures
+design, and which to the factorial design?
+  * `ans_6a <- "repeated on the left, factorial on the right"` 
+  * `ans_6a <- "factorial on the left, repeated on the right"` 
+  
+* What is the p-value of the test corresponding the left
+distribution? Please store your answer in a variable named
+`ans_6b`.

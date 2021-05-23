@@ -30,13 +30,16 @@ rm(list=ls())
 # 1
 # a 
 d <- fread('https://crossley.github.io/cogs2020/data/nhp_cat_learn/ii_gabor.csv')
+ans_1a <- copy(d)
 
 # b
 col_names <- c('cat', 'x', 'y', 'resp', 'rt', 'phase')
 setnames(d, col_names)
+ans_1b <- copy(d)
 
 # c
 d[, trial := 1:.N]
+ans_1c <- copy(d)
 
 # d
 n_trials <- d[, .N]
@@ -45,12 +48,15 @@ n_blocks <- n_trials / block_size + 1
 block <- rep(1:n_blocks, each=block_size)
 block <- block[1:n_trials]
 d[, block := block]
+ans_1d <- copy(d)
 
 # e
-d[, acc := cat == resp]
+d[, acc := as.integer(cat == resp)]
+ans_1e <- copy(d)
 
 # f
 dd <- d[, .(acc_mean=mean(acc), acc_err=sd(acc) / sqrt(.N)), .(block, phase)]
+ans_1f <- copy(dd)
 
 # g
 g <- ggplot(dd, aes(block, acc_mean, colour=factor(phase))) + 
@@ -58,7 +64,7 @@ g <- ggplot(dd, aes(block, acc_mean, colour=factor(phase))) +
   geom_pointrange(aes(x=block, 
                       ymin=acc_mean-acc_err, 
                       ymax=acc_mean+acc_err))
-g
+ans_1g <- g
 
 
 # Problem 2. Test the hypothesis that, for the first 100
@@ -101,6 +107,7 @@ p_val <- p_val_lower + p_val_upper
 
 theta_hat_crit_lower <- qbinom(0.025, n, 0.5, lower.tail=TRUE) / n
 theta_hat_crit_upper <- (qbinom(0.025, n, 0.5, lower.tail=FALSE) + 1) / n
+theta_hat_crit_upper_2 <- (qbinom(0.025, n, 0.5, lower.tail=FALSE)) / n # to be kind
 
 ci_width <- theta_hat_crit_upper - theta_hat_crit_lower
 ci_lower <- theta_hat_obs - ci_width / 2
@@ -124,6 +131,7 @@ prob_2_pval_lower <- p_val_lower
 prob_2_pval_upper <- p_val_upper
 prob_2_theta_hat_crit_lower <- theta_hat_crit_lower
 prob_2_theta_hat_crit_upper <- theta_hat_crit_upper
+prob_2_theta_hat_crit_upper_2 <- theta_hat_crit_upper_2
 prob_2_ci_lower <- ci_lower
 prob_2_ci_upper <- ci_upper
 prob_2_decision <- decision
@@ -134,20 +142,24 @@ prob_2_r_result <- r_result
 # guessing (i.e., p=0.5). For this problem, only
 # prob_x_r_result will be graded.
 x <- d[phase == 1][trial %in% max(trial):(max(trial)-99)][, sum(acc)]
-prob_3_r_result <- binom.test(x,  
+theta_hat_obs <- x / n
+prob_3_r_result <- binom.test(theta_hat_obs * n,  
                               n, 
                               p=0.5, 
                               alternative='greater')
+ans_3 <- prob_3_r_result
 
 # Problem 4. Test the hypothesis that, for the first 100
 # trials of phase 2, the monkey is doing worse than guessing
 # (i.e., p=0.5). For this problem, only prob_x_r_result will
 # be graded.
 x <- d[phase == 2][trial %in% min(trial):(min(trial)+99)][, sum(acc)]
-prob_4_r_result <- binom.test(x,  
+theta_hat_obs <- x / n
+prob_4_r_result <- binom.test(theta_hat_obs * n,  
                               n,  
                               p=0.5,  
                               alternative='less')
+ans_4 <- prob_4_r_result
 
 # Problem 5. Make a deep copy of d named d2, and then
 # redefine the block column of d2 to reflect a block size of
@@ -174,6 +186,7 @@ ggplot(dd2, aes(block, acc_mean, colour=factor(phase))) +
   geom_pointrange(aes(x=block, 
                       ymin=acc_mean-acc_err, 
                       ymax=acc_mean+acc_err))
+ans_5 <- dd2
 
 # Problem 6. Test the hypothesis that the mean accuracy in
 # the first 16 blocks of phase 1 is no greater or worse than
@@ -221,8 +234,10 @@ p_val <- p_val_lower + p_val_upper
 theta_hat_crit_lower_t <- qt(0.025, n-1, lower.tail=TRUE)
 theta_hat_crit_upper_t <- qt(0.025, n-1, lower.tail=FALSE)
 
-theta_hat_crit_lower <- theta_hat_crit_lower_t * sd(x) / sqrt(n) + 0.5
-theta_hat_crit_upper <- theta_hat_crit_upper_t * sd(x) / sqrt(n) + 0.5
+# theta_hat_crit_lower <- theta_hat_crit_lower_t * sd(x) / sqrt(n) + 0.5
+# theta_hat_crit_upper <- theta_hat_crit_upper_t * sd(x) / sqrt(n) + 0.5
+theta_hat_crit_lower <- theta_hat_crit_lower_t
+theta_hat_crit_upper <- theta_hat_crit_upper_t
 
 ci_width <- (theta_hat_crit_upper_t - theta_hat_crit_lower_t) * sd(x)/sqrt(n)
 ci_lower <- mean(x) - ci_width / 2
@@ -253,12 +268,14 @@ prob_6_r_result <- r_result
 # this problem, only prob_x_r_result will be graded.
 x <- dd2[phase == 1][block %in% max(block):(max(block)-15)][, acc_mean]
 prob_7_r_result <- t.test(x, mu=0.5, alternative='greater')
+ans_7 <- prob_7_r_result
 
 # Problem 8. Test the hypothesis that the mean accuracy in
 # the first 16 blocks of phase 2 less than chance. For this
 # problem, only prob_x_r_result will be graded.
 x <- dd2[phase == 2][block %in% min(block):(min(block)+15)][, acc_mean]
 prob_8_r_result <- t.test(x, mu=0.5, alternative='less')
+ans_8 <- prob_8_r_result
 
 # Problem 9. What accounts for the drop in accuracy between
 # phase 1 and phase 2? To answer this question, investigate
@@ -276,7 +293,7 @@ ans_9 <- ggplot(d, aes(x, y, colour=factor(cat))) +
 # that you are performing a one-tailed test, and assuming
 # that the true state of the universe is μ=.6 . Given
 # H0:μ=.5
-x <- dd2[phase==1 & block %in% 1:16, acc_mean]
+x <- dd2[phase==1][block %in% min(block):(min(block)+15)][, acc_mean]
 n <- length(x)
 sig_x <- sd(x)
 sig_x_bar <- sig_x / sqrt(n)
@@ -284,15 +301,6 @@ sig_x_bar <- sig_x / sqrt(n)
 mu_h0 <- 0
 mu_h1 <- .1 / sig_x_bar
 t_crit <- qt(0.05, n-1, lower.tail=F)
-
-t <- seq(-4, 4+mu_h1, 0.01)
-dt_h0 <- dt(t, n-1)
-dt_h1 <- dt(t-mu_h1, n-1)
-d <- data.table(t, dt_h0, dt_h1)
-ggplot(d) +
-  geom_line(aes(x=t, y=dt_h0), colour='red') +
-  geom_line(aes(x=t, y=dt_h1), colour='blue') +
-  geom_vline(xintercept=t_crit, linetype=2)
 
 ans_10a <- 0.05
 ans_10b <- pt(t_crit-mu_h1, n-1, lower.tail=T)
@@ -316,10 +324,7 @@ ans_10c <- 1 - ans_10b
 # check your work, but please perform all 5 steps as
 # indicated in the general instructions at the top of this
 # homework.
-
-# TODO: This one was extra credit so it's not a high
-# priority for me to write out.
-
+ 
 # Problem 12. Please respond by assigning "confidence",
 # "alpha", "beta", or "power" to the variables requested
 # below. Note that the dashed line in the above figure is

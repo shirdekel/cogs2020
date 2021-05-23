@@ -40,11 +40,7 @@ fontsize: 14pt
 
 #### [Lecture 11: Two-way ANOVA](lecture_9.html)
 
-#### Lecture 12: Repeated Measures ANOVA
-<!-- #### [Lecture 12: Repeated Measures ANOVA](lecture_10.html) -->
+#### [Lecture 12: Repeated Measures and mixed-design ANOVA](lecture_10.html)
 
-#### Lecture 13: Mixed-design ANOVA
-<!-- #### [Lecture 13: Mixed-design ANOVA](lecture_11.html) -->
-
-<!-- #### Lecture 14: Correlation, regression -->
-<!-- #### [Lecture 14: Correlation, regression](lecture_12.html) -->
+<!-- #### Lecture 13: Correlation, regression -->
+<!-- #### [Lecture 13: Correlation, regression](lecture_13.html) -->
