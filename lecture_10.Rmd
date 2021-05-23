@@ -37,7 +37,7 @@ so can require fewer subjects.
 freedom (we will see below the relevant $df$ term shrinks
 from $n_{observations} - k$ to $(k - 1)(n_{subject} - 1)$.
 The more degrees of freedom we have, in general, the less
-extreme observed outcome we need to reject the null (becuase
+extreme observed outcome we need to reject the null (because
 of its effect on the shape of the sampling distribution of
 our test statistic).
 
