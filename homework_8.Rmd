@@ -175,7 +175,7 @@ large sample of rats.
 * `rat` contains the id of the rat that gave the data in
 each row.
 
-* `y` contains the amount of time in seconds taken to
+* `time` contains the amount of time in seconds taken to
 complete the maze.
 
 * `maze` indicates the identity of the maze.
