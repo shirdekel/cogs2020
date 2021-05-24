@@ -22,9 +22,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## How to check your grades
 
-* If the following code returns empty data.tables, then please
-double check that you have entered your student ID correctly
-**as an integer**.
+* If the following code returns empty data.tables, then
+please double check that you have entered your student ID
+correctly **as an integer**.
 
 * If you still get empty data.tables then it may be because
 there was a fatal error in your homework submission that
