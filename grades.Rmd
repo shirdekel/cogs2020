@@ -75,7 +75,7 @@ dm2[student_id == sid]
 
 ## Total grades so far
 
-```{r, eval=T}
+```{r, eval=T, message=F, warning=F, fig.width=10}
 # If you want to know where you are standing currently, run
 # this entire code block and then select your student_id
 # from dd
@@ -108,10 +108,24 @@ dd <- dcast(dd, student_id ~ assignment, value.var = 'score')
 dd[, total_score := sum(0.1 * 1, # quizzes (assuming you got credit for the 3 given)
                     0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6), na.rm=T), # hw
                     0.3 * mean(c(m1, m2), na.rm=T), # midterm
-                    0.3 * 1, na.rm=T) # final (assuming perfect score)
+                    0.3 * 0.75, na.rm=T) # final (assuming 75%)
    , .(student_id)]
-ggplot(dd, aes(total_score)) +
-  geom_histogram(bins=10)
+dd[, mark_class := "NA"]
+dd[total_score >= .85, mark_class := "High Distinction"]
+dd[total_score >= .75 & total_score < .85, mark_class := "Distinction"]
+dd[total_score >= .65 & total_score < .75, mark_class := "Credit"]
+dd[total_score >= .50 & total_score < .65, mark_class := "Pass"]
+dd[total_score < .50, mark_class := "Fail"]
+dd[, mark_class := factor(mark_class, 
+                          levels=c('High Distinction',
+                                   'Distinction', 
+                                   'Credit', 
+                                   'Pass', 
+                                   'Fail'))]
+ggplot(dd, aes(total_score, fill=mark_class)) +
+  geom_histogram(bins=10, breaks=seq(0.0, 1.0, 0.05)) +
+  scale_x_continuous(breaks=c(0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0)) +
+  xlim(0.3, 1.0)
 ```
 
 
