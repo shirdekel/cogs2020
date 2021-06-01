@@ -21,3 +21,71 @@ date, and redo it.
 * Please include the name of the homework assignment you are
 redoing in the title of the file that you hand in. E.g.,
 `Crossley_Matthew_HW1.R`
+
+## Problem 0
+* Load `data.table` and `ggplot2` but no other packages.
+
+* Do not call `install.packages` anywhere in this script.
+Once you installed them once, there is no need to install
+them again. If you need to install some other package in the
+future, do so by using `install.packages` function in the
+console.
+
+* Make sure you are starting with a clean environment by
+running `rm(list=ls())`. Running this line of code will
+erase any variable defined before it. Do not put this line
+of code after anything important to keep for grading.
+
+* Create a variable named `my_name` and set its value equal
+to a **character** vector (i.e., letters surrounded by `""`)
+containing your name.
+
+* Create a variable named `my_student_id` and set its value
+equal to a **character** vector (i.e., letters surrounded by
+`""`) containing your student id.
+
+## Problem 1
+
+First, copy and paste the following code into your 
+
+```{r}
+# Only add the following three lines BEFORE you have written
+# your name and id.
+library(data.table)
+library(ggplot2)
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/data/nhp_cat_learn/ii_gabor.csv')
+col_names <- c('cat', 'x', 'y', 'resp', 'rt', 'phase')
+setnames(d, col_names)
+d[, trial := 1:.N]
+n_trials <- d[, .N]
+block_size = 100
+n_blocks <- n_trials / block_size + 1
+block <- rep(1:n_blocks, each=block_size)
+block <- block[1:n_trials]
+d[, block := block]
+d[, acc := as.integer(cat == resp)]
+dd <- d[, .(acc_mean=mean(acc), acc_err=sd(acc) / sqrt(.N)), .(block, phase)]
+```
+
+In the dataset from Problem 1, each trial is a Bernoulli
+trial with probability of success $p$. This means that
+trials are distributed $X \sim Bernoulli(p)$. This also
+means that blocks of trials are distributed $X \sim
+Binomial(n,p)$, where $n$ is the block size (i.e., number of
+trials per block).
+
+Test the hypothesis that, for the first 100 trials of phase
+1, the monkey is doing no better and no worse than guessing
+(i.e., $p = .5$).
+
+Please populate the following variables by hand.
+
+* `prob_1_theta_hat_obs` -- observed value of test statistic
+* `prob_1_pval` -- p-value of observed test statistic
+* `prob_1_theta_hat_crit_upper` -- upper critical value of test statistic
+* `prob_1_theta_hat_crit_lower` -- lower critical value of test statistic
+* `prob_1_theta_hat_ci_upper` -- upper confidence interval bound of test statistic
+* `prob_1_theta_hat_ci_lower` -- lower confidence interval bound of test statistic
+
