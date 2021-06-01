@@ -114,10 +114,11 @@ dm2[, assignment := 'm2']
 
 d <- rbindlist(list(d1, d2, d3, d4, d5, d6, d7, dm, dm1, dm2), use.names=T, fill=T)
 dd <- d[, .(score = unique(score)), .(student_id, assignment)]
-m_subs <- dd[assignment=="m", student_id]
+m_subs_1 <- dm1[, unique(student_id)]
+m_subs_2 <- dm2[, unique(student_id)]
 dd <- dcast(dd, student_id ~ assignment, value.var = 'score')
-dd[student_id %in% m_subs, m1 := m]
-dd[student_id %in% m_subs, m2 := m]
+dd[!(student_id %in% m_subs_1), m1 := m]
+dd[!(student_id %in% m_subs_2), m2 := m]
 dd[, total_score := sum(0.1 * 1, # quizzes (assuming you got credit for the 3 given)
                     0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6), na.rm=T), # hw
                     0.3 * mean(c(m1, m2), na.rm=T), # midterm recovery

@@ -45,5 +45,6 @@ fontsize: 14pt
 #### [Homework 7](homework_7.html)
 #### [Homework 7 Solutions](homework_7_solutions.html)
 #### [Homework 8](homework_8.html)
+#### [Homework 8 Solutions](homework_8_solutions.html)
 <!-- #### [Homework 9](homework_9.html) -->
 <!-- #### [Homework 10](homework_10.html) -->
