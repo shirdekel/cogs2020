@@ -1143,3 +1143,16 @@ student_id,ans_labels,ans,sub_ind,n_correct,n_total,score
 45652724,ans_2a,correct,99,3,13,0.230769230769231
 45652724,ans_3,correct,99,3,13,0.230769230769231
 45652724,ans_4,incorrect,99,3,13,0.230769230769231
+46350160,prob_1_theta_hat_obs_treatment,incorrect,100,3,13,0.230769230769231
+46350160,prob_1_pval_treatment,incorrect,100,3,13,0.230769230769231
+46350160,prob_1_theta_hat_crit_treatment,incorrect,100,3,13,0.230769230769231
+46350160,prob_1_theta_hat_obs_dose,incorrect,100,3,13,0.230769230769231
+46350160,prob_1_pval_dose,incorrect,100,3,13,0.230769230769231
+46350160,prob_1_theta_hat_crit_dose,incorrect,100,3,13,0.230769230769231
+46350160,prob_1_theta_hat_obs_interaction,incorrect,100,3,13,0.230769230769231
+46350160,prob_1_pval_interaction,incorrect,100,3,13,0.230769230769231
+46350160,prob_1_theta_hat_crit_interaction,incorrect,100,3,13,0.230769230769231
+46350160,prob_1_r_result,incorrect,100,3,13,0.230769230769231
+46350160,ans_2a,correct,100,3,13,0.230769230769231
+46350160,ans_3,correct,100,3,13,0.230769230769231
+46350160,ans_4,correct,100,3,13,0.230769230769231
