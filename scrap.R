@@ -1,8 +1,11 @@
 library(data.table)
 
-d <- data.table(x=rnorm(4), y=rnorm(4), z=c(1, 1, 2, 2))
+x <- rnorm(10)
+n <- length(x)
+df <- n-1
 
-dd <- d[, mean(x), .(z)]
+xobs <- mean(x)
 
-d[, mean_x := mean(x), .(z)]
-dd <- d[, unique(mean_x), .(z)]
+crit_val <- qt(0.025, df, lower.tail=T)
+crit_val <- qt(0.025, df, lower.tail=F)
+
