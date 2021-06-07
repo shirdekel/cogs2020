@@ -97,6 +97,7 @@ d4 <- fread('https://crossley.github.io/cogs2020/grades/hw_4_table.csv')
 d5 <- fread('https://crossley.github.io/cogs2020/grades/hw_5_table.csv')
 d6 <- fread('https://crossley.github.io/cogs2020/grades/hw_6_table.csv')
 d7 <- fread('https://crossley.github.io/cogs2020/grades/hw_7_table.csv')
+d8 <- fread('https://crossley.github.io/cogs2020/grades/hw_8_table.csv')
 dm <- fread('https://crossley.github.io/cogs2020/grades/midterm.csv')
 dm1 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv')
 dm2 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv')
@@ -108,21 +109,30 @@ d4[, assignment := 'hw4']
 d5[, assignment := 'hw5']
 d6[, assignment := 'hw6']
 d7[, assignment := 'hw7']
+d8[, assignment := 'hw8']
 dm[, assignment := 'm']
 dm1[, assignment := 'm1']
 dm2[, assignment := 'm2']
 
-d <- rbindlist(list(d1, d2, d3, d4, d5, d6, d7, dm, dm1, dm2), use.names=T, fill=T)
+d <- rbindlist(list(d1, d2, d3, d4, d5, d6, d7, d8, dm, dm1, dm2), use.names=T, fill=T)
 dd <- d[, .(score = unique(score)), .(student_id, assignment)]
 m_subs_1 <- dm1[, unique(student_id)]
 m_subs_2 <- dm2[, unique(student_id)]
 dd <- dcast(dd, student_id ~ assignment, value.var = 'score')
 dd[!(student_id %in% m_subs_1), m1 := m]
 dd[!(student_id %in% m_subs_2), m2 := m]
+dd[, hw1 := ifelse(is.na(hw1), 0, hw1)]
+dd[, hw2 := ifelse(is.na(hw2), 0, hw2)]
+dd[, hw3 := ifelse(is.na(hw3), 0, hw3)]
+dd[, hw4 := ifelse(is.na(hw4), 0, hw4)]
+dd[, hw5 := ifelse(is.na(hw5), 0, hw5)]
+dd[, hw6 := ifelse(is.na(hw6), 0, hw6)]
+dd[, hw7 := ifelse(is.na(hw7), 0, hw7)]
+dd[, hw8 := ifelse(is.na(hw8), 0, hw8)]
 dd[, total_score := sum(0.1 * 1, # quizzes (assuming you got credit for the 3 given)
-                    0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6), na.rm=T), # hw
-                    0.3 * mean(c(m1, m2), na.rm=T), # midterm recovery
-                    0.3 * 0.75, na.rm=T) # final (assuming 75%)
+                    0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6, hw7, hw8)), # hw
+                    0.3 * mean(c(m1, m2)), # midterm recovery
+                    0.3 * 0.75, na.rm=F) # final (assuming 75%)
    , .(student_id)]
 dd[, mark_class := "NA"]
 dd[total_score >= .85, mark_class := "High Distinction"]
