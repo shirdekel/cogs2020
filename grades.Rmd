@@ -67,6 +67,14 @@ d6[student_id == sid]
 d7 <- fread('https://crossley.github.io/cogs2020/grades/hw_7_table.csv')
 d6[student_id == sid]
 
+# HW 8
+d7 <- fread('https://crossley.github.io/cogs2020/grades/hw_8_table.csv')
+d6[student_id == sid]
+
+# HW 9
+d7 <- fread('https://crossley.github.io/cogs2020/grades/hw_9_table.csv')
+d6[student_id == sid]
+
 # midterm
 dm <- fread('https://crossley.github.io/cogs2020/grades/midterm.csv')
 dm[student_id == sid]
@@ -98,6 +106,7 @@ d5 <- fread('https://crossley.github.io/cogs2020/grades/hw_5_table.csv')
 d6 <- fread('https://crossley.github.io/cogs2020/grades/hw_6_table.csv')
 d7 <- fread('https://crossley.github.io/cogs2020/grades/hw_7_table.csv')
 d8 <- fread('https://crossley.github.io/cogs2020/grades/hw_8_table.csv')
+d9 <- fread('https://crossley.github.io/cogs2020/grades/hw_9_table.csv')
 dm <- fread('https://crossley.github.io/cogs2020/grades/midterm.csv')
 dm1 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv')
 dm2 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv')
@@ -110,11 +119,12 @@ d5[, assignment := 'hw5']
 d6[, assignment := 'hw6']
 d7[, assignment := 'hw7']
 d8[, assignment := 'hw8']
+d9[, assignment := 'hw9']
 dm[, assignment := 'm']
 dm1[, assignment := 'm1']
 dm2[, assignment := 'm2']
 
-d <- rbindlist(list(d1, d2, d3, d4, d5, d6, d7, d8, dm, dm1, dm2), use.names=T, fill=T)
+d <- rbindlist(list(d1, d2, d3, d4, d5, d6, d7, d8, d9, dm, dm1, dm2), use.names=T, fill=T)
 dd <- d[, .(score = unique(score)), .(student_id, assignment)]
 m_subs_1 <- dm1[, unique(student_id)]
 m_subs_2 <- dm2[, unique(student_id)]
@@ -129,8 +139,9 @@ dd[, hw5 := ifelse(is.na(hw5), 0, hw5)]
 dd[, hw6 := ifelse(is.na(hw6), 0, hw6)]
 dd[, hw7 := ifelse(is.na(hw7), 0, hw7)]
 dd[, hw8 := ifelse(is.na(hw8), 0, hw8)]
+dd[, hw9 := ifelse(is.na(hw9), 0, hw9)]
 dd[, total_score := sum(0.1 * 1, # quizzes (assuming you got credit for the 3 given)
-                    0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6, hw7, hw8)), # hw
+                    0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6, hw7, hw8, hw9)), # hw
                     0.3 * mean(c(m1, m2)), # midterm recovery
                     0.3 * 0.75, na.rm=F) # final (assuming 75%)
    , .(student_id)]
@@ -368,4 +379,18 @@ ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
   xlab('Problem Number') +
   ylab('Proportion Correct')+
   theme(axis.text.x=element_text(angle=45, hjust=1))
+```
+
+## Homework 9 Grades
+```{r, fig.width=10}
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+d <- fread('https://crossley.github.io/cogs2020/grades/hw_9_table.csv')
+
+dd <- d[, .(score = unique(score)), .(student_id)]
+ggplot(dd, aes(score)) +
+  geom_histogram(bins=10)
 ```
