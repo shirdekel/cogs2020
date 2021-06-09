@@ -111,8 +111,6 @@ dm <- fread('https://crossley.github.io/cogs2020/grades/midterm.csv')
 dm1 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv')
 dm2 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv')
 
-d1ref <- fread('https://crossley.github.io/cogs2020/grades/104521426_HW2_Part_1_Moodle_TT_.csv')
-
 d1[, assignment := 'hw1']
 d2[, assignment := 'hw2']
 d3[, assignment := 'hw3']
