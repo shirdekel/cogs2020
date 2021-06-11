@@ -65,15 +65,15 @@ d6[student_id == sid]
 
 # HW 7
 d7 <- fread('https://crossley.github.io/cogs2020/grades/hw_7_table.csv')
-d6[student_id == sid]
+d7[student_id == sid]
 
 # HW 8
-d7 <- fread('https://crossley.github.io/cogs2020/grades/hw_8_table.csv')
-d6[student_id == sid]
+d8 <- fread('https://crossley.github.io/cogs2020/grades/hw_8_table.csv')
+d8[student_id == sid]
 
 # HW 9
-d7 <- fread('https://crossley.github.io/cogs2020/grades/hw_9_table.csv')
-d6[student_id == sid]
+d9 <- fread('https://crossley.github.io/cogs2020/grades/hw_9_table.csv')
+d9[student_id == sid]
 
 # midterm
 dm <- fread('https://crossley.github.io/cogs2020/grades/midterm.csv')
