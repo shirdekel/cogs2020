@@ -766,8 +766,8 @@ ggplot(dd) +
 
 # contribution from upper tail
 typeI <- pt(t_crit_upper, n-1, lower.tail=FALSE)
-typeII <- pt(t_crit_upper-2, n-1, lower.tail=TRUE)
-power <- pt(t_crit_upper-2, n-1, lower.tail=FALSE)
+typeII <- pt(t_crit_upper-2 / sig_x_bar, n-1, lower.tail=TRUE)
+power <- pt(t_crit_upper-2 / sig_x_bar, n-1, lower.tail=FALSE)
 
 # contribution from lower tail
 # TODO:...
