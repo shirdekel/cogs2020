@@ -110,6 +110,7 @@ d9 <- fread('https://crossley.github.io/cogs2020/grades/hw_9_table.csv')
 dm <- fread('https://crossley.github.io/cogs2020/grades/midterm.csv')
 dm1 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv')
 dm2 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv')
+df <- fread('grades/final_exam_table.csv')
 
 d1[, assignment := 'hw1']
 d2[, assignment := 'hw2']
@@ -123,8 +124,9 @@ d9[, assignment := 'hw9']
 dm[, assignment := 'm']
 dm1[, assignment := 'm1']
 dm2[, assignment := 'm2']
+df[, assignment := 'f']
 
-d <- rbindlist(list(d1, d2, d3, d4, d5, d6, d7, d8, d9, dm, dm1, dm2), use.names=T, fill=T)
+d <- rbindlist(list(d1, d2, d3, d4, d5, d6, d7, d8, d9, dm, dm1, dm2, df), use.names=T, fill=T)
 dd <- d[, .(score = unique(score)), .(student_id, assignment)]
 m_subs_1 <- dm1[, unique(student_id)]
 m_subs_2 <- dm2[, unique(student_id)]
@@ -140,10 +142,11 @@ dd[, hw6 := ifelse(is.na(hw6), 0, hw6)]
 dd[, hw7 := ifelse(is.na(hw7), 0, hw7)]
 dd[, hw8 := ifelse(is.na(hw8), 0, hw8)]
 dd[, hw9 := ifelse(is.na(hw9), 0, hw9)]
+dd[, f := ifelse(is.na(f), 0, f)]
 dd[, total_score := sum(0.1 * 1, # quizzes (assuming you got credit for the 3 given)
                     0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6, hw7, hw8, hw9)), # hw
                     0.3 * mean(c(m1, m2)), # midterm recovery
-                    0.3 * 0.75, na.rm=F) # final (assuming 75%)
+                    0.3 * f, na.rm=F) # final
    , .(student_id)]
 dd[, mark_class := "NA"]
 dd[total_score >= .85, mark_class := "High Distinction"]
