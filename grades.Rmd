@@ -99,6 +99,7 @@ df[student_id == sid]
 # from dd
 library(data.table)
 library(ggplot2)
+library(stringr)
 
 rm(list=ls())
 
@@ -131,6 +132,7 @@ dm2[, assignment := 'm2']
 df[, assignment := 'f']
 
 d <- rbindlist(list(d1, d2, d3, d4, d5, d6, d7, d8, d9, dm, dm1, dm2, df), use.names=T, fill=T)
+
 dd <- d[, .(score = unique(score)), .(student_id, assignment)]
 m_subs_1 <- dm1[, unique(student_id)]
 m_subs_2 <- dm2[, unique(student_id)]
@@ -148,8 +150,15 @@ dd[, hw8 := ifelse(is.na(hw8), 0, hw8)]
 dd[, hw9 := ifelse(is.na(hw9), 0, hw9)]
 dd[, hw10 := 1]
 dd[, f := ifelse(is.na(f), 0, f)]
+
+# don't consider HW9 if people didn't turn it in
+# dd[hw9==0, hw9 := NA]
+
+# late penalties
+dd[student_id == 45565600, hw3:=0.5*hw3]
+  
 dd[, total_score := sum(0.1 * 1, # quizzes (assuming you got credit for the 3 given)
-                    0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6, hw7, hw8, hw9, hw10)), # hw
+                    0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6, hw7, hw8, hw9, hw10), na.rm=T), # hw
                     0.3 * mean(c(m1, m2)), # midterm recovery
                     0.3 * f, na.rm=F) # final
    , .(student_id)]
