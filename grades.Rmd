@@ -153,6 +153,7 @@ dd[, f := ifelse(is.na(f), 0, f)]
 
 # don't consider HW9 if people didn't turn it in
 # dd[hw9==0, hw9 := NA]
+dd[f != 0 & hw9==0]
 
 # late penalties
 dd[student_id == 45565600, hw3:=0.5*hw3]
