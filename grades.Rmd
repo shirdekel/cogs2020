@@ -180,8 +180,10 @@ dd[, hw7 := ifelse(is.na(hw7), 0, hw7)]
 dd[, hw8 := ifelse(is.na(hw8), 0, hw8)]
 dd[, hw9 := ifelse(is.na(hw9), 0, hw9)]
 dd[, hw10 := 1]
-dd[, f := ifelse(is.na(f), 0, f)]
 dd[, m2 := ifelse(is.na(m2), m1, m2)]
+dd[, f := ifelse(is.na(f), 0, f)]
+dd[, m1 := ifelse(is.na(m1), 0, m1)]
+dd[, m2 := ifelse(is.na(m2), 0, m2)]
 
 # don't consider HW9 if people didn't turn it in
 # dd[hw9==0, hw9 := NA]
@@ -208,8 +210,8 @@ ggplot(dd, aes(total_score, fill=mark_class)) +
   geom_histogram(breaks=seq(0.0, 1.0, 0.05)) +
   xlim(0.3, 1.0)
 
-# TODO: investigate NA students
-dd[is.na(total_score)]
+# TODO: investigate F students
+dd[mark_class == 'Fail'][order(f, m1, m2), .(student_id, m1, m2, f)]
 ```
 
 
