@@ -181,13 +181,14 @@ dd[, hw8 := ifelse(is.na(hw8), 0, hw8)]
 dd[, hw9 := ifelse(is.na(hw9), 0, hw9)]
 dd[, hw10 := 1]
 dd[, f := ifelse(is.na(f), 0, f)]
+dd[, m2 := ifelse(is.na(m2), m1, m2)]
 
 # don't consider HW9 if people didn't turn it in
 # dd[hw9==0, hw9 := NA]
 # dd[f != 0 & hw9==0]
 
 dd[, total_score := sum(0.1 * 1, # quizzes (assuming you got credit for the 3 given)
-                    0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6, hw7, hw8, hw9, hw10), na.rm=T), # hw
+                    0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6, hw7, hw8, hw9, hw10)), # hw
                     0.3 * mean(c(m1, m2)), # midterm recovery
                     0.3 * f, na.rm=F) # final
    , .(student_id)]
