@@ -356,7 +356,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Homework 6 Solutions</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 23 May, 2021</h4>
+<h4 class="date">Last update: 15 February, 2022</h4>
 
 </div>
 
@@ -365,14 +365,9 @@ div.tocify {
 <h2>Solutions</h2>
 <pre class="r"><code>library(data.table)
 library(ggplot2)
-library(ez)</code></pre>
-<pre><code>## Registered S3 methods overwritten by &#39;lme4&#39;:
-##   method                          from
-##   cooks.distance.influence.merMod car 
-##   influence.merMod                car 
-##   dfbeta.influence.merMod         car 
-##   dfbetas.influence.merMod        car</code></pre>
-<pre class="r"><code>rm(list = ls())
+library(ez)
+
+rm(list = ls())
 
 # 1 - follows lecture notes almost exactly
 a_obs &lt;- c(10.411443,  9.809970,  10.659213,  10.308088,  7.454662)
@@ -503,8 +498,7 @@ prob_3_r_result &lt;- ezANOVA(
 <pre><code>## Warning: Converting &quot;subject&quot; to factor for ANOVA.</code></pre>
 <pre><code>## Warning: &quot;condition&quot; will be treated as numeric.</code></pre>
 <pre><code>## Coefficient covariances computed by hccm()</code></pre>
-<pre><code>## Warning: At least one numeric between-Ss variable detected, therefore no
-## assumption test will be returned.</code></pre>
+<pre><code>## Warning: At least one numeric between-Ss variable detected, therefore no assumption test will be returned.</code></pre>
 <pre class="r"><code>fm &lt;- lm(mean_error ~ condition, data = dd)
 prob_3_r_result_2 &lt;- anova(fm)
 
