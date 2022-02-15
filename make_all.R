@@ -14,5 +14,7 @@ make <- function(in_file) {
 }
 
 for(in_file in in_files) {
+  if(in_file != "/Users/mq20185996/Dropbox/teaching/2022/cogs2020/live_course_material/lecture_20.Rmd") {
   make(in_file)
+  }
 }

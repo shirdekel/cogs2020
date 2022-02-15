@@ -356,7 +356,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Midterm Prep Key</h1>
 <h4 class="author">Author: Matthew J. Crossley</h4>
-<h4 class="date">Last update: 14 June, 2021</h4>
+<h4 class="date">Last update: 15 February, 2022</h4>
 
 </div>
 
@@ -911,18 +911,12 @@ power &lt;- pt(t_crit_upper-2 / sig_x_bar, n-1, lower.tail=FALSE)
 <li>Convert the following <code>data.table</code> to long format</li>
 <li>The <code>data.table</code> can be found here: <a href="https://crossley.github.io/cogs2020/data/maze/d_wide.csv" class="uri">https://crossley.github.io/cogs2020/data/maze/d_wide.csv</a></li>
 </ul>
-<pre><code>##    maze_time_rat_1 maze_time_rat_2 maze_time_rat_3 maze_time_rat_4
-## 1:       223.83041       16.795670       183.20471        20.46609
-## 2:        72.06537      -16.657055        77.26713        94.51225
-## 3:       275.79031       -6.559058       126.61374       125.01413
-## 4:       156.07461      -56.378205        62.32973       161.82433
-## 5:        54.72160      215.653700       344.13646        82.73765
-##    maze_time_rat_5 run
-## 1:     -122.390027   1
-## 2:      -26.361438   2
-## 3:      135.872890   3
-## 4:       98.895452   4
-## 5:        5.935084   5</code></pre>
+<pre><code>##    maze_time_rat_1 maze_time_rat_2 maze_time_rat_3 maze_time_rat_4 maze_time_rat_5 run
+## 1:       223.83041       16.795670       183.20471        20.46609     -122.390027   1
+## 2:        72.06537      -16.657055        77.26713        94.51225      -26.361438   2
+## 3:       275.79031       -6.559058       126.61374       125.01413      135.872890   3
+## 4:       156.07461      -56.378205        62.32973       161.82433       98.895452   4
+## 5:        54.72160      215.653700       344.13646        82.73765        5.935084   5</code></pre>
 <pre class="r"><code>d &lt;- fread(&#39;https://crossley.github.io/cogs2020/data/maze/d_wide.csv&#39;)
 melt(d, id.vars=c(&#39;run&#39;))</code></pre>
 <pre><code>##     run        variable       value
