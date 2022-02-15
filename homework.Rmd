@@ -17,34 +17,35 @@ fontsize: 14pt
 ---
 
 #### [Homework 1](homework_1.html)
-#### [Homework 1 Solutions](homework_1_solutions.html)
+<!-- #### [Homework 1 Solutions](homework_1_solutions.html) -->
 #### [Homework 2](homework_2.html)
-#### [Homework 2 Solutions](homework_2_solutions.html)
+<!-- #### [Homework 2 Solutions](homework_2_solutions.html) -->
 #### [Homework 3](homework_3.html)
-#### [Homework 3 Solutions](homework_3_solutions.html)
+<!-- #### [Homework 3 Solutions](homework_3_solutions.html) -->
 #### [Homework 4](homework_4.html)
-#### [Homework 4 Solutions](homework_4_solutions.html)
+<!-- #### [Homework 4 Solutions](homework_4_solutions.html) -->
+#### [Homework 5](homework_5.html)
+<!-- #### [Homework 5 Solutions](homework_5_solutions.html) -->
 
 ---
-
 #### [Midterm Prep](midterm_prep.html)
 #### [Midterm Prep Solutions](midterm_prep_solutions.html)
-
+#### Midterm Exam
+<!-- #### [Midterm](miterm_exam.html) -->
 ---
 
-#### [Midterm guidelines and hints](miterm_guide.html)
-#### [Midterm 1](miterm_exam.html)
-#### [Midterm 2](miterm_exam_2.html)
-
----
-
-#### [Homework 5](homework_5.html)
-#### [Homework 5 Solutions](homework_5_solutions.html)
 #### [Homework 6](homework_6.html)
-#### [Homework 6 Solutions](homework_6_solutions.html)
+<!-- #### [Homework 6 Solutions](homework_6_solutions.html) -->
 #### [Homework 7](homework_7.html)
-#### [Homework 7 Solutions](homework_7_solutions.html)
+<!-- #### [Homework 7 Solutions](homework_7_solutions.html) -->
 #### [Homework 8](homework_8.html)
-#### [Homework 8 Solutions](homework_8_solutions.html)
+<!-- #### [Homework 8 Solutions](homework_8_solutions.html) -->
 #### [Homework 9](homework_9.html)
-<!-- #### [Homework 10](homework_10.html) -->
+<!-- #### [Homework 9 Solutions](homework_8_solutions.html) -->
+#### [Homework 10](homework_10.html)
+<!-- #### [Homework 10 Solutions](homework_8_solutions.html) -->
+
+---
+#### Final Exam
+<!-- #### [Final](miterm_exam.html) -->
+---

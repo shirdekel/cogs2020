@@ -116,7 +116,6 @@ dm <- fread('https://crossley.github.io/cogs2020/grades/midterm.csv')
 dm1 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv')
 dm2 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv')
 df <- fread('https://crossley.github.io/cogs2020/grades/final_exam_table.csv')
-# df[, score := score + 0.05]
 
 d1[, assignment := 'hw1']
 d2[, assignment := 'hw2']
@@ -135,25 +134,21 @@ df[, assignment := 'f']
 d <- rbindlist(list(d1, d2, d3, d4, d5, d6, d7, d8, d9, dm, dm1, dm2, df), use.names=T, fill=T)
 
 late <- fread('../code/hws_submissions_deadline_posneg.csv')
-setnames(late, c('first_name',
-                 'last_name',
-                 'student_id',
-                 'hw1',
-                 'hw2',
-                 'hw3',
-                 'hw4',
-                 'hw5',
-                 'hw6',
-                 'hw7',
-                 'hw8',
-                 'hw9'
-                 ))
-
+setnames(late, c('ID number'), c('student_id'))
 late <- melt(late, 
              id.vars=c('student_id'), 
-             measure.vars=c('hw1', 'hw2', 'hw3', 'hw4', 'hw5', 'hw6', 'hw7', 'hw8', 'hw9'),
+             measure.vars=c('hw1',
+                            'hw2',
+                            'hw3',
+                            'hw4',
+                            'hw5',
+                            'hw6',
+                            'hw7',
+                            'hw8',
+                            'hw9'),
              variable.name='assignment',
-             value.name='sub_date')
+             value.name='sub_date'
+             )
 
 dd <- d[, .(score = unique(score)), .(student_id, assignment)]
 dd <- merge(dd, late, by=c('student_id', 'assignment'), all=T)
@@ -185,10 +180,6 @@ dd[, f := ifelse(is.na(f), 0, f)]
 dd[, m1 := ifelse(is.na(m1), 0, m1)]
 dd[, m2 := ifelse(is.na(m2), 0, m2)]
 
-# don't consider HW9 if people didn't turn it in
-# dd[hw9==0, hw9 := NA]
-# dd[f != 0 & hw9==0]
-
 dd[, total_score := sum(0.1 * 1, # quizzes (assuming you got credit for the 3 given)
                     0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6, hw7, hw8, hw9, hw10)), # hw
                     0.3 * mean(c(m1, m2)), # midterm recovery
@@ -210,8 +201,7 @@ ggplot(dd, aes(total_score, fill=mark_class)) +
   geom_histogram(breaks=seq(0.0, 1.0, 0.05)) +
   xlim(0.3, 1.0)
 
-# TODO: investigate F students
-dd[mark_class == 'Fail'][order(f, m1, m2), .(student_id, m1, m2, f)]
+fwrite(dd, '../code/dd.csv')
 ```
 
 
@@ -456,7 +446,6 @@ library(ggplot2)
 rm(list=ls())
 
 d <- fread('https://crossley.github.io/cogs2020/grades/final_exam_table.csv')
-d[, score := score + 0.05]
 
 dd <- d[, .(score = unique(score)), .(student_id)]
 ggplot(dd, aes(score)) +

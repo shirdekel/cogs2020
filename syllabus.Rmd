@@ -20,42 +20,34 @@ Please reference the following course websites for course
 details:
 
 - [Course Materials](https://crossley.github.io/cogs2020/)
-- [iLearn](https://ilearn.mq.edu.au/course/view.php?id=50609)
+- [iLearn](https://ilearn.mq.edu.au/course/view.php?id=62402)
 <!-- - [Unit Guide](https://unitguides.mq.edu.au/unit_offerings/123650/unit_guide) -->
 
 ## Instructor Information
 - **Name:** Dr. Matthew J. Crossley
 - **Email:** matthew.crossley@mq.edu.au
 - **Office:** Australian Hearing Hub 3.819
-- **Office Hours:** By appointment
+- **Office Hours:** Wednesday 3:00 - 5:00
 
 ## Tutor Information
-- **Name:** Juan Andres Mucarquer Fuentes
-- **Email:** juan.mucarquer@mq.edu.au
-- **Office:** TBA
-- **Office Hours:** TBA
+- **Name:** Shir Dekel
+- **Email:** shirdekel@yahoo.com.au
 
 ## Course Schedule
-|          | Day       | Time                | Location                            |
-|----------|-----------|---------------------|-------------------------------------|
-| Lecture  | Monday    | 9:00 AM - 10:00 AM  | Online only                         |
-| Tutorial | Monday    | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
-| Tutorial | Monday    | 1:00 PM - 2:00 PM   | 12 Second Way - 318 Faculty PC Room |
-| Tutorial | Monday    | 2:00 PM - 3:00 PM   | 12 Second Way - 318 Faculty PC Room |
-| Tutorial | Wednesday | 11:00 AM - 12:00 PM | 12 Second Way - 318 Faculty PC Room |
-| Tutorial | Wednesday | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
-| Tutorial | Wednesday | 1:00 PM - 2:00 PM   | 12 Second Way - 318 Faculty PC Room |
-| Tutorial | Thursday  | 11:00 AM - 12:00 PM | 12 Second Way - 318 Faculty PC Room |
-| Tutorial | Thursday  | 12:00 PM - 1:00 PM  | 12 Second Way - 318 Faculty PC Room |
+| Activity | Day       | Time                | Location                            |
+|----------+-----------+---------------------+-------------------------------------|
+| Lecture  | Wednesday | 13:00 PM - 15:00 PM | Online only                         |
+| Tutorial | Monday    | 09:00 PM - 11:00 PM | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Monday    | 13:00 PM - 15:00 PM | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Tuesday   | 12:00 PM - 14:00 PM | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Tuesday   | 14:00 PM - 16:00 PM | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Friday    | 12:00 PM - 2:00 PM  | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Friday    | 14:00 PM - 16:00 PM | 12 Second Way - 318 Faculty PC Room |
+| Tutorial | Friday    | 16:00 PM - 18:00 PM | 12 Second Way - 318 Faculty PC Room |
 
 - Lectures will be delivered exclusively over Zoom.
-
-- Tutorials will be on campus in the room indiacted above,
-but will also be streamed live over Zoom.
-
-- [Lecture Zoom](https://macquarie.zoom.us/j/85296023917?pwd=S1UzTExLYnR0cFYzMGk1TzJTUDRGdz09)
-- [M/W Tutorial Zoom](https://macquarie.zoom.us/j/9384264831?pwd=ekd2QXkxdU9pankrMzZsN3dseUJYZz09)
-- [Th Tutorial Zoom]()
+- Tutorials will be on campus in the room indiacted above.
+- [Lecture Zoom](https://macquarie.zoom.us/j/87043786483)
 
 ## Weekly Lectures
 - Please see [lectures](lectures.html)
@@ -74,7 +66,7 @@ immensely. There is no replacement for learning by doing.
 Semi-weekly problem sets and quizzes are designed to keep
 you motivated and on the hook.
 
-**Learn how to think**:  Too often intro courses leave
+**Learn how to think**:  Intro courses can sometimes leave
 students simply consulting a cheat sheet of "apply test X in
 situation Y".  Ultimately, the needs of your future research
 will be unique. You will need to apply the general
@@ -107,14 +99,13 @@ essential that you take them seriously and commit adequate
 time to them. Try to embrace that **code everyday**
 lifestyle.
 
-**Midterm exam**: 1 hour exam. I will release it at our
-normal lecture time and you will have 1 hour to submit your
-work. If you understand the problem sets, this will be easy.
+**Midterm exam**: 1 hour exam. I will release it at the
+beginning of our normal lecture time and you will have 1
+hour to submit your work.
 
-**Final exam**: 2 hour "take-home" exam. I will release it
-whenever our final exam is scheduled by MQ and you will have
-2 hours to submit your work. Again, if you understand the
-problem sets, this will be easy.
+**Final exam**: 2 hour exam. I will release it whenever our
+final exam is scheduled by MQ and you will have 2 hours to
+submit your work.
 
 **Grading**: No partial credit will be given for any
 assignment. Furthermore, you must read the instructions very

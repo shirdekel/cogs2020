@@ -1,6 +1,6 @@
 library(stringr)
 
-setwd('/Users/mq20185996/Dropbox/teaching/2021/cogs2020/live_course_material/')
+setwd('/Users/mq20185996/Dropbox/teaching/2022/cogs2020/live_course_material/')
 out_format <- 'html_document'
 in_files <- list.files(getwd(), pattern='*.Rmd', full.names=T)
 
@@ -14,5 +14,5 @@ make <- function(in_file) {
 }
 
 for(in_file in in_files) {
-    make(in_file)
+  make(in_file)
 }
