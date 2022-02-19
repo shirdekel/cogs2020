@@ -16,36 +16,27 @@ output:
 fontsize: 14pt
 ---
 
-#### [Homework 1](homework_1.html)
-<!-- #### [Homework 1 Solutions](homework_1_solutions.html) -->
-#### [Homework 2](homework_2.html)
-<!-- #### [Homework 2 Solutions](homework_2_solutions.html) -->
-#### [Homework 3](homework_3.html)
-<!-- #### [Homework 3 Solutions](homework_3_solutions.html) -->
-#### [Homework 4](homework_4.html)
-<!-- #### [Homework 4 Solutions](homework_4_solutions.html) -->
-#### [Homework 5](homework_5.html)
-<!-- #### [Homework 5 Solutions](homework_5_solutions.html) -->
-
----
-#### [Midterm Prep](midterm_prep.html)
-#### [Midterm Prep Solutions](midterm_prep_solutions.html)
-#### Midterm Exam
-<!-- #### [Midterm](miterm_exam.html) -->
----
-
-#### [Homework 6](homework_6.html)
-<!-- #### [Homework 6 Solutions](homework_6_solutions.html) -->
-#### [Homework 7](homework_7.html)
-<!-- #### [Homework 7 Solutions](homework_7_solutions.html) -->
-#### [Homework 8](homework_8.html)
-<!-- #### [Homework 8 Solutions](homework_8_solutions.html) -->
-#### [Homework 9](homework_9.html)
-<!-- #### [Homework 9 Solutions](homework_8_solutions.html) -->
-#### [Homework 10](homework_10.html)
-<!-- #### [Homework 10 Solutions](homework_8_solutions.html) -->
-
----
-#### Final Exam
-<!-- #### [Final](miterm_exam.html) -->
----
+| ASSESSMENT NAME                                              | WEIGHT | DUE DATE | RETURN DATE |
+|:-------------------------------------------------------------|:-------|:---------|:------------|
+| [Problem Set  1](homework_1.html)                            |     3% | 28/02/22 | 07/03/22    |
+| [Problem Set  2](homework_2.html)                            |     3% | 07/03/22 | 14/03/22    |
+| [Problem Set  3](homework_3.html)                            |     3% | 14/03/22 | 21/03/22    |
+| [Problem Set  4](homework_4.html)                            |     3% | 21/03/22 | 28/03/22    |
+| [Problem Set  5](homework_5.html)                            |     3% | 28/03/22 | 04/04/22    |
+| [Problem Set  6](homework_6.html)                            |     3% | 02/05/22 | 09/05/22    |
+| [Problem Set  7](homework_7.html)                            |     3% | 09/05/22 | 16/05/22    |
+| [Problem Set  8](homework_8.html)                            |     3% | 16/05/22 | 23/05/22    |
+| [Problem Set  9](homework_9.html)                            |     3% | 23/05/22 | 30/05/22    |
+| [Problem Set 10](homework_10.html)                           |     3% | 30/05/22 | 06/06/22    |
+| [Quiz  1](https://ilearn.mq.edu.au/course/view.php?id=62402) |     1% | 02/03/22 | 02/03/22    |
+| [Quiz  2](https://ilearn.mq.edu.au/course/view.php?id=62402) |     1% | 09/03/22 | 09/03/22    |
+| [Quiz  3](https://ilearn.mq.edu.au/course/view.php?id=62402) |     1% | 16/03/22 | 16/03/22    |
+| [Quiz  4](https://ilearn.mq.edu.au/course/view.php?id=62402) |     1% | 23/03/22 | 23/03/22    |
+| [Quiz  5](https://ilearn.mq.edu.au/course/view.php?id=62402) |     1% | 30/03/22 | 30/03/22    |
+| [Quiz  6](https://ilearn.mq.edu.au/course/view.php?id=62402) |     1% | 27/04/22 | 27/04/22    |
+| [Quiz  7](https://ilearn.mq.edu.au/course/view.php?id=62402) |     1% | 04/05/22 | 04/05/22    |
+| [Quiz  8](https://ilearn.mq.edu.au/course/view.php?id=62402) |     1% | 11/05/22 | 11/05/22    |
+| [Quiz  9](https://ilearn.mq.edu.au/course/view.php?id=62402) |     1% | 18/05/22 | 18/05/22    |
+| [Quiz 10](https://ilearn.mq.edu.au/course/view.php?id=62402) |     1% | 25/05/22 | 25/05/22    |
+| Midsem Exam                                                  |    30% | 06/04/22 | 13/04/22    |
+| Final Exam                                                   |    30% | TBA      | TBA         |

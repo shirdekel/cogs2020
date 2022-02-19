@@ -1,0 +1,52 @@
+---
+title: "Tutorial 1 - Introduction to the course"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    # code_folding: show
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+## Install R and RStudio
+* Install R: Find the download link [here](https://www.r-project.org/)
+
+* Install RStudio: Find the appropriate download link
+    [here](https://rstudio.com/products/rstudio/)
+
+## Get to know RStudio
+* If you haven't done so already, create a new folder on
+your computer named `cogs2020`
+
+* Open Rstudio and click `File > New File > R Script`
+
+* In Rstudio click `File > Save`
+
+* In the prompt that comes up, name your file
+`tutorial_1_notes.R`, and save it in your `cogs2020` folder.
+
+* For any code or demonstrations given in this tutorial,
+follow along by typing the code into `tutorial_1_notes.R`.
+
+* You can run the code by highlighting the chunk that you
+want, and selecting `Code > Run Selected Line(s)`. - Note
+that there are shortcuts for all of this that you will
+probably quickly come to prefer, but this method is fine if
+you like.
+
+## Work through this tutorial
+* [An opinionated tour of RStudio](https://rladiessydney.org/courses/ryouwithme/01-basicbasics-1/)
+
+## Work though this intro tutorial
+* [Programming basics](https://rstudio.cloud/learn/primers/1.2)
+
+## Begin working on problem set 1
+* [Problem set 1](homework_1.html)

@@ -48,7 +48,7 @@ carefully part is where statistics comes in to save the day.
 
 - In statistics, we have special terminology to refer the
 process that generates random outcomes of an experiment ---
-we call is a **random variable**. Any particular single
+we call it a **random variable**. Any particular single
 outcome or sometimes set of random outcomes from an
 experiment is called a **sample** from the random variable.
 
@@ -110,4 +110,165 @@ studies.
 - Install R: Find the download link [here](https://www.r-project.org/)
 - Install RStudio: Find the appropriate download link
     [here](https://rstudio.com/products/rstudio/)
-- Get going on [homework 1](homework_1.html)
+
+## Organise your work
+- Create a new folder on your computer named `cogs2020`
+
+- Open Rstudio and click `File > New File > R Script`
+
+- In Rstudio click `File > Save`
+
+- In the prompt that comes up, name your file
+`lecture_1_notes.R`, and save it in your newly created
+`cogs2020` folder.
+
+- For all of the following exercises and demonstrations,
+follow along by typing the code into `lecture_1_notes.R`.
+
+- You can run the code by highlighting the chunk that you
+want, and selecting `Code > Run Selected Line(s)`. - Note
+that there are shortcuts for all of this that you will
+probably quickly come to prefer, but this method is fine if
+you like.
+   
+## Basics
+```{r}
+# Use R as a calculator
+2 + 2
+
+# Store results in variables
+x <- 2 + 2
+x
+
+# Perform mathematical operations on variables
+x <- 2 + 2
+y <- 3 + 7
+x + y
+```
+
+
+## Functions
+* Functions are objects that take *arguments* as inputs,
+perform some operation on those inputs, and return the
+results.
+
+* `ls()` is a function that reports what objects (e.g.,
+variables you ahve defined) are in the current environment
+and therefore available for you to interact with.
+
+```{r}
+ls()
+```
+
+* `rm()` is a function that can remove objects from the
+current environment.
+
+* It takes several arguments. Type `?rm()` to see help
+information on how to use it.
+
+* We will commonly combine `ls()` and `rm()` to remove all
+objects from the current environment. This is a good thing
+to do at the beginning of every new script you write.
+
+```{r}
+# Remove all objects from the current R session.
+rm(list = ls())
+```
+
+## Data types
+
+### `numeric`
+```{r}
+x <- 2
+class(x)
+```
+
+### `character`
+```{r}
+x <- 'a'
+class(x)
+```
+
+### `logical` 
+```{r}
+x <- TRUE
+class(x)
+```
+
+### `factor`
+
+* A `factor` is a *categorical* data type. They are most
+often used to code for different conditions in an
+experiment.
+
+```{r}
+x <- factor(1)
+class(x)
+```
+
+## Containers
+
+### `vector`
+
+* Create a vector with the function `c()`.
+
+* The elements of a `vector` must be of the same type.
+
+* Access element `i` of `vector` `x` with square brackets
+(e.g., `x[i]`)
+
+```{r}
+# Create a vector with any three numbers you like.
+x <- c(1, 2, 3.14159)
+x
+
+# Access the third element of x
+x3 <- x[3]
+x3
+```
+
+
+### `list`
+
+* Create a list with the function `list()`
+
+* The elements of a `list` can be of different types.
+
+* Access element `i` of `list` `x` with *double* square
+brackets (e.g., `x[[i]]`)
+
+```{r}
+# Create a three element list containing one numeric
+# item, one `character` item, and one logical item.
+x <- list(3.14159, 'pi', TRUE)
+x
+
+# Access the third element of x
+x3 <- x[[3]]
+x3
+```
+
+
+### `data.frame`
+
+* Create a `data.frame` with the function `data.frame()`
+
+* `data.frame` is pretty close what you might think of as an
+excel spreadsheet.
+
+* Access column `x` in `data.frame` `df` with the `$`
+operator (e.g., `df$x`).
+
+```{r}
+# Create vectors to later store in a data frame
+x <- c('I', 'I', 'I', 'II', 'II', 'II', 'III', 'III', 'III', 'IV', 'IV', 'IV')
+y <- c('a', 'a', 'b', 'b', 'c', 'c', 'd', 'd', 'e', 'e', 'f', 'f')
+z <- rnorm(12)
+
+# Create the data frame
+df <- data.frame(x, y, z)
+df
+
+# Access column x
+df$x
+```
