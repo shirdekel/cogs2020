@@ -37,7 +37,7 @@ your computer named `cogs2020`
 follow along by typing the code into `tutorial_1_notes.R`.
 
 * You can run the code by highlighting the chunk that you
-want, and selecting `Code > Run Selected Line(s)`. - Note
+want, and selecting `Code > Run Selected Line(s)`. Note
 that there are shortcuts for all of this that you will
 probably quickly come to prefer, but this method is fine if
 you like.
@@ -50,3 +50,6 @@ you like.
 
 ## Begin working on problem set 1
 * [Problem set 1](homework_1.html)
+
+## Consult Lecture 1 example code
+* [Lecture 1](lecture_1.html)

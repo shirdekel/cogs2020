@@ -131,6 +131,7 @@ that there are shortcuts for all of this that you will
 probably quickly come to prefer, but this method is fine if
 you like.
    
+   
 ## Basics
 ```{r}
 # Use R as a calculator
@@ -272,3 +273,30 @@ df
 # Access column x
 df$x
 ```
+
+
+## Inspect existing objects
+
+* `R` has many built-in functions that are useful for
+inspecting what sort of thing an existing object is. We
+illustrate the use of some of these functions below.
+
+```{r}
+# define some variables (objects) to inspect
+var_1 <- 10
+var_2 <- "apple"
+var_3 <- TRUE
+var_4 <- c(1, 2, 3)
+var_5 <- list('a', 'b', 'c')
+var_6 <- data.frame(v4=var_4, v5=var_5)
+
+# substitute different variables into the following
+# functions to see how they help you inspect existing
+# objects.
+str(var_1)
+class(var_1)
+head(var_1)
+tail(var_1)
+summary(var_1)
+```
+

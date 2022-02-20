@@ -359,7 +359,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 1 - Introduction to the course</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 20 February, 2022</h4>
+<h4 class="date">Last update: 21 February, 2022</h4>
 
 </div>
 
@@ -459,7 +459,7 @@ x + y</code></pre>
 <li><p><code>ls()</code> is a function that reports what objects (e.g., variables you ahve defined) are in the current environment and therefore available for you to interact with.</p></li>
 </ul>
 <pre class="r"><code>ls()</code></pre>
-<pre><code>## [1] &quot;in_file&quot; &quot;x&quot;       &quot;y&quot;</code></pre>
+<pre><code>## [1] &quot;x&quot; &quot;y&quot;</code></pre>
 <ul>
 <li><p><code>rm()</code> is a function that can remove objects from the current environment.</p></li>
 <li><p>It takes several arguments. Type <code>?rm()</code> to see help information on how to use it.</p></li>
@@ -556,22 +556,50 @@ z &lt;- rnorm(12)
 df &lt;- data.frame(x, y, z)
 df</code></pre>
 <pre><code>##      x y          z
-## 1    I a  2.2872472
-## 2    I a -1.1967717
-## 3    I b -0.6942925
-## 4   II b -0.4122930
-## 5   II c -0.9706733
-## 6   II c -0.9472799
-## 7  III d  0.7481393
-## 8  III d -0.1169552
-## 9  III e  0.1526576
-## 10  IV e  2.1899781
-## 11  IV f  0.3569862
-## 12  IV f  2.7167518</code></pre>
+## 1    I a -0.5056408
+## 2    I a  2.2072832
+## 3    I b -2.8504773
+## 4   II b -1.4445577
+## 5   II c -1.5744761
+## 6   II c -0.1468868
+## 7  III d -0.9749665
+## 8  III d  0.4980169
+## 9  III e -1.0749242
+## 10  IV e  0.4708452
+## 11  IV f -0.5812868
+## 12  IV f  1.5121554</code></pre>
 <pre class="r"><code># Access column x
 df$x</code></pre>
 <pre><code>##  [1] &quot;I&quot;   &quot;I&quot;   &quot;I&quot;   &quot;II&quot;  &quot;II&quot;  &quot;II&quot;  &quot;III&quot; &quot;III&quot; &quot;III&quot; &quot;IV&quot;  &quot;IV&quot;  &quot;IV&quot;</code></pre>
 </div>
+</div>
+<div id="inspect-existing-objects" class="section level2">
+<h2>Inspect existing objects</h2>
+<ul>
+<li><code>R</code> has many built-in functions that are useful for inspecting what sort of thing an existing object is. We illustrate the use of some of these functions below.</li>
+</ul>
+<pre class="r"><code># define some variables (objects) to inspect
+var_1 &lt;- 10
+var_2 &lt;- &quot;apple&quot;
+var_3 &lt;- TRUE
+var_4 &lt;- c(1, 2, 3)
+var_5 &lt;- list(&#39;a&#39;, &#39;b&#39;, &#39;c&#39;)
+var_6 &lt;- data.frame(v4=var_4, v5=var_5)
+
+# substitute different variables into the following
+# functions to see how they help you inspect existing
+# objects.
+str(var_1)</code></pre>
+<pre><code>##  num 10</code></pre>
+<pre class="r"><code>class(var_1)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>head(var_1)</code></pre>
+<pre><code>## [1] 10</code></pre>
+<pre class="r"><code>tail(var_1)</code></pre>
+<pre><code>## [1] 10</code></pre>
+<pre class="r"><code>summary(var_1)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      10      10      10      10      10      10</code></pre>
 </div>
 
 
