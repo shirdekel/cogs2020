@@ -325,7 +325,7 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="https://ilearn.mq.edu.au/course/view.php?id=50609">iLearn</a>
+  <a href="https://ilearn.mq.edu.au/course/view.php?id=62402">iLearn</a>
 </li>
 <li>
   <a href="https://github.com/crossley/cogs2020">GitHub</a>
@@ -335,6 +335,9 @@ div.tocify {
 </li>
 <li>
   <a href="lectures.html">Lectures</a>
+</li>
+<li>
+  <a href="tutorials.html">Tutorials</a>
 </li>
 <li>
   <a href="homework.html">Homework</a>
@@ -356,7 +359,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 10 - Repeated measures and mixed-design ANOVA</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 15 February, 2022</h4>
+<h4 class="date">Last update: 20 February, 2022</h4>
 
 </div>
 
@@ -691,8 +694,8 @@ ezANOVA(
   between=.(level2),
   type=3
 )</code></pre>
-<pre><code>## Warning: Data is unbalanced (unequal N per group). Make sure you specified a well-considered value for the type argument to
-## ezANOVA().</code></pre>
+<pre><code>## Warning: Data is unbalanced (unequal N per group). Make sure you specified a
+## well-considered value for the type argument to ezANOVA().</code></pre>
 <pre><code>## $ANOVA
 ##          Effect DFn DFd          F            p p&lt;.05       ges
 ## 2        level2   1   3   4.067233 1.370875e-01       0.2129728
@@ -705,9 +708,12 @@ ezANOVA(
 ## 4 level2:level1 0.7245834 0.7245834      
 ## 
 ## $`Sphericity Corrections`
-##          Effect       GGe        p[GG] p[GG]&lt;.05      HFe        p[HF] p[HF]&lt;.05
-## 3        level1 0.7840576 6.479112e-06         * 1.491901 3.946207e-07         *
-## 4 level2:level1 0.7840576 2.920523e-01           1.491901 2.841678e-01</code></pre>
+##          Effect       GGe        p[GG] p[GG]&lt;.05      HFe        p[HF]
+## 3        level1 0.7840576 6.479112e-06         * 1.491901 3.946207e-07
+## 4 level2:level1 0.7840576 2.920523e-01           1.491901 2.841678e-01
+##   p[HF]&lt;.05
+## 3         *
+## 4</code></pre>
 </div>
 <div id="real-data-1" class="section level2">
 <h2>Real data</h2>

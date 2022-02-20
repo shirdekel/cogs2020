@@ -325,7 +325,7 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="https://ilearn.mq.edu.au/course/view.php?id=50609">iLearn</a>
+  <a href="https://ilearn.mq.edu.au/course/view.php?id=62402">iLearn</a>
 </li>
 <li>
   <a href="https://github.com/crossley/cogs2020">GitHub</a>
@@ -335,6 +335,9 @@ div.tocify {
 </li>
 <li>
   <a href="lectures.html">Lectures</a>
+</li>
+<li>
+  <a href="tutorials.html">Tutorials</a>
 </li>
 <li>
   <a href="homework.html">Homework</a>
@@ -356,7 +359,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 1 - Introduction to the course</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 19 February, 2022</h4>
+<h4 class="date">Last update: 20 February, 2022</h4>
 
 </div>
 
@@ -456,7 +459,7 @@ x + y</code></pre>
 <li><p><code>ls()</code> is a function that reports what objects (e.g., variables you ahve defined) are in the current environment and therefore available for you to interact with.</p></li>
 </ul>
 <pre class="r"><code>ls()</code></pre>
-<pre><code>## [1] &quot;x&quot; &quot;y&quot;</code></pre>
+<pre><code>## [1] &quot;in_file&quot; &quot;x&quot;       &quot;y&quot;</code></pre>
 <ul>
 <li><p><code>rm()</code> is a function that can remove objects from the current environment.</p></li>
 <li><p>It takes several arguments. Type <code>?rm()</code> to see help information on how to use it.</p></li>
@@ -552,19 +555,19 @@ z &lt;- rnorm(12)
 # Create the data frame
 df &lt;- data.frame(x, y, z)
 df</code></pre>
-<pre><code>##      x y           z
-## 1    I a  0.93691733
-## 2    I a -0.99502476
-## 3    I b -0.56326690
-## 4   II b  0.39733092
-## 5   II c -0.09491416
-## 6   II c  0.05179298
-## 7  III d -1.31054977
-## 8  III d  0.44684169
-## 9  III e -0.47996534
-## 10  IV e -0.89876109
-## 11  IV f -0.15950603
-## 12  IV f -0.03174256</code></pre>
+<pre><code>##      x y          z
+## 1    I a  2.2872472
+## 2    I a -1.1967717
+## 3    I b -0.6942925
+## 4   II b -0.4122930
+## 5   II c -0.9706733
+## 6   II c -0.9472799
+## 7  III d  0.7481393
+## 8  III d -0.1169552
+## 9  III e  0.1526576
+## 10  IV e  2.1899781
+## 11  IV f  0.3569862
+## 12  IV f  2.7167518</code></pre>
 <pre class="r"><code># Access column x
 df$x</code></pre>
 <pre><code>##  [1] &quot;I&quot;   &quot;I&quot;   &quot;I&quot;   &quot;II&quot;  &quot;II&quot;  &quot;II&quot;  &quot;III&quot; &quot;III&quot; &quot;III&quot; &quot;IV&quot;  &quot;IV&quot;  &quot;IV&quot;</code></pre>

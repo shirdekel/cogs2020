@@ -325,7 +325,7 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="https://ilearn.mq.edu.au/course/view.php?id=50609">iLearn</a>
+  <a href="https://ilearn.mq.edu.au/course/view.php?id=62402">iLearn</a>
 </li>
 <li>
   <a href="https://github.com/crossley/cogs2020">GitHub</a>
@@ -335,6 +335,9 @@ div.tocify {
 </li>
 <li>
   <a href="lectures.html">Lectures</a>
+</li>
+<li>
+  <a href="tutorials.html">Tutorials</a>
 </li>
 <li>
   <a href="homework.html">Homework</a>
@@ -356,53 +359,67 @@ div.tocify {
 
 <h1 class="title toc-ignore">Homework 1 Solutions</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 15 February, 2022</h4>
+<h4 class="date">Last update: 20 February, 2022</h4>
 
 </div>
 
 
-<div id="solutions" class="section level2">
-<h2>Solutions</h2>
-<pre class="r"><code>library(data.table)
-library(ggplot2)
-
-rm(list=ls())
+<pre class="r"><code>rm(list=ls())
+my_name &lt;- &quot;John Doe&quot;
+my_student_id &lt;- &quot;12345678&quot;
 
 # 1
-ans_1a &lt;- fread(&#39;https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv&#39;)
-ans_1b &lt;- ans_1a[cnd %in% c(&#39;Delay&#39;, &#39;Long ITI&#39;)]
-ans_1c &lt;- ans_1b[, .(t2c = mean(t2c)), .(cnd, sub)]
-ans_1d &lt;- ggplot(ans_1c, aes(cnd, t2c)) +
-  geom_violin() +
-  geom_point()
+ans_1a_x &lt;- 10
+ans_1a_y &lt;- 5
+ans_1a_z &lt;- ans_1a_x + ans_1a_y
+
+ans_1b_x &lt;- &quot;10&quot;
+ans_1b_y &lt;- &quot;5&quot;
+ans_1b_z &lt;- as.numeric(ans_1b_x) + as.numeric((ans_1b_y))
+
+ans_1c &lt;- ans_1a_x == ans_1a_y
+
 
 # 2
-ans_2a &lt;- fread(&#39;https://crossley.github.io/cogs2020/data/maze/maze.csv&#39;)
-ans_2b &lt;- data.table(ans_2a)
-ans_2b[, rat := as.factor(rat)]
-ans_2b[, maze := as.factor(maze)]
-ans_2c &lt;- ans_2b[, .(time = mean(time)), .(maze, rat)]
-ans_2d &lt;- ggplot(ans_2c, aes(maze, time)) +
-  geom_boxplot() +
-  geom_point()
+ans_2a &lt;- c(2, 3, 5, 7, 11)
+ans_2b &lt;- list(1, 2, &quot;a&quot;, &quot;b&quot;, TRUE)
+
+v1 &lt;- c(&#39;I&#39;, &#39;I&#39;, &#39;I&#39;, &#39;I&#39;, &#39;II&#39;, &#39;II&#39;, &#39;II&#39;, &#39;II&#39;)
+v2 &lt;- c(&#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;b&#39;, &#39;c&#39;, &#39;c&#39;, &#39;d&#39;, &#39;d&#39;)
+v3 &lt;- c(-1.6297880, 
+        -1.0738506,  
+         0.0299236, 
+        -1.5435811, 
+        -0.5133278, 
+        -1.4716107,
+        -1.1986316,
+        -1.5548207)
+ans_2c &lt;- data.frame(v1, v2, v3)
+
 
 # 3
-ans_3a &lt;- fread(&#39;https://crossley.github.io/cogs2020/data/mis/mis_data.csv&#39;)
-ans_3a[, group := as.factor(group)]
-ans_3a &lt;- ans_3a[, .(hand_angle = mean(hand_angle)), .(group, trial)]
-ans_3b &lt;- ggplot(ans_3a, aes(trial, hand_angle, colour=group)) +
-  geom_line()
+tmp &lt;- c(0.24, 0.015, 1.34, -1.00, -0.15)
+ans_3a &lt;- tmp[3]
+
+tmp &lt;- list(0.5, &quot;W&quot;, FALSE)
+ans_3b &lt;- tmp[[2]]
+
+tmp &lt;- data.frame(v1=c(1, 2, 3),
+                  v2=c(&#39;A&#39;, &#39;B&#39;, &#39;C&#39;),
+                  v3=c(TRUE, TRUE, FALSE))
+ans_3c &lt;- tmp$v2
+
 
 # 4
-ans_4a &lt;- fread(&#39;https://crossley.github.io/cogs2020/data/eeg/epochs.txt&#39;)
-ans_4a[, V1 := NULL]
-ans_4a[, condition := as.factor(condition)]
-ans_4b &lt;- melt(ans_4a, id.vars=c(&#39;time&#39;, &#39;epoch&#39;, &#39;condition&#39;))
-ans_4c &lt;- ans_4b[variable == &#39;MEG 001&#39;]
-ans_4d &lt;- ans_4c[, .(value = mean(value)), .(condition, time)]
-ans_4e &lt;- ggplot(ans_4d, aes(time, value, colour=condition)) +
-  geom_line()</code></pre>
-</div>
+ans_4a &lt;- &quot;numeric&quot;
+ans_4b &lt;- &quot;character&quot;
+
+
+# 5
+ans_5a &lt;- &quot;random_variable&quot;
+ans_5b &lt;- &quot;sample&quot;
+ans_5c &lt;- &quot;descriptive_statistic&quot;
+ans_5d &lt;- &quot;inferential_statistic&quot;</code></pre>
 
 
 

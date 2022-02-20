@@ -60,18 +60,19 @@ of `ans_1a_x` and `ans_1a_y`. The line of code that you
 write to define `ans_1a_z` must include the `+` operator or
 you will be marked incorrect.
 
-b. Define a variable named `ans_1b_xx` and set its value to
-`"10"`, a variable named `ans_1b_yy` and set its value to
-`"5"`, and a variable named `zz` and set its value to the
-sum of the *numeric values* of `ans_1b_xx` and `ans_1b_yy`.
-The line of code that you write to define `zz` must include
-the `+` operator and the `as.numeric()` function or you will
-be marked incorrect.
+b. Define a variable named `ans_1b_x` and set its value to
+`"10"`, a variable named `ans_1b_y` and set its value to
+`"5"`, and a variable named `ans_1b_z` and set its value to
+the sum of the *numeric values* of `ans_1b_x` and
+`ans_1b_y`. The line of code that you write to define
+`ans_1b_z` must include the `+` operator and the
+`as.numeric()` function or you will be marked incorrect.
 
-c. Define a variable named `x_equal_y` and set its value to
-the `logical` result indicating if `x` is equal to `y`. The
-line of code that you write to define `x_equal_y` must
-include the `==` operator or you will be marked incorrect.
+c. Define a variable named `ans_1c` and set its value to the
+`logical` result indicating if `ans_1a_x` is equal to
+`ans_1a_y`. The line of code that you write to define
+`ans_1c` must include the `==` operator or you will be
+marked incorrect.
 
 ## 2.
 a. Create a `vector` named `ans_2a` that contains the
@@ -123,4 +124,156 @@ includes the `$` operator or you will be marked incorrect.
 tmp <- data.frame(v1=c(1, 2, 3),
                   v2=c('A', 'B', 'C'),
                   v3=c(TRUE, TRUE, FALSE))
+``` 
+
+## 4.
+a. For the following code chunk, what is the data type of
+the second element of `tmp`? Store your answer in a variable
+named `ans_4a` by copying, pasting, and uncommenting one of
+the commented out lines of code below.
+```{r, echo=T}
+element_1 <- "A"
+element_2 <- 2
+element_3 <- FALSE
+tmp <- c(element_1, element_2, element_3)
+
+# ans_4a <- "character"
+# ans_4a <- "numeric"
+# ans_4a <- "logical"
+``` 
+
+b. For the following code chunk, what is the data type of
+the second element of `tmp`? Store your answer in a variable
+named `ans_4b` by copying, pasting, and uncommenting one of
+the commented out lines of code below.
+```{r, echo=T}
+element_1 <- "A"
+element_2 <- 2
+element_3 <- FALSE
+tmp <- c(element_1, element_2, element_3)
+
+# ans_4b <- "character"
+# ans_4b <- "numeric"
+# ans_4b <- "logical"
+``` 
+
+## 5.
+The function `generate_experiment_result()` defined in the
+following code chunk takes `sample_size` as an argument and
+returns the results from a silly experiment in which we
+sample from a normal distribution.
+```{r, echo=T}
+set.seed(0)
+generate_experiment_result <- function(sample_size) {
+  result <- rnorm(sample_size)
+  return(result)
+}
+
+experiment_result <- generate_experiment_result(10)
+
+experiment_result_mean <- mean(experiment_result)
+
+critical_value <- 1.5
+if(experiment_result_mean > critical_value) {
+   experiment_decision <- TRUE
+} else {
+   experiment_decision <- FALSE
+}
+``` 
+a. Is the function `generate_experiment_result ` a
+**descriptive statistic**, an **inferential statistic**, a
+**random variable**, or a **sample** from a random variable?
+Please use one of the following lines of code to save your
+answer.
+```{r, echo=T}
+ans_5a <- "descriptive_statistic"
+ans_5a <- "inferential_statistic"
+ans_5a <- "random_variable"
+ans_5a <- "sample"
+``` 
+
+b. Is the variable `experiment_result` a **descriptive
+statistic**, an **inferential statistic**, a **random
+variable**, or a **sample** from a random variable?
+Please use one of the following lines of code to save your
+answer.
+```{r, echo=T}
+ans_5b <- "descriptive_statistic"
+ans_5b <- "inferential_statistic"
+ans_5b <- "random_variable"
+ans_5b <- "sample"
+``` 
+
+c. Is the variable `experiment_result_mean` a **descriptive
+statistic**, an **inferential statistic**, a **random
+variable**, or a **sample** from a random variable?
+Please use one of the following lines of code to save your
+answer.
+```{r, echo=T}
+ans_5c <- "descriptive_statistic"
+ans_5c <- "inferential_statistic"
+ans_5c <- "random_variable"
+ans_5c <- "sample"
+``` 
+
+d. Is the variable `experiment_decision` a **descriptive
+statistic**, an **inferential statistic**, a **random
+variable**, or a **sample** from a random variable?
+Please use one of the following lines of code to save your
+answer.
+```{r, echo=T}
+ans_5d <- "descriptive_statistic"
+ans_5d <- "inferential_statistic"
+ans_5d <- "random_variable"
+ans_5d <- "sample"
+``` 
+
+## 6.
+A common error on these problem sets is to accidentally
+erase or overwrite variables from one question with those
+from another. Another common error is to name your variables
+slightly wrong (e.g., `Ans_1a` instead of `ans_1a`). Yet
+another common error is to include a line of code or two
+that generates an error, and sometimes this error is serious
+enough to prevent most or all of your script from running,
+in which case you will lose most or all of your marks for
+that assignment. All of these can be a very frustrating way
+to lose marks, but you will indeed lose marks if you make
+these mistakes, so you need to be very careful!
+
+To ensure that this doesn't happen to you, please run your
+entire `.R` script from start to finish. One way to do this
+is to use `Code > Run Region > Run All`, but of course there
+are shortcuts for everything so do as you wish. If there are
+any errors at all when you do this, it is essential that you
+address them.  
+
+After all of your code has executed from start to finish
+without and errors at all, then carefully inspect your
+workspace to ensure that the following variables are
+defined. A reasonable way to do this is to try to print each
+one of these variables to the console. If it is defined,
+then it will print without error.
+```{r, eval=F, echo=T}
+my_name
+my_student_id
+ans_1a_x
+ans_1a_y
+ans_1a_z
+ans_1b_x
+ans_1b_y
+ans_1b_z
+ans_1c
+ans_2a
+ans_2b
+ans_2c
+ans_3a
+ans_3b
+ans_3c
+ans_4a
+ans_4b
+ans_5a
+ans_5b
+ans_5c
+ans_5d
 ``` 

@@ -4,13 +4,15 @@ left:
   # - text: "Unit Guide"
   #   href: https://unitguides.mq.edu.au/unit_offerings/123650/unit_guide
   - text: "iLearn"
-    href: https://ilearn.mq.edu.au/course/view.php?id=50609
+    href: https://ilearn.mq.edu.au/course/view.php?id=62402
   - text: "GitHub"
     href: https://github.com/crossley/cogs2020
   - text: "Syllabus"
     href: syllabus.html
   - text: "Lectures"
     href: lectures.html
+  - text: "Tutorials"
+    href: tutorials.html
   - text: "Homework"
     href: homework.html
   - text: "Grades"

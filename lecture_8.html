@@ -325,7 +325,7 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="https://ilearn.mq.edu.au/course/view.php?id=50609">iLearn</a>
+  <a href="https://ilearn.mq.edu.au/course/view.php?id=62402">iLearn</a>
 </li>
 <li>
   <a href="https://github.com/crossley/cogs2020">GitHub</a>
@@ -335,6 +335,9 @@ div.tocify {
 </li>
 <li>
   <a href="lectures.html">Lectures</a>
+</li>
+<li>
+  <a href="tutorials.html">Tutorials</a>
 </li>
 <li>
   <a href="homework.html">Homework</a>
@@ -356,7 +359,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 8 - One-way ANOVA</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 15 February, 2022</h4>
+<h4 class="date">Last update: 20 February, 2022</h4>
 
 </div>
 
@@ -536,7 +539,8 @@ pval &lt;- pf(fobs, df_between, df_within, lower.tail=F)
 
 ## report results
 print(c(ss_between, ss_within, df_between, df_within, fobs, pval))</code></pre>
-<pre><code>## [1] 227.95300725 361.75603363   2.00000000  12.00000000   3.78077466   0.05329273</code></pre>
+<pre><code>## [1] 227.95300725 361.75603363   2.00000000  12.00000000   3.78077466
+## [6]   0.05329273</code></pre>
 <pre class="r"><code>## Check our work using a builtin R function
 d &lt;- data.table(x,y,z)
 d &lt;- melt(d, measure.var=c(&#39;x&#39;, &#39;y&#39;, &#39;z&#39;))
@@ -644,8 +648,8 @@ ezANOVA(
   between=.(cnd),
   type=3
 ) </code></pre>
-<pre><code>## Warning: Data is unbalanced (unequal N per group). Make sure you specified a well-considered value for the type argument to
-## ezANOVA().</code></pre>
+<pre><code>## Warning: Data is unbalanced (unequal N per group). Make sure you specified a
+## well-considered value for the type argument to ezANOVA().</code></pre>
 <pre><code>## Coefficient covariances computed by hccm()</code></pre>
 <pre><code>## $ANOVA
 ##   Effect DFn DFd        F         p p&lt;.05        ges

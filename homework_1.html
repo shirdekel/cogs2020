@@ -325,7 +325,7 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="https://ilearn.mq.edu.au/course/view.php?id=50609">iLearn</a>
+  <a href="https://ilearn.mq.edu.au/course/view.php?id=62402">iLearn</a>
 </li>
 <li>
   <a href="https://github.com/crossley/cogs2020">GitHub</a>
@@ -335,6 +335,9 @@ div.tocify {
 </li>
 <li>
   <a href="lectures.html">Lectures</a>
+</li>
+<li>
+  <a href="tutorials.html">Tutorials</a>
 </li>
 <li>
   <a href="homework.html">Homework</a>
@@ -378,8 +381,8 @@ my_student_id &lt;- &quot;12345678&quot;</code></pre>
 <h2>1.</h2>
 <ol style="list-style-type: lower-alpha">
 <li><p>Define a variable named <code>ans_1a_x</code> and set its value to <code>10</code>, a variable named <code>ans_1a_y</code> and set its value to <code>5</code>, and a variable named <code>ans_1a_z</code> and set its value to the sum of <code>ans_1a_x</code> and <code>ans_1a_y</code>. The line of code that you write to define <code>ans_1a_z</code> must include the <code>+</code> operator or you will be marked incorrect.</p></li>
-<li><p>Define a variable named <code>ans_1b_xx</code> and set its value to <code>&quot;10&quot;</code>, a variable named <code>ans_1b_yy</code> and set its value to <code>&quot;5&quot;</code>, and a variable named <code>zz</code> and set its value to the sum of the <em>numeric values</em> of <code>ans_1b_xx</code> and <code>ans_1b_yy</code>. The line of code that you write to define <code>zz</code> must include the <code>+</code> operator and the <code>as.numeric()</code> function or you will be marked incorrect.</p></li>
-<li><p>Define a variable named <code>x_equal_y</code> and set its value to the <code>logical</code> result indicating if <code>x</code> is equal to <code>y</code>. The line of code that you write to define <code>x_equal_y</code> must include the <code>==</code> operator or you will be marked incorrect.</p></li>
+<li><p>Define a variable named <code>ans_1b_x</code> and set its value to <code>&quot;10&quot;</code>, a variable named <code>ans_1b_y</code> and set its value to <code>&quot;5&quot;</code>, and a variable named <code>ans_1b_z</code> and set its value to the sum of the <em>numeric values</em> of <code>ans_1b_x</code> and <code>ans_1b_y</code>. The line of code that you write to define <code>ans_1b_z</code> must include the <code>+</code> operator and the <code>as.numeric()</code> function or you will be marked incorrect.</p></li>
+<li><p>Define a variable named <code>ans_1c</code> and set its value to the <code>logical</code> result indicating if <code>ans_1a_x</code> is equal to <code>ans_1a_y</code>. The line of code that you write to define <code>ans_1c</code> must include the <code>==</code> operator or you will be marked incorrect.</p></li>
 </ol>
 </div>
 <div id="section-2" class="section level2">
@@ -416,6 +419,106 @@ v3 &lt;- c(-1.6297880,
 <pre class="r"><code>tmp &lt;- data.frame(v1=c(1, 2, 3),
                   v2=c(&#39;A&#39;, &#39;B&#39;, &#39;C&#39;),
                   v3=c(TRUE, TRUE, FALSE))</code></pre>
+</div>
+<div id="section-4" class="section level2">
+<h2>4.</h2>
+<ol style="list-style-type: lower-alpha">
+<li>For the following code chunk, what is the data type of the second element of <code>tmp</code>? Store your answer in a variable named <code>ans_4a</code> by copying, pasting, and uncommenting one of the commented out lines of code below.</li>
+</ol>
+<pre class="r"><code>element_1 &lt;- &quot;A&quot;
+element_2 &lt;- 2
+element_3 &lt;- FALSE
+tmp &lt;- c(element_1, element_2, element_3)
+
+# ans_4a &lt;- &quot;character&quot;
+# ans_4a &lt;- &quot;numeric&quot;
+# ans_4a &lt;- &quot;logical&quot;</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>For the following code chunk, what is the data type of the second element of <code>tmp</code>? Store your answer in a variable named <code>ans_4b</code> by copying, pasting, and uncommenting one of the commented out lines of code below.</li>
+</ol>
+<pre class="r"><code>element_1 &lt;- &quot;A&quot;
+element_2 &lt;- 2
+element_3 &lt;- FALSE
+tmp &lt;- c(element_1, element_2, element_3)
+
+# ans_4b &lt;- &quot;character&quot;
+# ans_4b &lt;- &quot;numeric&quot;
+# ans_4b &lt;- &quot;logical&quot;</code></pre>
+</div>
+<div id="section-5" class="section level2">
+<h2>5.</h2>
+<p>The function <code>generate_experiment_result()</code> defined in the following code chunk takes <code>sample_size</code> as an argument and returns the results from a silly experiment in which we sample from a normal distribution.</p>
+<pre class="r"><code>set.seed(0)
+generate_experiment_result &lt;- function(sample_size) {
+  result &lt;- rnorm(sample_size)
+  return(result)
+}
+
+experiment_result &lt;- generate_experiment_result(10)
+
+experiment_result_mean &lt;- mean(experiment_result)
+
+critical_value &lt;- 1.5
+if(experiment_result_mean &gt; critical_value) {
+   experiment_decision &lt;- TRUE
+} else {
+   experiment_decision &lt;- FALSE
+}</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li>Is the function <code>generate_experiment_result</code> a <strong>descriptive statistic</strong>, an <strong>inferential statistic</strong>, a <strong>random variable</strong>, or a <strong>sample</strong> from a random variable? Please use one of the following lines of code to save your answer.</li>
+</ol>
+<pre class="r"><code>ans_5a &lt;- &quot;descriptive_statistic&quot;
+ans_5a &lt;- &quot;inferential_statistic&quot;
+ans_5a &lt;- &quot;random_variable&quot;
+ans_5a &lt;- &quot;sample&quot;</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Is the variable <code>experiment_result</code> a <strong>descriptive statistic</strong>, an <strong>inferential statistic</strong>, a <strong>random variable</strong>, or a <strong>sample</strong> from a random variable? Please use one of the following lines of code to save your answer.</li>
+</ol>
+<pre class="r"><code>ans_5b &lt;- &quot;descriptive_statistic&quot;
+ans_5b &lt;- &quot;inferential_statistic&quot;
+ans_5b &lt;- &quot;random_variable&quot;
+ans_5b &lt;- &quot;sample&quot;</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Is the variable <code>experiment_result_mean</code> a <strong>descriptive statistic</strong>, an <strong>inferential statistic</strong>, a <strong>random variable</strong>, or a <strong>sample</strong> from a random variable? Please use one of the following lines of code to save your answer.</li>
+</ol>
+<pre class="r"><code>ans_5c &lt;- &quot;descriptive_statistic&quot;
+ans_5c &lt;- &quot;inferential_statistic&quot;
+ans_5c &lt;- &quot;random_variable&quot;
+ans_5c &lt;- &quot;sample&quot;</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Is the variable <code>experiment_decision</code> a <strong>descriptive statistic</strong>, an <strong>inferential statistic</strong>, a <strong>random variable</strong>, or a <strong>sample</strong> from a random variable? Please use one of the following lines of code to save your answer.</li>
+</ol>
+<pre class="r"><code>ans_5d &lt;- &quot;descriptive_statistic&quot;
+ans_5d &lt;- &quot;inferential_statistic&quot;
+ans_5d &lt;- &quot;random_variable&quot;
+ans_5d &lt;- &quot;sample&quot;</code></pre>
+</div>
+<div id="section-6" class="section level2">
+<h2>6.</h2>
+<p>A common error on these problem sets is to accidentally erase or overwrite variables from one question with those from another. Another common error is to name your variables slightly wrong (e.g., <code>Ans_1a</code> instead of <code>ans_1a</code>). Yet another common error is to include a line of code or two that generates an error, and sometimes this error is serious enough to prevent most or all of your script from running, in which case you will lose most or all of your marks for that assignment. All of these can be a very frustrating way to lose marks, but you will indeed lose marks if you make these mistakes, so you need to be very careful!</p>
+<p>To ensure that this doesn’t happen to you, please run your entire <code>.R</code> script from start to finish. One way to do this is to use <code>Code &gt; Run Region &gt; Run All</code>, but of course there are shortcuts for everything so do as you wish. If there are any errors at all when you do this, it is essential that you address them.</p>
+<p>After all of your code has executed from start to finish without and errors at all, then carefully inspect your workspace to ensure that the following variables are defined. A reasonable way to do this is to try to print each one of these variables to the console. If it is defined, then it will print without error.</p>
+<pre class="r"><code>my_name
+my_student_id
+ans_1a_x
+ans_1a_y
+ans_1a_z
+ans_1b_x
+ans_1b_y
+ans_1b_z
+ans_1c
+ans_2a
+ans_2b
+ans_2c
+ans_3a
+ans_3b
+ans_3c
+ans_4a
+ans_4b
+ans_5a
+ans_5b
+ans_5c
+ans_5d</code></pre>
 </div>
 
 
