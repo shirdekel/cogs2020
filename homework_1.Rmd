@@ -135,7 +135,7 @@ the commented out lines of code below.
 element_1 <- "A"
 element_2 <- 2
 element_3 <- FALSE
-tmp <- c(element_1, element_2, element_3)
+tmp <- list(element_1, element_2, element_3)
 
 # ans_4a <- "character"
 # ans_4a <- "numeric"
