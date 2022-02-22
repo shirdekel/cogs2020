@@ -18,41 +18,50 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE, message=F}
+knitr::opts_chunk$set(echo = T, collapse=T)
 ```
 
 ## Learning objectives
 
-- Understand the relationship between a sample and a
-population.
+- Understand the relationship between a **sample** and a
+**population**.
 
-- Understand the relationship between descriptive and
-inferential statistics.
+- Understand the relationship between a **population** and a
+**random variable**.
 
-- Understand the difference between continuous and discrete
-data observations.
+- Understand what a **random sample** is and what is means
+for a sample to be **biased**.
 
-- Understand the difference between wide and long data
-formats and be able to convert from wide to long.
+- Understand the relationship between **descriptive** and
+**inferential statistics**.
 
-- Understand and be able to generate the following plots
-using `data.table` and `ggplot`:
-  - `geom_point`
-  - `geom_box`
-  - `geom_violin`
-  - `geom_hist`
-  - `geom_bar`
-  - `geom_line`
+- Understand the difference between **continuous** and
+**discrete** observations.
+
+- Understand what it means for an experiment design to be
+**between-subjects** or **within-subjects**.
+
+- Understand what it means for an experiment design to be
+**repeated measures**.
 
 - Understand conceptually and be able to compute by hand and
-using R the following descriptive statistics:
-  - sample mean
-  - sample median
-  - sample mode
-  - sample variance
-  - sample standard deviation
-  - sample range
+using `R` the following descriptive statistics:
+  - **sample mean**
+  - **sample median**
+  - **sample mode**
+  - **sample variance**
+  - **sample standard deviation**
+  - **sample range**
+  
+- Understand and be able to read common plots used to
+communicate descriptive statistics including scatter plots,
+bar plots, box plots, histograms, and violin plots.
+
+- Understand how to install and load **libraries** in `R`.
+
+- Understand the basics of working with the `data.table`
+package in `R`.
 
 
 ## What is statistics?
@@ -63,7 +72,7 @@ statistics** and for making decisions on the basis of data
 using **inferential statistics**. In statistics, it is safe
 to think of all data as coming from an experiment. The act
 of performing an experiment is equivalent to simply
-assigning numbers to events that we observed in the world.
+assigning numbers to events that we observe in the world.
 These numbers are called a **sample**. In general, if we
 perform an experiment in which we observe $n$ outcomes, then
 our sample is written as:
@@ -110,20 +119,13 @@ scenario, but we will begin developing an intuition now.
 
 As it turns out, answering this question intelligently
 requires using our **sample** to make inferences about a
-**population**, which can be roughly thought of as the set of
-all possible maze times and their relative frequencies that
-you will ever observe if you run this experiment forever.
+**population**, which in this case can be roughly thought of
+as the set of all possible maze times and their relative
+frequencies that you will ever observe if you run this
+experiment forever.
 
-Another way of thinking about it is that the **population**
-is the process that generates the maze times you will
-observe whenever you perform your experiment. A
-**population** is the true state of the world --- it is
-either the entire collection of things that you are
-interested in studying, or else it is the process that
-generates a potentially infinite set of things that you are
-interested in. For example, if you perform your experiment
-another two times, you might end up with the following
-samples:
+For example, if you perform your experiment another two
+times, you might end up with the following samples:
 
 $$
 \boldsymbol{x_1} = ( 52.38, 55.41, 70.88, 43.30, 50.15, 41.99, 36.82, 34.05, 52.70, 72.25 )
@@ -136,198 +138,72 @@ $$
 $$
 
 Each sample is composed of very similar but not identical
-observations. In statistics, we think of each **sample** as
-being drawn or generated from a **population**, and we want
-to estimate properties of the **population** by using our
-**sample**.
-
-#### Summary
-
-* data from an experiment is a **sample** from a
-**population**. 
-
-* We concisely describe our data using **descriptive
-statistics**.
-
-* We will use our data to make decisions using **inferential
-statistics**.
+observations. A **random variable** is a process that
+generates outcomes for a particular experiment, a
+**population** is the collection of all possible outcomes,
+and a **sample** is a particular outcome obtained when the
+experiment is performed (i.e., $\boldsymbol{x_1}$,
+$\boldsymbol{x_2}$ and $\boldsymbol{x_3}$ above). In
+statistics, we want to estimate properties of the
+**population** by using our **sample**.
 
 
-## Data representation
+## What is experiment design?
 
-### Wide vs long format
+### Continuous vs discrete data
+Random variables are processes that generate data in an
+experiment performed by sampling from a particular
+population. The data that random variables produce can be
+either discrete or continuous. In a rather straight-forward
+use of terms, a random variable that produces discrete data
+is called a **discrete random variable** and a random
+variable that produces continuous data is called a
+**continuous random variable**.
 
-Consider the rat maze data example given above. We can get
-that data into a `data.table` in a number of ways. Here is
-an example of how to do it by first using `vectors`.
+For example, consider the random variable $X$ defined as a
+process that returns the body lengths in cm of rats drawn
+from a **population** defined as all rats in the universe. A
+sample from this random variable might look as follows:
+$$
+\boldsymbol{x} = (2.877970, 7.497241, 5.455286, 4.903578, 7.806955)
+$$
+Here, $X$ is clearly a continuous random variable because it
+seems that any non-zero value can be obtained when sampling
+from it.
 
-```{r message=F}
-# Our first action will almost always be to start R, load
-# the `data.table` and `ggplot2` libraries, and clear the
-# current session
-library(data.table)
-library(ggplot2)
+As another example, consider the random variable $X$ defined
+as a process that returns the number of neurons in a rat
+cerebral cortex drawn from the same population as in the
+previous example. A sample from this random variable might
+look as follows:
+$$
+\boldsymbol{x} = (21e6 21e6 18e6 20e6 22e6)
+$$
+Here, $X$ is clearly a discrete random variable because that
+only integer values can be obtained when sampling from it.
 
-rm(list=ls())
+### Between-subjects vs within-subjects
+Consider a random variable $X$ defined as the number of
+neurons in a rat prefrontal cortex, and another random
+variable $Y$ defined as the number of neurons in a rat
+cerebellum. Both $X$ and $Y$ are linked to the same
+population (i.e., all rats in the universe). If we draw one
+random sample from $X$ and one random sample from $Y$ using
+a different sample of rats for each, then we say our
+experiment design is **between-subjects**. If instead we
+draw one random sample from $X$ and another random sample
+from $Y$ using the same sample of rats, then we say our
+experiment design is **within-subjects**.
 
-x1 <- c(52.38, 55.41, 70.88, 43.30, 50.15, 41.99, 36.82, 34.05, 52.70, 72.25)
-x2 <- c(62.36, 53.89, 53.95, 33.81, 61.12, 61.48, 36.89, 49.45, 52.50, 50.95)
-x3 <- c(52.04, 48.28, 48.12, 58.89, 51.76, 42.88, 49.04, 60.41, 53.99, 70.06)
-
-d_wide <- data.table(x1, x2, x3)
-```
-
-The `data.table` we created above is in **wide format**
-because the results from each of the three experiments that
-we ran are contained in separate columns.
-
-Although it is possible to use `ggplot` with wide format
-data, it is usually much more efficient to use **long
-format** data. As such, this will almost always be our
-convention. We can convert from wide to long by using the
-`melt()` function as follows:
-
-```{r, message=F}
-d_long = melt(d_wide, 
-              measure.vars=c('x1', 'x2', 'x3'),
-              variable.name = 'experiment_id',
-              value.name = 'time')
-```
-
-On the other hand, we could have created a long format
-`data.table` right off the bat as follows:
-
-```{r, message=F}
-time <- c(x1, x2, x3)
-experiment_id = c(rep('x1', length(x1)), 
-                  rep('x2', length(x1)), 
-                  rep('x3', length(x1)))
-d_long = data.table(experiment_id, time)
-```
-
-## Data visualisation
-
-Data visualisation is a core component of modern descriptive
-statistics and it is essential that we become proficient at
-collecting data, assembling it into csv-style formats,
-piping it into `R`, and inspecting it using plots.
-
-There are numerous methods to generate plots using `R`, but
-in this unit, we will focus exclusively on first
-representing our data as a `data.table` and then using
-`ggplot` to make plots.
-
-
-### `geom_point`
-
-Perhaps the most straightforward approach to visualising
-data is simply to plot points for each observation in your
-sample. We have separate experiments -- coded by
-`experiment_id` -- so we will keep them separate.
-
-```{r, message=F}
-ggplot(data=d_long, aes(x=experiment_id, y=time)) +
-  geom_point()
-```
-
-
-### `geom_box`
-
-Box plots give a summary of how your data is distributed by
-visually marking out the median value as well as the 25th to
-the 75th percentile. The idea is to concisely illustrate
-where the majority of the data fall. 
-
-Whiskers will typically extend from the ends of the box to
-indicate the more extreme end of your data, and very extreme
-data points will often be plotted individually. This aspect
-of box plots doesn't have as strong a convention as the
-rest, so it's important to read the documentation to be sure
-you are plotting what you think you are plotting.
-
-I often find that it can be quite nice to use both
-`geom_point` and `geom_box` in conjunction as follows.
-
-```{r, message=F}
-ggplot(data=d_long, aes(x=experiment_id, y=time)) +
-  geom_boxplot() + 
-  geom_point()
-```
-
-
-### `geom_violin`
-
-Violin plots are similar to box plots, except rather than
-represent your data in terms of percentiles, it attempts to
-give you a continuous estimate of how much our your data
-fall along the range of possible values. As with box plots,
-I often like to overlay individual points.
-
-```{r, message=F}
-ggplot(data=d_long, aes(x=experiment_id, y=time)) +
-  geom_violin() + 
-  geom_point()
-```
-
-
-### `geom_hist`
-
-A histogram attempts to illustrate how data is distributed
-by grouping data points into a set number of bins, and
-plotting a bar with height equal to the number of points in
-each bin. 
-
-If you have a lot of data, this method can work really well
-and convey lots of great information. With a smaller data
-set --- like the toy rat example that we are currently using
---- it only works okay.  In any case, working with
-histograms can involve a bit of tweaking to get things to
-look nice. For example, you can control how many bins are
-used and how big or small each bin is by using the `bins`
-and `breaks` argument.
-
-```{r, message=F}
-ggplot(data=d_long, aes(x=time, fill=experiment_id)) +
-  geom_histogram(bins = 5) +
-  facet_wrap(~experiment_id)
-```
-
-
-### `geom_bar`
-
-Bar plots are among the most common plots you will encounter
-as you navigate pretty much any scientific field. They throw
-away all information about how your data is distributed, and
-instead report only on the average values (unless error bars
-are included).
-
-There are many ways to use `ggplot` and `geom_bar` to make a
-bar plot. A good way to start is to first create a
-`data.table` that contains only the average values that you
-want to be represented by the bar heights:
-
-```{r, message=F}
-d_mean = d_long[, .(time = mean(time)), .(experiment_id)]
-ggplot(data=d_mean, aes(x=experiment_id, y=time)) +
-  geom_bar(stat='identity')
-```
-
-
-### `geom_line`
-
-We might be interested in examining whether the rat got fast
-from run to run within each experiment. To do this, it would
-be reasonable to place `run` on the x-axis and `time` on the
-y-axis. One issue that are faced with right away is that
-`d_long` doesn't have a `run` column --- i.e., `run` is
-implicitly indicated by the row index. Below, we will first
-add a `run` column, and then make the plot described above.
-
-```{r, message=F}
-d_long[, run := 1:.N, .(experiment_id)]
-ggplot(data=d_long, aes(x=run, y=time, colour=experiment_id)) +
-  geom_line()
-```
+### Repeated measures
+In a **repeated measures** experiment design, multiple
+measurements are obtained from the same level of some
+experimental factor. At this stage, this is all a bit
+jargon-y -- it will fall into place more naturally as the
+unit proceeds -- but the thing to notice is that a
+**within-subjects** experiment design is also a **repeated
+measures** experiment design, whereas a **between-subjects**
+design is not.
 
 
 ## Central tendency of a sample
@@ -406,16 +282,13 @@ sample observations in a variable `x`, and use built-in `R`
 functions `mean()` and `median()` to compute the sample mean
 and sample median.
 
-```{r eval=TRUE, message=FALSE}
+```{r }
+# mean and median of sample 1 above
 x <- c(55, 35, 23, 44, 31)
 mean(x)
 median(x)
-```
 
-While we're here, we might as well verify our computations
-for both samples.
-
-```{r eval=TRUE, message=FALSE}
+# mean and median of sample 2 above
 x <- c(55, 35, 23, 44)
 mean(x)
 median(x)
@@ -427,45 +300,29 @@ median(x)
 Sometimes a sample contains a few observations that are very
 different from the majority of the others. Theses
 observations are called **outliers**. How will outliers
-influence our measures of central tendency?
-
-To answer this question, consider the rat maze running
-example from above. Lets pool all observations across all
-three experiments into a single histogram.
+influence our measures of central tendency?  To answer this
+question, consider the rat maze running example from above.
 
 ```{r}
-ggplot(d_long, aes(x='', y=time)) + 
-  geom_violin() +
-  geom_point()
-```
+# define vectors that contain the maze times from the
+# example given at the top of the lecture.
+x1 <- c(52.38, 55.41, 70.88, 43.30, 50.15, 41.99, 36.82, 34.05, 52.70, 72.25)
+x2 <- c(62.36, 53.89, 53.95, 33.81, 61.12, 61.48, 36.89, 49.45, 52.50, 50.95)
+x3 <- c(52.04, 48.28, 48.12, 58.89, 51.76, 42.88, 49.04, 60.41, 53.99, 70.06)
 
-Taking a look at our sample, no observation seems much
-different from any other (i.e., there are no obvious
-outliers). How do the sample mean and sample median behave
-in this case?
+# combine all observations into a single vector
+x <- c(x1, x2, x3)
 
-```{r}
-d_long[, .('sample_mean' = mean(time), 'sample_median' = median(time))]
-```
-We see that the sample mean and sample median are nearly
-identical when there are no outliers.  Lets consider another
-example to see how the sample mean and sample median behave
-when our sample does contain outliers.
+# compute the mean and median of x
+mean(x)
+median(x)
 
-```{r}
-d_long_out = data.table(d_long)
-d_long_out[.N, time := time * 10] # make the last observation an outlier
+# add an outlier to x
+x <- c(x, 300)
 
-ggplot(d_long_out, aes(x='', y=time)) + 
-  geom_violin() +
-  geom_point()
-```
-
-We have clearly introduced an outlier. How do our mesures of
-central tendancy behave in this case?
-
-```{r}
-d_long_out[, .('sample_mean' = mean(time), 'sample_median' = median(time))]
+# compute the mean and median of x with the outlier in the data
+mean(x)
+median(x)
 ```
 
 Here, you can see that the mean, but much less so the
@@ -541,37 +398,466 @@ Well, that sucked, and in the next section we will see that
 We now use `R` to quickly compute the all measures of spread
 just covered.
 
-```{r eval=TRUE, message=FALSE}
-d_long[, .('sample_variance' = var(time),
-           'sample_standard_deviation' = sd(time),
-           'sample_range' = diff(range(time)))]
+```{r}
+var(x)
+sd(x)
+diff(range(x))
 ```
 
 Notice that that sample variance is larger than sample
-standard deviation. This will always true.
+standard deviation. This will always be true.
 
 We will now finish up by adding the sample mean, sample
 variance, standard deviation, and range to our previous
 histogram plot. This is a useful exercise to develop an
 intuition for what these quantities represent.
 
-```{r, message=F}
-ggplot(data=d_long, aes(x=time)) +
-  geom_histogram(bins = 10) + 
-  # sample variance
-  geom_segment(aes(x=mean(time)-var(time)/2,
-                   xend=mean(time)+var(time)/2,
-                   y = 20,
-                   yend = 20), colour='red') +
-  # sample sd
-  geom_segment(aes(x=mean(time)-sd(time)/2,
-                   xend=mean(time)+sd(time)/2,
-                   y = 18,
-                   yend = 18), colour='blue') +
-  # sample range
-  geom_segment(aes(x=mean(time)-diff(range(time))/2,
-                   xend=mean(time)+diff(range(time))/2,
-                   y = 16,
-                   yend = 16), colour='green')
+## Descriptive visuals
+Very often we report descriptive statistics in the form of
+plots. In this section we will start getting a feel for some
+of the more useful and common types of plots.
+
+```{r include=T, echo=F}
+library(ggplot2)
+library(data.table)
+
+d <- data.table(sub=integer(1000), x=rnorm(1000, 100, 10))
 ```
 
+### Histogram
+```{r include=T, echo=F}
+ggplot(data=d, aes(x=x)) +
+  geom_histogram(bins = 30) +
+  geom_segment(aes(x=mean(x)-var(x)/2,
+                   xend=mean(x)+var(x)/2,
+                   y = 20,
+                   yend = 20), colour='red') +
+  geom_segment(aes(x=mean(x)-sd(x)/2,
+                   xend=mean(x)+sd(x)/2,
+                   y = 15,
+                   yend = 15), colour='blue') +
+  geom_segment(aes(x=mean(x)-diff(range(x))/2,
+                   xend=mean(x)+diff(range(x))/2,
+                   y = 10,
+                   yend = 10), colour='green')
+```
+
+### Barplot
+```{r include=T, echo=F}
+d <- data.table(x=rnorm(1000, 100, 5))
+d[, condition := factor(rep(c(1, 2), .N/2))]
+dd <- d[, .(mean_x=mean(x), var_x=var(x)), .(condition)]
+ggplot(data=dd, aes(x=condition, y=mean_x)) +
+  geom_col(width=0.5) +
+  geom_errorbar(aes(ymin=mean_x-var_x, ymax=mean_x+var_x), width=0.1) 
+```
+
+### Boxplot
+```{r include=T, echo=F}
+d <- data.table(x=rnorm(1000, 100, 5))
+d[, condition := factor(rep(c(1, 2), .N/2))]
+ggplot(data=d, aes(x=condition, y=x)) +
+  geom_boxplot(width=0.5)
+```
+
+### Violin plot 
+```{r include=T, echo=F}
+d <- data.table(x=rnorm(1000, 100, 5))
+d[, condition := factor(rep(c(1, 2), .N/2))]
+ggplot(data=d, aes(x=condition, y=x)) +
+  geom_violin(width=0.5)
+```
+
+
+## `data.table`
+
+* `data.table` does everything `data.frame` does, and much more.
+
+* Because `data.table` is so powerful and so fast, we won't
+really bother much with the finer details of `data.frame`.
+
+* To use `data.table` we must first load it into our
+environment using the `library()` function. 
+
+* If you get an error message complaining that `there is no
+package called data.table` then install it by executing
+`install.packages('data.table')`.
+
+* Create a `data.table` with the `data.table()` function.
+
+* General form: `DT[i, j, by]`
+
+  * `i`: selects rows
+  
+  * `j`: specifies columns and operations to perform on those
+  columns
+  
+  * `by`: specifies columns to group the operation performed
+  in `j` by
+
+```{r}
+# Load the data.table library 
+library(data.table)
+
+# Create vectors to later store in a data frame
+x <- c('I', 'I', 'I', 'II', 'II', 'II', 'III', 'III', 'III', 'IV', 'IV', 'IV')
+y <- c('a', 'a', 'b', 'b', 'c', 'c', 'd', 'd', 'e', 'e', 'f', 'f')
+z <- rnorm(12)
+
+# create a data table
+dt <- data.table(x, y, z)
+dt
+```
+
+### Subset rows in `i`
+
+* There are many ways to select rows.
+
+  * Set `i` equal to a vector of integers
+  
+  * Set `i` equal to a logical expression
+  
+```{r}
+# Select rows by passing integer indices
+dt[c(2, 4)]
+
+# Select rows by passing a logical expression
+dt[x=='II']
+```
+
+
+### Select columns with `j`
+
+* First a quick note about specifying `i`.
+
+* If you want to operate on every row of some set of
+columns, leave the `i` argument blank.
+
+* This will result in the first character inside the square
+brackets being a comma, which looks a bit strange if you're
+not used to it. Just remember to read it as *select every row*.
+
+* To operate on specific columns, set `j` equal to a list
+of the names of the columns you want.
+
+* Inside the square brackets of a `data.table`, `list` can
+be abbreviated with a `.`, which can also look strage at
+first. Once you get used to it, you will appreciate the
+brevity.
+  
+```{r}
+# Select every row of columns y and z the cool way
+dt[, .(y, z)]
+
+# Select every row of columns y and z the long way
+dt[, list(y, z)]
+```
+
+
+### Operate on columns with `j`
+
+* You can do a lot more than just return the columns
+specified in `j`. In fact, you can perform any operation you
+want on them.
+
+```{r}
+# return the mean and standard deviation of z
+dt[, .(mean(z), sd(z))]
+```
+
+
+### Combine `i` and `j`
+
+* It is straightforward to combine `i` and `j`.
+
+```{r}
+# Select all rows for which x==II and return columns y and z
+dt[x=='II', .(y, z)]
+```
+
+
+### Group using `by`
+
+* The real magic of `data.table` comes in the power of the
+`by` argument.
+
+* `by` allows you apply the operation that you specify with
+`j` to separate groups of rows defined by the unique values
+in the columns specified in `by`.
+
+* Put another way, whatever column you pass to `by` will be
+split up into groups with each unique value getting its own
+group. Those groups will then be applied to the columns you
+specify in `j` and the operation also specified in `j` will
+be applied only to rows from the same group. Then, after all
+is done, everything is put back into a single `data.table`.
+
+```{r}
+# Compute the sum of elements in column z separately for
+# each value of x
+dt[, sum(z), .(x)]
+```
+
+```{r}
+# Compute the sum of elements in column z separately for
+# each unique combination of values in x and y
+dt[, sum(z), .(x, y)]
+```
+
+
+### Adding and modifying columns
+
+* Use the `:=` operator inside the `j` argument of a
+`data.table` to add or modify a column.
+
+```{r}
+# If you pass a single number, data.table will fill the
+# entire column with that value
+dt[, a := 9]
+
+# Otherwise, just pass a vector of the same length as the
+# data.table
+dt[, b := seq(2, 24, 2)]
+
+# redefine or modify an existing column the same way
+dt[, b := seq(4, 48, 4)]
+
+# Remove a column using := and the NULL keyword
+dt[, b := NULL]
+```
+
+### Be careful when copying `data.table` objects
+
+* `dt2 = dt` creates a *shallow copy*. This means that there
+is really only one `data.table` object in memory, but it can
+be referred to by both names.
+
+* This means that changes to `dt2` will be reflected in `dt`
+and vice-versa.
+
+* You can show that this is the case by modifying dt2 and
+observing that dt also changes (see code chunks below).
+
+* To create a *deep copy* use `dt2 = data.table(dt)`.
+
+```{r}
+# shallow copy:
+dt2 = dt # Not a deep copy
+dt ## inspect dt before dt2 changes
+dt2[, a := NULL]
+dt ## inspect dt after dt changes
+
+# deep copy:
+dt2 = data.table(dt) # this is a deep copy
+dt ## inspect dt before dt2 changes
+dt2[, x := NULL]
+dt ## inspect dt after dt changes
+```
+
+### Converting from wide to long format
+
+* Suppose you perform an experiment in which you collect
+data from 3 participants, and each participant gives you 5
+observations. 
+
+* If this data were represented in *wide* format, then data
+from each participant would be in separate columns.
+
+* If this data were represented in *long* format, then data
+from every participant would be in the same column. A
+separate column would *indicate* what subject a given row
+corresponded to.
+
+* To convert from wide to long format use the `melt()`
+function from `data.table`.
+
+```{r}
+x1 <- runif(5)
+x2 <- runif(5)
+x3 <- runif(5)
+data_wide <- data.table(x1, x2, x3)
+data_long <- melt(data_wide, measure.vars=c('x1', 'x2', 'x3'))
+
+data_wide
+data_long
+```
+
+
+
+<!-- ## Data representation -->
+
+<!-- ### Wide vs long format -->
+
+<!-- Consider the rat maze data example given above. We can get -->
+<!-- that data into a `data.table` in a number of ways. Here is -->
+<!-- an example of how to do it by first using `vectors`. -->
+
+<!-- ```{r message=F} -->
+<!-- # Our first action will almost always be to start R, load -->
+<!-- # the `data.table` and `ggplot2` libraries, and clear the -->
+<!-- # current session -->
+<!-- library(data.table) -->
+<!-- library(ggplot2) -->
+
+<!-- rm(list=ls()) -->
+
+<!-- x1 <- c(52.38, 55.41, 70.88, 43.30, 50.15, 41.99, 36.82, 34.05, 52.70, 72.25) -->
+<!-- x2 <- c(62.36, 53.89, 53.95, 33.81, 61.12, 61.48, 36.89, 49.45, 52.50, 50.95) -->
+<!-- x3 <- c(52.04, 48.28, 48.12, 58.89, 51.76, 42.88, 49.04, 60.41, 53.99, 70.06) -->
+
+<!-- d_wide <- data.table(x1, x2, x3) -->
+<!-- ``` -->
+
+<!-- The `data.table` we created above is in **wide format** -->
+<!-- because the results from each of the three experiments that -->
+<!-- we ran are contained in separate columns. -->
+
+<!-- Although it is possible to use `ggplot` with wide format -->
+<!-- data, it is usually much more efficient to use **long -->
+<!-- format** data. As such, this will almost always be our -->
+<!-- convention. We can convert from wide to long by using the -->
+<!-- `melt()` function as follows: -->
+
+<!-- ```{r, message=F} -->
+<!-- d_long = melt(d_wide,  -->
+<!--               measure.vars=c('x1', 'x2', 'x3'), -->
+<!--               variable.name = 'experiment_id', -->
+<!--               value.name = 'time') -->
+<!-- ``` -->
+
+<!-- On the other hand, we could have created a long format -->
+<!-- `data.table` right off the bat as follows: -->
+
+<!-- ```{r, message=F} -->
+<!-- time <- c(x1, x2, x3) -->
+<!-- experiment_id = c(rep('x1', length(x1)),  -->
+<!--                   rep('x2', length(x1)),  -->
+<!--                   rep('x3', length(x1))) -->
+<!-- d_long = data.table(experiment_id, time) -->
+<!-- ``` -->
+
+
+
+<!-- ## Data visualisation -->
+
+<!-- Data visualisation is a core component of modern descriptive -->
+<!-- statistics and it is essential that we become proficient at -->
+<!-- collecting data, assembling it into csv-style formats, -->
+<!-- piping it into `R`, and inspecting it using plots. -->
+
+<!-- There are numerous methods to generate plots using `R`, but -->
+<!-- in this unit, we will focus exclusively on first -->
+<!-- representing our data as a `data.table` and then using -->
+<!-- `ggplot` to make plots. -->
+
+
+<!-- ### `geom_point` -->
+
+<!-- Perhaps the most straightforward approach to visualising -->
+<!-- data is simply to plot points for each observation in your -->
+<!-- sample. We have separate experiments -- coded by -->
+<!-- `experiment_id` -- so we will keep them separate. -->
+
+<!-- ```{r, message=F} -->
+<!-- ggplot(data=d_long, aes(x=experiment_id, y=time)) + -->
+<!--   geom_point() -->
+<!-- ``` -->
+
+
+<!-- ### `geom_box` -->
+
+<!-- Box plots give a summary of how your data is distributed by -->
+<!-- visually marking out the median value as well as the 25th to -->
+<!-- the 75th percentile. The idea is to concisely illustrate -->
+<!-- where the majority of the data fall.  -->
+
+<!-- Whiskers will typically extend from the ends of the box to -->
+<!-- indicate the more extreme end of your data, and very extreme -->
+<!-- data points will often be plotted individually. This aspect -->
+<!-- of box plots doesn't have as strong a convention as the -->
+<!-- rest, so it's important to read the documentation to be sure -->
+<!-- you are plotting what you think you are plotting. -->
+
+<!-- I often find that it can be quite nice to use both -->
+<!-- `geom_point` and `geom_box` in conjunction as follows. -->
+
+<!-- ```{r, message=F} -->
+<!-- ggplot(data=d_long, aes(x=experiment_id, y=time)) + -->
+<!--   geom_boxplot() +  -->
+<!--   geom_point() -->
+<!-- ``` -->
+
+
+<!-- ### `geom_violin` -->
+
+<!-- Violin plots are similar to box plots, except rather than -->
+<!-- represent your data in terms of percentiles, it attempts to -->
+<!-- give you a continuous estimate of how much our your data -->
+<!-- fall along the range of possible values. As with box plots, -->
+<!-- I often like to overlay individual points. -->
+
+<!-- ```{r, message=F} -->
+<!-- ggplot(data=d_long, aes(x=experiment_id, y=time)) + -->
+<!--   geom_violin() +  -->
+<!--   geom_point() -->
+<!-- ``` -->
+
+
+<!-- ### `geom_hist` -->
+
+<!-- A histogram attempts to illustrate how data is distributed -->
+<!-- by grouping data points into a set number of bins, and -->
+<!-- plotting a bar with height equal to the number of points in -->
+<!-- each bin.  -->
+
+<!-- If you have a lot of data, this method can work really well -->
+<!-- and convey lots of great information. With a smaller data -->
+<!-- set --- like the toy rat example that we are currently using -->
+<!-- --- it only works okay.  In any case, working with -->
+<!-- histograms can involve a bit of tweaking to get things to -->
+<!-- look nice. For example, you can control how many bins are -->
+<!-- used and how big or small each bin is by using the `bins` -->
+<!-- and `breaks` argument. -->
+
+<!-- ```{r, message=F} -->
+<!-- ggplot(data=d_long, aes(x=time, fill=experiment_id)) + -->
+<!--   geom_histogram(bins = 5) + -->
+<!--   facet_wrap(~experiment_id) -->
+<!-- ``` -->
+
+
+<!-- ### `geom_bar` -->
+
+<!-- Bar plots are among the most common plots you will encounter -->
+<!-- as you navigate pretty much any scientific field. They throw -->
+<!-- away all information about how your data is distributed, and -->
+<!-- instead report only on the average values (unless error bars -->
+<!-- are included). -->
+
+<!-- There are many ways to use `ggplot` and `geom_bar` to make a -->
+<!-- bar plot. A good way to start is to first create a -->
+<!-- `data.table` that contains only the average values that you -->
+<!-- want to be represented by the bar heights: -->
+
+<!-- ```{r, message=F} -->
+<!-- d_mean = d_long[, .(time = mean(time)), .(experiment_id)] -->
+<!-- ggplot(data=d_mean, aes(x=experiment_id, y=time)) + -->
+<!--   geom_bar(stat='identity') -->
+<!-- ``` -->
+
+
+<!-- ### `geom_line` -->
+
+<!-- We might be interested in examining whether the rat got fast -->
+<!-- from run to run within each experiment. To do this, it would -->
+<!-- be reasonable to place `run` on the x-axis and `time` on the -->
+<!-- y-axis. One issue that are faced with right away is that -->
+<!-- `d_long` doesn't have a `run` column --- i.e., `run` is -->
+<!-- implicitly indicated by the row index. Below, we will first -->
+<!-- add a `run` column, and then make the plot described above. -->
+
+<!-- ```{r, message=F} -->
+<!-- d_long[, run := 1:.N, .(experiment_id)] -->
+<!-- ggplot(data=d_long, aes(x=run, y=time, colour=experiment_id)) + -->
+<!--   geom_line() -->
+<!-- ``` -->

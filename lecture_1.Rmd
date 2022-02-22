@@ -16,6 +16,24 @@ output:
 fontsize: 14pt
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, collapse=T)
+```
+
+## Learning objectives
+
+- Gain a rough understanding of **descriptive statistics**,
+**inferential statistics**, **random variables**, and **samples**.
+
+- Gain a rough understanding of why programming in `R` is so
+much more useful than pointing a clicking your way through
+data in a spreadsheet program.
+
+- Take your first steps in `R` by learning how to define
+variables, perform basic mathematical operations, use
+built-in functions, understand data types, and inspect
+objects in your current session.
+
 ## What are statistics?
 
 - Very roughly speaking, we can think of statistics as a
