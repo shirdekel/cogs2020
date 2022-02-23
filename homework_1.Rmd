@@ -44,7 +44,7 @@ letters surrounded by `""` or by `''`) containing your name.
 vector (i.e., letters surrounded by `""` or by `''`)
 containing your student id.
 
-- So far, here is what your file should look like if your
+* So far, here is what your file should look like if your
 name is `John Doe` and and your student ID is `12345678`.
 ```{r, echo=T}
 rm(list=ls())

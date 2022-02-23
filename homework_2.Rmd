@@ -6,7 +6,7 @@ output:
   html_document:
     toc: true
     toc_float:
-        collapsed: true
+        collapsed: false
         smooth_scroll: true
     toc_depth: 3
     fig_caption: yes
@@ -16,360 +16,137 @@ fontsize: 14pt
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
-```{r, echo=FALSE}
+```{r}
 library(data.table)
 library(ggplot2)
+
+rm(list=ls())
 ```
 
-<style type="text/css">
-.table {
+## 0.
+* Create a new file named `cogs2020_hw_2.R` and save it in
+the `cogs2020` folder that you created during Lecture 1.
 
-    width: 40%;
+* Make the first line of your script `rm(list=ls())`. This
+line of code will erase any variable defined before it. Do
+not put this line of code after anything important that you
+want to keep (e.g., so that I can mark your work).
 
-}
-</style>
+* After `rm(list=ls())`, create a variable named `my_name`
+and set its value equal to a **character** vector (i.e.,
+letters surrounded by `""` or by `''`) containing your name.
 
-## Problem 0
+* After `rm(list=ls())`, create a variable named
+`my_student_id` and set its value equal to a **character**
+vector (i.e., letters surrounded by `""` or by `''`)
+containing your student id.
 
-* Load `data.table` and `ggplot2` but no other packages.
-
-* Do not call `install.packages` anywhere in this script.
-Once you installed them once, there is no need to install
-them again. If you need to install some other package in the
-future, do so by using `install.packages` function in the
-console.
-
-* Make sure you are starting with a clean environment by
-running `rm(list=ls())`. Running this line of code will
-erase any variable defined before it. Do not put this line
-of code after anything important to keep for grading.
-
-* Create a variable named `my_name` and set its value equal
-to a **character** vector (i.e., letters surrounded by `""`)
-containing your name.
-
-* Create a variable named `my_student_id` and set its value
-equal to a **character** vector (i.e., letters surrounded by
-`""`) containing your student id.
-
-## Problem 1
-
-Consider an experiment in which two four-sided die are
-thrown.
-
-**(a)** Create a `data.table` named `ans_1a` with two
-columns labelled `die1` and `die2` where these columns
-encode the **sample space** of this experiment. See below
-for **only the first** eight rows of the resulting
-`data.table`.
-
-```{r echo=FALSE}
-die1 <- rep(c(1, 2, 3, 4), 4)
-die2 <- rep(c(1, 2, 3, 4), each=4)
-ans_1a <- data.table(die1, die2)
-ans_1a[1:8]
+* So far, here is what your file should look like if your
+name is `John Doe` and and your student ID is `12345678`.
+```{r, echo=T}
+rm(list=ls())
+my_name <- "John Doe"
+my_student_id <- "12345678"
 ```
 
-**(b)** Create a deep copy of `ans_1a` called `ans_1b` and
-then add a column to `ans_1b` called `X` and set it equal to
-the sum of the corresponding `die1` and `die2` values on a
-per row basis.
-
-**(c)** Let $X$ be the random variable defined by the `X`
-column in `ans_1b`. What is $P(X<5)$? Store your result in a
-variable named `ans_1c`.
-
-**(d)** Is the event defined as the set of all outcomes for
-which $X=2$ an elementary event? Store your answer (`"YES"`
-or `"NO"`) in a variable named `ans_1d`.
-
-## Problem 2
-
-For the following probability distribution:
-
-<div width:50px>
-| $x$    |  2 |  3 |  4 |  5 |  6 |
-|--------|----|----|----|----|----|
-| $f(x)$ | .1 | .3 | .3 | .2 | .1 |
-</div>
-
-**(a)** Is $f(x)$ a valid probability distribution? Store
-your answer (`"YES"` or `"NO"`) in a variable named
-`ans_2a`.
-
-**(b)** Calculate $E(X)$ store the result in a variable
-named `ans_2b`.
-
-**(c)** Calculate $P(X \geq 4)$ store the result in a
-variable named `ans_2c`.
-
-**(d)** Calculate $P(2 < X \leq 4)$ and store the result in
-a variable named `ans_2d`.
-
-<!-- **(d)** Let $Y = (2X-8)^2$.  Obtain the distribution of $Y$ and calculate $E(Y)$ -->
-
-## Problem 3
-
-Given the following probability distribution:
-
-```{r, echo=FALSE}
-x <- c(0, 1, 2, 3)
-fx <- c(0.3, 0.4, 0.2, 0.1)
-d <- data.table(x, fx)
-ggplot(d, aes(x, fx)) + 
-  geom_point() +
-  geom_segment(aes(x=x, y=0, xend=x, yend=fx)) +
-  xlab("x") +
-  ylab("P(X=x)")
-```
-
-Find:
-
-**(a)** Calculate $P(X \geq 2)$ and store your result in a
-variable named `ans_3a`.
-
-**(b)** Calculate $P(0 < X \leq 2)$ and store your result in
-a variable named `ans_3b`.
-
-**(c)** Calculate $E(X)$ and store your result in a variable
-named `ans_3c`.
-
-**(d)** $Var(X)$ and store your result in a variable named
-`ans_3d`.
-
-**(e)** $sd(X)$ and store your result in a variable named
-`ans_3e`.
-
-<!-- ## Problem 3 -->
-
-<!-- For scores $X$ on a nationally administered aptitude test, the mean and variance are: -->
-
-<!-- $E(X)=120$ -->
-
-<!-- $Var(X)=100$ -->
-
-<!-- Find the mean and variance of: -->
-
-<!-- **(a)** $Y = (X-120)/10$ -->
-
-<!-- **(b)** $Y = (X-100)/20$ -->
-
-## Problem 4
-
-The chance that monkeys will have a positive (*successful*)
-reaction during a trial of an experiment is $1/3$. Trials
-are performed until the first success occurs. Define the
-following random variable $X$:
-
-$X$ = number of failures before the first success.
-
-What is the probability distribution of $X$?
-
-Let $S$ denote success and $F$ denote failure Then the
-sample space is: $S = {S, FS, FFS, FFFS, ...}$
-
-You can see that it's impossible to make a complete list of
-all the values and their probabilities. However, this is a
-well studied problem, and it turns out that there is an
-formula that will give $P(X=x)$ for any $x$: 
-
-$$P(X=x) = p(1-p)^x$$
-
-This is called the geometric distribution, and it is defined
-by a single parameter $p$ (the probability of success). In
-`R`, you can use the function `dgeom()` and `pgeom()` to
-obtain geometric probabilities.
-
-Let $P(Success) = 1/3$.
-
-**(a)** Is the geometric distribution continuous or
-discrete. Use either `ans_4a<-"continuous"` or
-`ans_4a<-"discrete"` to store your answer.
-
-**(b)** Plot the geometric probability distribution from
-$x=0$ to $x=10$ and $p=\frac{1}{3}$. To do this, perform the
-following steps:
-
-* Define a variable `p` and set its value to `1/3`
-
-* Define a variable `x` and set its value to `0:10`
-
-* Define a variable `fx` and set its value to `dgeom(x, p)`
-
-* Define a variable `d` and set its values to
-`data.table(x,fx)`
-
-* Use `ggplot`, `geom_point` and `geom_segment` to replicate
-the following plot exactly and store your result in a
-variable named `ans_4b`.
-
-```{r, echo=FALSE}
-p <- 1/3
-x <- 0:10
-fx <- dgeom(x, p)
-d <- data.table(x, fx)
-ggplot(d, aes(x, fx)) +
-  geom_point() +
-  geom_segment(aes(x=x, xend=x, y=0, yend=fx))
-```
-
-<!-- **(c)** Plot the geometric distribution for the following -->
-<!-- values of $P(Success)$: -->
-
-<!-- $$ -->
-<!-- p(Success) = 0.2 \\ -->
-<!-- p(Success) = 0.5 \\ -->
-<!-- p(Success) = 0.8 \\ -->
-<!-- $$ -->
-
-<!-- Use `facet_wrap` to plot on a single figure. -->
-
-**(c)** Compute the expected value of the geometric
-distribution that you plotted in (b) using
-$\sum_{i=0}^{10}xP(x)$. Store your result in a variable
-named `ans_4c`.
-
-**(d)** It turns out it can be proven that if $X$ ~
-geometric with probability of success of $p$, then
-$E(X)=\frac{1-p}{p}$. This formula will yield a slightly
-different number than the number you computed in c. Why is
-this case?
-
-* Use `ans_4d <- "option 1"` if the difference arises due to
-computer rounding errors.
-
-* Use `ans_4d <- "option 2"` if the difference arises
-because part c only considered x in the range 0 to 10, yet
-the true range of a geometric random variable is 0 to
-infinity.
-
-* Use `ans_4d <- "option 3"` if the difference arises
-because the distribution of sample means is a random
-variable.
-
-
-<!-- ## Probalem 4 -->
-
-<!-- **(a)** Compute $P(X = 3)$ and store your result in a -->
-<!-- variable named `ans_2a`. -->
-
-<!-- **(b)** Compute $P(X > 3)$ and store your result in a -->
-<!-- variable named `ans_2b`. -->
-
-<!-- **(c)** Compute $P(X >= 3)$ and store your result in a -->
-<!-- variable named `ans_2c`. -->
-
-<!-- **(d)** Compute $P(X <= 3)$ and store your result in a -->
-<!-- variable named `ans_2d`. -->
-
-## Problem 5
-
-**(a)** Does the following histogram represent samples from
-a geometric distribution (use `ans_5a <- "geometric"`) or
-from the distribution of geometric sample means `ans_5a <-
-"geometric means"`? Note that histograms can make samples
-from a discrete distribution appear continuous.
-
-<!-- **(c)** Draw a sample of size $n=1000$ from the above -->
-<!-- geometric distribution and plot it with a histogram. To do -->
-<!-- this, perform the following steps exactly: -->
-
-<!-- * Define a variable `n` and set its value to `1000` -->
-
-<!-- * Define a variable `x` and set its value to `rgeom(n, p)` -->
-
-<!-- * Define a variable `d` and set its value to `data.table(x)` -->
-
-<!-- * Use `ggplot`, `geom_histogram(bins=10)`to replicate the -->
-<!-- following plot (your bars will be different heights because -->
-<!-- `rgeom` gives a random sample): -->
-
-```{r, echo=FALSE}
-n <- 1000
-x <- rgeom(n, p)
-d <- data.table(x)
-ggplot(d, aes(x)) + 
-  geom_histogram(breaks=0.5:10.5)
-```
-
-
-**(b)** Does the following histogram represent samples from
-a geometric distribution (use `ans_5b <- "geometric"`) or
-from the distribution of geometric sample means `ans_5b <-
-"geometric means"`? Note that histograms can make samples
-from a discrete distribution appear continuous.
-
-```{r, echo=FALSE}
-n <- 1000
-n_exp <- 100
-d_list <- vector("list", n_exp)
-for(i in 1:n_exp) {
-  x <- rgeom(n, p)
-  d <- data.table(x = mean(x))
-  d_list[[i]] = d
-}
-dd <- rbindlist(d_list)
-ggplot(dd, aes(x)) + 
-  geom_histogram(bins=10) 
-```
-
-
-<!-- **(g)** Plot samples from a geometric distribution for the -->
-<!-- following values of -->
-
-<!-- $$ -->
-<!-- p(Success) = 0.2 \\ -->
-<!-- p(Success) = 0.5 \\ -->
-<!-- p(Success) = 0.8 \\ -->
-<!-- $$ -->
-
-<!-- Use facet_wrap to plot on a single figure. -->
-
-<!-- **(h)** For each panel in (f), draw a vertical line -->
-<!-- indicating the sample mean -->
-
-<!-- **(i)** Repeat (g) and (h) a few times to see the variation -->
-<!-- in sample mean, and the absence of variance in the -->
-<!-- population mean. Make a figure that shows the results of -->
-<!-- each of these experiments in a separate panel of one figure. -->
-
-<!-- **(j)** Make a histogram to estimate the distribution of -->
-<!-- sample means -->
-
-
-<!-- ## Problem 5 -->
-
-<!-- **(a)** Read the following csv file into a `data.table` -->
-
-<!-- https://crossley.github.io/cogs2020/data/rb_bs_delay/rbbsdelay.csv -->
-
-<!-- `condition`, `subject` and `block` are **independent variables**. This means -->
-<!-- that they are controlled by the experimenter. `acc_mean` and `rt_mean` are -->
-<!-- **dependent variables**. This means that they are determined by the random -->
-<!-- samples taken as part of performing an experiment. -->
-
-<!-- This is data from a fairly simple category learning experiment where I was again -->
-<!-- investigating the effect of feedback delay on learning, but this time I took a -->
-<!-- different approach than the trials to criterion approach we worked with in -->
-<!-- previous lectures and homework. -->
-
-<!-- **(b)** For each column in the resulting `data.table`, say whether the data is -->
-<!-- continuous, discrete, or categorical. -->
-
-<!-- **(c)** Is this a within-subject or a between-subject design? Answer this by -->
-<!-- probing the `data.table`. If it within-subject, then the same subjects will be -->
-<!-- repeated in different conditions and blocks. -->
-
-<!-- **(d)** Plot the *learning curves* for this experiment: That is, plot mean -->
-<!-- accuracy per block and per condition across subjects on the y-axis and plot -->
-<!-- block on the x-axis. Include error bars indicating the standard error. -->
-
-<!-- **(e)** It is common to see speed-accuracy trade-offs in behavioural data of all -->
-<!-- sorts. That is, it is common for participants to be less accurate when they -->
-<!-- decide quickly, and more accurate when the decide slowly. Use `acc_mean` -->
-<!-- and`rt_mean` to look for evidence of a speed-accuracy trade-off in this data. Do -->
-<!-- you see any? NOTE: just make a plot and write a sentence. Nothing fancy here. -->
-
+## 1.
+Consider an experiment designed to find out whether or not
+feedback-delay impairs criterion learning? What is criterion
+learning? Here is an example trial:
+
+<center>
+![FigName](img/cats.png){width=250px}
+</center>
+
+In this case, thin bars belong to category A, and thick bars
+belong to category B. But where exactly is the category
+boundary (i.e., criterion) that separates thick from thin?
+Criterion learning is the process that allows our brains to
+figure this out.   Next, you will perform a cursory analysis
+on the data from this experiment.
+
+**a.**
+Read
+`https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv`
+into a `data.table` and store the result in a variable named
+`ans_1a`.
+
+The resulting `data.table` contains the following columns:
+
+- `t`: Trial number across the entire experiment.
+
+- `t_prob`: Trial number per problem.
+
+- `sub`: Subject identifier (i.e., different numbers correspond to different
+  subjects).
+
+- `cnd`: Condition identifier.
+
+- `prob_num`: Problem number (gets increased by 1 every time a participant
+  solves a problem).
+
+- `t2c`: Trials to criterion (i.e., the number of trials it took a participant
+  to solve a particular problem.)
+
+- `exp`: Experiment indicator. Overall, this study was broken down into two
+  experiments -- one using sine-wave grating stimuli and the other using a
+  different type of stimuli.
+
+- `nps`: Number of problems solved. This is the same as `max(prob_num)`
+
+**b.**
+Select only rows for which `cnd == Delay` or for which
+`cnd==Long ITI` and store the result in a new `data.table`
+named `ans_1b`.
+
+**c.**
+Select only the columns `cnd`, `sub` and `t2c` columns and
+store the result in a new `data.table` named `ans_1c`.
+
+# TODO: here
+Create a new `data.table` that contains only a `cnd`, `sub`
+and mean `t2c` per `cnd` per `sub`, and store the result in
+a variable named `ans_1c`.
+
+* Make sure that your resulting `data.table` has only `cnd`,
+`sub` and `t2c` columns and nothing more. Any columns named
+`V1` etc. will lead to this question being marked
+incorrect).
+
+* Also make sure that your resulting `data.frame` only has
+one observation per subject. Failure to do so will lead to
+this question being marked incorrect.
+
+## 6.
+A common error on these problem sets is to accidentally
+erase or overwrite variables from one question with those
+from another. Another common error is to name your variables
+slightly wrong (e.g., `Ans_1a` instead of `ans_1a`). Yet
+another common error is to include a line of code or two
+that generates an error, and sometimes this error is serious
+enough to prevent most or all of your script from running,
+in which case you will lose most or all of your marks for
+that assignment. All of these can be a very frustrating way
+to lose marks, but you will indeed lose marks if you make
+these mistakes, so you need to be very careful!
+
+To ensure that this doesn't happen to you, please run your
+entire `.R` script from start to finish. One way to do this
+is to use `Code > Run Region > Run All`, but of course there
+are shortcuts for everything so do as you wish. If there are
+any errors at all when you do this, it is essential that you
+address them.  
+
+After all of your code has executed from start to finish
+without and errors at all, then carefully inspect your
+workspace to ensure that the following variables are
+defined. A reasonable way to do this is to try to print each
+one of these variables to the console. If it is defined,
+then it will print without error.
+```{r, eval=F, echo=T}
+my_name
+my_student_id
+``` 
