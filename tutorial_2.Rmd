@@ -43,6 +43,12 @@ knitr::opts_chunk$set(echo = T, collapse=T)
   * Selecting rows with `i`, operating on columns with `j`,
   and grouping with `by` using `data.table` syntax `[i, j,
   by]`
+  
+## Begin learning the basics of `data.table`
+  * Consult [Lecture 2 notes](lecture_2.html)
+  
+  * Do this tutorial: [Data Table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
+  
 
 ## Get some experiment data
 * Complete the experiment located at the following address:
@@ -162,20 +168,20 @@ d_main <- d[!is.na(mainTrials.thisN), .(response.rt, isi)]
 
 d_main[, .(rt_mean=mean(response.rt), 
            rt_median=median(response.rt), 
-           rt_sd=mean(response.rt))]
+           rt_sd=sd(response.rt))]
 
 # Report basic descriptive statistics for the main
 # experiment using `chaining` to avoid creating a new
 # data.table
 d[!is.na(mainTrials.thisN), .(response.rt, isi)][, .(rt_mean=mean(response.rt), 
                                                      rt_median=median(response.rt), 
-                                                     rt_sd=mean(response.rt))]
+                                                     rt_sd=sd(response.rt))]
 
 # Report basic descriptive statistics for the practice
 # trials using `chaining` to avoid creating a new data.table
 d[!is.na(practiceTrials.thisN), .(response.rt, isi)][, .(rt_mean=mean(response.rt), 
                                                          rt_median=median(response.rt), 
-                                                         rt_sd=mean(response.rt))]
+                                                         rt_sd=sd(response.rt))]
 ```
 
 * Report basic descriptive statistics for practice and for
@@ -197,7 +203,7 @@ follows:
 ```{r}
 d[, .(rt_mean=mean(response.rt), 
       rt_median=median(response.rt), 
-      rt_sd=mean(response.rt)), 
+      rt_sd=sd(response.rt)), 
   .(phase)]
 ```
 
@@ -207,5 +213,3 @@ d[, .(rt_mean=mean(response.rt),
 ## Work on problem set 2
 * [Problem set 2](homework_2.html)
 
-## Consult Lecture 2 example code
-* [Lecture 2](lecture_2.html)

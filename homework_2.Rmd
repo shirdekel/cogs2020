@@ -65,6 +65,9 @@ rm(list=ls())
 my_name <- "John Doe"
 my_student_id <- "12345678"
 
+# Please include the following line of code as well
+set.seed(0)
+
 # create vectors from which to build d
 V1 <- rep(month.abb[1:8], each=2)
 V2 <- rep(letters[1:8], 2)
@@ -111,7 +114,7 @@ variable named `ans_1d`.
 **e.**
 Using the `%in%` operator, return a `data.table` containing
 only the rows of `d` for which `month` is in the vector
-`c(Jan, Mar, May, Jul)`,  and store the result in a variable
+`c("Jan", "Mar", "May", "Jul")`,  and store the result in a variable
 named `ans_1e`.
 
 
@@ -143,7 +146,7 @@ result in a variable named `ans_2e`.
 Return the mean and standard deviation of the `obs` column
 across all rows in `d` and store the result in a
 `data.table` named `ans_2f`. The resulting `data.table`
-should have length `1` with columns named `obs_mean` and
+should have `1` observation with columns named `obs_mean` and
 `obs_sd`.
 
 ## 3. Group by
@@ -172,10 +175,11 @@ column `obs_median`.
 **a.**
 Create a variable named `d5a` using `d5a = data.table(d)`.
 Create a deep copy of `d5a` named `d5a_copy` and use the
-`:=` operator to add a column of zeros to `d5a_copy`. Store
-the resulting `data.table` in a variable named `ans_5a`. Be
-very careful that the code you write and execute here does
-not modify `d5a` or you will be marked incorrect.
+`:=` operator to add a column of zeros to `d5a_copy`. Name
+the column of zeros `new_zeros`. Store the resulting
+`data.table` in a variable named `ans_5a`. Be very careful
+that the code you write and execute here does not modify
+`d5a` or you will be marked incorrect.
 
 **b.**
 Create a variable named `d5b` using `d5b = data.table(d)`.
@@ -283,8 +287,8 @@ The resulting `data.table` contains the following columns:
 - `nps`: Number of problems solved. This is the same as `max(prob_num)`
 
 **b.**
-Select only rows for which `cnd==Delay` or for which
-`cnd==Long ITI` and store the result in a new `data.table`
+Select only rows for which `cnd=="Delay"` or for which
+`cnd=="Long ITI"` and store the result in a new `data.table`
 named `ans_6b`.
 
 **c.**
@@ -299,9 +303,9 @@ problem.
 
 Create a new `data.table` that contains the `mean` values of
 the `t2c` column grouped by `cnd` and `sub`. Name the column
-of mean values `mean_t2c`. Make sure that your resulting
-`data.table` has only `cnd`, `sub` and `t2c` columns and
-nothing more (no columns named `V1` etc). Also make sure
+of mean values `t2c_mean`. Make sure that your resulting
+`data.table` has only `cnd`, `sub` and `t2c_mean` columns
+and nothing more (no columns named `V1` etc). Also make sure
 that your resulting `data.table` only has one observation
 per `sub`. Failure to do so will lead to this question being
 marked incorrect.  Store the result in a variable named

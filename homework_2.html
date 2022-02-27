@@ -385,6 +385,9 @@ rm(list=ls())
 my_name &lt;- &quot;John Doe&quot;
 my_student_id &lt;- &quot;12345678&quot;
 
+# Please include the following line of code as well
+set.seed(0)
+
 # create vectors from which to build d
 V1 &lt;- rep(month.abb[1:8], each=2)
 V2 &lt;- rep(letters[1:8], 2)
@@ -400,7 +403,7 @@ d &lt;- data.table(month=V1, event=V2, obs=V3)</code></pre>
 <p><strong>b.</strong> Return a <code>data.table</code> containing only the rows of <code>d</code> for which <code>month==Jan</code> and store the result in a variable named <code>ans_1b</code>.</p>
 <p><strong>c.</strong> Return a <code>data.table</code> containing only the rows of <code>d</code> for which <code>month==Feb</code> or <code>event==c</code> and store the result in a variable named <code>ans_1c</code>.</p>
 <p><strong>d.</strong> Return a <code>data.table</code> containing only the rows of <code>d</code> for which <code>month==Feb</code> and <code>event==c</code> and store the result in a variable named <code>ans_1d</code>.</p>
-<p><strong>e.</strong> Using the <code>%in%</code> operator, return a <code>data.table</code> containing only the rows of <code>d</code> for which <code>month</code> is in the vector <code>c(Jan, Mar, May, Jul)</code>, and store the result in a variable named <code>ans_1e</code>.</p>
+<p><strong>e.</strong> Using the <code>%in%</code> operator, return a <code>data.table</code> containing only the rows of <code>d</code> for which <code>month</code> is in the vector <code>c(&quot;Jan&quot;, &quot;Mar&quot;, &quot;May&quot;, &quot;Jul&quot;)</code>, and store the result in a variable named <code>ans_1e</code>.</p>
 </div>
 <div id="select-and-operate-on-columns" class="section level2">
 <h2>2. Select and operate on columns</h2>
@@ -409,7 +412,7 @@ d &lt;- data.table(month=V1, event=V2, obs=V3)</code></pre>
 <p><strong>c.</strong> Return a <code>data.table</code> containing only the <code>month</code> and <code>event</code> columns of <code>d</code> and store the result in a variable named <code>ans_2c</code>.</p>
 <p><strong>d.</strong> Using only one line of code, return a <code>data.table</code> containing only the <code>month</code> and <code>event</code> columns of <code>d</code>, but renamed to <code>MONTH</code> and <code>EVENT</code>, and store the result in a variable named <code>ans_2d</code>.</p>
 <p><strong>e.</strong> Return the mean <code>obs</code> across all rows in <code>d</code> and store your result in a variable named <code>ans_2e</code>.</p>
-<p><strong>f.</strong> Return the mean and standard deviation of the <code>obs</code> column across all rows in <code>d</code> and store the result in a <code>data.table</code> named <code>ans_2f</code>. The resulting <code>data.table</code> should have length <code>1</code> with columns named <code>obs_mean</code> and <code>obs_sd</code>.</p>
+<p><strong>f.</strong> Return the mean and standard deviation of the <code>obs</code> column across all rows in <code>d</code> and store the result in a <code>data.table</code> named <code>ans_2f</code>. The resulting <code>data.table</code> should have <code>1</code> observation with columns named <code>obs_mean</code> and <code>obs_sd</code>.</p>
 </div>
 <div id="group-by" class="section level2">
 <h2>3. Group by</h2>
@@ -422,7 +425,7 @@ d &lt;- data.table(month=V1, event=V2, obs=V3)</code></pre>
 </div>
 <div id="add-remove-columns-copy-etc." class="section level2">
 <h2>5. Add / remove columns, copy, etc.</h2>
-<p><strong>a.</strong> Create a variable named <code>d5a</code> using <code>d5a = data.table(d)</code>. Create a deep copy of <code>d5a</code> named <code>d5a_copy</code> and use the <code>:=</code> operator to add a column of zeros to <code>d5a_copy</code>. Store the resulting <code>data.table</code> in a variable named <code>ans_5a</code>. Be very careful that the code you write and execute here does not modify <code>d5a</code> or you will be marked incorrect.</p>
+<p><strong>a.</strong> Create a variable named <code>d5a</code> using <code>d5a = data.table(d)</code>. Create a deep copy of <code>d5a</code> named <code>d5a_copy</code> and use the <code>:=</code> operator to add a column of zeros to <code>d5a_copy</code>. Name the column of zeros <code>new_zeros</code>. Store the resulting <code>data.table</code> in a variable named <code>ans_5a</code>. Be very careful that the code you write and execute here does not modify <code>d5a</code> or you will be marked incorrect.</p>
 <p><strong>b.</strong> Create a variable named <code>d5b</code> using <code>d5b = data.table(d)</code>. Create a deep copy of <code>d5b</code> named <code>d5b_copy</code> and use the <code>:=</code> operator to remove the <code>obs</code> column from <code>d5b_copy</code>. Store the resulting <code>data.table</code> in a variable named <code>ans_5b</code>. Be very careful that the code you write and execute here does not modify <code>d5b</code> or you will be marked incorrect.</p>
 <p><strong>c.</strong> Consider the following methods of computing the mean value of the <code>obs</code> column in <code>d5c</code> – see below – grouped by <code>month</code>.</p>
 <pre class="r"><code>d5c &lt;- data.table(d)
@@ -483,10 +486,10 @@ dd2[, V3 := c(T, T, F)]</code></pre>
 <li><p><code>exp</code>: Experiment indicator. Overall, this study was broken down into two experiments – one using sine-wave grating stimuli and the other using a different type of stimuli.</p></li>
 <li><p><code>nps</code>: Number of problems solved. This is the same as <code>max(prob_num)</code></p></li>
 </ul>
-<p><strong>b.</strong> Select only rows for which <code>cnd==Delay</code> or for which <code>cnd==Long ITI</code> and store the result in a new <code>data.table</code> named <code>ans_6b</code>.</p>
+<p><strong>b.</strong> Select only rows for which <code>cnd==&quot;Delay&quot;</code> or for which <code>cnd==&quot;Long ITI&quot;</code> and store the result in a new <code>data.table</code> named <code>ans_6b</code>.</p>
 <p><strong>c.</strong> Select only the columns <code>cnd</code>, <code>sub</code> and <code>t2c</code> columns and store the result in a new <code>data.table</code> named <code>ans_6c</code>.</p>
 <p><strong>d.</strong> Do not work on this problem until you have finished earlier parts of the homework. When you have, start a timer on a stop watch and then immediately work on the rest of this problem.</p>
-<p>Create a new <code>data.table</code> that contains the <code>mean</code> values of the <code>t2c</code> column grouped by <code>cnd</code> and <code>sub</code>. Name the column of mean values <code>mean_t2c</code>. Make sure that your resulting <code>data.table</code> has only <code>cnd</code>, <code>sub</code> and <code>t2c</code> columns and nothing more (no columns named <code>V1</code> etc). Also make sure that your resulting <code>data.table</code> only has one observation per <code>sub</code>. Failure to do so will lead to this question being marked incorrect. Store the result in a variable named <code>ans_6d</code>.</p>
+<p>Create a new <code>data.table</code> that contains the <code>mean</code> values of the <code>t2c</code> column grouped by <code>cnd</code> and <code>sub</code>. Name the column of mean values <code>t2c_mean</code>. Make sure that your resulting <code>data.table</code> has only <code>cnd</code>, <code>sub</code> and <code>t2c_mean</code> columns and nothing more (no columns named <code>V1</code> etc). Also make sure that your resulting <code>data.table</code> only has one observation per <code>sub</code>. Failure to do so will lead to this question being marked incorrect. Store the result in a variable named <code>ans_6d</code>.</p>
 <p>Stop the timer you started at the beginning of this problem, and write down how long it took you to complete.</p>
 <p><strong>e.</strong> Do not work on this problem until you have finished earlier parts of the homework. When you have, start a timer on a stop watch and then immediately work on the rest of this problem.</p>
 <p>Download the <code>.csv</code> file at <code>https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv</code> and open it in Excel or any of your favourite spreadsheet programs. Using this spreadsheet program, perform all of the operations that lead to <code>ans_6d</code>.</p>

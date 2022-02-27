@@ -359,7 +359,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Tutorial 2 - Data wrangle with <code>data.table</code></h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 26 February, 2022</h4>
+<h4 class="date">Last update: 27 February, 2022</h4>
 
 </div>
 
@@ -386,6 +386,13 @@ div.tocify {
 <li>Adding columns using <code>:=</code></li>
 <li>Selecting rows with <code>i</code>, operating on columns with <code>j</code>, and grouping with <code>by</code> using <code>data.table</code> syntax <code>[i, j, by]</code></li>
 </ul></li>
+</ul>
+</div>
+<div id="begin-learning-the-basics-of-data.table" class="section level2">
+<h2>Begin learning the basics of <code>data.table</code></h2>
+<ul>
+<li><p>Consult <a href="lecture_2.html">Lecture 2 notes</a></p></li>
+<li><p>Do this tutorial: <a href="https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html">Data Table</a></p></li>
 </ul>
 </div>
 <div id="get-some-experiment-data" class="section level2">
@@ -511,26 +518,26 @@ d_main &lt;- d[!is.na(mainTrials.thisN), .(response.rt, isi)]
 
 d_main[, .(rt_mean=mean(response.rt), 
            rt_median=median(response.rt), 
-           rt_sd=mean(response.rt))]
-##    rt_mean rt_median   rt_sd
-## 1: 0.31745     0.269 0.31745
+           rt_sd=sd(response.rt))]
+##    rt_mean rt_median     rt_sd
+## 1: 0.31745     0.269 0.1530361
 
 # Report basic descriptive statistics for the main
 # experiment using `chaining` to avoid creating a new
 # data.table
 d[!is.na(mainTrials.thisN), .(response.rt, isi)][, .(rt_mean=mean(response.rt), 
                                                      rt_median=median(response.rt), 
-                                                     rt_sd=mean(response.rt))]
-##    rt_mean rt_median   rt_sd
-## 1: 0.31745     0.269 0.31745
+                                                     rt_sd=sd(response.rt))]
+##    rt_mean rt_median     rt_sd
+## 1: 0.31745     0.269 0.1530361
 
 # Report basic descriptive statistics for the practice
 # trials using `chaining` to avoid creating a new data.table
 d[!is.na(practiceTrials.thisN), .(response.rt, isi)][, .(rt_mean=mean(response.rt), 
                                                          rt_median=median(response.rt), 
-                                                         rt_sd=mean(response.rt))]
-##     rt_mean rt_median    rt_sd
-## 1: 0.292125     0.293 0.292125</code></pre>
+                                                         rt_sd=sd(response.rt))]
+##     rt_mean rt_median      rt_sd
+## 1: 0.292125     0.293 0.01615494</code></pre>
 <ul>
 <li>Report basic descriptive statistics for practice and for the main experiment at the same time. To do this, it will very helpful to have a new single column that indicates whether a particular row id <code>d</code> corresponds to a practice trial or to a main trial.</li>
 </ul>
@@ -574,11 +581,11 @@ d[, .(phase, response.rt)]
 </ul>
 <pre class="r"><code>d[, .(rt_mean=mean(response.rt), 
       rt_median=median(response.rt), 
-      rt_sd=mean(response.rt)), 
+      rt_sd=sd(response.rt)), 
   .(phase)]
-##       phase  rt_mean rt_median    rt_sd
-## 1: practice 0.292125     0.293 0.292125
-## 2:     main 0.317450     0.269 0.317450</code></pre>
+##       phase  rt_mean rt_median      rt_sd
+## 1: practice 0.292125     0.293 0.01615494
+## 2:     main 0.317450     0.269 0.15303611</code></pre>
 <ul>
 <li>From here, can you report these descriptive statistics for <code>isi</code> without my code to assist?</li>
 </ul>
@@ -587,12 +594,6 @@ d[, .(phase, response.rt)]
 <h2>Work on problem set 2</h2>
 <ul>
 <li><a href="homework_2.html">Problem set 2</a></li>
-</ul>
-</div>
-<div id="consult-lecture-2-example-code" class="section level2">
-<h2>Consult Lecture 2 example code</h2>
-<ul>
-<li><a href="lecture_2.html">Lecture 2</a></li>
 </ul>
 </div>
 
