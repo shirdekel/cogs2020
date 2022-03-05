@@ -1,5 +1,5 @@
 ---
-title: "Lecture 3 - Probability distributions, populations, and samples"
+title: "Lecture 3 -Probability, Random Variables, confidence intervals"
 author: "Author: Matthew J. Cossley"
 date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -18,32 +18,47 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE, message=F}
+knitr::opts_chunk$set(echo = T, collapse=T)
 ```
 
+# Learning objectives
 
-## Learning objectives
-
-* Define probability and understand the principles of how to
-compute it for both discrete and continuous data.
+* Define **probability** and understand the principles of
+how to compute it for both discrete and continuous data.
 
 * Define and understand the relationship between
-populations, samples, random variables, and probability
-distributions.
+**populations**, **samples**, **random variables**, and
+**probability distributions**.
 
-* Understand the relationship between sample statistics and
-population parameters.
+* Understand the relationship between **sample statistics**
+and **population parameters**.
 
-* Understand how to compute population mean and population
-variance.
+* Understand the definition of **Expected Value**.
 
-* Understand how to estimate population mean and population
-variance with sample statistics.
+* Understand how to compute **population mean** and
+**population variance**.
 
-* Understand the distribution of sample means and how it
-depends on sample size.
+* Understand the definition of an **estimate** of a
+population parameter.
 
+* Understand the definition of a **point estimate** and
+**interval estimate** of population paratmer.
+
+* Understand how to use esample statistics to generate point
+estimates and interval estimates for **population mean** and
+**population variance** parameters.
+
+<!-- * Understand the **distribution of sample means** and how it -->
+<!-- depends on sample size. -->
+
+* Understand how to convert a `data.table` from **wide
+format** to **long format** and vice versa.
+
+* Understand how to use ``ggplot`` to generate scatter
+plots, bar plots, box plots, histograms, and violin plots.
+
+# Concepts
 
 ## Probability definitions
 
@@ -158,10 +173,10 @@ $P(A \cup B) \neq P(A) + P(B)$).
 
 A **random variable** is a data generating process. You can
 think of it like an infinitely deep bucket full of
-experimental results. Whenever you perform an experiment,
-you reach into the bucket, and pull out one result at
-random. All possible experimental results contained by the
-bucket define the **population** under study, and the set of
+experiment outcomes. Whenever you perform an experiment, you
+reach into the bucket, and pull out one outcome at random.
+All possible experiment outcomes contained by the bucket
+define the **population** under study, and the set of
 probabilities corresponding to each possible outcome is the
 **probability distribution**. Probability distributions are
 in turn defined as functions of one or more **population
@@ -178,11 +193,12 @@ $\theta_1, \ldots, \theta_n$.
 
 ## Sample statistics estimate population parameters
 
-Any result you pull out of the bucket is a **sample** from
-the **random variable** or equivalently a **sample** from
-the **population**.  In general, we use **sample
-statistics** to **estimate** population parameters (e.g., we
-use the sample mean to estimate the true population mean).
+Any outcome you pull out of the bucket is a **sample** from
+the **random variable**.  In general, we use **sample
+statistics** to **estimate** population parameters. An
+estimate of a population parameter is our best guess for
+what a population parameters true value is. For example, we
+use the sample mean to estimate the population mean.
 Estimation of population parameters with sample statistics
 is a key step we will always need to take when performing
 **inferential statistics**.
@@ -191,40 +207,68 @@ is a key step we will always need to take when performing
 sample statistics and population parameters is fundamental
 and absolutely critical to understand.** </div>
 
-* Let $X$ be a random variable.
+### Population mean for discrete $X$
+* Let $X$ be a discrete random variable.
 
 * Let $\boldsymbol{x} = \{x_1, \ldots, x_n\}$ be a sample
 from $X$.
 
 The central tendency of the sample $\boldsymbol{x}$ is given
-by the **sample mean** $\bar{\boldsymbol{x}}$, but the true
-central tendency of the population $X$ is given by the
+by the **sample mean** $\bar{\boldsymbol{x}}$:
+$$
+\begin{align}
+\bar{\boldsymbol{x}} &= \frac{1}{n} \sum_{i=1}^{n} x_{i}
+\end{align}
+$$
+
+The true central tendency of $X$ is given by the
 **population mean** which is denoted by $\mu$ and is defined
 by an operation called the **expected value** of $X$ denoted
 $E(X)$:
 
 $$
 \begin{align}
-\hat{\mu} &= \bar{\boldsymbol{x}}  \\
-\bar{\boldsymbol{x}} &= \frac{1}{n} \sum_{i=1}^{n} x_{i}  \\
-\\
 E(\boldsymbol{X}) &= \mu \\
      &= x_1 p(x_1) + x_2 p(x_2) + \ldots + x_n p(x_n) \\
      &= \sum_{i}^{n} x_i p(x_i)\\
 \end{align}
 $$
 
-A common measure of spread in the sample is given by the
-**sample variance** $\boldsymbol{s}^2$ but the true variance
-of the $X$ is given by the **population variance** which is
-denoted by $\sigma^2$ and is defined below.
+If we do not know the true value of the population mean
+$\mu$ then we can estimate it using the sample mean
+$\bar{\boldsymbol{x}}$.
+$$
+\begin{align}
+\hat{\mu} &= \bar{\boldsymbol{x}}
+\end{align}
+$$
+
+This is called a **point estimate** of $\mu$, because we are
+specifying a single number (i.e., a single point) that is
+our best guess for its true value. Later, we will learn
+about **interval estimates** of population parameters, which
+provide a range of best guess (e.g., we might try to say
+that we are $95\%$ percent sure that the true value of some
+population parameter is between some lower value and some
+upper value). We will see how to generate interval estimates
+in a later lecture. For now, it is sufficient to understand
+their conceptual relationship to point estimates.
+
+### Population variance for discrete $X$
+Similarly, a common measure of the spread of a sample is
+given by the **sample variance** $\boldsymbol{s}^2$:
 
 $$
 \begin{align} 
-\hat{\sigma^2} &= \boldsymbol{s}^2 \\
-\\
 \boldsymbol{s}^2 &= \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{\boldsymbol{x}})^2
-\\
+\end{align}
+$$
+
+The true variance of $X$ is given by the **population
+variance** which is denoted by $\sigma^2$ and is defined
+as follows:
+$$
+\begin{align} 
 Var(\boldsymbol{X}) &= \sigma^2 \\
        &= E((X - \mu)^2) \\
        &= \sum(x^2 - 2x\mu + \mu^2) p(x) \\
@@ -235,9 +279,19 @@ Var(\boldsymbol{X}) &= \sigma^2 \\
 \end{align}
 $$
 
+If we do not know the true value of the population variance
+$\sigma^2$ then we can estimate it using the sample variance
+$\bar{\boldsymbol{s}^2}$.
+$$
+\begin{align}
+\hat{\sigma^2} &= \boldsymbol{s}^2 \\
+\end{align}
+$$
+
+### Discrete $X$ example
 As a concrete example, consider the following discrete
-probability distribution corresponding to random variable
-$X$.
+probability distribution corresponding to the random
+variable $X$.
 
 ```{r, echo=F}
 library(data.table)
@@ -256,7 +310,12 @@ ggplot(d, aes(x, y)) +
   theme(aspect.ratio = 1)
 ```
 
-Here, we are explicitly given the probability distribution
+<div style="color:#990000"> **Note that this is a
+probability distribution. It defines how likely outcomes
+from a random variable is. It is not itself a sample from a
+random variable** </div>
+
+Since we are explicitly given the probability distribution
 --- i.e., we are told exactly what the probability of each
 event is --- so we can calculate the population mean $\mu$
 as follows:
@@ -269,6 +328,18 @@ $$
     &= 2.4
 \end{align}
 $$
+
+<div style="color:#990000"> **Notice here that we have
+calculated the true value of a population parameter, yet we
+have not collected a single observation from an experiment.
+This is only possible because we were given the true
+probability distribution. When we are given exact
+probability distributions, then we can calculate population
+parameters exactly. When we are not given exact probability
+distributions, then we must estimate population parameters
+using sample statistics obtained by performing an experiment
+in which we sample from the random variable under
+consideration.** </div>
 
 Now suppose that we draw a the following sample of $n=10$
 from this distribution:
@@ -291,11 +362,11 @@ rexdist <- function(n) {
   return(xs)
 }
 xs <- rexdist(n)
+print("x:")
 print(xs)
+print("sample mean:")
+print(mean(xs))
 ```
-
-**TODO:** Practice computing mean and var of some random
-samples in R.
 
 The sample mean of this sample is $\bar{\boldsymbol{x}} =$
 `r mean(xs)`. Note that our sample mean is not equal to the
@@ -315,116 +386,431 @@ for(j in 1:5) {
 }
 ```
 
-This indicates that the sample mean is different every time
-we run the experiment, and therefore, the sample mean is a
-random variable itself!
+<div style="color:#990000"> **This indicates that the sample
+mean is different every time we run the experiment, and
+therefore, the sample mean is a random variable itself! This
+idea is very important to how we go about performing
+statistical inference, and we will treat it more formally in
+later lectures. For now, make sure you see clearly why and
+how we know it is a random variable** </div>
+
+### Population mean and variance for continuous $X$
+* Let $X$ be a continuous random variable.
+
+* Let $\boldsymbol{x} = \{x_1, \ldots, x_n\}$ be a sample
+from $X$.
+
+* Sample statistics are computed in exacrtly the same way
+regardless of whether $X$ is continuous or discrete.
+
+* Population parameters are again computed in terms of the
+**expected value** operator, but the way this operator works
+is a bit different depending on whether $X$ is continuous or
+discrete.
+
+* In particular, if $X$ is continuous, then we will replace
+discrete sums (i.e., $\sum x$) with continuous integrals
+(i.e., $\int x dx$).
+
+:::: {style="display: flex;"}
+
+::: {}
+#### Continuous $X$ mean
+$$
+\begin{align}
+\bar{\boldsymbol{x}} &= \frac{1}{n} \sum_{i=1}^{n} x_{i} 
+\\
+E(\boldsymbol{X}) &= \mu \\
+     &= x_1 p(x_1) + x_2 p(x_2) + \ldots + x_n p(x_n) \\
+     &= \sum_{i}^{n} x_i p(x_i)\\
+\\
+\hat{\mu} &= \bar{\boldsymbol{x}}
+\end{align}
+$$
+:::
+
+::: {}
+#### Continuous $X$ variance
+$$
+\begin{align} 
+\boldsymbol{s}^2 &= \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{\boldsymbol{x}})^2 
+\\
+Var(\boldsymbol{X}) &= \sigma^2 \\
+       &= E((X - \mu)^2) \\
+       &= \sum(x^2 - 2x\mu + \mu^2) p(x) \\
+       &= \sum x^2 p(x) - \sum 2 x \mu p(x) + \sum \mu^2 p(x) \\
+       &= \sum x^2 p(x) - 2 \mu \sum x p(x) + \mu^2 \sum p(x) \\
+       &= \sum x^2 p(x) - 2 \mu^2 + \mu^2 \\
+       &= \left(\sum_i x_{i}^2 p(x_{i})\right) - \mu^2
+\\       
+\hat{\sigma^2} &= \boldsymbol{s}^2 
+\\
+\end{align}
+$$
+:::
+
+::::
 
 
-## Distribution of sample means
+### Continuous $X$ example
+As a concrete example, consider the following continuous
+probability distribution corresponding to the random
+variable $X$.
 
-In the previous section, we saw that every time we sampled
-from a Binomial random variable:
+```{r, echo=F}
+library(data.table)
+library(ggplot2)
 
-(1) We got a sample mean $\bar{\boldsymbol{x}}$ that was
-close to the population mean $\mu$, but didn't match it
-exactly unless by dumb luck.
+x <- seq(-3, 3, 0.1)
+y <- dnorm(x)
 
-(2) Every sample from $X$ lead to a different value for
-$\bar{\boldsymbol{x}}$.
+d <- data.table(x, y)
+d[, mu := 0]
 
-(3) We concluded that $\bar{\boldsymbol{x}}$ must itself be
-a random variable.
+ggplot(d, aes(x, y)) +
+  geom_line() +
+  xlab('X=x') +
+  ylab('f(X=x)') +
+  theme(aspect.ratio = 1)
+```
 
-Moving forward, we will denote the random variable
-corresponding to the distribution of sample means with the
-symbol $\bar{X}$, and continue to use $\bar{\boldsymbol{x}}$
-to refer to a particular sample mean.
+<div style="color:#990000"> **Notice that the y-axis is not
+labelled with $P(X=x)$. This is because when $X$ is
+continuous $P(X=x)=0$ for all $x$. The $f(x)$ label refers
+to probability density. We will discuss this more formally
+in a later lecture.** </div>
+
+As for our discrete $X$ example, we are explicitly given the
+probability distribution --- i.e., we are told exactly what
+the probability *density* of each event is --- so we can
+calculate the population mean $\mu$ as follows:
 
 $$
 \begin{align}
-X & \rightarrow \{x_{1}, \ldots, x_{n}\} \\
-\\
-\bar{X} & \rightarrow \frac{1}{n} \{ x_{1} + \ldots + x_{n} \}
+\mu &= E(\boldsymbol{X}) \\
+    &= \int x p(x) dx \\
+    &= 0 \\
 \end{align}
 $$
 
-* Notice that $n>1$ samples from $X$ are needed to generate
-a single $n=1$ sample from $\bar{X}$.
+<div style="color:#990000"> **Note that you will not be
+expacted to evaluate difficulr integrals in this unit. You
+will, however, need to understand the trick I used to
+evaluate this integral. The trick is see that the
+distribution is symmetric, and so the expected value is the
+peak value.** </div>
 
-* This means that in order to estimate the distribution of
-sample means, we need to draw $n>1$ samples from $X$ many
-times.
+Now suppose that we draw a the following sample of $n=10$
+from this distribution:
 
-If perform an experiment in which we draw $n=10$ samples
-from $X$, compute the sample mean $\bar{x}$, and repeat 500
-times, then we get the following estimate for the
-distribution of sample means:
-
-```{r, echo=F, message=F, warning=F}
-num_experiments <- 500
+```{r, echo=F}
 n <- 10
-
-## Draw random samples from X (defined in previous toy
-## example) in many different experiments in order to
-## estimate the distribution of sample means
-d_list <- vector("list", num_experiments) 
-for(i in 1:num_experiments) {
-  xbar <- mean(rexdist(n)) 
-  d_list[[i]] <- data.table(xbar=xbar, exp=i)
-}
-
-d <- rbindlist(d_list)
-
-ggplot(d, aes(xbar)) +
-    geom_histogram(bins=10) +
-    theme(aspect.ratio=1)
+xs <- rnorm(n)
+print("x:")
+print(xs)
+print("sample mean:")
+print(mean(xs))
 ```
 
-Note that even though $X$ is discrete, $\bar{X}$ is
-continuous. Also note that $\bar{X}$ looks bell-shaped even
-though $X$ does not. This is because of something called the
-*central limit theorem*. We cover this in a later lecture.
+The sample mean of this sample is $\bar{\boldsymbol{x}} =$
+`r mean(xs)`. As for our discrete $X$ exmaple, we see that
+our sample mean is not equal to the population mean. Lets
+run it 5 more times to demonstrate again that the sample
+mean is indeed a ranomd variable.
 
-It turns out that $\bar{X}$ depends on `n` --- where $n$ is
-the sample size drawn from $X$ --- in a very important way.
-In particular, the population variance of the distribution
-of sample means $\sigma_{\bar{X}}^2$ decreases as $n$
-increases.
-
-The following plots show the estimated distribution of
-sample means for $n=10$, $n=20$, and $n=30$.
-
-```{r, echo=F, message=F, warning=F}
-num_experiments <- 500
-n <- c(10, 20, 30)
-
-d_list <- vector("list", num_experiments * 3) 
-for(j in 1:length(n)) {
-  for(i in 1:num_experiments) {
-    xbar <- mean(rexdist(n[j])) 
-    d_list[[i + num_experiments * (j-1)]] <- data.table(xbar=xbar, exp=i, n=n[j])
-  }
+```{r, echo=F}
+n <- 10
+for(j in 1:5) {
+  xs <- rnorm(n) 
+  print("x:")
+  print(xs)
+  print("sample mean:")
+  print(mean(xs))
 }
-
-d <- rbindlist(d_list)
-
-g1 <- ggplot(d[n==10], aes(xbar)) + 
-  geom_histogram(bins=10) +
-  xlim(1.5, 3.5) +
-  ggtitle('n=10') +
-  theme(aspect.ratio=1)
-g2 <- ggplot(d[n==20], aes(xbar)) + 
-  geom_histogram(bins=10) +
-  xlim(1.5, 3.5) +
-  ggtitle('n=20') +
-  theme(aspect.ratio=1)
-g3 <- ggplot(d[n==30], aes(xbar)) + 
-  geom_histogram(bins=10) +
-  xlim(1.5, 3.5) +
-  ggtitle('n=30') +
-  theme(aspect.ratio=1)
-library(gridExtra)
-grid.arrange(g1, g2, g3, ncol=3)
-
 ```
+
+# Practice with `R`
+
+## wide to long format `data.table`
+
+* Suppose you perform an experiment in which you collect
+data from 3 participants, and each participant gives you 5
+observations.
+
+* If this data were represented in *wide* format, then data
+from each participant would be in separate columns.
+
+* If this data were represented in *long* format, then data
+from every participant would be in the same column. A
+separate column would *indicate* what subject a given row
+corresponded to.
+
+* To convert from wide to long format use the `melt()`
+function from `data.table`.
+
+```{r}
+# define example data
+x1 <- runif(5)
+x2 <- runif(5)
+x3 <- runif(5)
+
+# create a wide format data.table
+d_wide <- data.table(x1, x2, x3)
+
+# convert to a long format data.table
+d_long <- melt(d_wide, measure.vars=c('x1', 'x2', 'x3'))
+
+d_wide
+d_long
+```
+
+## Data visualisation using `ggplot`
+
+Data visualisation is a core component of modern descriptive
+statistics and it is essential that we become proficient at
+collecting data, assembling it into csv-style formats,
+piping it into `R`, and inspecting it using plots.
+
+There are numerous methods to generate plots using `R`, but
+in this unit, we will focus exclusively on first
+representing our data as a `data.table` and then using
+`ggplot` to make plots.
+
+Note that many of the visualisations we will demonstrate
+below look best when we have lots of data, so lets make a
+bigger toy example now.
+
+```{r}
+# define example data with more observations
+x1 <- runif(100)
+x2 <- runif(100)
+x3 <- runif(100)
+
+# create a wide format data.table
+d_wide <- data.table(x1, x2, x3)
+
+# convert to a long format data.table
+d_long <- melt(d_wide, measure.vars=c('x1', 'x2', 'x3'))
+```
+
+### `geom_point`
+
+Perhaps the most straightforward approach to visualising
+data is simply to plot points for each observation in your
+sample. 
+
+```{r, message=F}
+ggplot(data=d_long, aes(x=variable, y=value)) +
+  geom_point()
+```
+
+
+### `geom_box`
+
+Box plots give a summary of how your data is distributed by
+visually marking out the median value as well as the 25th to
+the 75th percentile. The idea is to concisely illustrate
+where the majority of the data fall.
+
+Whiskers will typically extend from the ends of the box to
+indicate the more extreme end of your data, and very extreme
+data points will often be plotted individually. This aspect
+of box plots doesn't have as strong a convention as the
+rest, so it's important to read the documentation to be sure
+you are plotting what you think you are plotting.
+
+I often find that it can be quite nice to use both
+`geom_point` and `geom_box` in conjunction as follows.
+
+```{r, message=F}
+ggplot(data=d_long, aes(x=variable, y=value)) +
+  geom_boxplot() +
+  geom_point()
+```
+
+
+### `geom_violin`
+
+Violin plots are similar to box plots, except rather than
+represent your data in terms of percentiles, it attempts to
+give you a continuous estimate of how much our your data
+fall along the range of possible values. As with box plots,
+I often like to overlay individual points.
+
+```{r, message=F}
+ggplot(data=d_long, aes(x=variable, y=value)) +
+  geom_violin() +
+  geom_point()
+```
+
+
+### `geom_hist`
+
+A histogram attempts to illustrate how data is distributed
+by grouping data points into a set number of bins, and
+plotting a bar with height equal to the number of points in
+each bin.
+
+If you have a lot of data, this method can work really well
+and convey lots of great information. With a smaller data
+set --- like the toy rat example that we are currently using
+--- it only works okay.  In any case, working with
+histograms can involve a bit of tweaking to get things to
+look nice. For example, you can control how many bins are
+used and how big or small each bin is by using the `bins`
+and `breaks` argument.
+
+```{r, message=F}
+ggplot(data=d_long, aes(x=value, fill=variable)) +
+  geom_histogram(bins = 10) + 
+  facet_wrap(~variable)
+```
+
+### `geom_bar`
+
+Bar plots are among the most common plots you will encounter
+as you navigate pretty much any scientific field. They throw
+away all information about how your data is distributed, and
+instead report only on the average values (unless error bars
+are included).
+
+There are many ways to use `ggplot` and `geom_bar` to make a
+bar plot. A good way to start is to first create a
+`data.table` that contains only the average values that you
+want to be represented by the bar heights:
+
+```{r, message=F}
+d_mean = d_long[, .(var_mean = mean(value)), .(variable)]
+ggplot(data=d_mean, aes(x=variable, y=var_mean)) +
+  geom_bar(stat='identity')
+```
+
+
+### `geom_line`
+
+Of course, in certain circumstance, we might want to make a
+simple line plot. This is also easy to achieve with
+`ggplot`, but to demonstrate its use, we will need a
+different example data set.
+
+```{r, message=F}
+x <- seq(-10, 10, 0.1)
+y <- sin(x)
+d <- data.table(x, y)
+
+ggplot(data=d, aes(x=x, y=y))+
+  geom_line() +
+  ylab('sin(x)')
+```
+
+
+
+
+<!-- ## Distribution of sample means -->
+
+<!-- In the previous section, we saw that every time we sampled -->
+<!-- from a Binomial random variable: -->
+
+<!-- (1) We got a sample mean $\bar{\boldsymbol{x}}$ that was -->
+<!-- close to the population mean $\mu$, but didn't match it -->
+<!-- exactly unless by dumb luck. -->
+
+<!-- (2) Every sample from $X$ lead to a different value for -->
+<!-- $\bar{\boldsymbol{x}}$. -->
+
+<!-- (3) We concluded that $\bar{\boldsymbol{x}}$ must itself be -->
+<!-- a random variable. -->
+
+<!-- Moving forward, we will denote the random variable -->
+<!-- corresponding to the distribution of sample means with the -->
+<!-- symbol $\bar{X}$, and continue to use $\bar{\boldsymbol{x}}$ -->
+<!-- to refer to a particular sample mean. -->
+
+<!-- $$ -->
+<!-- \begin{align} -->
+<!-- X & \rightarrow \{x_{1}, \ldots, x_{n}\} \\ -->
+<!-- \\ -->
+<!-- \bar{X} & \rightarrow \frac{1}{n} \{ x_{1} + \ldots + x_{n} \} -->
+<!-- \end{align} -->
+<!-- $$ -->
+
+<!-- * Notice that $n>1$ samples from $X$ are needed to generate -->
+<!-- a single $n=1$ sample from $\bar{X}$. -->
+
+<!-- * This means that in order to estimate the distribution of -->
+<!-- sample means, we need to draw $n>1$ samples from $X$ many -->
+<!-- times. -->
+
+<!-- If perform an experiment in which we draw $n=10$ samples -->
+<!-- from $X$, compute the sample mean $\bar{x}$, and repeat 500 -->
+<!-- times, then we get the following estimate for the -->
+<!-- distribution of sample means: -->
+
+<!-- ```{r, echo=F, message=F, warning=F} -->
+<!-- num_experiments <- 500 -->
+<!-- n <- 10 -->
+
+<!-- ## Draw random samples from X (defined in previous toy -->
+<!-- ## example) in many different experiments in order to -->
+<!-- ## estimate the distribution of sample means -->
+<!-- d_list <- vector("list", num_experiments)  -->
+<!-- for(i in 1:num_experiments) { -->
+<!--   xbar <- mean(rexdist(n))  -->
+<!--   d_list[[i]] <- data.table(xbar=xbar, exp=i) -->
+<!-- } -->
+
+<!-- d <- rbindlist(d_list) -->
+
+<!-- ggplot(d, aes(xbar)) + -->
+<!--     geom_histogram(bins=10) + -->
+<!--     theme(aspect.ratio=1) -->
+<!-- ``` -->
+
+<!-- Note that even though $X$ is discrete, $\bar{X}$ is -->
+<!-- continuous. Also note that $\bar{X}$ looks bell-shaped even -->
+<!-- though $X$ does not. This is because of something called the -->
+<!-- *central limit theorem*. We cover this in a later lecture. -->
+
+<!-- It turns out that $\bar{X}$ depends on `n` --- where $n$ is -->
+<!-- the sample size drawn from $X$ --- in a very important way. -->
+<!-- In particular, the population variance of the distribution -->
+<!-- of sample means $\sigma_{\bar{X}}^2$ decreases as $n$ -->
+<!-- increases. -->
+
+<!-- The following plots show the estimated distribution of -->
+<!-- sample means for $n=10$, $n=20$, and $n=30$. -->
+
+<!-- ```{r, echo=F, message=F, warning=F} -->
+<!-- num_experiments <- 500 -->
+<!-- n <- c(10, 20, 30) -->
+
+<!-- d_list <- vector("list", num_experiments * 3)  -->
+<!-- for(j in 1:length(n)) { -->
+<!--   for(i in 1:num_experiments) { -->
+<!--     xbar <- mean(rexdist(n[j]))  -->
+<!--     d_list[[i + num_experiments * (j-1)]] <- data.table(xbar=xbar, exp=i, n=n[j]) -->
+<!--   } -->
+<!-- } -->
+
+<!-- d <- rbindlist(d_list) -->
+
+<!-- g1 <- ggplot(d[n==10], aes(xbar)) +  -->
+<!--   geom_histogram(bins=10) + -->
+<!--   xlim(1.5, 3.5) + -->
+<!--   ggtitle('n=10') + -->
+<!--   theme(aspect.ratio=1) -->
+<!-- g2 <- ggplot(d[n==20], aes(xbar)) +  -->
+<!--   geom_histogram(bins=10) + -->
+<!--   xlim(1.5, 3.5) + -->
+<!--   ggtitle('n=20') + -->
+<!--   theme(aspect.ratio=1) -->
+<!-- g3 <- ggplot(d[n==30], aes(xbar)) +  -->
+<!--   geom_histogram(bins=10) + -->
+<!--   xlim(1.5, 3.5) + -->
+<!--   ggtitle('n=30') + -->
+<!--   theme(aspect.ratio=1) -->
+<!-- library(gridExtra) -->
+<!-- grid.arrange(g1, g2, g3, ncol=3) -->
+
+<!-- ``` -->
 
