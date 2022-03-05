@@ -519,16 +519,22 @@ dt
   
 ```{r}
 # Select rows by passing integer indices
+dt[1:4]
+dt[4:7]
 dt[c(2, 4)]
+dt[c(2, 5, 11)]
 
 # Select rows by passing a logical expression
 dt[x=='II']
+dt[(x=='II') & (y=='c')]
+dt[(x=='II') & (y=='c') & (z > 0)]
+
+# select rows by implementing a logical expression using
+# `chaining`
+dt[x=='II'][y=='c'][z > 0]
 ```
 
-
-### Select columns with `j`
-
-* First a quick note about specifying `i`.
+* A quick note about specifying `i`.
 
 * If you want to operate on every row of some set of
 columns, leave the `i` argument blank.
@@ -537,6 +543,18 @@ columns, leave the `i` argument blank.
 brackets being a comma, which looks a bit strange if you're
 not used to it. Just remember to read it as *select every row*.
 
+* `data.table` also provides a keyword `.N` that can be
+useful in a number of ways. One such way is to use it in
+selecting rows as shown in the next code chunk.
+
+```{r}
+dt # select every row
+dt[,] # select every row
+dt[1:.N] # select every row using the .N keyword
+dt[2:.N] # select all but the first row using the .N keyword
+```
+
+### Select columns with `j`
 * To operate on specific columns, set `j` equal to a list
 of the names of the columns you want.
 
@@ -544,25 +562,49 @@ of the names of the columns you want.
 be abbreviated with a `.`, which can also look strage at
 first. Once you get used to it, you will appreciate the
 brevity.
-  
-```{r}
-# Select every row of columns y and z the cool way
-dt[, .(y, z)]
 
-# Select every row of columns y and z the long way
-dt[, list(y, z)]
-```
-
-
-### Operate on columns with `j`
-
+### Select and operate on columns with `j`
 * You can do a lot more than just return the columns
 specified in `j`. In fact, you can perform any operation you
 want on them.
 
 ```{r}
-# return the mean and standard deviation of z
-dt[, .(mean(z), sd(z))]
+# Select every row of columns y and z the long way
+dt[, list(y, z)]
+
+# Select every row of columns y and z the cool way
+dt[, .(y, z)]
+
+# select rows 1:4 and return the z column of the result as a
+# vector
+dt[1:4, z]
+
+# select rows 1:4 and return the z column of the result as a
+# data.table
+dt[1:4, list(z)]
+
+# select rows 1:4 and return the z column of the result as a
+# data.table, but use `.` to abbreviate `list`. This is a
+# thing specific to data.table.
+dt[1:4, .(z)]
+
+# select and operate on columns
+# select rows 1:4 and return a summary statistic of the
+# resulting z column
+dt[1:4, mean(z)]
+dt[1:4, sd(z)]
+
+# notice the default naming of the columns in the following
+# result
+dt[1:4, list(mean(z), sd(z))]
+
+# control the names of the resulting columns
+dt[1:4, list(z_mean = mean(z), z_sd = sd(z))]
+
+# select all rows and compute summary statistics of the
+# resulting data.table
+dt[, .(mean(z), sd(z))] # default column names
+dt[, list(z_mean=mean(z), z_sd=sd(z))] # custom column names
 ```
 
 
@@ -593,37 +635,56 @@ be applied only to rows from the same group. Then, after all
 is done, everything is put back into a single `data.table`.
 
 ```{r}
-# Compute the sum of elements in column z separately for
-# each value of x
-dt[, sum(z), .(x)]
-```
+# inefficient and tiring way to group by x
+dt[x=="I", mean(z)]
+dt[x=="II", mean(z)]
+dt[x=="III", mean(z)]
+dt[x=="IV", mean(z)]
 
-```{r}
-# Compute the sum of elements in column z separately for
-# each unique combination of values in x and y
-dt[, sum(z), .(x, y)]
-```
+# efficient and beautiful way to group by x
+dt[, mean(z), .(x)]
 
+# the efficient and beautiful way of doing things extends to
+# grouping by multiple variables with ease
+dt[, mean(z), .(x, y)]
+
+# return more than one summary statistic grouped by x
+dt[, .(mean(z), sd(z)), .(x)] # default naming of resulting columns
+dt[, .(z_mean=mean(z), z_sd=sd(z)), .(x)] # custom naming of resulting columns
+```
 
 ### Adding and modifying columns
 
 * Use the `:=` operator inside the `j` argument of a
 `data.table` to add or modify a column.
 
-```{r}
-# If you pass a single number, data.table will fill the
+```{r, error=T}
+# if you pass a single number, data.table will fill the
 # entire column with that value
 dt[, a := 9]
 
-# Otherwise, just pass a vector of the same length as the
+# otherwise, just pass a vector of the same length as the
 # data.table
 dt[, b := seq(2, 24, 2)]
 
+# notice that you get an error if you try to create a column
+# using a vector that isn't exactly the correct length
+dt[, b := seq(2, 26, 2)]
 # redefine or modify an existing column the same way
 dt[, b := seq(4, 48, 4)]
 
-# Remove a column using := and the NULL keyword
+# remove a column using := and the NULL keyword
 dt[, b := NULL]
+
+# don't use the `<-` operator and the `:=`operator at the
+# same time. It works but is inefficient
+dt <- dt[, c := 9] # don't do this
+
+# it all works the same with non-numerical columns
+dt[, betsy := 'mouse']
+dt[, betsy := c('mouse', 'rat')] # notice the error
+new_col_betsy <- rep(c('mouse', 'rat'), 6)
+dt[, betsy := new_col_betsy] # add betsy
 ```
 
 ### Be careful when copying `data.table` objects
@@ -641,48 +702,52 @@ observing that dt also changes (see code chunks below).
 * To create a *deep copy* use `dt2 = data.table(dt)`.
 
 ```{r}
-# shallow copy:
-dt2 = dt # Not a deep copy
-dt ## inspect dt before dt2 changes
-dt2[, a := NULL]
-dt ## inspect dt after dt changes
+# print dt to see what it looks like before messing with it
+dt 
 
-# deep copy:
-dt2 = data.table(dt) # this is a deep copy
-dt ## inspect dt before dt2 changes
-dt2[, x := NULL]
-dt ## inspect dt after dt changes
+# this is a shallow copy
+dt_copy = dt
+dt_copy[, a := NULL]
+
+# notice we also deleted the `a` column from dt, not just from
+# dt_copy
+dt
+
+# this is a deep copy
+dt_copy = data.table(dt)
+dt_copy[, x := NULL]
+
+# now our changes to dt_copy didn't also change dt
+dt
 ```
 
-### Converting from wide to long format
+<!-- ### Converting from wide to long format -->
 
-* Suppose you perform an experiment in which you collect
-data from 3 participants, and each participant gives you 5
-observations. 
+<!-- * Suppose you perform an experiment in which you collect -->
+<!-- data from 3 participants, and each participant gives you 5 -->
+<!-- observations.  -->
 
-* If this data were represented in *wide* format, then data
-from each participant would be in separate columns.
+<!-- * If this data were represented in *wide* format, then data -->
+<!-- from each participant would be in separate columns. -->
 
-* If this data were represented in *long* format, then data
-from every participant would be in the same column. A
-separate column would *indicate* what subject a given row
-corresponded to.
+<!-- * If this data were represented in *long* format, then data -->
+<!-- from every participant would be in the same column. A -->
+<!-- separate column would *indicate* what subject a given row -->
+<!-- corresponded to. -->
 
-* To convert from wide to long format use the `melt()`
-function from `data.table`.
+<!-- * To convert from wide to long format use the `melt()` -->
+<!-- function from `data.table`. -->
 
-```{r}
-x1 <- runif(5)
-x2 <- runif(5)
-x3 <- runif(5)
-data_wide <- data.table(x1, x2, x3)
-data_long <- melt(data_wide, measure.vars=c('x1', 'x2', 'x3'))
+<!-- ```{r} -->
+<!-- x1 <- runif(5) -->
+<!-- x2 <- runif(5) -->
+<!-- x3 <- runif(5) -->
+<!-- data_wide <- data.table(x1, x2, x3) -->
+<!-- data_long <- melt(data_wide, measure.vars=c('x1', 'x2', 'x3')) -->
 
-data_wide
-data_long
-```
-
-
+<!-- data_wide -->
+<!-- data_long -->
+<!-- ``` -->
 
 <!-- ## Data representation -->
 
