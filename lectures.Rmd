@@ -20,7 +20,7 @@ fontsize: 14pt
 |:---------|:--------|:-------------------------------------------------------------------------|
 | 21/02/22 | Week 1  | [Intro to course and R programming                    ](lecture_1.html)  |
 | 28/02/22 | Week 2  | [Descriptive statistics, data types, experiment design](lecture_2.html)  |
-| 07/03/22 | Week 3  | [Probability, Random Variables, confidence intervals  ](lecture_3.html)  |
+| 07/03/22 | Week 3  | [Probability, Random Variables, Estimation            ](lecture_3.html)  |
 | 14/03/22 | Week 4  | [Binomial Distribution, Binomial Test                 ](lecture_4.html)  |
 | 21/03/22 | Week 5  | [Normal distribution, Normal Test                     ](lecture_5.html)  |
 | 28/03/22 | Week 6  | [t-distribution, single sample t-test                 ](lecture_6.html)  |
