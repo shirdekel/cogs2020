@@ -98,18 +98,18 @@ are in `d` and store the result in a variable named
 
 **b.**
 Return a `data.table` containing only the rows of `d` for
-which `month==Jan` and store the result in a variable named
-`ans_1b`.
+which `month=="Jan"` and store the result in a variable
+named `ans_1b`.
 
 **c.**
 Return a `data.table` containing only the rows of `d` for
-which `month==Feb` or `event==c` and store the result in a
+which `month=="Feb"` or `event==c` and store the result in a
 variable named `ans_1c`.
 
 **d.**
 Return a `data.table` containing only the rows of `d` for
-which `month==Feb` and `event==c` and store the result in a
-variable named `ans_1d`.
+which `month=="Feb"` and `event=="c"` and store the result
+in a variable named `ans_1d`.
 
 **e.**
 Using the `%in%` operator, return a `data.table` containing

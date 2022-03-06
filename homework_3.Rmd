@@ -85,429 +85,93 @@ set.seed(0)
 ```
 
 ## 1.
+Consider an experiment in which two four-sided die are
+thrown.
 
-Consider the following two random variables:
+**(a)** Create a `data.table` named `ans_1a` with two
+columns labelled `die1` and `die2` where these columns
+encode the **sample space** of this experiment. See below
+for **only the first** eight rows of the resulting
+`data.table`.
 
-* $X\sim\mathcal{N}(\mu=0,\sigma=1)$ 
-
-* $Y{\sim}Binom(n=10,p=0.2)$ 
-
-The $X$ probability distribution (pdf since X is continuous) and
-the $Y$ probability distribution (pmf since Y is discrete) are 
-illustrated below. The probability corresponding to $x{\leq}1$
-and $y{\leq}3$ (`lower.tail=TRUE`) are coloured blue and the the 
-probability corresponding to $x{>}1$ and $y{>}3$ (`lower.tail=FALSE`)
-are coloured green. This figure is only here to help you think about 
-what is being asked below.
-
-```{r, echo=F, fig.width=10}
-x <- seq(-4, 4, 0.01)
-fx <- dnorm(x)
-d <- data.table(x, fx)
-ga <- ggplot(d, aes(x, fx)) +
-  geom_line() +
-  geom_segment(aes(x=1, xend=1, y=0, yend=dnorm(1)), linetype=2) +
-  geom_ribbon(data=d[x<=1],
-              aes(x=x, ymin=0, ymax=fx),
-              fill='blue',
-              alpha=0.25) +
-  geom_ribbon(data=d[x>1],
-              aes(x=x, ymin=0, ymax=fx),
-              fill='green',
-              alpha=0.25) +
-  annotate("text", x=-0.5, y=0.05, label=TeX("$P(X\\leq x)$")) +
-  annotate("text", x=1.5, y=0.05, label=TeX("$P(X>x)$"))+
-  ylab('f(x)')
-
-n <- 10
-p <- 0.2
-y <- seq(0, n, 1)
-fy <- dbinom(y, n, p)
-d <- data.table(y, fy)
-gb <- ggplot(d, aes(y, fy)) +
-  geom_segment(data=d[y<=3], aes(x=y, xend=y, y=0, yend=dbinom(y,n,p)), colour='blue') +
-  geom_segment(data=d[y>3], aes(x=y, xend=y, y=0, yend=dbinom(y,n,p)), colour='green') +
-  annotate("text", x=3, y=0.21, label=TeX("$P(Y\\leq y)$")) +
-  annotate("text", x=4, y=0.1, label="P(Y>y)") +
-  scale_x_continuous(breaks=0:10) +
-  ylab('f(y)')
-
-ggarrange(ga, gb, ncol=2)
+```{r echo=FALSE}
+die1 <- rep(c(1, 2, 3, 4), 4)
+die2 <- rep(c(1, 2, 3, 4), each=4)
+ans_1a <- data.table(die1, die2)
+ans_1a[1:8]
 ```
 
-**(a)** Verify that $p(X{<}x)=p(X{\leq}x)$ for $x=1$.
-Do this by performing the following steps:
+**(b)** Create a deep copy of `ans_1a` called `ans_1b` and
+then add a column to `ans_1b` called `X` and set it equal to
+the sum of the corresponding `die1` and `die2` values on a
+per row basis.
 
-* Define a variable `p1` and set its value to $p(X{<}x)$.
+**(c)** Let $X$ be the random variable defined by the `X`
+column in `ans_1b`. What is $P(X<5)$? Store your result in a
+variable named `ans_1c`.
 
-* Define a variable `p2` and set its value to
-  $p(X{\leq}x)$.
+**(d)** Is the event defined as the set of all outcomes for
+which $X=2$ an elementary event? Store your answer (`"YES"`
+or `"NO"`) in a variable named `ans_1d`.
 
-* Define a variable `ans_1a` and set its value to `TRUE`
-  if `p1` is equal to `p2` and set its value to `FALSE`
-  otherwise.
-
-**(b)** Verify that $p(Y < y) \neq p(Y\leq y)$ for $y=3$.
-Do this by performing the following steps:
-
-* Define a variable `p1` and set its value to $p(Y < y)$.
-
-* Define a variable `p2` and set its value to
-  $p(Y \leq y)$.
-
-* Define a variable `ans_1b` and set its value to `TRUE`
-  if `p1` is equal to `p2` and set its value to `FALSE`
-  otherwise.
 
 ## 2.
+For the following probability distribution:
 
-Consider the following random variables:
+<div width:50px>
+| $x$    |  2 |  3 |  4 |  5 |  6 |
+|:-------|:---|:---|:---|:---|:---|
+| $f(x)$ | .1 | .3 | .3 | .2 | .1 |
+</div>
 
-* $X{\sim}\mathcal{N}(\mu_X=15,\sigma_X=2.74)$ 
+**(a)** Is $f(x)$ a valid probability distribution? Store
+your answer (`"YES"` or `"NO"`) in a variable named
+`ans_2a`.
 
-* $Y{\sim}Binom(n=30,p=0.5)$.
-
-The $X$ and $Y$ distributions are illustrated in the
-following figure:
-
-```{r, echo=F, fig.width=10}
-x <- seq(0, 30, 0.01)
-fx <- dnorm(x, 15, 2.74)
-d <- data.table(x, fx)
-gx <- ggplot(d, aes(x, fx)) +
-  geom_line() +
-  ylab('f(x)')
-
-n <- 30
-p <- 0.5
-y <- seq(0, 30, 1)
-fy <- dbinom(y, n, p)
-d <- data.table(y, fy)
-gy <- ggplot(d, aes(y, fy)) +
-  geom_segment(aes(x=y, xend=y, y=0, yend=fy)) + 
-  ylab('f(y)')
-
-ggarrange(gx, gy, ncol=2)
-```
-
-**(a)** Compute $P(X > 17)$ and store it in a variable
-named `ans_2a`.
-
-**(b)** Compute $P(X \leq 14)$ and store it in a variable
+**(b)** Calculate $E(X)$ store the result in a variable
 named `ans_2b`.
 
-**(c)** Compute $P(X \geq 20)$ and store it in a variable
-named `ans_2c`.
+**(c)** Calculate $P(X \geq 4)$ store the result in a
+variable named `ans_2c`.
 
-**(d)** Compute $P(X < 13)$ and store it in a variable
-named `ans_2d`.
+**(d)** Calculate $P(2 < X \leq 4)$ and store the result in
+a variable named `ans_2d`.
 
-**(e)** Compute $P(Y > 17)$ and store it in a variable
-named `ans_2e`.
-
-**(f)** Compute $P(Y \leq 14)$ and store it in a variable
-named `ans_2f`.
-
-**(g)** Compute $P(Y \geq 20)$ and store it in a variable
-named `ans_2g`.
-
-**(h)** Compute $P(Y < 13)$ and store it in a variable
-named `ans_2h`.
-
-**(i)** How do all of the above quantities computed with
-respect to $X$ compare to those computed with respect to
-$Y$? No points for this one. Just think about it.
-
-<!-- **(e)** Compute $P(12.22 < X < 24.55)$ and store it in a -->
-<!-- variable named `ans_2e`. -->
-
-<!-- **(f)** Compute $x$ such that $P(X>x) = .9$ and store it in -->
-<!-- a variable named `ans_2f`. -->
-
-<!-- **(g)** Compute $x$ such that $P(X \leq x) = .8$ and store -->
-<!-- it in a variable named `ans_2g`. -->
 
 ## 3.
+Given the following probability distribution:
 
-Consider the following plots:
-
-```{r, echo=F, fig.height=14, fig.width=10}
-xcritvec <- c(17, 14, 20, 13)
-
-mu <- 15
-sigma <- 2.74
-
-x <- seq((mu-sigma*4), (mu+sigma*4), 0.01)
-fxd <- dnorm(x, mu, sigma)
-
-fxp <- pnorm(x, mu, sigma, lower.tail=F)
-d <- data.table(x, fxd, fxp)
-xcrit <- xcritvec[1]
-ga1n <- ggplot(d, aes(x, fxd)) +
-  geom_line() +
-  geom_ribbon(data=d[x>xcrit],
-              aes(x=x, ymin=0, ymax=fxd),
-              fill='blue',
-              alpha=0.25) +
-  ylab('f(x)')
-
-ga2n <- ggplot(d, aes(x, fxp)) +
-  geom_line() +
-  geom_segment(x=xcrit,
-               xend=xcrit,
-               y=0,
-               yend=pnorm(xcrit, mu, sigma, lower.tail=F),
-               linetype=2) +
-  geom_segment(x=min(x),
-               xend=xcrit,
-               y=pnorm(xcrit, mu, sigma, lower.tail=F),
-               yend=pnorm(xcrit, mu, sigma, lower.tail=F),
-               linetype=2) +
-  ylab('P(X>x)')
-
-fxp <- pnorm(x, mu, sigma, lower.tail=T)
-d <- data.table(x, fxd, fxp)
-xcrit <- xcritvec[2]
-gb1n <- ggplot(d, aes(x, fxd)) +
-  geom_line() +
-  geom_ribbon(data=d[x <= xcrit],
-              aes(x=x, ymin=0, ymax=fxd),
-              fill='blue',
-              alpha=0.25) +
-  ylab('f(x)')
-
-gb2n <- ggplot(d, aes(x, fxp)) +
-  geom_line() +
-  geom_segment(x=xcrit,
-               xend=xcrit,
-               y=0,
-               yend=pnorm(xcrit, mu, sigma, lower.tail=T),
-               linetype=2) +
-  geom_segment(x=min(x),
-               xend=xcrit,
-               y=pnorm(xcrit, mu, sigma, lower.tail=T),
-               yend=pnorm(xcrit, mu, sigma, lower.tail=T),
-               linetype=2) +
-  ylab('P(X<=x)')
-
-fxp <- pnorm(x, mu, sigma, lower.tail=F)
-d <- data.table(x, fxd, fxp)
-xcrit <- xcritvec[3]
-gc1n <- ggplot(d, aes(x, fxd)) +
-  geom_line() +
-  geom_ribbon(data=d[x >= xcrit],
-              aes(x=x, ymin=0, ymax=fxd),
-              fill='blue',
-              alpha=0.25) +
-  ylab('f(x)')
-
-gc2n <- ggplot(d, aes(x, fxp)) +
-  geom_line() +
-  geom_segment(x=xcrit,
-               xend=xcrit,
-               y=0,
-               yend=pnorm(xcrit, mu, sigma, lower.tail=F),
-               linetype=2) +
-  geom_segment(x=min(x),
-               xend=xcrit,
-               y=pnorm(xcrit, mu, sigma, lower.tail=F),
-               yend=pnorm(xcrit, mu, sigma, lower.tail=F),
-               linetype=2) +
-  ylab('P(X>x)')
-
-fxp <- pnorm(x, mu, sigma, lower.tail=T)
-d <- data.table(x, fxd, fxp)
-xcrit <- xcritvec[4]
-gd1n <- ggplot(d, aes(x, fxd)) +
-  geom_line() +
-  geom_ribbon(data=d[x < xcrit],
-              aes(x=x, ymin=0, ymax=fxd),
-              fill='blue',
-              alpha=0.25) +
-  ylab('f(x)')
-
-gd2n <- ggplot(d, aes(x, 1-fxp)) +
-  geom_line() +
-  geom_segment(x=xcrit,
-               xend=xcrit,
-               y=0,
-               yend=pnorm(xcrit, mu, sigma, lower.tail=F),
-               linetype=2) +
-  geom_segment(x=min(x),
-               xend=xcrit,
-               y=pnorm(xcrit, mu, sigma, lower.tail=F),
-               yend=pnorm(xcrit, mu, sigma, lower.tail=F),
-               linetype=2) +
-  ylab(TeX('P(X\\leq x)'))
-
-n <- 30
-p <- 0.5
-x <- seq(0, n, 1)
-
-fxd <- dbinom(x, n, p)
-fxp <- pbinom(x, n, p, lower.tail=F)
-d <- data.table(x, fxd, fxp)
-xcrit <- xcritvec[1]
-ga1b <- ggplot(d, aes(x, fxd)) +
-  geom_segment(data=d[x>xcrit], aes(x=x, xend=x, y=0, yend=fxd), colour='blue') +
-  geom_segment(data=d[x<=xcrit], aes(x=x, xend=x, y=0, yend=fxd)) +
-  ylab('f(x)') +
-  scale_x_continuous(breaks=seq(0,n,2))
-
-ga2b <- ggplot(d, aes(x, fxp)) +
+```{r, echo=FALSE}
+x <- c(0, 1, 2, 3)
+fx <- c(0.3, 0.4, 0.2, 0.1)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) + 
   geom_point() +
-  geom_segment(x=xcrit, 
-               xend=xcrit, 
-               y=0, 
-               yend=pbinom(xcrit, n, p, lower.tail=F), 
-               linetype=2) +
-  geom_segment(x=min(x),
-               xend=xcrit,
-               y=pbinom(xcrit, n, p, lower.tail=F),
-               yend=pbinom(xcrit, n, p, lower.tail=F),
-               linetype=2) +
-  ylab('P(X>x)') +
-  scale_x_continuous(breaks=seq(0,n,2))
-
-fxd <- dbinom(x, n, p)
-fxp <- pbinom(x, n, p, lower.tail=T)
-d <- data.table(x, fxd, fxp)
-xcrit <- xcritvec[2]
-gb1b <- ggplot(d, aes(x, fxd)) +
-  geom_segment(data=d[x<=xcrit], aes(x=x, xend=x, y=0, yend=fxd), colour='blue') +
-  geom_segment(data=d[x>xcrit], aes(x=x, xend=x, y=0, yend=fxd)) +
-  ylab('f(x)') +
-  scale_x_continuous(breaks=seq(0,n,2))
-
-gb2b <- ggplot(d, aes(x, fxp)) +
-  geom_point() +
-  geom_segment(x=xcrit, 
-               xend=xcrit, 
-               y=0, 
-               yend=pbinom(xcrit, n, p, lower.tail=T), 
-               linetype=2) +
-  geom_segment(x=min(x),
-               xend=xcrit,
-               y=pbinom(xcrit, n, p, lower.tail=T),
-               yend=pbinom(xcrit, n, p, lower.tail=T),
-               linetype=2) +
-  ylab('P(X<=x)') +
-  scale_x_continuous(breaks=seq(0,n,2))
-
-fxd <- dbinom(x, n, p)
-fxp <- pbinom(x, n, p, lower.tail=F)
-d <- data.table(x, fxd, fxp)
-xcrit <- xcritvec[3]
-gc1b <- ggplot(d, aes(x, fxd)) +
-  geom_segment(data=d[x>=xcrit], aes(x=x, xend=x, y=0, yend=fxd), colour='blue') +
-  geom_segment(data=d[x<xcrit], aes(x=x, xend=x, y=0, yend=fxd)) +
-  ylab('f(x)') +
-  scale_x_continuous(breaks=seq(0,n,2))
-
-gc2b <- ggplot(d, aes(x, fxp)) +
-  geom_point() +
-  geom_segment(x=xcrit-1, 
-               xend=xcrit-1, 
-               y=0, 
-               yend=pbinom(xcrit-1, n, p, lower.tail=F), 
-               linetype=2) +
-  geom_segment(x=min(x),
-               xend=xcrit-1,
-               y=pbinom(xcrit-1, n, p, lower.tail=F),
-               yend=pbinom(xcrit-1, n, p, lower.tail=F),
-               linetype=2) +
-  ylab('P(X>x)') +
-  scale_x_continuous(breaks=seq(0,n,2))
-
-fxd <- dbinom(x, n, p)
-fxp <- pbinom(x, n, p, lower.tail=T)
-d <- data.table(x, fxd, fxp)
-xcrit <- xcritvec[4]
-gd1b <- ggplot(d, aes(x, fxd)) +
-  geom_segment(data=d[x<xcrit], aes(x=x, xend=x, y=0, yend=fxd), colour='blue') +
-  geom_segment(data=d[x>=xcrit], aes(x=x, xend=x, y=0, yend=fxd)) +
-  ylab('f(x)') +
-  scale_x_continuous(breaks=seq(0,n,2))
-
-gd2b <- ggplot(d, aes(x, fxp)) +
-  geom_point() +
-  geom_segment(x=xcrit-1, 
-               xend=xcrit-1, 
-               y=0, 
-               yend=pbinom(xcrit-1, n, p, lower.tail=T), 
-               linetype=2) +
-  geom_segment(x=min(x),
-               xend=xcrit-1,
-               y=pbinom(xcrit-1, n, p, lower.tail=T),
-               yend=pbinom(xcrit-1, n, p, lower.tail=T),
-               linetype=2) +
-  ylab('P(X<=x)') +
-  scale_x_continuous(breaks=seq(0,n,2))
-
-list_1 <- list(ga1n, gb1n, gc1n, gd1n, ga1b, gb1b, gc1b, gd1b)
-list_2 <- list(ga2n, gb2n, gc2n, gd2n, ga2b, gb2b, gc2b, gd2b)
-plot_list_list <- list(list_1, list_2)
-
-set.seed(2)
-inds1 <- sample(1:8, 8)
-inds2 <- sample(rep(1:2, 4), 8)
-
-plot_list <- list()
-for(i in 1:8) {
-  plot_list[[i]] <- plot_list_list[[inds2[i]]][[inds1[i]]]
-}
-
-plot_labels <- list('I', 'II', 'III', 'IV',
-                    'V', 'VI', 'VII', 'VIII')
-
-ggarrange(
-  plotlist=plot_list,
-  labels=plot_labels,
-  nrow=4,
-  ncol=2)
+  geom_segment(aes(x=x, y=0, xend=x, yend=fx)) +
+  xlab("x") +
+  ylab("P(X=x)")
 ```
 
-For each of the following problems, please respond by
-setting the appropriate variable to one of `"I"`, `"II"`,
-`"III"`, `"IV"`, `"V"`, `"VI"`, `"VII"`, or `"VIII"`.
-When responding to the questions below, please note that 
-the x and y axis labels in the above plots all use 'X' or 
-'x' but may correspond to either the X or the Y random variable 
-from problem 2.
+Find:
 
-**(a)** Which plot corresponds to the quantity requested 
-in problem 2a? Please store your answer in a variable named
-`ans_3a`.
+**(a)** Calculate $P(X \geq 2)$ and store your result in a
+variable named `ans_3a`.
 
-**(b)** Which plot corresponds to the quantity requested 
-in problem 2b? Please store your answer in a variable named
-`ans_3b`.
+**(b)** Calculate $P(0 < X \leq 2)$ and store your result in
+a variable named `ans_3b`.
 
-**(c)** Which plot corresponds to the quantity requested 
-in problem 2c? Please store your answer in a variable named
-`ans_3c`.
+**(c)** Calculate $E(X)$ and store your result in a variable
+named `ans_3c`.
 
-**(d)** Which plot corresponds to the quantity requested 
-in problem 2d? Please store your answer in a variable named
+**(d)** $Var(X)$ and store your result in a variable named
 `ans_3d`.
 
-**(e)** Which plot corresponds to the quantity requested 
-in problem 2e? Please store your answer in a variable named
+**(e)** $sd(X)$ and store your result in a variable named
 `ans_3e`.
 
-**(f)** Which plot corresponds to the quantity requested 
-in problem 2f? Please store your answer in a variable named
-`ans_3f`.
-
-**(g)** Which plot corresponds to the quantity requested 
-in problem 2g? Please store your answer in a variable named
-`ans_3g`.
-
-**(h)** Which plot corresponds to the quantity requested 
-in problem 2h? Please store your answer in a variable named
-`ans_3h`.
-
-## 4.
+## 4. 
+Consider the probability distributions for random vairbale
+$X$ and random variable $Y$ defined below.
 ```{r, echo=F, fig.width=10}
 x <- seq(-4, 4, 0.01)
 fx <- dnorm(x)
@@ -580,8 +244,9 @@ into a `data.table` and store the result in a variable named
 
 **b.** Create a new `data.table` that contains only rows of
 `ans_5a` for which `cnd` is `%in%` `c('Delay', 'Long ITI',
-'Short ITI')`, and only the `sub`, `cnd` and `t2c` columns.
-Store your result in a variable named `ans_5b`.
+'Short ITI')`, and only the mean of the `t2c` column grouped
+by `sub` and `cnd`. Store your result in a variable named
+`ans_5b`.
 
 **c.** Is `ans_5b` in wide or long format? Please use one of
 the following lines to store your result in a variable named
@@ -596,15 +261,74 @@ to long format. Store your result in a variable named
 `ans_5d`. Please also be careful to not alter `ans_5b` in
 the process.
 
-**e.** Please recreate the following figure using `ans_5b`
+**e.** If `ans_5d` is in long format, then convert it to
+wide format. If it is already wide format, then convert it
+to long format. Store your result in a variable named
+`ans_5e`. Please also be careful to not alter `ans_5d` in
+the process.
+
+**f.** Please recreate the following figure using `ans_5b`
 as the source of data being plotted. Store the result of
 your call to the `ggplot()` function in a variable named
-`ans_5e`.
+`ans_5f`.
 
 ```{r, echo=F, include=T}
 d <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
-d <- d[cnd %in% c('Delay', 'Long ITI', 'Short ITI'), .(sub, cnd, t2c)]
-ggplot(data=d, aes(x=cnd, y=t2c)) + 
+d <- d[cnd %in% c('Delay', 'Long ITI', 'Short ITI'), .(t2c_mean=mean(t2c)), .(sub, cnd)]
+ggplot(data=d, aes(x=cnd, y=t2c_mean)) + 
   geom_violin() + 
   geom_point()
 ```
+
+## 6. Final Check
+A common error on these problem sets is to accidentally
+erase or overwrite variables from one question with those
+from another. Another common error is to name your variables
+slightly wrong (e.g., `Ans_1a` instead of `ans_1a`). Yet
+another common error is to include a line of code or two
+that generates an error, and sometimes this error is serious
+enough to prevent most or all of your script from running,
+in which case you will lose most or all of your marks for
+that assignment. All of these can be a very frustrating way
+to lose marks, but you will indeed lose marks if you make
+these mistakes, so you need to be very careful!
+
+To ensure that this doesn't happen to you, please run your
+entire `.R` script from start to finish. One way to do this
+is to use `Code > Run Region > Run All`, but of course there
+are shortcuts for everything so do as you wish. If there are
+any errors at all when you do this, it is essential that you
+address them.  
+
+After all of your code has executed from start to finish
+without and errors at all, then carefully inspect your
+workspace to ensure that the following variables are
+defined. A reasonable way to do this is to try to print each
+one of these variables to the console. If it is defined,
+then it will print without error.
+```{r, eval=F, echo=T}
+my_name
+my_student_id
+ans_1a
+ans_1b
+ans_1c
+ans_1d
+ans_2a
+ans_2b
+ans_2c
+ans_2d
+ans_3a
+ans_3b
+ans_3c
+ans_3d
+ans_3e
+ans_4a
+ans_4b
+ans_4c
+ans_4d
+ans_5a
+ans_5b
+ans_5c
+ans_5d
+ans_5e
+``` 
