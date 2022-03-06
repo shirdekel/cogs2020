@@ -605,7 +605,7 @@ ggplot(data=d_long, aes(x=variable, y=value)) +
 ```
 
 
-### `geom_box`
+### `geom_boxplot`
 
 Box plots give a summary of how your data is distributed by
 visually marking out the median value as well as the 25th to

@@ -1,0 +1,155 @@
+---
+title: "Tutorial 3 - VIsualise data with `ggplot2`"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    # code_folding: show
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, collapse=T)
+```
+
+## Learning objectives
+
+* Get lots of hands-on practice with `R` and `data.table`
+and `ggplot`.
+
+* In particular, practice using the following functions:
+  * `ggplot()`
+  * `geom_point()`
+  * `geom_line()`
+  * `geom_bar()`
+  * `geom_hist()`
+  * `geom_violin()`
+  * `geom_boxplot()`
+  
+## do the following tutorials
+From here -- `https://rstudio.cloud/learn/primers/3` --  do
+the following tutorials:
+
+* `https://rstudio.cloud/learn/primers/3.2`
+* `https://rstudio.cloud/learn/primers/3.3`
+* `https://rstudio.cloud/learn/primers/3.4`
+* `https://rstudio.cloud/learn/primers/3.5`
+* `https://rstudio.cloud/learn/primers/3.6`
+* `https://rstudio.cloud/learn/primers/3.8`
+
+Please note that you may encounter some non-`data.table`
+code here and there in these tutorials. Please do your best
+to ignore it and focus on the `ggplot` aspects of the
+lessons.
+
+## Get some experiment data
+* Complete the experiment located at the following address:
+`https://run.pavlovia.org/demos/stroop/`
+
+* Be sure to enter your name or some other ID that you will
+remember and can be easily searched for.
+
+* Download your data in a `.csv` file by taking the
+following steps:
+
+* Go here: `https://gitlab.pavlovia.org/demos/stroop`
+
+* Read about the experiment you just participated in by
+scrolling to the bottom and reading the `README.md` file.
+
+* Click the `data` folder to land at the following address:
+`https://gitlab.pavlovia.org/demos/stroop/tree/master/data`
+
+* Near the top right of the page, click the `Find file`
+button, and search for a file containing the unique ID that
+you entered at the beginning of the experiment.
+
+* Click on the `.csv` file that pops up.
+
+* Finally, click the `download` button to download your
+`.csv` file to your local machine.
+
+
+## Get ready to analyse your data
+* If you haven't done so already, create a new folder on
+your computer named `cogs2020`
+
+* Open Rstudio and click `File > New File > R Script`
+
+* In Rstudio click `File > Save`
+
+* In the prompt that comes up, name your file
+`tutorial_3_notes.R`, and save it in your `cogs2020` folder.
+
+* Move the `.csv` file you just downloaded into your
+`cogs2020` folder.
+
+
+## Analyse your data using `data.table`
+* Load the `data.table` library and `rm` to be sure your are
+starting with a clean work space.
+```{r}
+library(data.table)
+library(ggplot2)
+
+rm(list = ls())
+```
+
+* Load the data into a `data.table` using the `fread()`
+function from the `data.table` library.
+```{r}
+# my data lives within a subfolder named `data` so I need
+# the following:
+d <- fread('./data/data_mjc_stroop_2022-02-08_06h43.13.csv')
+
+# If your data lives in the same directory as your code,
+# then you would use:
+# d <- fread('data_mjc_stroop_2022-02-08_06h43.13.csv')
+```
+
+* The data contains a row for every trial completed. The
+relevant columns are as follows:
+
+  * `text`: indicates the presented stimulus text
+  * `letterColor`: indicates the presented stimulus colour
+  * `congruent`: indicates whether the stimulus colour
+  matched the stimulus text
+  * `corrAns`: indicates whether or not the response was correct
+  * `resp.keys` indicates the response made
+  * `resp.rt`: indicates the response time
+
+```{r}
+d[, .(text, letterColor, congruent, corrAns, resp.keys, resp.rt)]
+```
+
+* The classic Stroop finding is that people are slower and
+less accurate on incongruent trials (i.e., trials on which
+stimulus text and stimulus colour do not match) than they
+are on congruent trials. Lets see if our data pan out that way.
+
+```{r}
+# first create a column to indicate response accuracy
+d[, acc := corrAns == resp.keys]
+
+# report what your overall accuracy was grouped by congruent
+d[, mean(acc), .(congruent)]
+
+# inspect reaction time 
+ggplot(d, aes(x=factor(congruent), y=resp.rt)) + 
+  geom_violin() +
+  geom_point()
+```
+
+* Visualise this data in as many other ways as you can. Try
+to use all the function listed in the learning objectives.
+
+## Work on problem set 3
+* [Problem set 3](homework_3.html)

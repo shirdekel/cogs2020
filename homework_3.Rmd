@@ -508,7 +508,6 @@ in problem 2h? Please store your answer in a variable named
 `ans_3h`.
 
 ## 4.
-
 ```{r, echo=F, fig.width=10}
 x <- seq(-4, 4, 0.01)
 fx <- dnorm(x)
@@ -536,6 +535,41 @@ in a variable named `ans_4a`.
 
 **b.** What is the population mean of $Y$? Sore your answer
 in a variable named `ans_4b`.
+
+```{r, echo=F, fig.width=10}
+x1 <- rnorm(100)
+x2 <- rnorm(100, 10)
+y1 <- rbinom(100, n, 0.2)
+y2 <- rbinom(100, n, 0.5)
+d <- data.table(x1, x2, y1, y2)
+d <- melt(d)
+
+ggplot(data=d, aes(value)) + 
+  geom_histogram(binwidth=0.1) +
+  facet_wrap(~variable, scales='free') +
+  theme(
+    strip.background = element_blank(),
+    strip.text.x = element_blank()
+  )
+```
+
+**c.** Which of the histograms above most likely corresponds
+to a sample from $X$? Please store your answer as one of the
+following:
+
+* `ans_4c <- 'upper left'`
+* `ans_4c <- 'lower left'`
+* `ans_4c <- 'upper right'`
+* `ans_4c <- 'lower right'`
+
+**d.** Which of the histograms above most likely corresponds
+to a sample from $X$? Please store your answer as one of the
+following:
+
+* `ans_4d <- 'upper left'`
+* `ans_4d <- 'lower left'`
+* `ans_4d <- 'upper right'`
+* `ans_4d <- 'lower right'`
 
 ## 5.
 **a.** Use the `fread` function in the `data.table` library
