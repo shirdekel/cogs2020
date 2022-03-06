@@ -48,7 +48,14 @@ the following tutorials:
 Please note that you may encounter some non-`data.table`
 code here and there in these tutorials. Please do your best
 to ignore it and focus on the `ggplot` aspects of the
-lessons.
+lessons. The non-`data.table` aspects that you run into
+won't be how we prefer to do things in this unit, and your
+tutor will help you identify what is relevant and what
+isn't. Be sure to ask if you are unsure.
+
+Please also note that the above tutorials are to be
+interacted with completely within a web browser. You will
+not need to use R Studio in this part of today's tutorial.
 
 ## Get some experiment data
 * Complete the experiment located at the following address:
