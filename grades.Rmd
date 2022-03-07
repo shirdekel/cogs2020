@@ -135,8 +135,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <!-- late <- fread('../code/hws_submissions_deadline_posneg.csv') -->
 <!-- setnames(late, c('ID number'), c('student_id')) -->
-<!-- late <- melt(late,  -->
-<!--              id.vars=c('student_id'),  -->
+<!-- late <- melt(late, -->
+<!--              id.vars=c('student_id'), -->
 <!--              measure.vars=c('hw1', -->
 <!--                             'hw2', -->
 <!--                             'hw3', -->
@@ -191,11 +191,11 @@ knitr::opts_chunk$set(echo = TRUE)
 <!-- dd[total_score >= .65 & total_score < .75, mark_class := "Credit"] -->
 <!-- dd[total_score >= .50 & total_score < .65, mark_class := "Pass"] -->
 <!-- dd[total_score < .50, mark_class := "Fail"] -->
-<!-- dd[, mark_class := factor(mark_class,  -->
+<!-- dd[, mark_class := factor(mark_class, -->
 <!--                           levels=c('High Distinction', -->
-<!--                                    'Distinction',  -->
-<!--                                    'Credit',  -->
-<!--                                    'Pass',  -->
+<!--                                    'Distinction', -->
+<!--                                    'Credit', -->
+<!--                                    'Pass', -->
 <!--                                    'Fail'))] -->
 <!-- ggplot(dd, aes(total_score, fill=mark_class)) + -->
 <!--   geom_histogram(breaks=seq(0.0, 1.0, 0.05)) + -->
@@ -205,28 +205,28 @@ knitr::opts_chunk$set(echo = TRUE)
 <!-- ``` -->
 
 
-<!-- ## Homework 1 Grades -->
-<!-- ```{r, fig.width=10} -->
-<!-- library(data.table) -->
-<!-- library(ggplot2) -->
+## Homework 1 Grades
+```{r, fig.width=10}
+library(data.table)
+library(ggplot2)
 
-<!-- rm(list=ls()) -->
+rm(list=ls())
 
-<!-- d <- fread('https://crossley.github.io/cogs2020/grades/hw_1_table.csv') -->
+d <- fread('https://crossley.github.io/cogs2020/grades/hw_1_table.csv')
 
-<!-- dd <- d[, .(score = unique(score)), .(student_id)] -->
-<!-- ggplot(dd, aes(score)) + -->
-<!--   geom_histogram(bins=10) -->
+dd <- d[, .(score = unique(score)), .(student_id)]
+ggplot(dd, aes(score)) +
+  geom_histogram(bins=10)
 
-<!-- dd <- d[, .(ans_mean = mean(ans==TRUE, na.rm=T), -->
-<!--             ans_err = sd(ans==FALSE, na.rm=T)/sqrt(.N)), .(ans_labels)] -->
-<!-- ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) + -->
-<!--   geom_pointrange(aes(x=ans_labels, -->
-<!--                       ymin=ans_mean-ans_err, -->
-<!--                       ymax=ans_mean+ans_err)) + -->
-<!--   xlab('Problem Number') + -->
-<!--   ylab('Proportion Correct') -->
-<!-- ``` -->
+dd <- d[, .(ans_mean = mean(ans==TRUE, na.rm=T),
+            ans_err = sd(ans==FALSE, na.rm=T)/sqrt(.N)), .(ans_labels)]
+ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
+  geom_pointrange(aes(x=ans_labels,
+                      ymin=ans_mean-ans_err,
+                      ymax=ans_mean+ans_err)) +
+  xlab('Problem Number') +
+  ylab('Proportion Correct')
+```
 
 <!-- ## Homework 2 Grades -->
 <!-- ```{r, fig.width=10} -->

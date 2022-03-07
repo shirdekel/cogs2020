@@ -333,3 +333,8 @@ ans_5c
 ans_5d
 ans_5e
 ```
+
+Finally, be sure that the file you submit to iLearn is a
+`.R` file and nothing else. Any other extension cannot be
+marked. This means do not submit `.Rmd`, `.RProj`, `.pdf`,
+`.html` or anything else. You must submit a `.R` file.
