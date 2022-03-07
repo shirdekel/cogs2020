@@ -359,7 +359,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Homework 2</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 06 March, 2022</h4>
+<h4 class="date">Last update: 07 March, 2022</h4>
 
 </div>
 
@@ -483,11 +483,11 @@ dd2[, V3 := c(T, T, F)]</code></pre>
 <li><p><code>cnd</code>: Condition identifier.</p></li>
 <li><p><code>prob_num</code>: Problem number (gets increased by 1 every time a participant solves a problem).</p></li>
 <li><p><code>t2c</code>: Trials to criterion (i.e., the number of trials it took a participant to solve a particular problem.)</p></li>
-<li><p><code>exp</code>: Experiment indicator. Overall, this study was broken down into two experiments – one using sine-wave grating stimuli and the other using a different type of stimuli.</p></li>
 <li><p><code>nps</code>: Number of problems solved. This is the same as <code>max(prob_num)</code></p></li>
 </ul>
 <p><strong>b.</strong> Select only rows for which <code>cnd==&quot;Delay&quot;</code> or for which <code>cnd==&quot;Long ITI&quot;</code> and store the result in a new <code>data.table</code> named <code>ans_6b</code>.</p>
-<p><strong>c.</strong> Select only the columns <code>cnd</code>, <code>sub</code> and <code>t2c</code> columns and store the result in a new <code>data.table</code> named <code>ans_6c</code>.</p>
+<p><strong>c.</strong> From <code>ans_6b</code> select only the columns <code>cnd</code>, <code>sub</code> and <code>t2c</code> columns and store the result in a new <code>data.table</code> named <code>ans_6c</code>.</p>
+<!-- NOTE: merge b and c next time -->
 <p><strong>d.</strong> Do not work on this problem until you have finished earlier parts of the homework. When you have, start a timer on a stop watch and then immediately work on the rest of this problem.</p>
 <p>Create a new <code>data.table</code> that contains the <code>mean</code> values of the <code>t2c</code> column grouped by <code>cnd</code> and <code>sub</code>. Name the column of mean values <code>t2c_mean</code>. Make sure that your resulting <code>data.table</code> has only <code>cnd</code>, <code>sub</code> and <code>t2c_mean</code> columns and nothing more (no columns named <code>V1</code> etc). Also make sure that your resulting <code>data.table</code> only has one observation per <code>sub</code>. Failure to do so will lead to this question being marked incorrect. Store the result in a variable named <code>ans_6d</code>.</p>
 <p>Stop the timer you started at the beginning of this problem, and write down how long it took you to complete.</p>

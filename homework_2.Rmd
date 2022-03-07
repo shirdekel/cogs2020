@@ -280,10 +280,6 @@ The resulting `data.table` contains the following columns:
 - `t2c`: Trials to criterion (i.e., the number of trials it took a participant
   to solve a particular problem.)
 
-- `exp`: Experiment indicator. Overall, this study was broken down into two
-  experiments -- one using sine-wave grating stimuli and the other using a
-  different type of stimuli.
-
 - `nps`: Number of problems solved. This is the same as `max(prob_num)`
 
 **b.**
@@ -295,6 +291,8 @@ named `ans_6b`.
 From `ans_6b` select only the columns `cnd`, `sub` and `t2c`
 columns and store the result in a new `data.table` named
 `ans_6c`.
+
+<!-- NOTE: merge b and c next time -->
 
 **d.**
 Do not work on this problem until you have finished earlier
