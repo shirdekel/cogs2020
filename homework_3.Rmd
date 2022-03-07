@@ -227,7 +227,7 @@ following:
 * `ans_4c <- 'lower right'`
 
 **d.** Which of the histograms above most likely corresponds
-to a sample from $X$? Please store your answer as one of the
+to a sample from $Y$? Please store your answer as one of the
 following:
 
 * `ans_4d <- 'upper left'`
