@@ -292,8 +292,9 @@ Select only rows for which `cnd=="Delay"` or for which
 named `ans_6b`.
 
 **c.**
-Select only the columns `cnd`, `sub` and `t2c` columns and
-store the result in a new `data.table` named `ans_6c`.
+From `ans_6b` select only the columns `cnd`, `sub` and `t2c`
+columns and store the result in a new `data.table` named
+`ans_6c`.
 
 **d.**
 Do not work on this problem until you have finished earlier

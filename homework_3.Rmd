@@ -145,7 +145,7 @@ Given the following probability distribution:
 x <- c(0, 1, 2, 3)
 fx <- c(0.3, 0.4, 0.2, 0.1)
 d <- data.table(x, fx)
-ggplot(d, aes(x, fx)) + 
+ggplot(d, aes(x, fx)) +
   geom_point() +
   geom_segment(aes(x=x, y=0, xend=x, yend=fx)) +
   xlab("x") +
@@ -169,7 +169,7 @@ named `ans_3c`.
 **(e)** $sd(X)$ and store your result in a variable named
 `ans_3e`.
 
-## 4. 
+## 4.
 Consider the probability distributions for random vairbale
 $X$ and random variable $Y$ defined below.
 ```{r, echo=F, fig.width=10}
@@ -208,7 +208,7 @@ y2 <- rbinom(100, n, 0.5)
 d <- data.table(x1, x2, y1, y2)
 d <- melt(d)
 
-ggplot(data=d, aes(value)) + 
+ggplot(data=d, aes(value)) +
   geom_histogram(binwidth=0.1) +
   facet_wrap(~variable, scales='free') +
   theme(
@@ -254,7 +254,7 @@ the following lines to store your result in a variable named
 
 * `ans_5c <- 'wide'`
 * `ans_5c <- 'long'`
-  
+
 **d.** If `ans_5b` is in long format, then convert it to
 wide format. If it is already wide format, then convert it
 to long format. Store your result in a variable named
@@ -275,8 +275,8 @@ your call to the `ggplot()` function in a variable named
 ```{r, echo=F, include=T}
 d <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
 d <- d[cnd %in% c('Delay', 'Long ITI', 'Short ITI'), .(t2c_mean=mean(t2c)), .(sub, cnd)]
-ggplot(data=d, aes(x=cnd, y=t2c_mean)) + 
-  geom_violin() + 
+ggplot(data=d, aes(x=cnd, y=t2c_mean)) +
+  geom_violin() +
   geom_point()
 ```
 
@@ -298,7 +298,7 @@ entire `.R` script from start to finish. One way to do this
 is to use `Code > Run Region > Run All`, but of course there
 are shortcuts for everything so do as you wish. If there are
 any errors at all when you do this, it is essential that you
-address them.  
+address them.
 
 After all of your code has executed from start to finish
 without and errors at all, then carefully inspect your
@@ -306,6 +306,7 @@ workspace to ensure that the following variables are
 defined. A reasonable way to do this is to try to print each
 one of these variables to the console. If it is defined,
 then it will print without error.
+
 ```{r, eval=F, echo=T}
 my_name
 my_student_id
@@ -331,4 +332,4 @@ ans_5b
 ans_5c
 ans_5d
 ans_5e
-``` 
+```

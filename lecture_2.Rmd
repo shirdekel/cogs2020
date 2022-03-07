@@ -513,18 +513,21 @@ dt
 
 * There are many ways to select rows.
 
-  * Set `i` equal to a vector of integers
-  
-  * Set `i` equal to a logical expression
+* Set `i` equal to a vector of integers.
+
+* Set `i` equal to a logical expression.
+
+* It will sometimes be useful to use the `%in%` operator
+when specifying `i`.
   
 ```{r}
-# Select rows by passing integer indices
+# select rows by passing integer indices
 dt[1:4]
 dt[4:7]
 dt[c(2, 4)]
 dt[c(2, 5, 11)]
 
-# Select rows by passing a logical expression
+# select rows by passing a logical expression
 dt[x=='II']
 dt[(x=='II') & (y=='c')]
 dt[(x=='II') & (y=='c') & (z > 0)]
@@ -532,9 +535,16 @@ dt[(x=='II') & (y=='c') & (z > 0)]
 # select rows by implementing a logical expression using
 # `chaining`
 dt[x=='II'][y=='c'][z > 0]
-```
 
-* A quick note about specifying `i`.
+# select rows using the `%in%` operator
+dt[x %in% c('I', 'II')]
+dt[y %in% c('b', 'f')]
+
+# Notice that using the `%in%` operator is essentially
+# performing an *or* logical operation
+dt[(x=='I') | (x=='II')]
+dt[(y=='b') | (y=='f')]
+```
 
 * If you want to operate on every row of some set of
 columns, leave the `i` argument blank.
