@@ -35,15 +35,25 @@ and `ggplot`.
   * `geom_boxplot()`
   
 ## do the following tutorials
-From here -- `https://rstudio.cloud/learn/primers/3` --  do
-the following tutorials:
+* [Intro](https://tutorials.shinyapps.io/02-Vis-Basics/)
 
-* `https://rstudio.cloud/learn/primers/3.2`
-* `https://rstudio.cloud/learn/primers/3.3`
-* `https://rstudio.cloud/learn/primers/3.4`
-* `https://rstudio.cloud/learn/primers/3.5`
-* `https://rstudio.cloud/learn/primers/3.6`
-* `https://rstudio.cloud/learn/primers/3.8`
+* [Bar charts](https://rstudio.cloud/learn/primers/3.2)
+  * Sections: Bar Charts (excluding Exercise 4) and Facets
+
+* [Histograms](https://rstudio.cloud/learn/primers/3.3)
+  * Sections: Histograms
+
+* [Boxplots](https://rstudio.cloud/learn/primers/3.4)
+  * Sections: Boxplots (excluding cut functions) and Similar Geoms
+
+* [Scatterplots](https://rstudio.cloud/learn/primers/3.5)
+  * Sections: Layers (only Code duplication onwards)
+
+* [Line plots](https://rstudio.cloud/learn/primers/3.6)
+  * Sections: Line graphs
+
+* [Customize](https://rstudio.cloud/learn/primers/3.8)
+  * Sections: Labels and Themes
 
 Please note that you may encounter some non-`data.table`
 code here and there in these tutorials. Please do your best
