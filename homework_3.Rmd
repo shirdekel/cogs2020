@@ -18,6 +18,10 @@ fontsize: 18pt
 knitr::opts_chunk$set(warning=FALSE)
 ```
 
+```{r setup, include=FALSE, message=F}
+knitr::opts_chunk$set(echo = T, collapse=T, warning=F)
+```
+
 <style type="text/css">
   body{
   font-size: 18pt;
@@ -256,17 +260,65 @@ the following lines to store your result in a variable named
 * `ans_5c <- 'wide'`
 * `ans_5c <- 'long'`
 
-**d.** If `ans_5b` is in long format, then convert it to
+**Note on 5d and 5e below:**
+```{r, echo=T, include=F}
+ans_5a<-fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
+ans_5b <- ans_5a[cnd %in% c('Delay', 'Long ITI', 'Short ITI'), .(t2c_mean = mean(t2c)), .(sub, cnd)]
+```
+
+```{r, echo=T, include=T}
+# First, after using `fread` to read the cav file into a
+# data.table (this step not shown here) you should end up
+# with the variable `ans_5b` that looks like this:
+ans_5b
+
+# It is clear from this that `ans_5b` is in `long` format.
+# This is because there is only one column that contains
+# measurements of a dependent variable. In this case, that
+# column is named `t2c_mean`.
+
+# To convert this long format data.table into a wide format
+# data.table, we use the `dcast` function:
+d_wide <- dcast(ans_5b, sub ~ cnd, value.var='t2c_mean')
+
+# The first argument we pass `dcast` is the data.table
+# object that we want to convert from long to wide. The
+# second argument that we pass is a `formula` that tells
+# `dcast` what columns you want to keep as indicator columns
+# (LHS side of the formula) and what columns you want to
+# break out into multiple wide format columns (RHS of the
+# formula).
+
+# So, did it all work out okay?
+d_wide
+
+# Well, sorta... what's with all those NAs? It turns out
+# that I should have been thinking more clearly when I wrote
+# this question. In particular, since there are different
+# number of subjects per condition, the resulting wide format
+# columns won't have the same number of rows, and that leads
+# awkwardness. The form of `d_wide` above is just about as good
+# as we can do. 
+
+# Q: How will the question be marked?
+
+# A: Everybody will get marks up pretty willy nilly on this
+# problem up until the last bit where you need to make a
+# plot. There, I will mark more normally.
+
+```
+
+~~**d.** If `ans_5b` is in long format, then convert it to
 wide format. If it is already wide format, then convert it
 to long format. Store your result in a variable named
 `ans_5d`. Please also be careful to not alter `ans_5b` in
-the process.
+the process.~~
 
-**e.** If `ans_5d` is in long format, then convert it to
+~~**e.** If `ans_5d` is in long format, then convert it to
 wide format. If it is already wide format, then convert it
 to long format. Store your result in a variable named
 `ans_5e`. Please also be careful to not alter `ans_5d` in
-the process.
+the process.~~
 
 **f.** Please recreate the following figure using `ans_5b`
 as the source of data being plotted. Store the result of
@@ -331,8 +383,9 @@ ans_4d
 ans_5a
 ans_5b
 ans_5c
-ans_5d
-ans_5e
+# ans_5d # my mistake here --- you don't need this. 
+# ans_5e # my mistake here --- you don't need this.
+ans_5f
 ```
 
 Finally, be sure that the file you submit to iLearn is a
