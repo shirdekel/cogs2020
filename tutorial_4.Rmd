@@ -25,14 +25,7 @@ knitr::opts_chunk$set(echo = T, collapse=T)
 * Get lots of hands-on practice with `R` and `data.table`
 and `ggplot`.
 
-* In particular, practice using the following functions:
-  * `ggplot()`
-  * `geom_point()`
-  * `geom_line()`
-  * `geom_bar()`
-  * `geom_hist()`
-  * `geom_violin()`
-  * `geom_boxplot()`
+* Do some almost real-world data wrangling. 
   
 ## Get some experiment data
 * If you haven't already participated in the following short
