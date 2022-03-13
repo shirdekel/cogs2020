@@ -162,3 +162,72 @@ in R.
   <code> d[ID == 'b', .(b_mean=mean(b), c_mean=mean(c)), .(ID)] </code>
   <code> d[ID != 'c', .(b_mean=mean(b), c_mean=mean(c)), .(ID)] </code>
 
+
+## quiz 3
+### 1
+Consider an experiment in which a coin is tossed three
+times. Let X be a random variable defined as the number of
+heads that were observed. Which of the following is not a
+possible outcome of the experiment.
+
+4
+3
+2
+1
+0
+
+
+### 2
+Consider an experiment in which a coin is tossed four times.
+Let X be a random variable defined as the number of heads
+that were observed. What is the expected value of X?
+
+0
+1
+2
+3
+4
+
+
+### 3
+Consider a random variable X with three possible outcomes
+{A, B, C}. Which of the following is a valid set of
+probabilities.
+
+P(A) = 0.1, P(B)=0.9, P(C)=0.1
+P(A) = 0.1, P(B)=0.8, P(C)=0.2
+P(A) = 0.2, P(B)=0.7, P(C)=0.2
+P(A) = 0.3, P(B)=0.6, P(C)=0.1
+
+
+### 4
+Which of the following statements about the distribution of
+sample means is true?
+
+The distribution of sample means is always smaller variance
+than the original sampling distribution.
+
+The distribution of sample means has the same central
+tendency as the original sampling distribution.
+
+The distribution of sample means is a symmetric distribution
+regardless of the shape of the original sampling
+distribution.
+
+The distribution of sample means is a continuous
+distribution even if the original sampling distribution is
+discrete.
+
+All of these statements are true.
+
+
+### 5
+Which of the following is a true statement?
+
+The sample mean is a random variable.
+
+The population mean is a random variable.
+
+Population parameters estimate sample statistics.
+
+All random variables are defined by the same population parameters.

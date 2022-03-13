@@ -1,0 +1,166 @@
+---
+title: "Tutorial 4 - Visualise data with `ggplot2`"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    # code_folding: show
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, collapse=T)
+```
+
+## Learning objectives
+
+* Get lots of hands-on practice with `R` and `data.table`
+and `ggplot`.
+
+* In particular, practice using the following functions:
+  * `ggplot()`
+  * `geom_point()`
+  * `geom_line()`
+  * `geom_bar()`
+  * `geom_hist()`
+  * `geom_violin()`
+  * `geom_boxplot()`
+  
+## Get some experiment data
+* If you haven't already participated in the following short
+demo experiment, please do so at the following address:
+`https://run.pavlovia.org/demos/stroop/`
+
+* Be sure to enter your name or some other ID that you will
+remember and can be easily searched for.
+
+* Download your data in a `.csv` file by taking the
+following steps:
+
+* Go here: `https://gitlab.pavlovia.org/demos/stroop`
+
+* Read about the experiment you just participated in by
+scrolling to the bottom and reading the `README.md` file.
+
+* Click the `data` folder to land at the following address:
+`https://gitlab.pavlovia.org/demos/stroop/tree/master/data`
+
+* In previous tutorials, I instructed you to find and
+download only your data. In this tutorial, please download a
+small batch of data (somewhere around 5 files should be
+plenty but you can download the whole lot if you like). It
+doesn't matter which files they are so long as they are
+`.csv` data files all with identical format.
+
+## Get ready to analyse your data
+* If you haven't done so already, create a new folder on
+your computer named `cogs2020`
+
+* Open Rstudio and click `File > New File > R Script`
+
+* In Rstudio click `File > Save`
+
+* In the prompt that comes up, name your file
+`tutorial_3_notes.R`, and save it in your `cogs2020` folder.
+
+* Move the batch `.csv` files you just downloaded into your
+`cogs2020` folder.
+
+
+## Analyse your data using `data.table` and `ggplot`
+* The big challenge that we will begin working on today is
+wrangling all of those individual `.csv` files into one big
+`data.table`. Do this is a critical step towards using `R`
+to do actual inferential statistics on data from real world
+experiments.
+
+```{r}
+# Load the `data.table` and `ggplot2` libraries and `rm` to
+# be sure your are starting with a clean work space.
+library(data.table)
+library(ggplot2)
+
+rm(list = ls())
+
+# Use the `list.files` function to save a list of file paths
+# corresponding to your just downloaded data files.
+file_list <- list.files('./data/stroop', full.names=T) 
+
+# create an empty list with as many elements as we have data
+# files
+d_list <- vector("list", length(file_list))
+
+# iterate through our list of data files and read each into
+# a data.table, which we then store in d_list
+for(i in 1:length(file_list)) {
+  z <- fread(file_list[[i]])
+  z[, subject := i]
+  d_list[[i]] <- z
+}
+
+# bind our list of data.tables into one big data.table
+d <- rbindlist(d_list)
+```
+
+* As we saw last week, the data from each `data.table` that
+we loaded above contains a row for every trial completed.
+The relevant columns are as follows:
+
+  * `text`: indicates the presented stimulus text
+  * `letterColor`: indicates the presented stimulus colour
+  * `congruent`: indicates whether the stimulus colour
+  matched the stimulus text
+  * `corrAns`: indicates whether or not the response was correct
+  * `resp.keys` indicates the response made
+  * `resp.rt`: indicates the response time
+  
+* But now, since we concatenated a list of many `data.table`
+objects into one large `data.table`, we have an extra column
+(that we added manually).
+
+  * `subject` is a column that indicates which subject /
+  `data.table` the rows in our big `data.table` correspond
+  to.
+  
+* We next inspect our data following last tutorial very
+closely. The main difference now is that we can look at the
+average over our multiple subjects / data files.
+
+```{r}
+d[, .(text, letterColor, congruent, corrAns, resp.keys, resp.rt, subject)]
+```
+
+* The classic Stroop finding is that people are slower and
+less accurate on incongruent trials (i.e., trials on which
+stimulus text and stimulus colour do not match) than they
+are on congruent trials. Lets see if our data pan out that way.
+
+```{r}
+# first create a column to indicate response accuracy
+d[, acc := corrAns == resp.keys]
+
+# report what your overall accuracy and rt was grouped by
+# subject and grouped by congruent
+dd <- d[, 
+        .(acc_mean = mean(acc), rt_mean = mean(resp.rt)), 
+        .(subject, congruent)]
+
+# inspect reaction time 
+ggplot(dd, aes(x=factor(congruent), y=rt_mean)) + 
+  geom_violin() +
+  geom_point()
+```
+
+* Visualise this data in as many other ways as you can. Try
+to use all the function listed in the learning objectives.
+
+## Work on problem set 4
+* [Problem set 4](homework_4.html)

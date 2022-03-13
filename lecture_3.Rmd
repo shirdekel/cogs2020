@@ -18,7 +18,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=FALSE, message=F}
+```{r setup, include=F, message=F}
 knitr::opts_chunk$set(echo = T, collapse=T)
 ```
 
@@ -48,9 +48,6 @@ population parameter.
 * Understand how to use esample statistics to generate point
 estimates and interval estimates for **population mean** and
 **population variance** parameters.
-
-<!-- * Understand the **distribution of sample means** and how it -->
-<!-- depends on sample size. -->
 
 * Understand how to convert a `data.table` from **wide
 format** to **long format** and vice versa.
@@ -224,11 +221,11 @@ $$
 The true central tendency of $X$ is given by the
 **population mean** which is denoted by $\mu$ and is defined
 by an operation called the **expected value** of $X$ denoted
-$E(X)$:
+$\mathbb{E}\big[X\big]$:
 
 $$
 \begin{align}
-E(\boldsymbol{X}) &= \mu \\
+\mathbb{E}\big[\boldsymbol{X}\big] &= \mu \\
      &= x_1 p(x_1) + x_2 p(x_2) + \ldots + x_n p(x_n) \\
      &= \sum_{i}^{n} x_i p(x_i)\\
 \end{align}
@@ -269,8 +266,8 @@ variance** which is denoted by $\sigma^2$ and is defined
 as follows:
 $$
 \begin{align} 
-Var(\boldsymbol{X}) &= \sigma^2 \\
-       &= E((X - \mu)^2) \\
+\mathbb{Var}\big[\boldsymbol{X}\big] &= \sigma^2 \\
+       &= \mathbb{E}\big[(X - \mu)^2\big] \\
        &= \sum(x^2 - 2x\mu + \mu^2) p(x) \\
        &= \sum x^2 p(x) - \sum 2 x \mu p(x) + \sum \mu^2 p(x) \\
        &= \sum x^2 p(x) - 2 \mu \sum x p(x) + \mu^2 \sum p(x) \\
@@ -322,7 +319,7 @@ as follows:
 
 $$
 \begin{align}
-\mu &= E(\boldsymbol{X}) \\
+\mu &= \mathbb{E}\big[\boldsymbol{X}\big] \\
     &= \sum_{i}^{n} x_i p(x_i) \\
     &= (1 \times 0.1) + (2.0 \times 0.4) + (3.0 \times 0.5) \\
     &= 2.4
@@ -412,7 +409,8 @@ discrete.
 discrete sums (i.e., $\sum x$) with continuous integrals
 (i.e., $\int x dx$).
 
-:::: {style="display: flex;"}
+<!-- :::: {style="display: flex;"} -->
+:::: {style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px"}
 
 ::: {}
 #### Continuous $X$ mean
@@ -420,9 +418,8 @@ $$
 \begin{align}
 \bar{\boldsymbol{x}} &= \frac{1}{n} \sum_{i=1}^{n} x_{i} 
 \\
-E(\boldsymbol{X}) &= \mu \\
-     &= x_1 p(x_1) + x_2 p(x_2) + \ldots + x_n p(x_n) \\
-     &= \sum_{i}^{n} x_i p(x_i)\\
+\mathbb{E}\big[\boldsymbol{X}\big] &= \mu \\
+     &= \int x f(x) dx \\
 \\
 \hat{\mu} &= \bar{\boldsymbol{x}}
 \end{align}
@@ -435,13 +432,13 @@ $$
 \begin{align} 
 \boldsymbol{s}^2 &= \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{\boldsymbol{x}})^2 
 \\
-Var(\boldsymbol{X}) &= \sigma^2 \\
-       &= E((X - \mu)^2) \\
-       &= \sum(x^2 - 2x\mu + \mu^2) p(x) \\
-       &= \sum x^2 p(x) - \sum 2 x \mu p(x) + \sum \mu^2 p(x) \\
-       &= \sum x^2 p(x) - 2 \mu \sum x p(x) + \mu^2 \sum p(x) \\
-       &= \sum x^2 p(x) - 2 \mu^2 + \mu^2 \\
-       &= \left(\sum_i x_{i}^2 p(x_{i})\right) - \mu^2
+\mathbb{Var}\big[\boldsymbol{X}\big] &= \sigma^2 \\
+       &= \mathbb{E}\big[(X - \mu)^2\big] \\
+       &= \int(x^2 - 2x\mu + \mu^2) f(x) dx \\
+       &= \int x^2 f(x) dx - \int 2 x \mu f(x) dx + \int \mu^2 f(x) dx \\
+       &= \int x^2 f(x) dx - 2 \mu \int x f(x) dx + \mu^2 \int f(x) dx \\
+       &= \int x^2 f(x) dx - 2 \mu^2 + \mu^2 \\
+       &= \left(\int x^2 fx \right) - \mu^2
 \\       
 \hat{\sigma^2} &= \boldsymbol{s}^2 
 \\
@@ -702,115 +699,3 @@ ggplot(data=d, aes(x=x, y=y))+
   geom_line() +
   ylab('sin(x)')
 ```
-
-
-
-
-<!-- ## Distribution of sample means -->
-
-<!-- In the previous section, we saw that every time we sampled -->
-<!-- from a Binomial random variable: -->
-
-<!-- (1) We got a sample mean $\bar{\boldsymbol{x}}$ that was -->
-<!-- close to the population mean $\mu$, but didn't match it -->
-<!-- exactly unless by dumb luck. -->
-
-<!-- (2) Every sample from $X$ lead to a different value for -->
-<!-- $\bar{\boldsymbol{x}}$. -->
-
-<!-- (3) We concluded that $\bar{\boldsymbol{x}}$ must itself be -->
-<!-- a random variable. -->
-
-<!-- Moving forward, we will denote the random variable -->
-<!-- corresponding to the distribution of sample means with the -->
-<!-- symbol $\bar{X}$, and continue to use $\bar{\boldsymbol{x}}$ -->
-<!-- to refer to a particular sample mean. -->
-
-<!-- $$ -->
-<!-- \begin{align} -->
-<!-- X & \rightarrow \{x_{1}, \ldots, x_{n}\} \\ -->
-<!-- \\ -->
-<!-- \bar{X} & \rightarrow \frac{1}{n} \{ x_{1} + \ldots + x_{n} \} -->
-<!-- \end{align} -->
-<!-- $$ -->
-
-<!-- * Notice that $n>1$ samples from $X$ are needed to generate -->
-<!-- a single $n=1$ sample from $\bar{X}$. -->
-
-<!-- * This means that in order to estimate the distribution of -->
-<!-- sample means, we need to draw $n>1$ samples from $X$ many -->
-<!-- times. -->
-
-<!-- If perform an experiment in which we draw $n=10$ samples -->
-<!-- from $X$, compute the sample mean $\bar{x}$, and repeat 500 -->
-<!-- times, then we get the following estimate for the -->
-<!-- distribution of sample means: -->
-
-<!-- ```{r, echo=F, message=F, warning=F} -->
-<!-- num_experiments <- 500 -->
-<!-- n <- 10 -->
-
-<!-- ## Draw random samples from X (defined in previous toy -->
-<!-- ## example) in many different experiments in order to -->
-<!-- ## estimate the distribution of sample means -->
-<!-- d_list <- vector("list", num_experiments)  -->
-<!-- for(i in 1:num_experiments) { -->
-<!--   xbar <- mean(rexdist(n))  -->
-<!--   d_list[[i]] <- data.table(xbar=xbar, exp=i) -->
-<!-- } -->
-
-<!-- d <- rbindlist(d_list) -->
-
-<!-- ggplot(d, aes(xbar)) + -->
-<!--     geom_histogram(bins=10) + -->
-<!--     theme(aspect.ratio=1) -->
-<!-- ``` -->
-
-<!-- Note that even though $X$ is discrete, $\bar{X}$ is -->
-<!-- continuous. Also note that $\bar{X}$ looks bell-shaped even -->
-<!-- though $X$ does not. This is because of something called the -->
-<!-- *central limit theorem*. We cover this in a later lecture. -->
-
-<!-- It turns out that $\bar{X}$ depends on `n` --- where $n$ is -->
-<!-- the sample size drawn from $X$ --- in a very important way. -->
-<!-- In particular, the population variance of the distribution -->
-<!-- of sample means $\sigma_{\bar{X}}^2$ decreases as $n$ -->
-<!-- increases. -->
-
-<!-- The following plots show the estimated distribution of -->
-<!-- sample means for $n=10$, $n=20$, and $n=30$. -->
-
-<!-- ```{r, echo=F, message=F, warning=F} -->
-<!-- num_experiments <- 500 -->
-<!-- n <- c(10, 20, 30) -->
-
-<!-- d_list <- vector("list", num_experiments * 3)  -->
-<!-- for(j in 1:length(n)) { -->
-<!--   for(i in 1:num_experiments) { -->
-<!--     xbar <- mean(rexdist(n[j]))  -->
-<!--     d_list[[i + num_experiments * (j-1)]] <- data.table(xbar=xbar, exp=i, n=n[j]) -->
-<!--   } -->
-<!-- } -->
-
-<!-- d <- rbindlist(d_list) -->
-
-<!-- g1 <- ggplot(d[n==10], aes(xbar)) +  -->
-<!--   geom_histogram(bins=10) + -->
-<!--   xlim(1.5, 3.5) + -->
-<!--   ggtitle('n=10') + -->
-<!--   theme(aspect.ratio=1) -->
-<!-- g2 <- ggplot(d[n==20], aes(xbar)) +  -->
-<!--   geom_histogram(bins=10) + -->
-<!--   xlim(1.5, 3.5) + -->
-<!--   ggtitle('n=20') + -->
-<!--   theme(aspect.ratio=1) -->
-<!-- g3 <- ggplot(d[n==30], aes(xbar)) +  -->
-<!--   geom_histogram(bins=10) + -->
-<!--   xlim(1.5, 3.5) + -->
-<!--   ggtitle('n=30') + -->
-<!--   theme(aspect.ratio=1) -->
-<!-- library(gridExtra) -->
-<!-- grid.arrange(g1, g2, g3, ncol=3) -->
-
-<!-- ``` -->
-

@@ -18,28 +18,53 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=F, message=F}
+knitr::opts_chunk$set(echo = T, collapse=T)
 ```
 
 
 ## Learning objectives
 
-* Define and understand Bernoulli random variables.
+* Define and understand **Bernoulli** random variables.
 
-* Define and understand Binomial random variables.
+* Define and understand **Binomial** random variables.
 
-* Define and understand Normal random variables.
+* Define and understand **Normal** random variables.
 
-* Understand how, in principle, to compute expected values
-from continuous and discrete random variables.
+* Understand how, in principle, to **compute expected
+values** from continuous and discrete random variables.
+
+* Define and understand **probability distributions**
+including **probability mass functions**, and **probability
+density functions**, **cumulative probability functions**
+and **quantile functions**.
 
 * Be able to read simple expected values and probabilities
 from probability mass and density functions, and cumulative
 distribution functions.
 
-* Use `R` functions to compute probabilities from binomial
+* Understand the **central limit theorem** and the
+**distribution of sample means** and how it depends on
+sample size.
+
+* Use `R` functions to obtain useful things about binomial
 and normal distributions.
+
+  * `dbinom`
+  
+  * `pbinom`
+  
+  * `qbinom`
+  
+  * `rbinom`
+  
+  * `dnorm`
+  
+  * `pnorm`
+  
+  * `qnorm`
+  
+  * `rnorm`
 
 ## Bernoulli random variable
 
@@ -315,84 +340,84 @@ ggplot(d, aes(x=x, y=p_norm)) +
 
 ```
 
-## Central tendency
+<!-- ## Central tendency -->
 
-We have previously seen that central tendency is given by
-the expected value of a random variable, and that for a
-discrete a random variable, expected value is given by the
-following equation:
+<!-- We have previously seen that central tendency is given by -->
+<!-- the expected value of a random variable, and that for a -->
+<!-- discrete a random variable, expected value is given by the -->
+<!-- following equation: -->
 
-\begin{align}
-E(X) &= \mu \\
-     &= x_1 p(x_1) + x_2 p(x_2) + \ldots + x_n p(x_n) \\
-     &= \sum_{i}^{n} x_i p(x_i)
-\end{align}
+<!-- \begin{align} -->
+<!-- \mathbb{E}\big[X\big] &= \mu \\ -->
+<!--      &= x_1 p(x_1) + x_2 p(x_2) + \ldots + x_n p(x_n) \\ -->
+<!--      &= \sum_{i}^{n} x_i p(x_i) -->
+<!-- \end{align} -->
 
-When dealing with continuous random variables, this equation
-becomes the following:
+<!-- When dealing with continuous random variables, this equation -->
+<!-- becomes the following: -->
 
-\begin{align}
-E(X) &= \mu \\
-     &= \int_{a}^{b} f(x) dx
-\end{align}
+<!-- \begin{align} -->
+<!-- \mathbb{E}\big[X\big] &= \mu \\ -->
+<!--      &= \int_{a}^{b} f(x) dx -->
+<!-- \end{align} -->
 
-where the possible outcomes of the random variable $X$ are
-continuous in the interval $[a, b]$, and $f(x)$ is the pdf
-of $X.
+<!-- where the possible outcomes of the random variable $X$ are -->
+<!-- continuous in the interval $[a, b]$, and $f(x)$ is the pdf -->
+<!-- of $X$. -->
 
-For a normal distribution, this becomes
+<!-- For a normal distribution, this becomes -->
 
-\begin{align}
-E(X) &= \mu \\
-     &= \int_{-\infty}^{\infty} f(x) dx
-\end{align}
+<!-- \begin{align} -->
+<!-- \mathbb{E}\big[X\big] &= \mu \\ -->
+<!--      &= \int_{-\infty}^{\infty} f(x) dx -->
+<!-- \end{align} -->
 
-because the possible outcomes of a random variable with a
-normal distribution are continuous in the interval
-$[-\infty, \infty]$.
+<!-- because the possible outcomes of a random variable with a -->
+<!-- normal distribution are continuous in the interval -->
+<!-- $[-\infty, \infty]$. -->
 
-## Population spread
+<!-- ## Population spread -->
 
-We saw that for discrete random variables, population
-variance is defined as the expected squared deviation from
-the mean, as given by the following equation:
+<!-- We saw that for discrete random variables, population -->
+<!-- variance is defined as the expected squared deviation from -->
+<!-- the mean, as given by the following equation: -->
 
-\begin{align}
-Var(X) &= \sigma^2 \\
-       &= E((X - \mu)^2) \\
-       &= \sum_i x_{i}^2 p(X=x_{i}) - \mu^2
-\end{align}
+<!-- \begin{align} -->
+<!-- \mathbb{Var}\big[X\big] &= \sigma^2 \\ -->
+<!--        &= E((X - \mu)^2) \\ -->
+<!--        &= \sum_i x_{i}^2 p(X=x_{i}) - \mu^2 -->
+<!-- \end{align} -->
 
-For continuous random variables, this equation becomes the
-following:
+<!-- For continuous random variables, this equation becomes the -->
+<!-- following: -->
 
-\begin{align}
-Var(X) &= \sigma^2 \\
-       &= E((X - \mu)^2) \\
-       &= \int_{a}^{b} (x - \mu)^2 f(x) dx
-\end{align}
+<!-- \begin{align} -->
+<!-- \mathbb{Var}\big[X\big] &= \sigma^2 \\ -->
+<!--        &= E((X - \mu)^2) \\ -->
+<!--        &= \int_{a}^{b} (x - \mu)^2 f(x) dx -->
+<!-- \end{align} -->
 
-For a normal distribution, this becomes:
+<!-- For a normal distribution, this becomes: -->
 
-\begin{align}
-Var(X) &= \sigma^2 \\
-       &= E((X - \mu)^2) \\
-       &= \int_{-\infty}^{\infty} (x - \mu)^2 f(x) dx
-\end{align}
+<!-- \begin{align} -->
+<!-- \mathbb{Var}\big[X\big] &= \sigma^2 \\ -->
+<!--        &= E((X - \mu)^2) \\ -->
+<!--        &= \int_{-\infty}^{\infty} (x - \mu)^2 f(x) dx -->
+<!-- \end{align} -->
 
-because the possible outcomes of a random variable with a
-normal distribution are continuous in the interval
-$[-\infty, \infty]$.
+<!-- because the possible outcomes of a random variable with a -->
+<!-- normal distribution are continuous in the interval -->
+<!-- $[-\infty, \infty]$. -->
 
 
-<div style="color:#990000">
-**Computing expect values (e.g., population means and
-population variances) from continuous random variables
-required the evauluation of integrals. I won't expect that
-you do that in this course. Rather, it is important that you
-understand how to estimate these things from plots.**
-<br></br>
-</div>
+<!-- <div style="color:#990000"> -->
+<!-- **Computing expect values (e.g., population means and -->
+<!-- population variances) from continuous random variables -->
+<!-- required the evauluation of integrals. I won't expect that -->
+<!-- you do that in this course. Rather, it is important that you -->
+<!-- understand how to estimate these things from plots.** -->
+<!-- <br></br> -->
+<!-- </div> -->
 
 ## Computing Probabilities
 
@@ -877,6 +902,287 @@ p
 
 </div>
 
+
+## Distribution of sample means
+
+* Every time we draw a sample from any random variable, we
+can compute the sample mean of that sample.
+
+* In general, if we repeat that procedure many times, we
+will see that every time we draw a sample, we get different
+outcomes and therefore different sample means.
+
+* This means that the sample mean is itself a random
+variable (i.e., because every time you measure it you get a
+different number).
+
+* Lets examine this by considering samples from the Binomial
+random variable with distribution shown in the left column
+of the following, and samples from the Normal random
+variable with distribution shown on the right.
+
+* More precisely, consider the following:
+
+:::: {style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px"}
+
+::: {}
+$X \sim \mathcal{Binomial}(n=10, p=0.5)$
+```{r, echo=F, include=T}
+n <- 10
+p <- 0.5
+
+x <- 1:n
+fx <- dbinom(x, n, p)
+
+dx <- data.table(x, fx)
+
+ggplot(dx, aes(x, fx)) + 
+  geom_segment(aes(x=x, xend=x, y=0, yend=fx)) +
+  scale_x_continuous(breaks=1:10)
+```
+
+```{r echo=F, include=T}
+n <- 10
+p <- 0.5
+
+sample_1 <- rbinom(10, n, p)
+sample_2 <- rbinom(10, n, p)
+sample_3 <- rbinom(10, n, p)
+
+d_binom <- data.table(sample_1, 
+                      sample_2, 
+                      sample_3)
+
+d_binom <- melt(d_binom, 
+                measure.vars=c('sample_1', 
+                               'sample_2', 
+                               'sample_3'),
+                variable.name='sample_number',
+                value.name='sample_outcome')
+
+d_binom[, 
+         sample_mean := mean(sample_outcome), 
+        .(sample_number)]
+
+d_binom
+```
+:::
+
+::: {}
+$Y \sim \mathcal{N}({\mu=5, \sigma=2.5})$
+```{r, echo=F, include=T}
+mu <- n*p
+sig <- n*p*(1-p)
+
+y <- seq(mu-3*sig, mu+3*sig, 0.1)
+fy <- dnorm(y, mu, sig)
+
+dy <- data.table(y, fy)
+
+ggplot(dy, aes(y, fy)) +
+  geom_line()
+```
+
+```{r echo=F, include=T}
+mu <- 5
+sig <- 2.5
+
+sample_1 <- rnorm(10, mu, sig)
+sample_2 <- rnorm(10, mu, sig)
+sample_3 <- rnorm(10, mu, sig)
+
+d_norm <- data.table(sample_1, 
+                     sample_2, 
+                     sample_3)
+
+d_norm <- melt(d_norm, 
+               measure.vars=c('sample_1', 
+                              'sample_2', 
+                              'sample_3'),
+               variable.name='sample_number',
+               value.name='sample_outcome')
+
+d_norm[, 
+       sample_mean := mean(sample_outcome), 
+       .(sample_number)]
+
+d_norm
+```
+
+:::
+
+::::
+
+<!-- <div style="color:#990000"> -->
+<!-- **Make sure you understand the code in the above chunks. It -->
+<!-- isn't easy, but it is stuff that you are expected to learn -->
+<!-- to be able to do on your own quickly and smoothly.** -->
+<!-- <br></br> -->
+<!-- </div> -->
+
+We see that every time we sample from either random
+variable:
+
+(1) We get a sample mean $\bar{\boldsymbol{x}}$ that is
+close to the population mean $\mu$, but doesn't match it
+exactly unless by dumb luck.
+
+(2) Every sample from $X$ leads to a different value for
+$\bar{\boldsymbol{x}}$.
+
+(3) Thus, we have verified that $\bar{\boldsymbol{x}}$ must
+itself be a random variable.
+
+Moving forward, we will denote the random variable
+corresponding to the distribution of sample means with the
+symbol $\bar{X}$, and continue to use $\bar{\boldsymbol{x}}$
+to refer to a particular sample mean.
+
+$$
+\begin{align}
+X & \rightarrow \{x_{1}, \ldots, x_{n}\} \\
+\\
+\bar{X} & \rightarrow \frac{1}{n} \{ x_{1} + \ldots + x_{n} \}
+\end{align}
+$$
+
+* Notice that $n>1$ samples from $X$ are needed to generate
+a single $n=1$ sample from $\bar{X}$.
+
+* This means that in order to estimate the distribution of
+sample means, we need to draw $n>1$ samples from $X$ many
+times.
+
+If we perform an experiment in which we draw $n=10$ samples
+from $X$ or from $Y$, compute the sample means for each
+($\bar{x}$ and $\bar{y}$), and repeat 500 times, then we get
+the following estimate for the distribution of sample means:
+
+:::: {style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px"}
+
+::: {}
+```{r, echo=F, }
+num_experiments <- 500
+n <- 10
+d_list <- vector("list", num_experiments)
+for(i in 1:num_experiments) {
+  xbar <- mean(rbinom(n, n, p))
+  d_list[[i]] <- data.table(xbar=xbar, exp=i)
+}
+dxbar <- rbindlist(d_list)
+dx <- data.table(x=rbinom(num_experiments, n, p)) 
+ggplot(dxbar, aes(xbar)) +
+    geom_histogram(bins=10)
+```
+:::
+
+::: {}
+```{r, echo=F}
+num_experiments <- 500
+n <- 10
+d_list <- vector("list", num_experiments)
+for(i in 1:num_experiments) {
+  ybar <- mean(rnorm(n, mu, sig))
+  d_list[[i]] <- data.table(ybar=ybar, exp=i)
+}
+dybar <- rbindlist(d_list)
+dy <- data.table(y=rnorm(num_experiments, mu, sig)) 
+ggplot(dybar, aes(ybar)) +
+    geom_histogram(bins=10)
+```
+:::
+
+::::
+
+Note that even though $X$ is discrete, $\bar{X}$ is
+continuous. We also note that both $\bar{X}$ and $\bar{Y}$
+look bell-shaped. This is because of something called the
+*central limit theorem*. Before we say more about this very
+important theorem, lets investigate how the original
+distributions ($X$ and $Y$) compare to their corresponding
+distributions of sample means ($\bar{X}$ and $\bar{Y}$) in
+terms of central tendancy and spread.
+
+:::: {style="display: grid; grid-template-columns: 1fr 1fr; grid-column-gap: 10px"}
+
+::: {}
+```{r, echo=F, }
+ggplot() +
+  geom_histogram(data=dx, aes(x, fill='red'), bins=10, alpha=0.5) +
+  geom_histogram(data=dxbar, aes(xbar, fill='blue'), bins=10, alpha=0.5) +
+  scale_x_continuous(breaks=1:10) +
+  theme(legend.position="None")
+```
+:::
+
+::: {}
+```{r, echo=F}
+ggplot() +
+    geom_histogram(data=dy, aes(y, fill='red'), bins=10, alpha=0.5) +
+    geom_histogram(data=dybar, aes(ybar, fill='blue'), bins=10, alpha=0.5) +
+    scale_x_continuous(breaks=1:10) +
+    theme(legend.position="None")
+```
+:::
+
+:::: 
+
+We can see a few important things from these plots:
+
+* The central tendancy (i.e., mean) of the distribution of
+sample means $\bar{X}$ looks to be about the same as that
+for the original distribution $X$.
+
+* The spread of the distribution of sample means $\bar{X}$
+looks to be smaller than that for the original distribution
+$X$.
+
+The central limit theorem helps us formalise both of these
+observations.
+
+<!-- It seems that $\bar{X}$ depends on `n` --- where $n$ is -->
+<!-- the sample size drawn from $X$ --- in a very important way. -->
+<!-- In particular, the population variance of the distribution -->
+<!-- of sample means $\sigma_{\bar{X}}^2$ decreases as $n$ -->
+<!-- increases. -->
+
+<!-- The following plots show the estimated distribution of -->
+<!-- sample means for $n=10$, $n=20$, and $n=30$. -->
+
+```{r, echo=F, message=F, warning=F}
+# num_experiments <- 500
+# n <- c(10, 20, 30)
+# 
+# d_list <- vector("list", num_experiments * 3)
+# for(j in 1:length(n)) {
+#   for(i in 1:num_experiments) {
+#     xbar <- mean(rexdist(n[j]))
+#     d_list[[i + num_experiments * (j-1)]] <- data.table(xbar=xbar, exp=i, n=n[j])
+#   }
+# }
+# 
+# d <- rbindlist(d_list)
+# 
+# g1 <- ggplot(d[n==10], aes(xbar)) +
+#   geom_histogram(bins=10) +
+#   xlim(1.5, 3.5) +
+#   ggtitle('n=10') +
+#   theme(aspect.ratio=1)
+# g2 <- ggplot(d[n==20], aes(xbar)) +
+#   geom_histogram(bins=10) +
+#   xlim(1.5, 3.5) +
+#   ggtitle('n=20') +
+#   theme(aspect.ratio=1)
+# g3 <- ggplot(d[n==30], aes(xbar)) +
+#   geom_histogram(bins=10) +
+#   xlim(1.5, 3.5) +
+#   ggtitle('n=30') +
+#   theme(aspect.ratio=1)
+# library(gridExtra)
+# grid.arrange(g1, g2, g3, ncol=3)
+```
+
+
 ## Central limit theorem
 
 The **central limit theorem** tells us that the sum of independent and
@@ -892,14 +1198,13 @@ $\boldsymbol{X}_i \sim \boldsymbol{D}$
 
 where $\boldsymbol{D}$ can have any distribution whatsoever. Then,
 
-$\boldsymbol{Y} \sim N(\mu_{Y}, \sigma_{y}^2)$
-
-where $N$ stands for a *Normal* distribution.
+$\boldsymbol{Y} \sim \mathcal{N}(\mu_{Y}, \sigma_{y}^2)$
 
 ### Central limit theorem mean and variance
 
-One way to see where the mean and variance parameters come from in the central
-limit theorem is by using the rule I gave you in Homework 2:
+One way to see where the mean and variance parameters come
+from in the central limit theorem is to use the following
+rule:
 
 Let 
 
@@ -907,13 +1212,12 @@ $Y \sim a X + b$
 
 Then:
 
-$E(Y) = a E(X) + E(b)$
+$\mathbb{E}\big[Y\big] = a \mathbb{E}\big[X\big] + E(b)$
 
-$Var(Y) = (a^2) E(X)$
+$\mathbb{Var}\big[Y\big] = (a^2) \mathbb{Var}\big[X\big]$
 
 
 ### Applied to the distribution of sample sums
-
 \begin{align}
 
 \boldsymbol{Y} &= \boldsymbol{X}_1 + \boldsymbol{X}_2 + \dots + \boldsymbol{X}_n \\

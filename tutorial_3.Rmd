@@ -1,5 +1,5 @@
 ---
-title: "Tutorial 3 - VIsualise data with `ggplot2`"
+title: "Tutorial 3 - Visualise data with `ggplot2`"
 author: "Author: Matthew J. Cossley"
 date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -34,7 +34,7 @@ and `ggplot`.
   * `geom_violin()`
   * `geom_boxplot()`
   
-## do the following tutorials
+## Do the following tutorials
 * [Intro](https://tutorials.shinyapps.io/02-Vis-Basics/)
 
 * [Bar charts](https://rstudio.cloud/learn/primers/3.2)
@@ -54,6 +54,9 @@ and `ggplot`.
 
 * [Customize](https://rstudio.cloud/learn/primers/3.8)
   * Sections: Labels and Themes
+  
+* Finally, a nice ggplot cheat sheet can be downloaded
+[here](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf)
 
 Please note that you may encounter some non-`data.table`
 code here and there in these tutorials. Please do your best
