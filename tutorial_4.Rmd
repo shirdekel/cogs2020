@@ -1,5 +1,5 @@
 ---
-title: "Tutorial 4 - Visualise data with `ggplot2`"
+title: "Tutorial 4 - Data Wrangle"
 author: "Author: Matthew J. Cossley"
 date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 output:
