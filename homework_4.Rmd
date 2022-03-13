@@ -646,12 +646,14 @@ ggplot(d, aes(x)) +
 
 **(b)** What happens to the variance of the distribution of
 sample means as $n$ increases?
+
 * `ans_4b <- "Stays the same"`
 * `ans_4b <- "Increases"`
 * `ans_4b <- "Decreases"`
 
 **(c)** What happens to the skew of the distribution of
 sample means as $n$ increases?
+
 * `ans_4c <- "Stays the same"`
 * `ans_4c <- "Increases"`
 * `ans_4c <- "Decreases"`
