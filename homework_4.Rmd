@@ -202,6 +202,10 @@ gy <- ggplot(d, aes(y, fy)) +
 ggarrange(gx, gy, ncol=2)
 ```
 
+For all of the following use built-in `R` functions to
+compute the requested quantities. The functions are covered
+in the lecture notes this week.
+
 **(a)** Compute $P(X > 17)$ and store it in a variable
 named `ans_2a`.
 
@@ -612,7 +616,7 @@ the following:
 We next estimate the distribution of sample means as a
 function of the number of samples `n` that were drawn per
 experiment. We will perform 6 experiments in which we draw
-2, 10, 20, 30, 50, and 100 samples from $X$ (each of these
+2, 5, 10, 15, 30, and 50 samples from $X$ (each of these
 numbers corresponds to one experiment). Each of these
 experiments, if performed once, will give us one sample
 mean. To examine the distribution of sample means, we repeat
