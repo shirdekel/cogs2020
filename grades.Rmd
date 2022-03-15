@@ -42,11 +42,11 @@ sid <- 314159
 # HW 1
 d1 <- fread('https://crossley.github.io/cogs2020/grades/hw_1_table.csv')
 d1[student_id == sid]
-```
 
-# HW 2
+#  HW 2
 d2 <- fread('https://crossley.github.io/cogs2020/grades/hw_2_table.csv')
 d2[student_id == sid]
+```
 
 <!-- # HW 3 -->
 <!-- d3 <- fread('https://crossley.github.io/cogs2020/grades/hw_3_table.csv') -->
