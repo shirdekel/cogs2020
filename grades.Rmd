@@ -44,9 +44,9 @@ d1 <- fread('https://crossley.github.io/cogs2020/grades/hw_1_table.csv')
 d1[student_id == sid]
 ```
 
-<!-- # HW 2 -->
-<!-- d2 <- fread('https://crossley.github.io/cogs2020/grades/hw_2_table.csv') -->
-<!-- d2[student_id == sid] -->
+# HW 2
+d2 <- fread('https://crossley.github.io/cogs2020/grades/hw_2_table.csv')
+d2[student_id == sid]
 
 <!-- # HW 3 -->
 <!-- d3 <- fread('https://crossley.github.io/cogs2020/grades/hw_3_table.csv') -->
@@ -229,28 +229,28 @@ ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
   ylab('Proportion Correct')
 ```
 
-<!-- ## Homework 2 Grades -->
-<!-- ```{r, fig.width=10} -->
-<!-- library(data.table) -->
-<!-- library(ggplot2) -->
+## Homework 2 Grades
+```{r, fig.width=10}
+library(data.table)
+library(ggplot2)
 
-<!-- rm(list=ls()) -->
+rm(list=ls())
 
-<!-- d <- fread('https://crossley.github.io/cogs2020/grades/hw_2_table.csv') -->
+d <- fread('https://crossley.github.io/cogs2020/grades/hw_2_table.csv')
 
-<!-- dd <- d[, .(score = unique(score)), .(student_id)] -->
-<!-- ggplot(dd, aes(score)) + -->
-<!--   geom_histogram(bins=10) -->
+dd <- d[, .(score = unique(score)), .(student_id)]
+ggplot(dd, aes(score)) +
+  geom_histogram(bins=10)
 
-<!-- dd <- d[, .(ans_mean = mean(ans=="correct"), -->
-<!--             ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)] -->
-<!-- ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) + -->
-<!--   geom_pointrange(aes(x=ans_labels, -->
-<!--                       ymin=ans_mean-ans_err, -->
-<!--                       ymax=ans_mean+ans_err)) + -->
-<!--   xlab('Problem Number') + -->
-<!--   ylab('Proportion Correct') -->
-<!-- ``` -->
+dd <- d[, .(ans_mean = mean(ans=="correct"),
+            ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
+ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
+  geom_pointrange(aes(x=ans_labels,
+                      ymin=ans_mean-ans_err,
+                      ymax=ans_mean+ans_err)) +
+  xlab('Problem Number') +
+  ylab('Proportion Correct')
+```
 
 
 <!-- ## Homework 3 Grades -->
