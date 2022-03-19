@@ -1,0 +1,2 @@
+﻿resp.keys,resp.corr,resp.rt,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,text,letterColor,corrAns,congruent,participant,session,date,expName,psychopyVersion,OS,frameRate
+right,0,2.3619,0,0,0,1,1,red,green,down,0,1,001,2022-02-28_02h37.53.855,stroop,2021.2.3,MacIntel,120.0048002

@@ -1,0 +1,14 @@
+﻿resp.keys,resp.corr,resp.rt,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,text,letterColor,corrAns,congruent,participant,session,date,expName,psychopyVersion,OS,frameRate
+left,0,5.0161,0,0,0,3,1,green,blue,right,0,33,001,2022-02-28_15h40.29.726,stroop,2021.2.3,Win32,60.13590715
+down,1,3.2932,0,1,1,1,1,red,green,down,0,33,001,2022-02-28_15h40.29.726,stroop,2021.2.3,Win32,60.13590715
+right,0,0.8187,0,2,2,0,1,red,red,left,1,33,001,2022-02-28_15h40.29.726,stroop,2021.2.3,Win32,60.13590715
+down,0,0.5598,0,3,3,4,1,blue,blue,right,1,33,001,2022-02-28_15h40.29.726,stroop,2021.2.3,Win32,60.13590715
+left,1,0.843,0,4,4,5,1,blue,red,left,0,33,001,2022-02-28_15h40.29.726,stroop,2021.2.3,Win32,60.13590715
+left,0,0.3021,0,5,5,2,1,green,green,down,1,33,001,2022-02-28_15h40.29.726,stroop,2021.2.3,Win32,60.13590715
+left,0,0.3033,1,0,6,2,1,green,green,down,1,33,001,2022-02-28_15h40.29.726,stroop,2021.2.3,Win32,60.13590715
+left,0,0.3563,1,1,7,3,1,green,blue,right,0,33,001,2022-02-28_15h40.29.726,stroop,2021.2.3,Win32,60.13590715
+right,1,0.3271,1,2,8,4,1,blue,blue,right,1,33,001,2022-02-28_15h40.29.726,stroop,2021.2.3,Win32,60.13590715
+down,0,0.3352,1,3,9,5,1,blue,red,left,0,33,001,2022-02-28_15h40.29.726,stroop,2021.2.3,Win32,60.13590715
+right,0,0.0512,1,4,10,0,1,red,red,left,1,33,001,2022-02-28_15h40.29.726,stroop,2021.2.3,Win32,60.13590715
+left,0,0.0799,1,5,11,1,1,red,green,down,0,33,001,2022-02-28_15h40.29.726,stroop,2021.2.3,Win32,60.13590715
+left,0,0.0006,2,0,12,4,1,blue,blue,right,1,33,001,2022-02-28_15h40.29.726,stroop,2021.2.3,Win32,60.13590715

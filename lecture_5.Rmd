@@ -17,8 +17,23 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+<!-- TODO: -->
+
+<!-- Change Binom to rephrase H0? -->
+
+<!-- Comment on how a normal distribution is a good model for rat -->
+<!-- maze times -->
+
+<!-- Explain / write equations showing how (X - mu ) / sig ~ Z -->
+<!-- (this is currently in the t-test section... so just move it -->
+<!-- up). -->
+
+<!-- Add comment that the t-distribution in the NHST example has -->
+<!-- a normal overlaid as well for comparison. A comment below -->
+<!-- says this is in black but I don't think it is. Fix this. -->
+
+```{r setup, include=F, message=F}
+knitr::opts_chunk$set(echo = T, collapse=T)
 ```
 
 ```{r, echo=F}
@@ -41,7 +56,7 @@ rm(list=ls())
 
 * Define and understand **rejection region**.
 
-* Define and understand **$1-\alpha\%$ confidence interval**.
+<!-- * Define and understand **$1-\alpha\%$ confidence interval**. -->
 
 * Be able to perform hypothesis binomial tests and t-tests
   manually (i.e., run through the 5 steps).
@@ -49,7 +64,6 @@ rm(list=ls())
 * Understand when and how to use `binom.test()`.
 
 * Understand when and how to use `t.test()`.
-
 
 ## Null Hypothesis Significance Testing
 
@@ -60,7 +74,7 @@ follow. They are listed here for reference.
    $H_1$) in terms of a population parameter $\theta$.
 
 2. Specify the type I error rate -- denoted by the symbol
-   $\alpha$) -- you are willing to tolerate.
+   $\alpha$ -- you are willing to tolerate.
 
 3. Specify the sample statistic $\widehat{\theta}$ that you will use to
    estimate the population parameter $\theta$ in step 1 and state how
@@ -71,7 +85,7 @@ follow. They are listed here for reference.
    statistic from step 3. Call this value
    $\widehat{\theta}_{\text{obs}}$.
 
-5. If $\widehat{\theta}_{\text{obs}}$ or a more extreme outcome 
+5. If $\widehat{\theta}_{\text{obs}}$ or a **more extreme outcome 
    is very unlikely to occur under the assumption that $H_0$ is true, then
    reject $H_0$. Otherwise, do not reject $H_0$.
 
@@ -307,19 +321,19 @@ ggplot(d, aes(x, fx, colour=rregion)) +
   theme(legend.title = element_blank())
 ```
 
-Yet another way of stating the decision rule above is
-through the use of **95% confidence intervals**. A
-confidence interval is a range of outcomes within which the
-probability that the true parameter value is within the
-interval is 95%. If the null falls outside of a test 95%
-confidence interval, then we reject the null. Learning how
-to compute confidence intervals for a binomial test is a bit
-beyond the scope of this unit, but later on we will learn
-how to compute them for other sampling distributions. For
-now, it is enough to simply be aware that they exist and
-have a vague understanding of whhat they are and how to
-use them. A full treatment of confidence intervals will
-come in a later lecture.
+<!-- Yet another way of stating the decision rule above is -->
+<!-- through the use of **95% confidence intervals**. A -->
+<!-- confidence interval is a range of outcomes within which the -->
+<!-- probability that the true parameter value is within the -->
+<!-- interval is 95%. If the null falls outside of a test 95% -->
+<!-- confidence interval, then we reject the null. Learning how -->
+<!-- to compute confidence intervals for a binomial test is a bit -->
+<!-- beyond the scope of this unit, but later on we will learn -->
+<!-- how to compute them for other sampling distributions. For -->
+<!-- now, it is enough to simply be aware that they exist and -->
+<!-- have a vague understanding of what they are and how to -->
+<!-- use them. A full treatment of confidence intervals will -->
+<!-- come in a later lecture. -->
 
 The five steps outlined above are the core of
 null-hypothesis significance testing, and working through
@@ -327,7 +341,7 @@ each step in the longhand format that we just did is
 important to be able to do. This is because these five steps
 are completely general and will perfectly apply to any
 situation you might find yourself in. That said, in many
-situations, R has built-in functions to handle all five
+situations, `R` has built-in functions to handle all five
 steps in one line of code. When making inferences from a
 binomial distribution, you can use the `binom.test()`
 function.
@@ -523,16 +537,23 @@ us to the famous t-test.
 ## The z-test
 
 - Why is the $Z$ distribution so important?
-- To be honest, for the privileged R users of the world, it really isn't that
-  essential to our day to day statistical adventures.
-- This is because, if we want to know what $P(X < x)$ for $X \sim N(\mu_X,
-  \sigma_x)$ then we just type `pnorm(x, mu_x, sigma_x, lower.tail=TRUE)` and
-  let R do all the hard work.
+
+- To be candid, for the privileged `R` users of the world,
+it really isn't that essential to our day to day statistical
+adventures.
+
+- This is because, if we want to know what $P(X < x)$ for $X
+\sim N(\mu_X, \sigma_x)$ then we just type `pnorm(x, mu_x,
+sigma_x, lower.tail=TRUE)` and let R do all the hard work.
+
 - But what is R doing under the hood?
-- Recall that $P(X < x)$ for $X \sim N(\mu_X, \sigma_x)$ corresponds to the area
-  under the probability density function in the interval $[-\infty, x]$.
-- Further recall that the equation that describes the PDF of a normal
-  distribution is given by:
+
+- Recall that $P(X < x)$ for $X \sim N(\mu_X, \sigma_x)$
+corresponds to the area under the probability density
+function in the interval $[-\infty, x]$.
+
+- Further recall that the equation that describes the PDF of
+a normal distribution is given by:
 
 $$
 f(x) = \frac{1}{\sigma_X \sqrt(2 \pi)} e^{ -\frac{1}{2} (\frac{x - \mu_X}{\sigma_X})^2 }
@@ -545,16 +566,21 @@ P(X < a) = \int_{\infty}^{a}
 \frac{1}{\sigma_X \sqrt(2 \pi)} e^{ -\frac{1}{2} (\frac{x - \mu_X}{\sigma_X})^2 }
 $$
 
-- It turns out that without awesome computer programs like R, evaluating this
-  integral is challenging.
-- The old school solution to this challenge was to evaluate this integral for
-  the standard normal ($Z$) and put that solution in the back of standard
-  statistics text books in the form of big giant tables.
-- The $Z$ distribution has other uses in statistics and machine learning, but
-  most of them are beyond the scope of this course.
-- We will see that the overarching idea of the z-transform -- i.e.,
-  standardising data to mean zero and variance one -- comes up when we get to
-  the t-test (later this lecture!).
+- It turns out that without awesome computer programs like
+R, evaluating this integral is challenging.
+
+- The old school solution to this challenge was to evaluate
+this integral for the standard normal ($Z$) and put that
+solution in the back of standard statistics text books in
+the form of big giant tables.
+
+- The $Z$ distribution has other uses in statistics and
+machine learning, but most of them are beyond the scope of
+this unit.
+
+- We will see that the overarching idea of the z-transform
+-- i.e., standardising data to mean zero and variance one --
+comes up when we get to the t-test (later this lecture!).
 
 ```{r}
 # Using Normal distribution
@@ -572,10 +598,12 @@ pz
 ```
 
 - How are the p-values the same?
+
 - The plot below is the X distribution on the left and the Z
 distribution on the right. - Notice that the Z is just a
 scaled version of X, and the that scaling also applied to
 the observed value.
+
 - This means that all probabilities (area under the curve)
 are the same.
 ```{r, echo=F, fig.width=10}
@@ -651,8 +679,8 @@ by one parameter called the *degrees of freedom* given by
 $n-1$. This all means that the mathematical formulation for
 how our sampling distribution is defined is different
 depending on whether or not we know $\sigma_X$.
-Lets examine how this pans out using the cheese example from
-the previous example, but without assuming known variance.
+Lets examine how this pans out using our previous cheese
+example, but without assuming known variance.
 
 <h4>1\. Specify the null and alternative hypotheses ($H_0$ and
    $H_1$) in terms of a distribution and population
@@ -801,12 +829,322 @@ will do all of this for you.
 t.test(x_obs, mu=90, alternative='less')
 ```
 
+## Type I versus Type II errors
+
+### Definitions
+
+- Hypothesis testing is about using noisy data to make decisions about what we
+  think the true state of the universe is.
+
+- Sometimes, our procedure for making these decisions will lead us to make the
+  correct decision, but sometimes we will make the wrong decision.
+
+- In the context of hypothesis testing, there are two ways to make a correct
+  decision and two ways to make an incorrect decision. These are summarised in
+  the following table.
+
+|                   | H0 True                 | H1 True                 |
+|:------------------|:------------------------|:------------------------|
+| Reject H0         | Type I error ($\alpha$) | Power ($1-\beta$)        |
+| Fail to reject H0 | Confidence ($1-\alpha$) | Type II error ($\beta$) |
+
+
+- Here, we have introduced the concept of **power**.
+
+- Power is the probability of correctly rejecting $H_0$.
+
+- Power can only be computed with respect to some fully specified $H_1$.
+
+- This is best seen with a visualisation.
+
+```{r, echo=F}
+mu_x_0 <- 2
+mu_x_1 <- 7
+
+sigma_x <- 2
+
+n <- 10
+x_crit <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=TRUE)
+
+x <- seq(mu_x_0 - 5*sigma_x, mu_x_1 + 5*sigma_x, 0.01)
+fx0 <- dnorm(x, mu_x_0, sigma_x)
+fx1 <- dnorm(x, mu_x_1, sigma_x)
+
+d <- data.table(x, fx0, fx1)
+
+g1 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx1), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x<x_crit], aes(x=x, ymin=0, ymax=fx0), fill='red', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(1-alpha)) +
+  theme(plot.title = element_text(size=36))
+
+g2 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx1), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx0), fill='red', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(alpha)) +
+  theme(plot.title = element_text(size=36))
+
+
+g3 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx1), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x<x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(beta)) +
+  theme(plot.title = element_text(size=36))
+
+
+g4 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx1), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(1 - beta)) +
+  theme(plot.title = element_text(size=36))
+
+## ggarrange(g2, g4, g1, g3, ncol=2, nrow=2)
+```
+<div class = "row">
+<div class = "col-md-6">
+
+```{r echo=F}
+g2
+```
+
+- Type I error is given by $\alpha$
+- The probability of a type I error is given by the area under the $H_0$ curve
+  in the rejection region.
+- A type I error is the probability of incorrectly rejecting $H_0$
+- Type I error is completely determined by $H_0$
+- Type I error does not depend on $H_1$
+
+</div>
+<div class = "col-md-6">
+
+```{r echo=F}
+g4
+```
+
+- Power is given by $1 - \beta$
+- Power is given by the area under the $H_1$ curve in the rejection region.
+- Power can depends on both $H_0$ and $H_1$
+-
+-
+
+</div>
+<div class = "col-md-6">
+
+```{r echo=F}
+g1
+```
+
+- Confidence is given by $1 - \alpha$
+- Confidence is given by the area under the $H_0$ curve outside the rejection region.
+- Confidence depends only on $H_0$
+-
+-
+-
+
+</div>
+<div class = "col-md-6">
+
+```{r echo=F}
+g3
+```
+
+- Type II error is given by $\beta$
+- The probability of a type II error is given by the area under the $H_1$ curve
+  outside the rejection region.
+- A type II error is the probability of incorrectly failing to reject $H_0$
+- Type II error depends on both $H_0$ and $H1$
+-
+
+
+</div>
+</div>
+
+## power
+
+```{r, echo=F}
+mu_x_0 <- 2
+mu_x_1 <- 7
+
+sigma_x <- 2
+
+n <- 10
+x_crit <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=TRUE)
+
+x <- seq(mu_x_0 - 5*sigma_x, mu_x_1 + 5*sigma_x, 0.01)
+fx0 <- dnorm(x, mu_x_0, sigma_x)
+fx1 <- dnorm(x, mu_x_1, sigma_x)
+
+d <- data.table(x, fx0, fx1)
+
+ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx1), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(1-beta)) +
+  theme(plot.title = element_text(size=36))
+```
+
+- In general, we want as much power as possible.
+- This is because, if $H_0$ isn't true, then we'd really like to reject it.
+- How can we increase power?
+
+### Increase the distance between $H_0$ and $H_1$
+
+```{r, echo=F}
+mu_x_0 <- 2
+mu_x_1 <- c(7, 10)
+
+sigma_x <- 2
+
+n <- 10
+x_crit <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=TRUE)
+
+x <- seq(mu_x_0 - 4*sigma_x, mu_x_1[2] + 4*sigma_x, 0.01)
+fx0 <- dnorm(x, mu_x_0, sigma_x)
+fx1 <- dnorm(x, mu_x_1[1], sigma_x)
+fx2 <- dnorm(x, mu_x_1[2], sigma_x)
+
+d <- data.table(x, fx0, fx1, fx2)
+
+g1 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx1), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(1-beta)) +
+  theme(
+    aspect.ratio=0.85,
+    plot.title = element_text(size=30))
+
+g2 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0), colour='red') +
+  geom_line(aes(y=fx2), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx2), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ggtitle(expression(1-beta)) +
+  theme(
+    aspect.ratio=0.85,
+    plot.title = element_text(size=30))
+
+ggarrange(g1, g2, ncol=2)
+```
+
+- The closer together the $H_0$ and $H_1$ distributions, the less power we have.
+
+
+### Decrease the variance of $H_0$ and $H_1$
+
+```{r, echo=F}
+mu_x_0 <- 2
+mu_x_1 <- 10
+
+sigma_x <- c(2, 20)
+
+n <- 10
+x_crit_1 <- qnorm(0.95, mu_x_0, sigma_x[1], lower.tail=TRUE)
+x_crit_2 <- qnorm(0.95, mu_x_0, sigma_x[2], lower.tail=TRUE)
+
+x <- seq(mu_x_0 - 4*sigma_x[2], mu_x_1 + 4*sigma_x[2], 0.01)
+fx01 <- dnorm(x, mu_x_0, sigma_x[1])
+fx11 <- dnorm(x, mu_x_1, sigma_x[1])
+fx02 <- dnorm(x, mu_x_0, sigma_x[2])
+fx12 <- dnorm(x, mu_x_1, sigma_x[2])
+
+
+d <- data.table(x, fx01, fx11, fx02, fx12)
+
+g1 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx01), colour='red') +
+  geom_line(aes(y=fx11), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx11), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ylim(0, 0.2) +
+  ggtitle(expression(1-beta)) +
+  theme(
+    aspect.ratio=0.85,
+    plot.title = element_text(size=30))
+
+g2 <- ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx02), colour='red') +
+  geom_line(aes(y=fx12), colour='blue') +
+  geom_vline(xintercept=x_crit, linetype=2) +
+  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx12), fill='blue', alpha=0.5) +
+  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
+  ylab('Probability Density') +
+  ylim(0, 0.2) +
+  ggtitle(expression(1-beta)) +
+  theme(
+    aspect.ratio=0.85,
+    plot.title = element_text(size=30))
+
+ggarrange(g1, g2, ncol=2)
+```
+
+- The smaller the variance of $H_0$ and $H_1$, the greater power we have
+
+
+### Power as a function of sample size
+
+- The key point here is that, when dealing with the distribution of sample
+  means, variance is inversely proportional to sample size.
+
+- $\sigma_\bar{X} = \frac{\sigma_X}{\sqrt{n}}$
+
+- This means that power increases with increased sample size.
+
+```{r, echo=F}
+mu_x_0 <- 20
+mu_x_1 <- 70
+
+sigma_x <- 30
+
+n <- 1:10
+
+mu_x_bar_0 <- mu_x_0
+mu_x_bar_1 <- mu_x_1
+
+sigma_x_bar <- sigma_x / sqrt(n)
+
+x_crit <- qnorm(0.95, mu_x_bar_0, sigma_x_bar, lower.tail=TRUE)
+power <- pnorm(x_crit, mu_x_bar_1, sigma_x_bar, lower.tail=FALSE)
+
+d <- data.table(n, power)
+
+ggplot(d, aes(n, power)) +
+  geom_line()
+```
+
 
 ## Summary
 
-* The **p-value** is the probability of the outcome or a
-  more extreme outcome occurring under the assumption that 
-  $H_0$ is true.
+* The **p-value** is the probability of the outcome or **a
+more extreme outcome** occurring under the assumption that
+$H_0$ is true.
   
 * What counts as a more extreme outcome is determined by $H_1$.
 
@@ -816,9 +1154,9 @@ t.test(x_obs, mu=90, alternative='less')
 * The **rejection region** is the set of all outcomes that
   would lead us to reject $H_0$.
 
-* A **$1-\alpha\%$ confidence interval** is a range of
-  values in which the true value of the parameter is
-  $1-\alpha\%$ likely to reside.
+<!-- * A **$1-\alpha\%$ confidence interval** is a range of -->
+<!--   values in which the true value of the parameter is -->
+<!--   $1-\alpha\%$ likely to reside. -->
 
 * `binom.test()` can be used to efficiently perform a
   binomial test without manually labouring through the

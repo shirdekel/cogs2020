@@ -1,0 +1,7 @@
+﻿resp.keys,resp.corr,resp.rt,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,text,letterColor,corrAns,congruent,participant,session,date,expName,psychopyVersion,OS,frameRate
+right,0,2.148,0,0,0,1,1,red,green,down,0,,001,2022-02-23_12h26.15.594,stroop,2021.2.3,MacIntel,58.82352941
+left,1,1.461,0,1,1,5,1,blue,red,left,0,,001,2022-02-23_12h26.15.594,stroop,2021.2.3,MacIntel,58.82352941
+right,1,1.755,0,2,2,4,1,blue,blue,right,1,,001,2022-02-23_12h26.15.594,stroop,2021.2.3,MacIntel,58.82352941
+left,0,0.767,0,3,3,2,1,green,green,down,1,,001,2022-02-23_12h26.15.594,stroop,2021.2.3,MacIntel,58.82352941
+right,0,1.903,0,4,4,0,1,red,red,left,1,,001,2022-02-23_12h26.15.594,stroop,2021.2.3,MacIntel,58.82352941
+left,0,9.773,0,5,5,3,1,green,blue,right,0,,001,2022-02-23_12h26.15.594,stroop,2021.2.3,MacIntel,58.82352941

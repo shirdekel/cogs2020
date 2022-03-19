@@ -1,0 +1,4 @@
+﻿resp.keys,resp.corr,resp.rt,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,text,letterColor,corrAns,congruent,participant,session,date,expName,psychopyVersion,OS,frameRate
+right,1,0.313,0,0,0,4,1,blue,blue,right,1,,001,2022-02-25_11h27.22.320,stroop,2021.2.3,Win32,60.0240096
+right,0,0.049,0,1,1,5,1,blue,red,left,0,,001,2022-02-25_11h27.22.320,stroop,2021.2.3,Win32,60.0240096
+right,0,0.069,0,2,2,1,1,red,green,down,0,,001,2022-02-25_11h27.22.320,stroop,2021.2.3,Win32,60.0240096

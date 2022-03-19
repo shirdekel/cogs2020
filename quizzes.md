@@ -231,3 +231,21 @@ The population mean is a random variable.
 Population parameters estimate sample statistics.
 
 All random variables are defined by the same population parameters.
+
+## quiz 4
+Which of the following probability distributions corresponds to a random variable X ~ Binomial(n=10, p=0.2)?
+
+Which of the following probability distributions corresponds to a random variable X ~ Binomial(n=10, p=0.8)?
+
+Which of the following probability distributions corresponds to a random variable X ~ Normal(mu=10, sig=p=0.1)?
+
+Which of the following probability distributions corresponds to a random variable X ~ Normal(mu=10, sig=0.05)?
+
+What is the expected value of the random variable X ~ Normal(mu=5, 0.01)
+
+What is the expected value of the random variable X ~ Binomial(n=5, p=0.5)?
+
+What type of function is displayed in the following figure?
+
+How is cumulative probability computed from the following figure?
+

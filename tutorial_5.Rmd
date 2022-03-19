@@ -1,0 +1,298 @@
+---
+title: "Tutorial 4 - Data Wrangle"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    # code_folding: show
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, collapse=T)
+```
+
+## Learning objectives
+
+* Get lots of hands-on practice with `R` and `data.table`
+and `ggplot`.
+
+* Do some actual real-world data wrangling. 
+
+* Use the `pattern` argument of `list.files` to select only
+`.csv` files.
+
+* Use the `file.size` function to filter out empty or
+incomplete data files.
+
+* Query how many unique values exist within a
+`datatable` column using syntax like `d[,
+length(unique(subject))]`.
+
+* Begin developing an understanding of Null Hypothesis
+Significance Testing.
+
+* Begin developing an understanding of when it is
+appropriate to apply a **t-test** and begin practising how
+to do so in`R`.
+
+* Clear up lingering confusions by using this time to
+meaningfully interact with your tutor.
+
+
+## Get some experiment data
+
+* If you haven't already participated in the following short
+demo experiment, please do so at the following address:
+`https://run.pavlovia.org/demos/stroop/`
+
+* Next, go here: `https://gitlab.pavlovia.org/demos/stroop`
+
+* Read about the experiment you just participated in by
+scrolling to the bottom and reading the `README.md` file.
+
+* Click the `data` folder to land at the following address:
+`https://gitlab.pavlovia.org/demos/stroop/tree/master/data`
+
+* In previous tutorials, I instructed you to find and
+download only your data, or else to  download a small batch
+of hand selected data (somewhere around 5 files). Here, we
+will download the whole batch and deal with a few of the
+data wrangling challenges that come along for the ride.
+
+* Click the download icon and then `Download zip`. This will
+download the entire repository to your computer. Move the
+`data` folder to a location that makes loading files in from
+`R` convenient.
+
+
+## Get ready to analyse your data
+
+* If you haven't done so already, create a new folder on
+your computer named `cogs2020`
+
+* Open Rstudio and click `File > New File > R Script`
+
+* In Rstudio click `File > Save`
+
+* In the prompt that comes up, name your file
+`tutorial_5_notes.R`, and save it in your `cogs2020` folder.
+
+* Move the batch `.csv` files you just downloaded into your
+`cogs2020` folder.
+
+
+## Analyse your data using `data.table` and `ggplot`
+
+* In our previous tutorial we learned how to wrangle a
+folder full of separate files into one big coherent
+`data.table`. However, we hand selected the data files that
+were suitable for our needs (e.g., `csv` files from complete
+data sets). Here, we downloaded the entire folder, and as a
+consequence, we will have to filter out the files we don't
+want.
+
+* The following code chunk augments the approach we used
+last week to wrange everything into a single `data.table`
+with all of your data contained within.
+
+```{r}
+# Load the `data.table` and `ggplot2` libraries and `rm` to
+# be sure your are starting with a clean work space.
+library(data.table)
+library(ggplot2)
+
+rm(list = ls())
+
+# Use the `list.files` function to save a list of file paths
+# corresponding to your just downloaded data files. Here, I
+# have written `'data/stroop'` because that is where I put
+# the data that I downloaded. You will need change this to
+# something appropriate to where you put these files.
+file_list <- list.files('data/stroop', 
+                        full.names=T, 
+                        pattern='.csv$' # select only .csv files
+                        ) 
+
+# Here, we have used the `pattern` argument of the
+# `list.files` function to select only the files in our data
+# directory that have a `.csv` in their file name. The
+# trailing `$` is saying that the `.csv` bit needs to come
+# at the end of the file name. However, we will still have
+# to deal with the fact that some of these csv files are
+# empty.
+
+# create an empty list with as many elements as we have data
+# files
+d_list <- vector("list", length(file_list))
+
+# iterate through our list of data files and read each into
+# a data.table, which we then store in d_list
+for(i in 1:length(file_list)) {
+  
+  # Check the file size, and if it's too small to be actual
+  # data, then skip it
+  if( file.size(file_list[[i]]) > 5){
+    
+    z <- fread(file_list[[i]], )
+    z[, subject := i]
+    d_list[[i]] <- z
+  
+  }
+}
+
+# bind our list of data.tables into one big data.table
+d <- rbindlist(d_list)
+
+# ask how many unique subjects we have (which for us in this
+# example is equivalent to the number of unique files you've
+# loaded)
+d[, length(unique(subject))]
+```
+
+* Please consult your tutorial notes from last week if the
+above does seem at all familiar.
+
+* We next move on to the visualisations using `ggplot2` following last weeks template exactly. 
+
+* The classic Stroop finding is that people are slower and
+less accurate on incongruent trials (i.e., trials on which
+stimulus text and stimulus colour do not match) than they
+are on congruent trials. Lets see if our data pan out that way.
+
+```{r}
+# first create a column to indicate response accuracy
+d[, acc := corrAns == resp.keys]
+
+# report what your overall accuracy and rt was grouped by
+# subject and grouped by congruent
+dd <- d[, 
+        .(acc_mean = mean(acc), rt_mean = mean(resp.rt)), 
+        .(subject, congruent)]
+
+# inspect reaction time 
+ggplot(dd, aes(x=factor(congruent), y=rt_mean)) + 
+  geom_violin() +
+  geom_point()
+
+# inspect accuracy
+ggplot(dd, aes(x=factor(congruent), y=acc_mean)) + 
+  geom_violin() +
+  geom_point()
+```
+
+### Single-sample t-test
+* In this tutorial, we begin formalising our analysis
+through the use of inferential statistics (i.e., Null
+Hypothesis Significance Testing -- NHST). The fundamental
+logic of NHST is a cornerstone of this unit that we will
+spend considerable lecture and problem set time developing
+and practising. Here, we will begin developing skill in
+recognising when to apply one type of test or another. We
+will also begin developing the practical ability to use `R`
+to perform these tests.
+
+* The first step of any hypothesis testing system is to ask
+a simple and explicit question about the source of your
+data. E.g.:
+
+  * **Is the true reaction time across all trials -- not
+  distinguishing between congruent or incongruent --less
+  than 3 seconds?**
+  
+* The next critical step is to understand how your
+observations are likely distributed. That is, what random
+variable did they come from? A good first step to answer
+this question is to ask whether your data is continuous or
+discrete. If it is continuous, then a common assumption is
+that the data came from a random variable with a Normal
+distribution. That seems to be a good bet for both of our
+current observation columns (`acc_mean` and `rt_mean`).
+
+* The next step of NHST is to reframe your core question in
+terms of the parameters of the random variable that you
+decided on just above. Here, this means that we assume that
+$X$ is the random variable that generates reaction times on
+every trial of this Stroop experiment. The question of
+whether or not reaction times are greater that 3 seconds is
+then equivalent to asking if the population mean of $X$ is
+less than 3 or not.
+
+* **If your observations come from a random variable or random
+variables with Normal distributions and you are interested
+in the population mean of these random variables, then it is
+appropriate to use a t-test.**
+
+* `R` makes this very easy for you with the function
+`t.test`
+
+```{r}
+x <- dd[, rt_mean]
+t.test(x, 
+       alternative='less', # we are testing if x < 3
+       mu=3, # the population mean we are asking about
+       )
+```
+
+* The output of this function is a lot. It will all be
+explained in this weeks lecture.
+
+* For now, you should at least notice the output that reads
+**p-value**. We will have lots to say about this, but as you
+likely already know, if the p-value is less than 0.05, then
+we believe that the population mean of $X$ really is less
+than 3.
+
+### Two-sample t-test
+
+* Suppose our question was something more like the
+following:
+
+  * **Is the true reaction time on congruent trials less
+  than it is on incongruent trials?**
+
+* Here, we assume that $X$ is a random variable that
+generates reaction times on congruent trials and $Y$ is a
+random variable that generates reaction times on incongruent
+trials. The question of whether or not congruent trials are
+easier than incongruent trials is now equivalent to asking
+if the population mean of $X$ is smaller than the population
+mean of $y$.
+
+* Since we are again dealing with continuous data that we
+are assuming is Normally distributed and our question is
+about population means, a t-test is again a reasonable thing
+to do. In this case, since we are comparing two means, we
+use a two-sample t-test.
+
+* However, since each participant provides a measurement of
+both congruent and incongruent reaction times, we have a
+repeated measures design, and this will turn out to require
+us to perform a paired samples t-test. Again, `R` makes this
+type of `t.test` very easy to implement.
+
+```{r}
+# exclude participants that do not have measurements for
+# both congruent and incongruent trial types.
+dd[, n_congruent := length(unique(congruent)), .(subject)]
+ddd <- dd[n_congruent == 2]
+
+t.test(rt_mean ~ congruent, 
+       data=ddd,
+       alternative='greater',
+       mu=0, # by default we assume that x=y and therefore there is *zero* difference
+       paired=T # tell R we have repeated measures
+       )
+```
+
+
+## Work on problem set 5
+* [Problem set 5](homework_5.html)
