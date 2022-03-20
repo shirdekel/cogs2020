@@ -115,6 +115,9 @@ explicitly instructed to do so.**
 * Store the value of your observed test statistic in a
 variable named `ans_1_test_stat_obs`.
 
+* Store the critical value of your test in a variable named
+`ans_1_critical_value`.
+
 * Store the p-value of your test in a variable named
 `ans_1_p_value`.
 
@@ -125,15 +128,18 @@ discover if the response a participant makes in a
 2-alternative forced choice task can be predicted on the
 basis of neural activity occurring 1 second before the motor
 response is made. They train a machine learning classifier
-to do this, and discover that it correctly predicted
+to do this, and discover that it correctly predicts
 participant choices in 63 out of 100 trials. Test the
-hypothesis that their machine learning classifier predicted
+hypothesis that their machine learning classifier predicts
 participant choice at above-chance levels. **Do not use
 `t.test`, `binim.test` or any other built in full test
 function unless explicitly instructed to do so.**
 
 * Store the value of your observed test statistic in a
 variable named `ans_2_test_stat_obs`.
+
+* Store the critical value of your test in a variable named
+`ans_2_critical_value`.
 
 * Store the p-value of your test in a variable named
 `ans_2_p_value`.
@@ -159,15 +165,22 @@ ggplot(d, aes(x, fx)) +
   geom_segment(aes(x=8, y=0, xend=8, yend=fx[5]), colour='blue') +
   scale_x_continuous(breaks=x) +
   scale_y_continuous(breaks=fx) +
-  xlab('x') +
-  ylab('P(theta_hat = x)')
+  xlab(TeX("$\\theta_x$")) +
+  ylab(TeX("$P(\\hat{\\theta} = \\theta_x)$"))
 ```
+
+
+
+
+
+* Store the critical value of your test in a variable named
+`ans_3_critical_value`.
 
 * Store the p-value of this test in a variable named
 `ans_3_p_value`.
 
 
-## 4
+## 4.
 ```{r, echo=F, fig.width=10}
 n <- 2
 
@@ -263,10 +276,13 @@ then it will print without error.
 my_name
 my_student_id
 ans_1_test_stat_obs
+ans_1_critical_value
 ans_1_p_value
 ans_2_test_stat_obs
+ans_2_critical_value
 ans_2_p_value
 ans_3_p_value
+ans_3_critical_value
 ans_4a
 ans_4b
 ans_4c

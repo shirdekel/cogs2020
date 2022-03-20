@@ -1,5 +1,5 @@
 ---
-title: "Tutorial 4 - Data Wrangle"
+title: "Tutorial 5 - Data Wrangle"
 author: "Author: Matthew J. Cossley"
 date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -34,7 +34,7 @@ and `ggplot`.
 incomplete data files.
 
 * Query how many unique values exist within a
-`datatable` column using syntax like `d[,
+`data.table` column using syntax like `d[,
 length(unique(subject))]`.
 
 * Begin developing an understanding of Null Hypothesis
@@ -159,7 +159,7 @@ d[, length(unique(subject))]
 ```
 
 * Please consult your tutorial notes from last week if the
-above does seem at all familiar.
+above doesn't seem at all familiar.
 
 * We next move on to the visualisations using `ggplot2` following last weeks template exactly. 
 
@@ -205,7 +205,7 @@ a simple and explicit question about the source of your
 data. E.g.:
 
   * **Is the true reaction time across all trials -- not
-  distinguishing between congruent or incongruent --less
+  distinguishing between congruent or incongruent -- less
   than 3 seconds?**
   
 * The next critical step is to understand how your
@@ -265,7 +265,7 @@ random variable that generates reaction times on incongruent
 trials. The question of whether or not congruent trials are
 easier than incongruent trials is now equivalent to asking
 if the population mean of $X$ is smaller than the population
-mean of $y$.
+mean of $Y$.
 
 * Since we are again dealing with continuous data that we
 are assuming is Normally distributed and our question is

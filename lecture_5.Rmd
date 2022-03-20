@@ -737,7 +737,8 @@ d <- data.table(t,
 g1 <- ggplot(d, aes(t, ft, colour=region)) +
   geom_line() +
   geom_vline(xintercept=t_obs, colour='black', linetype=2) +
-  geom_ribbon(aes(ymin=0, ymax=dnorm(t, 0, 1), fill=region), alpha=0.5) +
+  geom_ribbon(aes(ymin=0, ymax=dnorm(t, 0, 1), fill=region), 
+              colour='black', alpha=0.5) +
   annotate('text', x=t_obs-0.1, y=dnorm(t_obs, 0, 1),
            label='t_obs or \n more extreme',
            colour='#00AFBB',
@@ -751,7 +752,8 @@ g2 <- ggplot(d, aes(t, ft, colour=cregion)) +
   geom_line() +
   geom_vline(xintercept=t_obs, colour='black', linetype=2) +
   geom_vline(xintercept=t_crit, colour='black', linetype=2) +
-  geom_ribbon(aes(ymin=0, ymax=dnorm(t, 0, 1), fill=cregion), alpha=0.5) +
+  geom_ribbon(aes(ymin=0, ymax=dnorm(t, 0, 1), fill=cregion), 
+              colour='black', alpha=0.5) +
   annotate('text', x=t_crit-0.1, y=dnorm(t_crit, 0, 1),
            label='critical value\n(rejection region)',
            colour='#00AFBB',
