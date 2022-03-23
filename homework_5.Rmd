@@ -151,7 +151,7 @@ $\theta$ is a parameter of some random variable.  The
 sampling distribution for $\hat{\theta}$ is shown in the
 following figure and the observed test statistic
 $\hat{\theta}_{obs}$ is shown in blue.  Ensure that the type
-I error rate of your test is at least $\alpha=0.05$.
+I error rate of your test is no greater than $\alpha=0.05$.
 
 ```{r, echo=F, include=T}
 n <- 6
