@@ -1,0 +1,102 @@
+---
+title: "Homework 2 Solutions"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: false
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, eval=T}
+# load data.table library
+library(data.table)
+
+# clean session
+rm(list=ls())
+
+# basic id info
+my_name <- "John Doe"
+my_student_id <- "12345678"
+
+# Please include the following line of code as well
+set.seed(0)
+
+# create vectors from which to build d
+V1 <- rep(month.abb[1:8], each=2)
+V2 <- rep(letters[1:8], 2)
+V3 <- rnorm(length(V1))
+
+# create a data.table named d
+d <- data.table(month=V1, event=V2, obs=V3)
+
+ans_1a <- d[, .N]
+ans_1b <- d[month=='Jan']
+ans_1c <- d[month=='Feb' | event=='c']
+ans_1d <- d[month=='Feb' & event=='c']
+ans_1e <- d[month %in% c('Jan', 'Mar', 'May', 'Jul')]
+
+ans_2a <- d[, month]
+ans_2b <- d[, .(month)]
+ans_2c <- d[, .(month, event)]
+ans_2d <- d[, .(MONTH=month, EVENT=event)]
+ans_2e <- d[, mean(obs)]
+ans_2f <- d[, .(obs_mean=mean(obs), obs_sd=sd(obs))]
+
+ans_3a <- d[, .(obs_mean=mean(obs)), .(event)]
+ans_3b <- d[, .(obs_mean=mean(obs)), .(event, month)]
+
+ans_4a <- d[1:8, .(obs_median=median(obs)), .(month, event)]
+
+d5a = data.table(d)
+d5a_copy = copy(d5a)
+d5a_copy[, new_zeros := 0]
+ans_5a <- d5a_copy
+
+d5b = data.table(d)
+d5b_copy = copy(d5b)
+d5b_copy[, obs := NULL]
+ans_5b <- d5b_copy 
+
+ans_5c <- 'option 3'
+ans_5d <- 'option 1'
+
+ans_6a <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
+ans_6b <- ans_6a[cnd=="Delay" | cnd=="Long ITI"]
+ans_6c <- ans_6b[, .(cnd, sub, t2c)]
+ans_6d <- ans_6c[, .(t2c_mean = mean(t2c)), .(cnd, sub)]
+```
+
+```{r, eval=T, include=F}
+my_name
+my_student_id
+ans_1a
+ans_1b
+ans_1c
+ans_1d
+ans_1e
+ans_2a
+ans_2b
+ans_2c
+ans_2d
+ans_2e
+ans_2f
+ans_3a
+ans_3b
+ans_4a
+ans_5a
+ans_5b
+ans_5c
+ans_5d
+ans_6a
+ans_6b
+ans_6c
+ans_6d
+```

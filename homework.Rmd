@@ -20,7 +20,7 @@ fontsize: 14pt
 | :---------------------------------------------------------------------   | :------- | :--------- | :------------ |
 | [Problem Set  1](homework_1.html) [Solutions](homework_1_solutions.html) |       3% | 28/02/22   | 07/03/22      |
 | [Problem Set  2](homework_2.html) [Solutions](homework_2_solutions.html) |       3% | 07/03/22   | 14/03/22      |
-| [Problem Set  3](homework_3.html)                                        |       3% | 14/03/22   | 21/03/22      |
+| [Problem Set  3](homework_3.html) [Solutions](homework_3_solutions.html) |       3% | 14/03/22   | 21/03/22      |
 | [Problem Set  4](homework_4.html)                                        |       3% | 21/03/22   | 28/03/22      |
 | [Problem Set  5](homework_5.html)                                        |       3% | 28/03/22   | 04/04/22      |
 | [Problem Set  6](homework_6.html)                                        |       3% | 02/05/22   | 09/05/22      |

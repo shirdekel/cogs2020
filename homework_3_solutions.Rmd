@@ -1,0 +1,131 @@
+---
+title: "Homework 3 Solutions"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: false
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=F)
+```
+
+```{r, eval=T}
+# load the packages we will need
+library(data.table)
+library(ggplot2)
+
+# clean session
+rm(list=ls())
+
+# basic id info
+my_name <- "John Doe"
+my_student_id <- "12345678"
+
+# Please include the following line of code as well
+set.seed(0)
+
+
+# 1
+die1 <- rep(1:4, 4)
+die2 <- rep(1:4, each=4)
+ans_1a <- data.table(die1, die2)
+
+ans_1b <- data.table(ans_1a)
+ans_1b[, X := die1 + die2]
+
+ans_1c <- ans_1b[, sum(X<5)/.N]
+
+if(ans_1b[X==2, .N]==1) {
+  ans_1d <- "YES"
+} else {
+  ans_1d <- "NO"
+}
+
+
+# 2
+x <- c(2, 3, 4, 5, 6)
+fx <- c(.1, .3, .3, .2, .1)
+d <- data.table(x, fx)
+
+if(sum(fx) == 1) {
+  ans_2a <- "YES"
+} else {
+  ans_2a <- "NO"
+}
+ans_2b <- d[, sum(x*fx)]
+ans_2c <- d[x >= 4, sum(fx)]
+ans_2d <- d[(x > 2) & (x <= 4), sum(fx)]
+
+
+# 3
+x <- c(0, 1, 2, 3)
+fx <- c(0.3, 0.4, 0.2, 0.1)
+d <- data.table(x, fx)
+
+ans_3a <- d[x >= 2, sum(fx)]
+ans_3b <- d[(x > 0) & (x <= 2), sum(fx)]
+ans_3c <- d[, sum(x*fx)]
+ans_3d <- d[, sum((x-ans_3c)^2*fx)]
+ans_3e <- sqrt(ans_3d)
+
+
+# 4 
+ans_4a <- 0
+ans_4b <- 0*0.64 + 1*0.32 + 2*0.04
+ans_4c <- 'upper left'
+ans_4d <- 'lower left'
+
+
+# 5
+ans_5a <- fread('https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv')
+ans_5b <- ans_5a[cnd %in% c('Delay', 'Long ITI', 'Short ITI'), 
+                 .(t2c_mean=mean(t2c)), 
+                 .(cnd, sub)]
+ans_5c <- 'long'
+ans_5d <- dcast(ans_5b, sub ~ cnd)
+ans_5e <- melt(ans_5d, 
+               id.vars=c('sub'), 
+               measure.vars=c('Delay', 'Long ITI', 'Short ITI'),
+               variable.name='cnd',
+               value.name='t2c_mean'
+               )
+
+ans_5f <- ggplot(data=ans_5e, aes(x=cnd, y=t2c_mean)) + 
+  geom_violin() + 
+  geom_point()
+
+```
+
+```{r, eval=T, include=F}
+my_name
+my_student_id
+ans_1a
+ans_1b
+ans_1c
+ans_1d
+ans_2a
+ans_2b
+ans_2c
+ans_2d
+ans_3a
+ans_3b
+ans_3c
+ans_3d
+ans_3e
+ans_4a
+ans_4b
+ans_4c
+ans_4d
+ans_5a
+ans_5b
+ans_5c
+ans_5d
+ans_5e
+ans_5f
+```
