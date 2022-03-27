@@ -15,9 +15,19 @@ output:
 fontsize: 18pt
 ---
 
+```{r global-options, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE)
+```
+
+```{r setup, include=FALSE, message=F}
+knitr::opts_chunk$set(echo = T, collapse=T, warning=F)
+```
+
 ```{r echo=FALSE}
 library(data.table)
 library(ggplot2)
+library(ggpubr)
+library(latex2exp)
 
 rm(list = ls())
 
@@ -133,6 +143,8 @@ y4 <- d[, sort(probability)][4]
 
 ```
 
+- Is $X$ continuous or discrete?
+
 - Compute $P(X < `r x2`)$
 
 - Compute $P(X \geq `r x2`)$
@@ -143,7 +155,7 @@ y4 <- d[, sort(probability)][4]
 
 ### Practice 1
 
-For the random variable $X \sim N(\mu_x = 5, \sigma_x=3)$
+For the random variable $X \sim \mathcal{N}(\mu_x = 5, \sigma_x=3)$
 
 - Find $x$ such that $P(X < x) = 0.5$
 
@@ -153,7 +165,7 @@ For the random variable $X \sim N(\mu_x = 5, \sigma_x=3)$
 
 ### Practice 2
 
-For the random variable $X \sim Poisson(\lambda=4)$
+For the random variable $X \sim \mathcal{Poisson}(\lambda=4)$
 
 - Find $x$ such that $P(X \leq x) = 0.5$
 
@@ -170,23 +182,23 @@ are subsequently asked to perform some other task. The question the researchers
 are interested in is how initial learning affects the subsequent task, and it is
 therefore critical that participants that didn't learn anything be excluded from
 the final analysis. An exclusion criteria is set such that any participant that
-fails to reach at least $60\%$ accuracy by the end of training is excluded.
-Suppose that data is collected from 30 participants, and of these, 5 are
-excluded. Is this greater than would be expected if the true probability of
-meeting the exclusion criteria was 0.1?
+fails to reach at least $60\%$ accuracy by the end of
+training is excluded. Suppose that data is collected from 30
+participants, and of these, 5 are excluded. Is this greater
+than would be expected if the true probability -- denoted
+$p$ -- of meeting the exclusion criteria was 0.1?
 
-- Answer this question going through all 5 steps in long form
+- Answer this question going through all 5 steps in long form.
 
 - Is there a built in function you can use? If so, use it.
 
-- Report a point estimates for $\hat{p}$
+- Report a point estimate for $\hat{p}$.
 
-- Report the critical value for $\alpha=0.05$
+- Report the critical value for $\alpha=0.05$.
 
-- Compute power against the alternative $H_1$ that $p$ is .3
+- Compute power against the alternative $H_1$ that $p$ is $0.3$.
 
 ### Practice 2
-
 
 ```{r echo=FALSE}
 
@@ -198,29 +210,31 @@ x[x > 1] <- 1
 
 ```
 
-Consider an experiment in which participants study a list of words and are
-subsequently asked to recall as many of the studied words as possible. Suppose
-that data is collected from `r n` participants and the percentage of words
-recalled by each participant is given by
+Consider an experiment in which participants study a list of
+words and are subsequently asked to recall as many of the
+studied words as possible. Suppose that data is collected
+from `r n` participants and the percentage of words recalled
+by each participant is given by
 
 \begin{equation}
 x = ( `r round(x, 2)` )
 \end{equation}
 
-Let $X$ be the random variable that each participants performance is drawn from,
-and suppose we know $\sigma_x = `r sigma_x`$.
+Let $X$ be the random variable that each participants
+performance is drawn from, and suppose we know $\sigma_x =
+`r sigma_x`$.
 
 Is $\mu_x$ significantly greater than $0.6$?
 
-- Answer this question going through all 5 steps in long form
+- Answer this question going through all 5 steps in long form.
 
 - Is there a built in function you can use? If so, use it.
 
-- Report point and interval estimates for $\hat{\mu_x}$
+- Report point and interval estimates for $\hat{\mu_x}$.
 
-- Report the critical value for $\alpha=0.05$
+- Report the critical value for $\alpha=0.05$.
 
-- Compute power against the alternative $H_1$ that $\mu_x$ is .62
+- Compute power against the alternative $H_1$ that $\mu_x$ is $0.62$.
 
 
 ### Practice 3
@@ -244,20 +258,21 @@ that the mean reach error per participant is given by
 x = ( `r round(x, 2)` )
 \end{equation}
 
-Let $X$ be the random variable that each participants performance is drawn from.
+Let $X$ be the random variable that each participant's
+performance is drawn from.
 
 Is $\mu_x$ significantly different from $0$?
 
-- Answer this question going through all 5 steps in long form
+- Answer this question going through all 5 steps in long form.
 
 - Is there a built in function you can use? If so, use it.
 
-- Report point and interval estimates for $\hat{\mu_x}$
+- Report point and interval estimates for $\hat{\mu_x}$.
 
-- Report the critical value for $\alpha=0.05$
+- Report the critical value for $\alpha=0.05$.
 
 - Compute power against the alternative $H_1$ that $\mu_x$
-is 2 assuming that the population standard deviation is
+is $2$ assuming that the population standard deviation is
 equal to the sample standard deviation.
 
 ## Data Wrangling
@@ -307,11 +322,33 @@ fwrite(d_long, '../live_course_material/data/maze/d_long.csv')
 
 ```
 
+Consider an experiment in which a set of rats run through a
+set of mazes some number of times each. The researchers
+running this experiment are interested in how quickly rats
+can run these mazes, and so they plan to record the time in
+seconds each rat takes to complete each run of each maze.
+Before investing time and resources into a full experiment,
+two graduate students are tasked with running a scaled-down
+version (i.e., pilot experiments) to make sure everything is
+set up correctly.
+
+* Graduate student 1 acquired the following data:
+
+`https://crossley.github.io/cogs2020/data/maze/d_wide.csv`
+
+* Graduate student 2 acquired the following data:
+
+`https://crossley.github.io/cogs2020/data/maze/d_long.csv`
+
+* After validating the pilot data, they ran a full
+experiment and acquired the following data:
+
+`https://crossley.github.io/cogs2020/data/maze/maze.csv`
+
 ### Practice 1
 
-- Convert the following `data.table` to long format
-- The `data.table` can be found here:
-https://crossley.github.io/cogs2020/data/maze/d_wide.csv
+- Convert the following `data.table` acquired by graduate
+student 1 (shown below) to long format.
 
 ```{r echo=FALSE}
 
@@ -321,10 +358,8 @@ d_wide
 
 ### Practice 2
 
-- Convert the following `data.table` to wide format
-- The `data.table` can be found here:
-https://crossley.github.io/cogs2020/data/maze/d_long.csv
-
+- Convert the following `data.table` acquired by graduate
+student 2 (shown below) to wide format.
 
 ```{r echo=FALSE}
 
@@ -333,7 +368,6 @@ d_long
 ```
 
 ### Practice 3
-
 
 ```{r echo=FALSE}
 
@@ -371,33 +405,11 @@ fwrite(d, '../live_course_material/data/maze/maze.csv')
 
 ```
 
-Consider an experiment in which a set of rats run through a set of mazes some
-number of times each. The researchers running this experiment are interested in
-how quickly rats can run these mazes, and so they record the time in seconds
-each rat takes to complete each run of each maze. The data for the experiment
-they performed can be found here:
-
-https://crossley.github.io/cogs2020/data/maze/maze.csv
-
-- Recreate the following visualisation of their results. Note that error bars
-  represent standard error of the mean (SEM).
-
-```{r echo=FALSE}
-
-dd <- d[, .(mean(time), sd(time)/sqrt(length(unique(rat)))), .(maze, run)]
-
-ggplot(dd, aes(run, V1)) +
-  geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2)) +
-  xlab('run') +
-  ylab('mean maze time') +
-  facet_wrap(~factor(maze, labels=c('Maze ')))
-
-```
-
-- Recreate the following visualisation of their results. Note that error bars
-  represent standard error of the mean (SEM). Also note that to get SEM here,
-  first compute the mean `time` per `maze` for each `rat`. Then, compute the
-  mean and standard error from these values.
+- Recreate the following visualisation of their results.
+  Note that error bars represent standard error of the mean
+  (SEM). Also note that to get SEM here, first compute the
+  mean `time` per `maze` per `rat`. Then, compute the mean and
+  standard error from these values.
 
 ```{r echo=FALSE}
 
@@ -410,3 +422,30 @@ ggplot(ddd, aes(maze, V1)) +
 
 ```
 
+
+## NHST concepts
+```{r echo=F}
+
+mux <- 20
+sigx <- 5
+x <- seq(-5*sigx + mux, 5*sigx + mux, 0.01)
+fx <- dnorm(x, mux, sigx)
+dtx <- data.table(x, fx)
+gx <- ggplot(dtx, aes(x, fx)) + 
+  geom_line() +
+  xlab(TeX('$x$')) +
+  ylab(TeX('Probability Density $f(X=x)$'))
+
+n <- 15
+muxbar <- 20
+sigxbar <- 5 / sqrt(n)
+xbar <- seq(-5*sigxbar + muxbar, 5*sigxbar + muxbar, 0.01)
+fxbar <- dnorm(xbar, muxbar, sigxbar)
+dtxbar <- data.table(xbar, fxbar)
+gxbar <- ggplot(dtxbar, aes(xbar, fxbar)) + 
+  geom_line() +
+  xlab(TeX('$\\bar{x}$')) +
+  ylab(TeX('Probability Density $f(\\bar{X}=\\bar{x})$'))
+
+ggarrange(gx, gxbar, ncol=2)
+```

@@ -45,9 +45,9 @@ generate_pdf_continuous <- function() {
     scale_x_continuous(breaks=c(d[, x][1], d[, xend][1:5])) +
     scale_y_continuous(breaks=c(0, d[, sort(density)]),
                        limits=c(0, d[, max(density)])) +
-    xlab('x') +
-    ylab('Probability Density') +
-    ggtitle('Probability Density for the random variable X') +
+    xlab(TeX('$x$')) +
+    ylab(TeX('Probability Density $f(X=x)$')) +
+    ggtitle(TeX('Probability Density for the random variable $X$')) +
     theme_classic()
 
   return(list(g, d))
@@ -80,9 +80,9 @@ generate_pdf_discrete <- function() {
     scale_x_continuous(breaks=c(d[, sort(x)])) +
     scale_y_continuous(breaks=c(0, d[, sort(mass)]),
                        limits=c(0, d[, max(mass)])) +
-    xlab('x') +
-    ylab('Probability P(X=x)') +
-    ggtitle('Probability mass for the random variable X') +
+    xlab(TeX('x')) +
+    ylab(TeX('Probability $P(X=x)$')) +
+    ggtitle(TeX('Probability mass for the random variable $X$')) +
     theme_classic()
 
   return(list(g, d))
@@ -138,9 +138,9 @@ generate_cdf_discrete <- function() {
     scale_x_continuous(breaks=c(d[, x][1], d[, xend][1:5])) +
     scale_y_continuous(breaks=c(0, d[, sort(probability)]),
                        limits=c(0, d[, max(probability)])) +
-    xlab('x') +
-    ylab('P(X < x)') +
-    ggtitle('Cumulative Probability for the random variable X') +
+    xlab(TeX('$x$')) +
+    ylab(TeX('$P(X < x)$')) +
+    ggtitle(TeX('Cumulative Probability for the random variable $X$')) +
     theme_classic()
 
   return(list(g, d))
