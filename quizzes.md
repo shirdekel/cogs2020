@@ -249,3 +249,94 @@ What type of function is displayed in the following figure?
 
 How is cumulative probability computed from the following figure?
 
+
+## quiz 5
+Let X ~ Bernoulli(p) where p is the probability of success (S) and 1-p is the probability of failure (F). Suppose that the parameter p is unknown to you, but you would like to Null Hypothesis Significance Testing to assess whether or not it is greater than 0.5. Finally, suppose that you perform an experiment in which you draw a sample of size n=10 from X, and obtain the following results:
+
+x <- {S, S, S, F, S, F, S, S, F, S}
+
+What test statistic best estimates p and what is its sampling distribution?
+- The sample proportion of successes; Binomial(n, p)
+- The sample proportion of successes; Normal(np, 1-p)
+- The sample mean; Normal(np, 1-p)
+- The t-score; t(n-1)
+
+
+Suppose that the sampling distribution of some test statistic is given by X ~ Binomial(n, p). The distribution from which single (n=1) observations from X are computed is most likely distributed according to which of the following?
+- Normal
+- t
+- z
+- Bernoulli
+- Binomial
+- All are plausible
+- None are plausible
+
+
+Suppose that the sampling distribution of some test statistic is given by X ~ Normal(mu, sig). The distribution from which single (n=1) observations from X are computed is most likely distributed according to which of the following?
+- Normal
+- t
+- z
+- Bernoulli
+- Binomial
+- All are plausible
+- None are plausible
+
+
+Suppose that a test statistic X is used as an estimate of some population parameter, and that the sampling distribution of X is given by the following probability density function shown below. The green area corresponds to the:
+- Rejection region
+- Type I error rate
+- confidence
+- p-value
+- power
+- None of these
+
+Suppose that a test statistic X is used as an estimate of some population parameter, and that the sampling distribution of X is given by the following probability density function shown below. The blue and red areas combined correspond to the:
+- Rejection region 
+- Type I error rate
+- confidence
+- p-value
+- power
+- None of these
+
+Suppose that a test statistic X is used as an estimate of some population parameter, and that the sampling distribution of X is given by the following probability density function shown below. The red areas combined correspond to the:
+- Rejection region 
+- Type I error rate
+- confidence
+- p-value
+- power
+- None of these
+
+
+Suppose the following is true: 
+
+1. A test statistic Y is computed from samples of another
+random variable X.
+
+2. Y is used as an estimate of some population parameter,
+
+3. The sampling distribution of X is given by the following
+probability density function shown below.
+
+The green area corresponds to the:
+- Rejection region 
+- Type I error rate
+- confidence
+- p-value
+- power
+- None of these
+
+The blue and red areas combined correspond to the:
+- Rejection region 
+- Type I error rate
+- confidence
+- p-value
+- power
+- None of these
+
+The red areas combined correspond to the:
+- Rejection region 
+- Type I error rate
+- confidence
+- p-value
+- power
+- None of these
