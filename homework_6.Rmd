@@ -1,0 +1,342 @@
+---
+title: "Homework 6"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: true
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 18pt
+---
+```{r global-options, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE)
+```
+
+```{r setup, include=FALSE, message=F}
+knitr::opts_chunk$set(echo = T, collapse=T, warning=F)
+```
+
+<style type="text/css">
+  body{
+  font-size: 18pt;
+}
+
+<style type="text/css">
+.table {
+
+    width: 40%;
+}
+</style>
+
+```{r, echo=F}
+library(data.table)
+library(ggplot2)
+library(ggpubr)
+library(latex2exp)
+```
+
+## 0.
+* Create a new file named `cogs2020_hw_6.R` and save it in
+the `cogs2020` folder that you created during Lecture 1.
+
+* If you have not already installed the `data.table` and the
+`ggplot2` packages, do so now. If you use the
+`install.packages` function, do not include it in the script
+that you hand in.
+
+* Make the first line of your script `library(data.table)`
+and the second line `library(ggplot2)`.
+
+* Make the second line of your script `rm(list=ls())`. This
+line of code will erase any variable defined before it. Do
+not put this line of code after anything important that you
+want to keep (e.g., so that I can mark your work).
+
+* After `rm(list=ls())`, create a variable named `my_name`
+and set its value equal to a **character** vector (i.e.,
+letters surrounded by `""` or by `''`) containing your name.
+
+* After `rm(list=ls())`, create a variable named
+`my_student_id` and set its value equal to a **character**
+vector (i.e., letters surrounded by `""` or by `''`)
+containing your student id.
+
+* So far, here is what your file should look like if your
+name is `John Doe` and and your student ID is `12345678`.
+Note that the following code chunk also includes a few lines
+to create a `data.table` named `d` that many of the problems
+below require you manipulate.
+```{r, echo=T}
+# load the packages we will need
+library(data.table)
+library(ggplot2)
+
+# clean session
+rm(list=ls())
+
+# basic id info
+my_name <- "John Doe"
+my_student_id <- "12345678"
+
+# Please include the following line of code as well
+set.seed(0)
+```
+
+** NOTE: This problem set is mostly the same as the previous
+problem set but with one-tailed tests replaced with
+two-tailed tests.**
+
+## 1.
+Suppose that researchers for a popular social media platform
+are interested maximising the amount of time that users
+spend on their app, and that they are faced with a tough
+decision about whether or not the app should use a
+continuous scroll feature. Since opinions on the research
+team are split on the issue, they decide to perform an
+experiment to clear things up. They implement the continuous
+scroll feature and push it to their users. The average time
+that a user spends on app currently is 58 minutes per day.
+Thus they are interested in whether or not continuous scroll
+increases this number. Suppose they obtain the following
+sample from this experiment:
+
+$$
+x = \{ 63.97, 60.29, 85.60, 72.57, 54.65, 53.74, 69.13, 70.07, 67.19, 53.95 \}
+$$
+
+Test the hypothesis that infinite scroll had any effect
+whatsoever (increased or decreased) time on app beyond 58
+minutes per day assuming that the population variance of $X$
+is $\sigma_X^2 = 10$. **Do not use `t.test`, `binim.test` or
+any other built in full test function unless explicitly
+instructed to do so.**
+
+* Store the value of your observed test statistic in a
+variable named `ans_1_test_stat_obs`.
+
+* Store the lower critical value of your test in a variable
+named `ans_1_critical_value_lower`.
+
+* Store the upper critical value of your test in a variable
+named `ans_1_critical_value_upper`.
+
+* Store the lower bound of a 95% CI for your test statistic
+in a variable named `ans_1_CI_lower`.
+
+* Store the upper bound of a 95% CI for your test statistic
+in a variable named `ans_1_CI_upper`.
+
+* Store the p-value of your test in a variable named
+`ans_1_p_value`.
+
+
+## 2.
+Suppose that a cognitive neuroscientist would like to
+discover if the response a participant makes in a
+2-alternative forced choice task can be predicted on the
+basis of neural activity occurring 1 second before the motor
+response is made. They train a machine learning classifier
+to do this, and discover that it correctly predicts
+participant choices in 63 out of 100 trials. Test the
+hypothesis that their machine learning classifier predicts
+participant choice at levels significantly different from
+chance (i.e., above chance or below chance). **Do not use
+`t.test`, `binim.test` or any other built in full test
+function unless explicitly instructed to do so.**
+
+* Store the value of your observed test statistic in a
+variable named `ans_2_test_stat_obs`.
+
+* Store the lower critical value of your test in a variable
+named `ans_2_critical_value_lower`.
+
+* Store the upper critical value of your test in a variable
+named `ans_2_critical_value_upper`.
+
+* Store the lower bound of a 95% CI for your test statistic
+in a variable named `ans_2_CI_lower`.
+
+* Store the upper bound of a 95% CI for your test statistic
+in a variable named `ans_2_CI_upper`.
+
+* Store the p-value of your test in a variable named
+`ans_2_p_value`.
+
+
+## 3.
+Test the hypothesis that $\theta$ is different than 0.5,
+where $\theta$ is a parameter of some random variable.  The
+sampling distribution for $\hat{\theta}$ is shown in the
+following figure and the observed test statistic
+$\hat{\theta}_{obs}$ is shown in blue.  Ensure that the type
+I error rate of your test is $\alpha=0.05$.
+
+```{r, echo=F, include=T}
+xobs <- 0.75
+a <- 0
+b <- 1
+x <- seq(a, b, 0.01)
+fx <- dunif(x, a, b)
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+  geom_line() +
+  geom_segment(aes(x=a, xend=a, y=0, yend=fx[1])) +
+  geom_segment(aes(x=b, xend=b, y=0, yend=fx[length(fx)])) +
+  geom_segment(aes(x=xobs, xend=xobs, y=0, yend=fx[x==xobs]), colour='blue') +
+  xlab(TeX("$\\theta_x$")) +
+  ylab(TeX("$P(\\hat{\\theta} = \\theta_x)$"))
+```
+
+
+* Store the lower critical value of your test in a variable
+named `ans_3_critical_value_lower`.
+
+* Store the upper critical value of your test in a variable
+named `ans_3_critical_value_upper`.
+
+* Store the lower bound of a 95% CI for $\hat{\theta}$ in a
+variable named `ans_3_CI_lower`.
+
+* Store the upper bound of a 95% CI for $\hat{\theta}$ in a
+variable named `ans_3_CI_upper`.
+
+* Store the p-value of this test in a variable named
+`ans_3_p_value`.
+
+
+## 4.
+```{r, echo=F, fig.width=10}
+n <- 2
+
+mu_x_0 <- 5
+sigma_x <-  2 / sqrt(n)
+x_crit_lower <- qnorm(0.05, mu_x_0, sigma_x, lower.tail=T)
+x_crit_upper <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=T)
+mu_x_1 <- mu_x_0 + 1
+
+x <- seq(mu_x_0 - 5*sigma_x, mu_x_1 + 5*sigma_x, 0.01)
+fx0 <- dnorm(x, mu_x_0, sigma_x)
+fx1 <- dnorm(x, mu_x_1, sigma_x)
+d <- data.table(x, fx0, fx1)
+d[x > x_crit_lower & x < x_crit_upper, region0 := 'I'] # confidence
+d[x > x_crit_lower & x < x_crit_upper, region1 := 'II'] # beta
+d[x < x_crit_lower, region0 := 'III'] # alpha lower
+d[x < x_crit_lower, region1 := 'IV'] # power lower
+d[x > x_crit_upper, region0 := 'V'] # alpha upper
+d[x > x_crit_upper, region1 := 'VI'] # power upper
+
+a <- 0.5
+ggplot(d, aes(x=x)) +
+  geom_line(aes(y=fx0)) +
+  geom_line(aes(y=fx1)) +
+  geom_vline(xintercept=x_crit_lower, linetype=2) +
+  geom_vline(xintercept=x_crit_upper, linetype=2) +
+  geom_ribbon(data=d[x < x_crit_lower], aes(x=x, ymin=0, ymax=fx0, fill=region0), alpha=a) +
+  geom_ribbon(data=d[x > x_crit_upper], aes(x=x, ymin=0, ymax=fx0, fill=region0), alpha=a) +
+  geom_ribbon(data=d[x > x_crit_lower & x < x_crit_upper],
+              aes(x=x, ymin=0, ymax=fx0, fill=region0), alpha=a) +
+  geom_ribbon(data=d[x < x_crit_lower], aes(x=x, ymin=0, ymax=fx1, fill=region1), alpha=a) +
+  geom_ribbon(data=d[x > x_crit_upper], aes(x=x, ymin=0, ymax=fx1, fill=region1), alpha=a) +
+  geom_ribbon(data=d[x > x_crit_lower & x < x_crit_upper], 
+              aes(x=x, ymin=0, ymax=fx1, fill=region1), alpha=a) +
+  scale_x_continuous(breaks=c(mu_x_1, mu_x_0), labels=c('H1', 'H0')) +
+  ylab('Probability Density') +
+  theme(legend.title = element_blank()) +
+  annotate('text', x=mu_x_0, y=0.25, label='I') +
+  annotate('text', x=mu_x_1, y=0.25, label='II') +
+  annotate('text', x=2.1, y=0.02, label='III') +
+  annotate('text', x=2.3, y=0, label='IV') +
+  annotate('text', x=7.7, y=0.02, label='V') +
+  annotate('text', x=7.7, y=0.1, label='VI')
+```
+
+Please respond by assigning `"confidence"`, `"alpha"`,
+`"beta"`, or `"power"` to the variables requested below.
+Note that the dashed lines in the above figure are the
+critical values. 
+
+* What quantity does region I in the above plot correspond
+to? Store your answer in a variable named `ans_4a`.
+
+* What quantity does region II in the above plot correspond
+to? Store your answer in a variable named `ans_4b`.
+
+* What quantity does region III in the above plot correspond
+to? Store your answer in a variable named `ans_4c`.
+
+* What quantity does region IV in the above plot correspond
+to? Store your answer in a variable named `ans_4d`.
+
+* What quantity does region V in the above plot correspond
+to? Store your answer in a variable named `ans_4e`.
+
+* What quantity does region VI in the above plot correspond
+to? Store your answer in a variable named `ans_4f`.
+
+
+## Final Check
+A common error on these problem sets is to accidentally
+erase or overwrite variables from one question with those
+from another. Another common error is to name your variables
+slightly wrong (e.g., `Ans_1a` instead of `ans_1a`). Yet
+another common error is to include a line of code or two
+that generates an error, and sometimes this error is serious
+enough to prevent most or all of your script from running,
+in which case you will lose most or all of your marks for
+that assignment. All of these can be a very frustrating way
+to lose marks, but you will indeed lose marks if you make
+these mistakes, so you need to be very careful!
+
+To ensure that this doesn't happen to you, please run your
+entire `.R` script from start to finish. One way to do this
+is to use `Code > Run Region > Run All`, but of course there
+are shortcuts for everything so do as you wish. If there are
+any errors at all when you do this, it is essential that you
+address them.
+
+After all of your code has executed from start to finish
+without and errors at all, then carefully inspect your
+workspace to ensure that the following variables are
+defined. A reasonable way to do this is to try to print each
+one of these variables to the console. If it is defined,
+then it will print without error.
+
+```{r, eval=F, echo=T}
+my_name
+my_student_id
+ans_1_test_stat_obs
+ans_1_critical_value_lower
+ans_1_critical_value_upper
+ans_1_CI_lower
+ans_1_CI_upper
+ans_1_p_value
+ans_2_test_stat_obs
+ans_2_critical_value_lower
+ans_2_critical_value_upper
+ans_2_CI_lower
+ans_2_CI_upper
+ans_2_p_value
+ans_3_critical_value_lower
+ans_3_critical_value_upper
+ans_3_CI_lower
+ans_3_CI_upper
+ans_3_p_value
+ans_4a
+ans_4b
+ans_4c
+ans_4d
+ans_4e
+ans_4f
+ans_4g
+```
+
+Finally, be sure that the file you submit to iLearn is a
+`.R` file and nothing else. Any other extension cannot be
+marked. This means do not submit `.Rmd`, `.RProj`, `.pdf`,
+`.html` or anything else. You must submit a `.R` file.

@@ -672,312 +672,147 @@ ggplot(d, aes(x, fx)) +
 ```
 
 
-## Type I versus Type II errors
-
-### Definitions
-
-- Hypothesis testing is about using noisy data to make decisions about what we
-  think the true state of the universe is.
-
-- Sometimes, our procedure for making these decisions will lead us to make the
-  correct decision, but sometimes we will make the wrong decision.
-
-- In the context of hypothesis testing, there are two ways to make a correct
-  decision and two ways to make an incorrect decision. These are summarised in
-  the following table.
-
-|                   | H0 True                 | H1 True                 |
-|:------------------|:------------------------|:------------------------|
-| Reject H0         | Type I error ($\alpha$) | Power ($1-\beta$)        |
-| Fail to reject H0 | Confidence ($1-\alpha$) | Type II error ($\beta$) |
-
-
-- Here, we have introduced the concept of **power**.
-
-- Power is the probability of correctly rejecting $H_0$.
-
-- Power can only be computed with respect to some fully specified $H_1$.
-
-- This is best seen with a visualisation.
-
-```{r, echo=F}
-mu_x_0 <- 2
-mu_x_1 <- 7
-
-sigma_x <- 2
-
-n <- 10
-x_crit <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=TRUE)
-
-x <- seq(mu_x_0 - 5*sigma_x, mu_x_1 + 5*sigma_x, 0.01)
-fx0 <- dnorm(x, mu_x_0, sigma_x)
-fx1 <- dnorm(x, mu_x_1, sigma_x)
-
-d <- data.table(x, fx0, fx1)
-
-g1 <- ggplot(d, aes(x=x)) +
-  geom_line(aes(y=fx0), colour='red') +
-  geom_line(aes(y=fx1), colour='blue') +
-  geom_vline(xintercept=x_crit, linetype=2) +
-  geom_ribbon(data=d[x<x_crit], aes(x=x, ymin=0, ymax=fx0), fill='red', alpha=0.5) +
-  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
-  ylab('Probability Density') +
-  ggtitle(expression(1-alpha)) +
-  theme(plot.title = element_text(size=36))
-
-g2 <- ggplot(d, aes(x=x)) +
-  geom_line(aes(y=fx0), colour='red') +
-  geom_line(aes(y=fx1), colour='blue') +
-  geom_vline(xintercept=x_crit, linetype=2) +
-  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx0), fill='red', alpha=0.5) +
-  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
-  ylab('Probability Density') +
-  ggtitle(expression(alpha)) +
-  theme(plot.title = element_text(size=36))
-
-
-g3 <- ggplot(d, aes(x=x)) +
-  geom_line(aes(y=fx0), colour='red') +
-  geom_line(aes(y=fx1), colour='blue') +
-  geom_vline(xintercept=x_crit, linetype=2) +
-  geom_ribbon(data=d[x<x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) +
-  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
-  ylab('Probability Density') +
-  ggtitle(expression(beta)) +
-  theme(plot.title = element_text(size=36))
-
-
-g4 <- ggplot(d, aes(x=x)) +
-  geom_line(aes(y=fx0), colour='red') +
-  geom_line(aes(y=fx1), colour='blue') +
-  geom_vline(xintercept=x_crit, linetype=2) +
-  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) +
-  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
-  ylab('Probability Density') +
-  ggtitle(expression(1 - beta)) +
-  theme(plot.title = element_text(size=36))
-
-## ggarrange(g2, g4, g1, g3, ncol=2, nrow=2)
-```
-<div class = "row">
-<div class = "col-md-6">
-
-```{r echo=F}
-g2
-```
-
-- Type I error is given by $\alpha$
-- The probability of a type I error is given by the area under the $H_0$ curve
-  in the rejection region.
-- A type I error is the probability of incorrectly rejecting $H_0$
-- Type I error is completely determined by $H_0$
-- Type I error does not depend on $H_1$
-
-</div>
-<div class = "col-md-6">
-
-```{r echo=F}
-g4
-```
-
-- Power is given by $1 - \beta$
-- Power is given by the area under the $H_1$ curve in the rejection region.
-- Power can depends on both $H_0$ and $H_1$
--
--
-
-</div>
-<div class = "col-md-6">
-
-```{r echo=F}
-g1
-```
-
-- Confidence is given by $1 - \alpha$
-- Confidence is given by the area under the $H_0$ curve outside the rejection region.
-- Confidence depends only on $H_0$
--
--
--
-
-</div>
-<div class = "col-md-6">
-
-```{r echo=F}
-g3
-```
-
-- Type II error is given by $\beta$
-- The probability of a type II error is given by the area under the $H_1$ curve
-  outside the rejection region.
-- A type II error is the probability of incorrectly failing to reject $H_0$
-- Type II error depends on both $H_0$ and $H1$
--
-
-
-</div>
-</div>
-
-## power
-
-```{r, echo=F}
-mu_x_0 <- 2
-mu_x_1 <- 7
-
-sigma_x <- 2
-
-n <- 10
-x_crit <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=TRUE)
-
-x <- seq(mu_x_0 - 5*sigma_x, mu_x_1 + 5*sigma_x, 0.01)
-fx0 <- dnorm(x, mu_x_0, sigma_x)
-fx1 <- dnorm(x, mu_x_1, sigma_x)
-
-d <- data.table(x, fx0, fx1)
-
-ggplot(d, aes(x=x)) +
-  geom_line(aes(y=fx0), colour='red') +
-  geom_line(aes(y=fx1), colour='blue') +
-  geom_vline(xintercept=x_crit, linetype=2) +
-  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) +
-  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
-  ylab('Probability Density') +
-  ggtitle(expression(1-beta)) +
-  theme(plot.title = element_text(size=36))
-```
-
-- In general, we want as much power as possible.
-- This is because, if $H_0$ isn't true, then we'd really like to reject it.
-- How can we increase power?
-
-### Increase the distance between $H_0$ and $H_1$
-
-```{r, echo=F}
-mu_x_0 <- 2
-mu_x_1 <- c(7, 10)
-
-sigma_x <- 2
-
-n <- 10
-x_crit <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=TRUE)
-
-x <- seq(mu_x_0 - 4*sigma_x, mu_x_1[2] + 4*sigma_x, 0.01)
-fx0 <- dnorm(x, mu_x_0, sigma_x)
-fx1 <- dnorm(x, mu_x_1[1], sigma_x)
-fx2 <- dnorm(x, mu_x_1[2], sigma_x)
-
-d <- data.table(x, fx0, fx1, fx2)
-
-g1 <- ggplot(d, aes(x=x)) +
-  geom_line(aes(y=fx0), colour='red') +
-  geom_line(aes(y=fx1), colour='blue') +
-  geom_vline(xintercept=x_crit, linetype=2) +
-  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) +
-  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
-  ylab('Probability Density') +
-  ggtitle(expression(1-beta)) +
-  theme(
-    aspect.ratio=0.85,
-    plot.title = element_text(size=30))
-
-g2 <- ggplot(d, aes(x=x)) +
-  geom_line(aes(y=fx0), colour='red') +
-  geom_line(aes(y=fx2), colour='blue') +
-  geom_vline(xintercept=x_crit, linetype=2) +
-  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx2), fill='blue', alpha=0.5) +
-  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
-  ylab('Probability Density') +
-  ggtitle(expression(1-beta)) +
-  theme(
-    aspect.ratio=0.85,
-    plot.title = element_text(size=30))
-
-ggarrange(g1, g2, ncol=2)
-```
-
-- The closer together the $H_0$ and $H_1$ distributions, the less power we have.
-
-
-### Decrease the variance of $H_0$ and $H_1$
-
-```{r, echo=F}
-mu_x_0 <- 2
-mu_x_1 <- 10
-
-sigma_x <- c(2, 20)
-
-n <- 10
-x_crit_1 <- qnorm(0.95, mu_x_0, sigma_x[1], lower.tail=TRUE)
-x_crit_2 <- qnorm(0.95, mu_x_0, sigma_x[2], lower.tail=TRUE)
-
-x <- seq(mu_x_0 - 4*sigma_x[2], mu_x_1 + 4*sigma_x[2], 0.01)
-fx01 <- dnorm(x, mu_x_0, sigma_x[1])
-fx11 <- dnorm(x, mu_x_1, sigma_x[1])
-fx02 <- dnorm(x, mu_x_0, sigma_x[2])
-fx12 <- dnorm(x, mu_x_1, sigma_x[2])
-
-
-d <- data.table(x, fx01, fx11, fx02, fx12)
-
-g1 <- ggplot(d, aes(x=x)) +
-  geom_line(aes(y=fx01), colour='red') +
-  geom_line(aes(y=fx11), colour='blue') +
-  geom_vline(xintercept=x_crit, linetype=2) +
-  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx11), fill='blue', alpha=0.5) +
-  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
-  ylab('Probability Density') +
-  ylim(0, 0.2) +
-  ggtitle(expression(1-beta)) +
-  theme(
-    aspect.ratio=0.85,
-    plot.title = element_text(size=30))
-
-g2 <- ggplot(d, aes(x=x)) +
-  geom_line(aes(y=fx02), colour='red') +
-  geom_line(aes(y=fx12), colour='blue') +
-  geom_vline(xintercept=x_crit, linetype=2) +
-  geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx12), fill='blue', alpha=0.5) +
-  scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) +
-  ylab('Probability Density') +
-  ylim(0, 0.2) +
-  ggtitle(expression(1-beta)) +
-  theme(
-    aspect.ratio=0.85,
-    plot.title = element_text(size=30))
-
-ggarrange(g1, g2, ncol=2)
-```
-
-- The smaller the variance of $H_0$ and $H_1$, the greater power we have
-
-
-### Power as a function of sample size
-
-- The key point here is that, when dealing with the distribution of sample
-  means, variance is inversely proportional to sample size.
-
-- $\sigma_\bar{X} = \frac{\sigma_X}{\sqrt{n}}$
-
-- This means that power increases with increased sample size.
-
-```{r, echo=F}
-mu_x_0 <- 20
-mu_x_1 <- 70
-
-sigma_x <- 30
-
-n <- 1:10
-
-mu_x_bar_0 <- mu_x_0
-mu_x_bar_1 <- mu_x_1
-
-sigma_x_bar <- sigma_x / sqrt(n)
-
-x_crit <- qnorm(0.95, mu_x_bar_0, sigma_x_bar, lower.tail=TRUE)
-power <- pnorm(x_crit, mu_x_bar_1, sigma_x_bar, lower.tail=FALSE)
-
-d <- data.table(n, power)
-
-ggplot(d, aes(n, power)) +
-  geom_line()
-```
+<!-- ## Type I versus Type II errors -->
+
+<!-- ### Definitions -->
+
+<!-- - Hypothesis testing is about using noisy data to make decisions about what we -->
+<!--   think the true state of the universe is. -->
+
+<!-- - Sometimes, our procedure for making these decisions will lead us to make the -->
+<!--   correct decision, but sometimes we will make the wrong decision. -->
+
+<!-- - In the context of hypothesis testing, there are two ways to make a correct -->
+<!--   decision and two ways to make an incorrect decision. These are summarised in -->
+<!--   the following table. -->
+
+<!-- |                   | H0 True                 | H1 True                 | -->
+<!-- |:------------------|:------------------------|:------------------------| -->
+<!-- | Reject H0         | Type I error ($\alpha$) | Power ($1-\beta$)        | -->
+<!-- | Fail to reject H0 | Confidence ($1-\alpha$) | Type II error ($\beta$) | -->
+
+
+<!-- - Here, we have introduced the concept of **power**. -->
+
+<!-- - Power is the probability of correctly rejecting $H_0$. -->
+
+<!-- - Power can only be computed with respect to some fully specified $H_1$. -->
+
+<!-- - This is best seen with a visualisation. -->
+
+<!-- ```{r, echo=F} -->
+<!-- mu_x_0 <- 2 -->
+<!-- mu_x_1 <- 7 -->
+
+<!-- sigma_x <- 2 -->
+
+<!-- n <- 10 -->
+<!-- x_crit <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=TRUE) -->
+
+<!-- x <- seq(mu_x_0 - 5*sigma_x, mu_x_1 + 5*sigma_x, 0.01) -->
+<!-- fx0 <- dnorm(x, mu_x_0, sigma_x) -->
+<!-- fx1 <- dnorm(x, mu_x_1, sigma_x) -->
+
+<!-- d <- data.table(x, fx0, fx1) -->
+
+<!-- g1 <- ggplot(d, aes(x=x)) + -->
+<!--   geom_line(aes(y=fx0), colour='red') + -->
+<!--   geom_line(aes(y=fx1), colour='blue') + -->
+<!--   geom_vline(xintercept=x_crit, linetype=2) + -->
+<!--   geom_ribbon(data=d[x<x_crit], aes(x=x, ymin=0, ymax=fx0), fill='red', alpha=0.5) + -->
+<!--   scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) + -->
+<!--   ylab('Probability Density') + -->
+<!--   ggtitle(expression(1-alpha)) + -->
+<!--   theme(plot.title = element_text(size=36)) -->
+
+<!-- g2 <- ggplot(d, aes(x=x)) + -->
+<!--   geom_line(aes(y=fx0), colour='red') + -->
+<!--   geom_line(aes(y=fx1), colour='blue') + -->
+<!--   geom_vline(xintercept=x_crit, linetype=2) + -->
+<!--   geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx0), fill='red', alpha=0.5) + -->
+<!--   scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) + -->
+<!--   ylab('Probability Density') + -->
+<!--   ggtitle(expression(alpha)) + -->
+<!--   theme(plot.title = element_text(size=36)) -->
+
+
+<!-- g3 <- ggplot(d, aes(x=x)) + -->
+<!--   geom_line(aes(y=fx0), colour='red') + -->
+<!--   geom_line(aes(y=fx1), colour='blue') + -->
+<!--   geom_vline(xintercept=x_crit, linetype=2) + -->
+<!--   geom_ribbon(data=d[x<x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) + -->
+<!--   scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) + -->
+<!--   ylab('Probability Density') + -->
+<!--   ggtitle(expression(beta)) + -->
+<!--   theme(plot.title = element_text(size=36)) -->
+
+
+<!-- g4 <- ggplot(d, aes(x=x)) + -->
+<!--   geom_line(aes(y=fx0), colour='red') + -->
+<!--   geom_line(aes(y=fx1), colour='blue') + -->
+<!--   geom_vline(xintercept=x_crit, linetype=2) + -->
+<!--   geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) + -->
+<!--   scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) + -->
+<!--   ylab('Probability Density') + -->
+<!--   ggtitle(expression(1 - beta)) + -->
+<!--   theme(plot.title = element_text(size=36)) -->
+
+<!-- ## ggarrange(g2, g4, g1, g3, ncol=2, nrow=2) -->
+<!-- ``` -->
+<!-- <div class = "row"> -->
+<!-- <div class = "col-md-6"> -->
+
+<!-- ```{r echo=F} -->
+<!-- g2 -->
+<!-- ``` -->
+
+<!-- - Type I error is given by $\alpha$ -->
+<!-- - The probability of a type I error is given by the area under the $H_0$ curve -->
+<!--   in the rejection region. -->
+<!-- - A type I error is the probability of incorrectly rejecting $H_0$ -->
+<!-- - Type I error is completely determined by $H_0$ -->
+<!-- - Type I error does not depend on $H_1$ -->
+
+<!-- </div> -->
+<!-- <div class = "col-md-6"> -->
+
+<!-- ```{r echo=F} -->
+<!-- g4 -->
+<!-- ``` -->
+
+<!-- - Power is given by $1 - \beta$ -->
+<!-- - Power is given by the area under the $H_1$ curve in the rejection region. -->
+<!-- - Power can depends on both $H_0$ and $H_1$ -->
+<!-- - -->
+<!-- - -->
+
+<!-- </div> -->
+<!-- <div class = "col-md-6"> -->
+
+<!-- ```{r echo=F} -->
+<!-- g1 -->
+<!-- ``` -->
+
+<!-- - Confidence is given by $1 - \alpha$ -->
+<!-- - Confidence is given by the area under the $H_0$ curve outside the rejection region. -->
+<!-- - Confidence depends only on $H_0$ -->
+<!-- - -->
+<!-- - -->
+<!-- - -->
+
+<!-- </div> -->
+<!-- <div class = "col-md-6"> -->
+
+<!-- ```{r echo=F} -->
+<!-- g3 -->
+<!-- ``` -->
+
+<!-- - Type II error is given by $\beta$ -->
+<!-- - The probability of a type II error is given by the area under the $H_1$ curve -->
+<!--   outside the rejection region. -->
+<!-- - A type II error is the probability of incorrectly failing to reject $H_0$ -->
+<!-- - Type II error depends on both $H_0$ and $H1$ -->
+<!-- - -->
+
+<!-- </div> -->
+<!-- </div> -->
