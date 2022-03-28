@@ -267,14 +267,12 @@ y4 <- d[, sort(probability)][4]
 ```
 
 ```{r}
-
 ## For all the following problems, just read off the graph.
 
 ## The key point to notice is that this cdf corresponds to a
 ## discrete random variable.
 
 ## X has non-zero probability only for x=29, x=123, x=147, x=213, x=228
-
 ```
 
 - Compute $P(X < `r x2`)$

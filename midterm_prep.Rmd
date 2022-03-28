@@ -423,29 +423,29 @@ ggplot(ddd, aes(maze, V1)) +
 ```
 
 
-## NHST concepts
-```{r echo=F}
+<!-- ## NHST concepts -->
+<!-- ```{r echo=F} -->
 
-mux <- 20
-sigx <- 5
-x <- seq(-5*sigx + mux, 5*sigx + mux, 0.01)
-fx <- dnorm(x, mux, sigx)
-dtx <- data.table(x, fx)
-gx <- ggplot(dtx, aes(x, fx)) + 
-  geom_line() +
-  xlab(TeX('$x$')) +
-  ylab(TeX('Probability Density $f(X=x)$'))
+<!-- mux <- 20 -->
+<!-- sigx <- 5 -->
+<!-- x <- seq(-5*sigx + mux, 5*sigx + mux, 0.01) -->
+<!-- fx <- dnorm(x, mux, sigx) -->
+<!-- dtx <- data.table(x, fx) -->
+<!-- gx <- ggplot(dtx, aes(x, fx)) +  -->
+<!--   geom_line() + -->
+<!--   xlab(TeX('$x$')) + -->
+<!--   ylab(TeX('Probability Density $f(X=x)$')) -->
 
-n <- 15
-muxbar <- 20
-sigxbar <- 5 / sqrt(n)
-xbar <- seq(-5*sigxbar + muxbar, 5*sigxbar + muxbar, 0.01)
-fxbar <- dnorm(xbar, muxbar, sigxbar)
-dtxbar <- data.table(xbar, fxbar)
-gxbar <- ggplot(dtxbar, aes(xbar, fxbar)) + 
-  geom_line() +
-  xlab(TeX('$\\bar{x}$')) +
-  ylab(TeX('Probability Density $f(\\bar{X}=\\bar{x})$'))
+<!-- n <- 15 -->
+<!-- muxbar <- 20 -->
+<!-- sigxbar <- 5 / sqrt(n) -->
+<!-- xbar <- seq(-5*sigxbar + muxbar, 5*sigxbar + muxbar, 0.01) -->
+<!-- fxbar <- dnorm(xbar, muxbar, sigxbar) -->
+<!-- dtxbar <- data.table(xbar, fxbar) -->
+<!-- gxbar <- ggplot(dtxbar, aes(xbar, fxbar)) +  -->
+<!--   geom_line() + -->
+<!--   xlab(TeX('$\\bar{x}$')) + -->
+<!--   ylab(TeX('Probability Density $f(\\bar{X}=\\bar{x})$')) -->
 
-ggarrange(gx, gxbar, ncol=2)
-```
+<!-- ggarrange(gx, gxbar, ncol=2) -->
+<!-- ``` -->

@@ -15,10 +15,6 @@ output:
 fontsize: 18pt
 ---
 
-```{r global-options, include=FALSE}
-knitr::opts_chunk$set(warning=FALSE)
-```
-
 ```{r setup, include=FALSE, message=F}
 knitr::opts_chunk$set(echo = T, collapse=T, warning=F)
 ```
@@ -183,13 +179,53 @@ y4 <- d[, sort(mass)][4]
 
 - Is $X$ continuous or discrete?
 
+```{r}
+## X is discrete because it is defined for only a few
+## individual x values.
+```
+
 - Compute $P(X < `r x3`)$
+
+```{r}
+## Given a probability mass function, probabilities of a
+## particular outcome are given by the height of the pmf at
+## that value. The x values 51 and 40 are the only x values
+## that satisfy X<73
+p <- 0.5517 + 0.0776
+```
 
 - Compute $P(X > `r x3`)$
 
+```{r}
+## Same logic as above
+p <- 0.1724
+```
+
 - Compute $P(`r x1` \leq X < `r x3`)$
 
+```{r}
+## Same logic as above
+p <- 0.5517 + 0.0776
+```
+
 - Compute the mean and variance of $X$
+
+```{r}
+mux <- 0.5517*40 + 0.0776*51 + 0.1983*70 + 0.1724*78
+
+# option 1
+varx <- 0.5517*( 40 - mux )^2 + 
+         0.0776*( 51 - mux )^2 + 
+         0.1983*( 70 - mux )^2 + 
+         0.1724*( 78 - mux)^2
+
+# option 2
+varx <- 0.5517*40^2 + 
+        0.0776*51^2 + 
+        0.1983*70^2 + 
+        0.1724*78^2 -
+        mux^2
+```
 
 ## CDF
 
@@ -197,11 +233,33 @@ y4 <- d[, sort(mass)][4]
 
 For the random variable $X \sim N(\mu_X=10, \sigma_X=2)$
 
+```{r}
+## Begin by defining the parameters of the Normal
+## distribution that we are being asked about.
+mux <- 10
+sigx <- 2
+```
+
 - Compute $P(X < 12)$
+
+```{r}
+## Recall that for continuous distributions P(X<x) =
+## P(X<=x), which keeps our use of `lower.tail` pretty
+## straight forward.
+pnorm(12, mux, sigx, lower.tail=TRUE)
+```
 
 - Compute $P(X > 8)$
 
+```{r}
+pnorm(8, mux, sigx, lower.tail=FALSE)
+```
+
 - Compute $P(8 \leq X < 12)$
+
+```{r}
+pnorm(12, mux, sigx, lower.tail=TRUE) - pnorm(8, mux, sigx, lower.tail=TRUE)
+```
 
 ### Practice 2
 
@@ -227,13 +285,32 @@ y4 <- d[, sort(probability)][4]
 
 ```
 
-- Is $X$ continuous or discrete?
+```{r}
+## For all the following problems, just read off the graph.
+
+## The key point to notice is that this cdf corresponds to a
+## discrete random variable.
+
+## X has non-zero probability only for x=29, x=123, x=147, x=213, x=228
+```
 
 - Compute $P(X < `r x2`)$
 
+```{r}
+## P(X<123) = 0.1379
+```
+
 - Compute $P(X \geq `r x2`)$
 
+```{r}
+## P(X>=123) = 1 - 0.1379
+```
+
 - Compute $P(`r x2` \leq X < `r x3`)$
+
+```{r}
+## P(123≤X<147) = 0.2517
+```
 
 ## Quantile Function
 
@@ -243,55 +320,249 @@ For the random variable $X \sim \mathcal{N}(\mu_x = 5, \sigma_x=3)$
 
 - Find $x$ such that $P(X < x) = 0.5$
 
+```{r}
+qnorm(0.5, 5, 3, lower.tail=TRUE)
+```
+
 - Find $x$ such that $P(X < x) = 0.05$
 
+```{r}
+qnorm(0.05, 5, 3, lower.tail=TRUE)
+```
+
 - Find $x$ such that $P(X \geq x) = 0.05$
+
+```{r}
+qnorm(0.05, 5, 3, lower.tail=FALSE)
+```
 
 ### Practice 2
 
 For the random variable $X \sim \mathcal{Poisson}(\lambda=4)$
 
+```{r}
+## You may not have seen a Poisson random variable before,
+## regardless of whether you have or haven't, R knows about
+## it and provides all the usual functions to work with it:
+## dpois
+## ppois
+## qpois
+## rpois
+
+## Also, since you may not have seen a Pisson distribution,
+## I have included code to plot it for you, so you can
+## corroborate the results you obtain using the above functions
+## with what you can obtain from a visual.
+```
+
 - Find $x$ such that $P(X \leq x) = 0.5$
+
+```{r}
+## Reading off this graph, we see that P(X<=x)=0.05 occurs
+## at x=4
+p <- seq(0,0.99,0.01)
+qf <- qpois(p, 4, lower.tail=TRUE)
+d <- data.table(p, qf)
+ggplot(d, aes(x=p, y=qf)) +
+  geom_point() +
+  scale_y_continuous(breaks=qf) +
+  xlab('P(X <= x)') +
+  ylab('x') +
+  geom_vline(xintercept=0.5, linetype=2)
+
+# same result from the straight forward use of the qpois
+# function
+qpois(0.5, 4, lower.tail=TRUE)
+```
 
 - Find $x$ such that $P(X < x) = 0.05$
 
+```{r}
+## Here, you have to be careful to remember that P(X<=x) is
+## not the same as P(X<x) when X is discrete. 
+p <- seq(0,0.99,0.01)
+qf <- qpois(p, 4, lower.tail=TRUE)
+d <- data.table(p, qf)
+ggplot(d, aes(x=p, y=qf)) +
+  geom_point() +
+  scale_y_continuous(breaks=qf) +
+  xlab('P(X <= x)') +
+  ylab('x') +
+  geom_vline(xintercept=0.05, linetype=2)
+
+## The +1 is because `lower.tail=TRUE` gives P(X<=x) but we
+## are asked for P(X < x). Here, we are using this fact:
+## P(X<=x) = P(X<x+1) if x can only be 1, 2, 3, 4... n
+qpois(0.05, 4, lower.tail=TRUE) + 1
+```
+
 - Find $x$ such that $P(X > x) = 0.05$
+
+```{r}
+## Nothing to be extra careful about here becuase
+## `lower.tail=TRUE` will give us x such that P(X>x)
+p <- seq(0,0.99,0.01)
+qf <- qpois(p, 4, lower.tail=FALSE)
+d <- data.table(p, qf)
+ggplot(d, aes(x=p, y=qf)) +
+  geom_point() +
+  scale_y_continuous(breaks=qf) +
+  xlab('P(X > x)') +
+  ylab('x') +
+  geom_vline(xintercept=0.05, linetype=2)
+
+qpois(0.05, 4, lower.tail=FALSE)
+```
 
 ## NHST
 
 ### Practice 1
 
-Consider an experiment in which participants first learn novel categories, and
-are subsequently asked to perform some other task. The question the researchers
-are interested in is how initial learning affects the subsequent task, and it is
-therefore critical that participants that didn't learn anything be excluded from
-the final analysis. An exclusion criteria is set such that any participant that
-fails to reach at least $60\%$ accuracy by the end of
-training is excluded. Suppose that data is collected from 30
+Consider an experiment in which participants first learn
+novel categories, and are subsequently asked to perform some
+other task. The question the researchers are interested in
+is how initial learning affects the subsequent task, and it
+is therefore critical that participants that didn't learn
+anything be excluded from the final analysis. An exclusion
+criteria is set such that any participant that fails to
+reach at least $60\%$ accuracy by the end of training is
+excluded. Suppose that data is collected from 30
 participants, and of these, 5 are excluded. Is this greater
 than would be expected if the true probability -- denoted
 $p$ -- of meeting the exclusion criteria was 0.1?
 
 - Answer this question going through all 5 steps in long form.
 
+```{r}
+## 1
+## Let X = number excluded
+## X ~ Binomial(n, p)
+
+## H0: p = 0.1
+## H1: p > 0.1
+
+## 2
+# alpha = 0.05
+
+## 3
+## p_hat = n_success / n_total
+## p_hat ~ Binomial(n, p); x -> x/n_total 
+## "x/n_total" is to convert between count and proportion
+
+## 4
+n <- 30
+p_hat_obs <- 5 / n
+
+## 5
+p_val <- pbinom(p_hat_obs*n-1, n, 0.1, lower.tail=FALSE)
+p_hat_crit <- qbinom(0.05, n, 0.1, lower.tail=FALSE)/n
+
+p_val
+p_hat_crit
+
+x <- 0:n
+fx <- dbinom(x, n, 0.1)
+x <- x / n
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+  geom_point() +
+  geom_segment(aes(x=p_hat_obs,  
+                   xend=p_hat_obs,  
+                   y=0,  
+                   yend=max(fx)),
+               linetype=2, 
+               colour='grey') +
+  geom_segment(aes(x=p_hat_crit,  
+                   xend=p_hat_crit,  
+                   y=0,  
+                   yend=max(fx)),
+               linetype=2, 
+               colour='red')
+
+if(p_val < 0.05) {
+  print('reject H0')
+} else {
+  print('fail to reject H0')
+}
+
+if(p_hat_obs > p_hat_crit) {
+  print('reject H0')
+} else {
+  print('fail to reject H0')
+}
+
+## NOTE: I haven't shown how to compute confidence interval
+## estimates from Binomial random variables (or any discrete
+## random variable for that matter). It follows the same
+## principles in most ways as our approach for continuous
+## random variables, but it turns out to be a bit more
+## involved. Because of that, I will not expect the CI
+## intervals that you compute by hand to exactly match those
+## from R. You will, however, need to be careful to properly
+## deal with lower.tail=F issues.
+```
+
 - Is there a built in function you can use? If so, use it.
 
-- Report a point estimate for $\hat{p}$.
+```{r}
+binom.test(p_hat_obs*n, n=n, p=0.1, alternative='greater', conf.level=0.95)
+```
 
-- Report the critical value for $\alpha=0.05$.
+- Report a point estimates for $\hat{p}$
 
-- Compute power against the alternative $H_1$ that $p$ is $0.3$.
+```{r}
+p_hat_obs
+```
+
+- Report the critical value for $\alpha=0.05$
+
+```{r}
+x <- 0:n
+fx <- pbinom(x, n, 0.1, lower.tail=FALSE)
+x <- x/n
+d <- data.table(x, fx)
+ggplot(d, aes(x, fx)) +
+  geom_point() +
+  geom_hline(yintercept=0.05) +
+  geom_segment(aes(x=x, xend=x+1/n, y=fx, yend=fx)) +
+  scale_x_continuous(breaks=round(x, 1)) +
+  ylab('P(X > x)') +
+  xlab('x')
+
+p_hat_crit
+```
+
+- Compute power against the alternative $H_1$ that $p$ is .3
+
+```{r}
+x <- 0:30
+pmf_h0 <- dbinom(x, n, 0.1)
+pmf_h1 <- dbinom(x, n, 0.3)
+x <- x/n
+d <- data.table(x, pmf_h0, pmf_h1)
+dd <- melt(d, 
+          id.vars='x', 
+          measure.vars=c('pmf_h0', 'pmf_h1'),
+          variable.name='h',
+          value.name='fx')
+ggplot(dd) +
+  geom_point(aes(x, fx, colour=h)) +
+  geom_vline(xintercept=p_hat_crit, linetype=2)
+
+## power is the probability in the rejection region
+type_I <- d[x > p_hat_crit, sum(pmf_h0)]
+type_II <- d[x <= p_hat_crit, sum(pmf_h1)]
+power <- d[x > p_hat_crit, sum(pmf_h1)]
+```
 
 ### Practice 2
 
 ```{r echo=FALSE}
-
 n <- 10
 mu_x <- 0.6
 sigma_x <- 0.15
 x <- rnorm(n, mu_x, sigma_x)
 x[x > 1] <- 1
-
 ```
 
 Consider an experiment in which participants study a list of
@@ -310,27 +581,92 @@ performance is drawn from, and suppose we know $\sigma_x =
 
 Is $\mu_x$ significantly greater than $0.6$?
 
-- Answer this question going through all 5 steps in long form.
+```{r}
+## 1
+## H0: mux = .6
+## H1: mux > .6
 
-- Is there a built in function you can use? If so, use it.
+## 2
+# alpha <- 0.05
 
-- Report point and interval estimates for $\hat{\mu_x}$.
+## 3
+## mu_x_hat = xbar 
+## x_bar ~ N(mu_x_bar, sig_x_bar)
+## mu_x_bar = mu_x
+## sig_x_bar = sig_x/sqrt(n)
 
-- Report the critical value for $\alpha=0.05$.
+n <- length(x)
+sig_x <- 0.15
+mu_x_bar <- 0.60
+sig_x_bar <- sig_x/sqrt(n)
 
-- Compute power against the alternative $H_1$ that $\mu_x$ is $0.62$.
+## 4
+x_bar_obs <- mean(x)
 
+## 5
+p_val <- pnorm(x_bar_obs, mu_x_bar, sig_x_bar, lower.tail=FALSE)
+x_bar_crit <- qnorm(0.05, mu_x_bar, sig_x_bar, lower.tail=FALSE)
+```
+
+- Is there a built-in function you can use? If so, use it.
+
+```{r}
+## Unfortunately, there is not.
+```
+
+- Report point and interval estimates for $\hat{\mu_x}$
+
+```{r}
+# point estimate
+x_bar_obs
+
+# interval estimate (90% interval)
+ci_width <- qnorm(0.95, mu_x_bar, sig_x_bar) - qnorm(0.05, mu_x_bar, sig_x_bar)
+ci_lower <- x_bar_obs - ci_width / 2
+ci_upper <- x_bar_obs + ci_width / 2
+
+
+# interval estimate (95% interval)
+ci_width <- qnorm(0.975, mu_x_bar, sig_x_bar) - qnorm(0.025, mu_x_bar, sig_x_bar)
+ci_lower <- x_bar_obs - ci_width / 2
+ci_upper <- x_bar_obs + ci_width / 2
+```
+
+- Report the critical value for $\alpha=0.05$
+
+```{r}
+x_bar_crit
+```
+
+- Compute power against the alternative $H_1$ that $\mu_x$ is 0.62
+
+```{r}
+x <- seq(mu_x_bar-sig_x_bar*4, mu_x_bar+sig_x_bar*4, 0.001)
+pdf_h0 <- dnorm(x, 0.60, sig_x_bar)
+pdf_h1 <- dnorm(x, 0.62, sig_x_bar)
+d <- data.table(x, pdf_h0, pdf_h1)
+dd <- melt(d, 
+          id.vars='x', 
+          measure.vars=c('pdf_h0', 'pdf_h1'),
+          variable.name='h',
+          value.name='fx')
+ggplot(dd) +
+  geom_line(aes(x, fx, colour=h)) +
+  geom_vline(xintercept=x_bar_crit, linetype=2)
+
+typeI <- pnorm(x_bar_crit, 0.60, sig_x_bar, lower.tail=FALSE)
+typeII <- pnorm(x_bar_crit, 0.62, sig_x_bar, lower.tail=TRUE)
+power <- pnorm(x_bar_crit, 0.62, sig_x_bar, lower.tail=FALSE)
+```
 
 ### Practice 3
 
 ```{r echo=FALSE}
-
 n <- 15
 
 mu_x <- 0
-sigma_x <- 15
-x <- rnorm(n, mu_x, sigma_x)
-
+sig_x <- 15
+x <- rnorm(n, mu_x, sig_x)
 ```
 
 Consider an experiment in which participants attempt to toss
@@ -346,23 +682,114 @@ Let $X$ be the random variable that each participant's
 performance is drawn from.
 
 Is $\mu_x$ significantly different from $0$?
+```{r}
+## 1
+## H0: mux = 0
+## H1: mux != 0
 
-- Answer this question going through all 5 steps in long form.
+## 2
+# alpha <- 0.05
+
+## 3
+## mu_x_hat = x_bar ~ N(mu_x_bar, sig_x_bar)
+## mu_x_bar = mu_x
+## sig_x_bar = sig_x / sqrt(n)
+## Don't know sig_x so we need to estimate it
+## This means we need to transform everything for a t-test
+## t_x_bar = (x_bar - mu_x_bar) / sig_x_bar 
+## t_x_bar ~ t(n-1)
+
+n <- length(x)
+df <- n - 1
+mu_x_bar <- 0
+
+sig_x <- sd(x)
+sig_x_bar <- sig_x/sqrt(n)
+
+## 4
+x_bar_obs <- mean(x)
+t_obs <- (x_bar_obs - mu_x_bar) / sig_x_bar
+
+## 5
+p_val_lower <- pt(-abs(t_obs), n-1, lower.tail = TRUE)
+p_val_upper <- pt(abs(t_obs), n-1, lower.tail = FALSE)
+p_val <- p_val_lower + p_val_upper
+
+t_crit_lower <- qt(0.025, n-1)
+t_crit_upper <- qt(0.975, n-1)
+```
 
 - Is there a built in function you can use? If so, use it.
 
-- Report point and interval estimates for $\hat{\mu_x}$.
+```{r}
+t.test(x, mu=0, alternative='two.sided')
+```
 
-- Report the critical value for $\alpha=0.05$.
+- Report point and interval estimates for $\hat{\mu_x}$
+
+```{r}
+# The insight you have to have here is that to convert
+# between t which has mean 0 and (approximately) sd 1, you
+# have to scale the interval you get from the t by sig_x_bar.
+ci_width <- ( t_crit_upper - t_crit_lower) * sig_x_bar
+ci_lower <- x_bar_obs - ci_width / 2
+ci_upper <- x_bar_obs + ci_width / 2
+
+# print out stuff to compare with t.test()
+p_val
+ci_lower
+ci_upper
+```
+
+- Report the critical values for $\alpha=0.05$
+
+```{r}
+t_crit_lower
+t_crit_upper
+```
 
 - Compute power against the alternative $H_1$ that $\mu_x$
-is $2$ assuming that the population standard deviation is
+is 2 assuming that the population standard deviation is
 equal to the sample standard deviation.
+
+```{r}
+# In x_bar units the mean of the null and the alternative
+# are 2 units apart. However, since we have to estimate the
+# population standard deviation from the data, we need to
+# work with t-distributions.
+# mu_h0 = 0 --> t
+# mu_h1 = 2 --> t + 2/sig_x_bar
+lower_t <- -4
+upper_t <-  4 + 2/sig_x_bar
+t <- seq(lower_t, upper_t, 0.1)
+pdf_h0 <- dt(t, n-1)
+pdf_h1 <- dt(t-2/sig_x_bar, n-1)
+d <- data.table(t, pdf_h0, pdf_h1)
+dd <- melt(d, 
+          id.vars='t', 
+          measure.vars=c('pdf_h0', 'pdf_h1'),
+          variable.name='h',
+          value.name='ft')
+ggplot(dd) +
+  geom_line(aes(t, ft, colour=h)) +
+  geom_vline(xintercept=t_crit_lower, linetype=2) +
+  geom_vline(xintercept=t_crit_upper, linetype=2)
+
+# contribution from upper tail
+typeI_upper <- pt(t_crit_upper, n-1, lower.tail=FALSE)
+typeII_upper <- pt(t_crit_upper-2/sig_x_bar, n-1, lower.tail=TRUE)
+power_upper <- pt(t_crit_upper-2/sig_x_bar, n-1, lower.tail=FALSE)
+
+# contribution from lower tail
+typeI_lower <- pt(t_crit_lower, n-1, lower.tail=TRUE)
+typeII_lower <- pt(t_crit_lower-2/sig_x_bar, n-1, lower.tail=FALSE)
+power_lower <- pt(t_crit_lower-2/sig_x_bar, n-1, lower.tail=TRUE)
+```
+
 
 ## Data Wrangling
 
 ```{r echo=FALSE}
-
 ## Make data up -- Rats running a maze -- simple wide format
 mu_x <- runif(1, 100, 100)
 sigma_x <- runif(1, 100, 100)
@@ -403,7 +830,6 @@ d_long <- data.table(run,
 
 fwrite(d_wide, '../live_course_material/data/maze/d_wide.csv')
 fwrite(d_long, '../live_course_material/data/maze/d_long.csv')
-
 ```
 
 Consider an experiment in which a set of rats run through a
@@ -435,9 +861,12 @@ experiment and acquired the following data:
 student 1 (shown below) to long format.
 
 ```{r echo=FALSE}
-
 d_wide
+```
 
+```{r}
+d <- fread('https://crossley.github.io/cogs2020/data/maze/d_wide.csv')
+melt(d, id.vars=c('run'))
 ```
 
 ### Practice 2
@@ -446,9 +875,12 @@ d_wide
 student 2 (shown below) to wide format.
 
 ```{r echo=FALSE}
-
 d_long
+```
 
+```{r}
+d <- fread('https://crossley.github.io/cogs2020/data/maze/d_long.csv')
+dcast(d, run ~ rat, value.var='maze_time')
 ```
 
 ### Practice 3
@@ -484,9 +916,7 @@ d <- data.table(rat,
 ```
 
 ```{r echo=FALSE}
-
 fwrite(d, '../live_course_material/data/maze/maze.csv')
-
 ```
 
 - Recreate the following visualisation of their results.
@@ -495,41 +925,40 @@ fwrite(d, '../live_course_material/data/maze/maze.csv')
   mean `time` per `maze` per `rat`. Then, compute the mean and
   standard error from these values.
 
-```{r echo=FALSE}
-
+```{r echo=T}
+d <- fread('https://crossley.github.io/cogs2020/data/maze/maze.csv')
 dd <- d[, mean(time), .(rat, maze)]
 ddd <- dd[, .(mean(V1), sd(V1)/sqrt(length(unique(rat)))), .(maze)]
 ggplot(ddd, aes(maze, V1)) +
   geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2)) +
   xlab('maze') +
   ylab('mean maze time')
-
 ```
 
 
-## NHST concepts
-```{r echo=F}
+<!-- ## NHST concepts -->
+<!-- ```{r echo=F} -->
 
-mux <- 20
-sigx <- 5
-x <- seq(-5*sigx + mux, 5*sigx + mux, 0.01)
-fx <- dnorm(x, mux, sigx)
-dtx <- data.table(x, fx)
-gx <- ggplot(dtx, aes(x, fx)) + 
-  geom_line() +
-  xlab(TeX('$x$')) +
-  ylab(TeX('Probability Density $f(X=x)$'))
+<!-- mux <- 20 -->
+<!-- sigx <- 5 -->
+<!-- x <- seq(-5*sigx + mux, 5*sigx + mux, 0.01) -->
+<!-- fx <- dnorm(x, mux, sigx) -->
+<!-- dtx <- data.table(x, fx) -->
+<!-- gx <- ggplot(dtx, aes(x, fx)) +  -->
+<!--   geom_line() + -->
+<!--   xlab(TeX('$x$')) + -->
+<!--   ylab(TeX('Probability Density $f(X=x)$')) -->
 
-n <- 15
-muxbar <- 20
-sigxbar <- 5 / sqrt(n)
-xbar <- seq(-5*sigxbar + muxbar, 5*sigxbar + muxbar, 0.01)
-fxbar <- dnorm(xbar, muxbar, sigxbar)
-dtxbar <- data.table(xbar, fxbar)
-gxbar <- ggplot(dtxbar, aes(xbar, fxbar)) + 
-  geom_line() +
-  xlab(TeX('$\\bar{x}$')) +
-  ylab(TeX('Probability Density $f(\\bar{X}=\\bar{x})$'))
+<!-- n <- 15 -->
+<!-- muxbar <- 20 -->
+<!-- sigxbar <- 5 / sqrt(n) -->
+<!-- xbar <- seq(-5*sigxbar + muxbar, 5*sigxbar + muxbar, 0.01) -->
+<!-- fxbar <- dnorm(xbar, muxbar, sigxbar) -->
+<!-- dtxbar <- data.table(xbar, fxbar) -->
+<!-- gxbar <- ggplot(dtxbar, aes(xbar, fxbar)) +  -->
+<!--   geom_line() + -->
+<!--   xlab(TeX('$\\bar{x}$')) + -->
+<!--   ylab(TeX('Probability Density $f(\\bar{X}=\\bar{x})$')) -->
 
-ggarrange(gx, gxbar, ncol=2)
-```
+<!-- ggarrange(gx, gxbar, ncol=2) -->
+<!-- ``` -->
