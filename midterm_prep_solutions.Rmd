@@ -400,7 +400,7 @@ qpois(0.05, 4, lower.tail=TRUE) + 1
 
 ```{r}
 ## Nothing to be extra careful about here becuase
-## `lower.tail=TRUE` will give us x such that P(X>x)
+## `lower.tail=FALSE` will give us x such that P(X>x)
 p <- seq(0,0.99,0.01)
 qf <- qpois(p, 4, lower.tail=FALSE)
 d <- data.table(p, qf)
@@ -784,6 +784,11 @@ power_upper <- pt(t_crit_upper-2/sig_x_bar, n-1, lower.tail=FALSE)
 typeI_lower <- pt(t_crit_lower, n-1, lower.tail=TRUE)
 typeII_lower <- pt(t_crit_lower-2/sig_x_bar, n-1, lower.tail=FALSE)
 power_lower <- pt(t_crit_lower-2/sig_x_bar, n-1, lower.tail=TRUE)
+
+# sum together to get total
+typeI <- typeI_upper + typeI_lower
+typeII <- typeII_upper + typeII_lower
+typeI <- power_upper + power_lower
 ```
 
 

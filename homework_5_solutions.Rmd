@@ -1,0 +1,151 @@
+---
+title: "Homework 4 Solutions"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: false
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, eval=T}
+# load the packages we will need
+library(data.table)
+library(ggplot2)
+
+# clean session
+rm(list=ls())
+
+# basic id info
+my_name <- "John Doe"
+my_student_id <- "12345678"
+
+# Please include the following line of code as well
+set.seed(0)
+
+
+# 1
+# Assume X ~ Normal(mu_x, sig_x)
+# Then Null and alternative H's are:
+# H0: mu_x = 58
+# H1: mu_x > 58
+
+# type I error (alpha) = 0.05
+type_I_error <- 0.05
+
+# estimate mu_x with mu_x_hat = x_bar
+x <- c(63.97,
+      60.29,
+      85.60,
+      72.57,
+      54.65,
+      53.74,
+      69.13,
+      70.07,
+      67.19,
+      53.95
+     )
+
+n <- length(x)
+x_bar_obs <- mean(x)
+
+# define the sampling distribution of x_bar:
+#
+# X ~ Normal(mu_x, sig_x)
+# X_bar ~ Normal(mu_x_bar, sig_x_bar)
+#
+# mu_x_bar = mu_x
+# sig_x_bar = sig_x / sqrt(n)
+
+mu_x = 58
+sig_x = sqrt(10) # given in the problem
+
+mu_x_bar <- mu_x # from central limit theorem
+sig_x_bar <- sig_x / sqrt(n) # from central limit theorem
+
+# critical value
+critical_value <- qnorm(type_I_error, mu_x_bar, sig_x_bar, lower.tail=F)
+
+# p-value
+p_value <- pnorm(x_bar_obs, mu_x_bar, sig_x_bar, lower.tail=F)
+
+ans_1_test_stat_obs <- x_bar_obs
+ans_1_critical_value <- critical_value
+ans_1_p_value <- p_value
+
+
+# 2
+# Assume X ~ Binomial(n, p)
+# Then Null and alternative H's are:
+# H0: p=0.5
+# H1: p>0.05
+
+# type I error (alpha) = 0.05
+type_I_error <- 0.05
+
+# estimate p with the observed proportion of successes
+n <- 100 # given in problem
+n_obs = 63 # given in the problem
+p_hat_obs = n_obs / n
+
+# define the sampling distribution of np:
+# np ~ Binomial(n, p)
+p <- 0.5 # as specified in H0
+
+# critical value (note the -1 due to discrete distribution)
+critical_value <- (qbinom(type_I_error, n, p, lower.tail=F) - 1) / n
+
+
+# p-value
+p_value <- pbinom(n_obs, n, p, lower.tail=F)
+
+ans_2_test_stat_obs <- p_hat_obs
+ans_2_critical_value <- critical_value
+ans_2_p_value <- p_value
+
+
+# 3
+theta_hat_obs <- 8 # read off of the plot
+p_value <- 0.138240 + 0.036864 + 0.004096 # what you observed plus more extreme outcomes
+critical_value <- 10 # because at this value and beyond the p-val would be < 0.05 and we would reject H0
+
+ans_3_critical_value <- critical_value
+ans_3_p_value <- p_value
+
+
+# 4
+ans_4a <- "alpha"
+ans_4b <- "confidence"
+ans_4c <- "power"
+ans_4d <- "beta"
+ans_4e <- 0.5
+ans_4f <- 0.95
+ans_4g <- "NO"
+```
+
+```{r, eval=T, include=F}
+my_name
+my_student_id
+ans_1_test_stat_obs
+ans_1_critical_value
+ans_1_p_value
+ans_2_test_stat_obs
+ans_2_critical_value
+ans_2_p_value
+ans_3_p_value
+ans_3_critical_value
+ans_4a
+ans_4b
+ans_4c
+ans_4d
+ans_4e
+ans_4f
+ans_4g
+```

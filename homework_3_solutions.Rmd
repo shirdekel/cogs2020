@@ -96,7 +96,7 @@ ans_5e <- melt(ans_5d,
                value.name='t2c_mean'
                )
 
-ans_5f <- ggplot(data=ans_5e, aes(x=cnd, y=t2c_mean)) + 
+ans_5f <- ggplot(data=ans_5b, aes(x=cnd, y=t2c_mean)) + 
   geom_violin() + 
   geom_point()
 

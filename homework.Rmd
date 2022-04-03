@@ -22,8 +22,8 @@ fontsize: 14pt
 | [Problem Set  2](homework_2.html) [Solutions](homework_2_solutions.html) |       3% | 07/03/22   | 14/03/22      |
 | [Problem Set  3](homework_3.html) [Solutions](homework_3_solutions.html) |       3% | 14/03/22   | 21/03/22      |
 | [Problem Set  4](homework_4.html) [Solutions](homework_4_solutions.html) |       3% | 21/03/22   | 28/03/22      |
-| [Problem Set  5](homework_5.html)                                        |       3% | 28/03/22   | 04/04/22      |
-| [Midterm Prep  ](midterm_prep.html)                                      |       0% | --/--/--   | --/--/--      |
+| [Problem Set  5](homework_5.html) [Solutions](homework_5_solutions.html) |       3% | 28/03/22   | 04/04/22      |
+| [Midterm Prep  ](midterm_prep.html) [Solutions](midterm_prep_solutions.html)|       0% | --/--/--   | --/--/--      |
 | [Problem Set  6](homework_6.html)                                        |       3% | 02/05/22   | 09/05/22      |
 | [Problem Set  7](homework_7.html)                                        |       3% | 09/05/22   | 16/05/22      |
 | [Problem Set  8](homework_8.html)                                        |       3% | 16/05/22   | 23/05/22      |

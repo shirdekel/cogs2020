@@ -359,7 +359,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Midterm Prep</h1>
 <h4 class="author">Author: Matthew J. Crossley</h4>
-<h4 class="date">Last update: 28 March, 2022</h4>
+<h4 class="date">Last update: 03 April, 2022</h4>
 
 </div>
 
@@ -632,7 +632,7 @@ qpois(0.05, 4, lower.tail=TRUE) + 1
 <li>Find <span class="math inline">\(x\)</span> such that <span class="math inline">\(P(X &gt; x) = 0.05\)</span></li>
 </ul>
 <pre class="r"><code>## Nothing to be extra careful about here becuase
-## `lower.tail=TRUE` will give us x such that P(X&gt;x)
+## `lower.tail=FALSE` will give us x such that P(X&gt;x)
 p &lt;- seq(0,0.99,0.01)
 qf &lt;- qpois(p, 4, lower.tail=FALSE)
 d &lt;- data.table(p, qf)
@@ -982,7 +982,12 @@ power_upper &lt;- pt(t_crit_upper-2/sig_x_bar, n-1, lower.tail=FALSE)
 # contribution from lower tail
 typeI_lower &lt;- pt(t_crit_lower, n-1, lower.tail=TRUE)
 typeII_lower &lt;- pt(t_crit_lower-2/sig_x_bar, n-1, lower.tail=FALSE)
-power_lower &lt;- pt(t_crit_lower-2/sig_x_bar, n-1, lower.tail=TRUE)</code></pre>
+power_lower &lt;- pt(t_crit_lower-2/sig_x_bar, n-1, lower.tail=TRUE)
+
+# sum together to get total
+typeI &lt;- typeI_upper + typeI_lower
+typeII &lt;- typeII_upper + typeII_lower
+typeI &lt;- power_upper + power_lower</code></pre>
 </div>
 </div>
 <div id="data-wrangling" class="section level2">

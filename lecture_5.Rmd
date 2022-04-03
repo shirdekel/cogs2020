@@ -497,7 +497,7 @@ the random variable $\bar{X}$, is obtained as follows:
 x_bar_obs <- mean(x_obs)
 ```
 
-* Therefore, $\bar{x}_{\text{obs}}=$ `r mean(xobs)`
+* Therefore, $\bar{x}_{\text{obs}}=$ `r x_bar_obs`
 
 <h4>5\. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
    occur under the assumption that $H_0$ is true, then
@@ -777,9 +777,9 @@ ggarrange(g1, g2, ncol=2)
 For our data, the following is true:
 
 * $n=15$,
-* $\bar{x} =$ `r mean(xobs)`,
-* $s_x =$ `r sd(xobs)`
-* $t_{obs} =$ `r (mean(xobs)-90)/(sd(xobs)/sqrt(n))`.
+* $\bar{x} =$ `r mean(x_obs)`,
+* $s_x =$ `r sd(x_obs)`
+* $t_{obs} =$ `r (mean(x_obs)-90)/(sd(x_obs)/sqrt(n))`.
 
 The above plot shows the $t(n-1)$ sampling distribution in
 colour, and the $Z\sim\mathcal{N}(0,1)$ in black. The $t$
