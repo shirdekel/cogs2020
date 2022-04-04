@@ -359,7 +359,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 5 - Hypothesis testing</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 29 March, 2022</h4>
+<h4 class="date">Last update: 04 April, 2022</h4>
 
 </div>
 
@@ -475,6 +475,7 @@ pval
 <pre class="r"><code>n &lt;- 100
 p &lt;- 0.5
 xcrit &lt;- qbinom(0.05, n, p, lower.tail=FALSE)
+
 ## Have to divide by n because we are working with
 ## proportions not counts
 phatcrit &lt;- xcrit / n

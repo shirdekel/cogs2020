@@ -111,6 +111,8 @@ generate_cdf_discrete <- function() {
   d[, total_probability := sum(probability)]
   d[, probability := probability / total_probability]
   d[, probability := round(probability, 4)]
+  
+  d[, probability := cumsum(probability)]
 
   x1 <- d[, x][1]
   x2 <- d[, x][2]
@@ -135,7 +137,7 @@ generate_cdf_discrete <- function() {
     geom_vline(aes(xintercept=x[1]), linetype=2, alpha=0.25, size=0.25) +
     geom_vline(aes(xintercept=xend), linetype=2, alpha=0.25, size=0.25) +
     geom_hline(aes(yintercept=probability), linetype=2, alpha=0.25, size=0.25) +
-    scale_x_continuous(breaks=c(d[, x][1], d[, xend][1:5])) +
+    scale_x_continuous(breaks=c(d[, x][1], d[, xend][1:3])) +
     scale_y_continuous(breaks=c(0, d[, sort(probability)]),
                        limits=c(0, d[, max(probability)])) +
     xlab(TeX('$x$')) +

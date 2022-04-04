@@ -286,6 +286,7 @@ by the `qbinom()` function, again with `lower.tail=FALSE`.
 n <- 100
 p <- 0.5
 xcrit <- qbinom(0.05, n, p, lower.tail=FALSE)
+
 ## Have to divide by n because we are working with
 ## proportions not counts
 phatcrit <- xcrit / n

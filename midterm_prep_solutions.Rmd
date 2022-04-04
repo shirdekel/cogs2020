@@ -297,19 +297,19 @@ y4 <- d[, sort(probability)][4]
 - Compute $P(X < `r x2`)$
 
 ```{r}
-## P(X<123) = 0.1379
+## P(X<123) = 0.3896
 ```
 
 - Compute $P(X \geq `r x2`)$
 
 ```{r}
-## P(X>=123) = 1 - 0.1379
+## P(X>=123) = 1 - 0.3896
 ```
 
 - Compute $P(`r x2` \leq X < `r x3`)$
 
 ```{r}
-## P(123≤X<147) = 0.2517
+## P(123≤X<147) = 0.6586 - 0.3896
 ```
 
 ## Quantile Function
