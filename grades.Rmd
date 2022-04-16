@@ -328,19 +328,9 @@ ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
   theme(axis.text.x=element_text(angle=45, hjust=1))
 ```
 
-<!-- ## Midterm 1 Grades -->
-<!-- ```{r, fig.width=10} -->
-<!-- library(data.table) -->
-<!-- library(ggplot2) -->
-
-<!-- rm(list=ls()) -->
-
-<!-- d <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv') -->
-
-<!-- dd <- d[, .(score = unique(score)), .(student_id)] -->
-<!-- ggplot(dd, aes(score)) + -->
-<!--   geom_histogram(bins=10) -->
-<!-- ``` -->
+## Midterm Grades
+![Midterm performance by problem](img/midterm_by_prob.png)
+![Midterm performance overall](img/midterm_total.png)
 
 <!-- ## Midterm 2 Grades -->
 <!-- ```{r, fig.width=10} -->
