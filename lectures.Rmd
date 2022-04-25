@@ -21,17 +21,17 @@ fontsize: 14pt
 | 21/02/22 | Week 1  | [Intro to course and R programming                    ](lecture_1.html)  |
 | 28/02/22 | Week 2  | [Descriptive statistics, data types, experiment design](lecture_2.html)  |
 | 07/03/22 | Week 3  | [Probability, Random Variables, Estimation            ](lecture_3.html)  |
-| 14/03/22 | Week 4  | [Binomial Distribution, Binomial Test                 ](lecture_4.html)  |
-| 21/03/22 | Week 5  | [Normal distribution, Normal Test                     ](lecture_5.html)  |
-| 28/03/22 | Week 6  | [t-distribution, single sample t-test                 ](lecture_6.html)  |
-| 04/04/22 | Week 7  | [Midsem exam                                          ](lecture_7.html)  |
+| 14/03/22 | Week 4  | [Binomial and Normal distributions                    ](lecture_4.html)  |
+| 21/03/22 | Week 5  | [Hypothesis testing                                   ](lecture_5.html)  |
+| 28/03/22 | Week 6  | Review                                                                   |
+| 04/04/22 | Week 7  | Midsem exam                                                              |
 | 11/04/22 | Recess  | --                                                                       |
 | 18/04/22 | Recess  | --                                                                       |
-| 25/04/22 | Week 8  | [Two-sample t-test                                    ](lecture_8.html)  |
-| 02/05/22 | Week 9  | [One-way ANOVA                                        ](lecture_9.html)  |
-| 09/05/22 | Week 10 | [Two-way ANOVA                                        ](lecture_10.html) |
-| 16/05/22 | Week 11 | [Repeated Measures and mixed design ANOVA             ](lecture_11.html) |
-| 23/05/22 | Week 12 | [Simple Linear Regression                             ](lecture_12.html) |
-| 30/05/22 | Week 13 | [Multiple Regression                                  ](lecture_13.html) |
+| 25/04/22 | Week 8  | [Hypothesis testing 2                                 ](lecture_8.html)  |
+| 02/05/22 | Week 9  | [two-sample t-tests                                   ](lecture_9.html)  |
+| 09/05/22 | Week 10 | [One-way ANOVA                                        ](lecture_10.html) |
+| 16/05/22 | Week 11 | [Two-way ANOVA                                        ](lecture_11.html) |
+| 23/05/22 | Week 12 | [Repeated Measures and mixed design ANOVA             ](lecture_12.html) |
+| 30/05/22 | Week 13 | [Regression                                           ](lecture_13.html) |
 | 14/06/22 | Exams   | --                                                                       |
 | 24/06/22 | Exams   | --                                                                       |

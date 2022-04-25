@@ -1,5 +1,5 @@
 ---
-title: "Homework 4 Solutions"
+title: "Homework 5 Solutions"
 author: "Author: Matthew J. Cossley"
 date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 output:

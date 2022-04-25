@@ -261,22 +261,22 @@ Please respond by assigning `"confidence"`, `"alpha"`,
 Note that the dashed lines in the above figure are the
 critical values. 
 
-* What quantity does region I in the above plot correspond
+* What quantity does region I in the above plot contribute
 to? Store your answer in a variable named `ans_4a`.
 
-* What quantity does region II in the above plot correspond
+* What quantity does region II in the above plot contribute
 to? Store your answer in a variable named `ans_4b`.
 
-* What quantity does region III in the above plot correspond
+* What quantity does region III in the above plot contribute
 to? Store your answer in a variable named `ans_4c`.
 
-* What quantity does region IV in the above plot correspond
+* What quantity does region IV in the above plot contribute
 to? Store your answer in a variable named `ans_4d`.
 
-* What quantity does region V in the above plot correspond
+* What quantity does region V in the above plot contribute
 to? Store your answer in a variable named `ans_4e`.
 
-* What quantity does region VI in the above plot correspond
+* What quantity does region VI in the above plot contribute
 to? Store your answer in a variable named `ans_4f`.
 
 
@@ -333,7 +333,6 @@ ans_4c
 ans_4d
 ans_4e
 ans_4f
-ans_4g
 ```
 
 Finally, be sure that the file you submit to iLearn is a

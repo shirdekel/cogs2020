@@ -1,5 +1,5 @@
 ---
-title: "Lecture 8 - One-way ANOVA"
+title: "Lecture 8 - Hypothesis testing II"
 author: "Author: Matthew J. Cossley"
 date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -17,366 +17,802 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r echo=F, message=F, warning=F}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
+```{r, echo=F}
 library(data.table)
 library(ggplot2)
-
+library(ggpubr)
 rm(list=ls())
-
 ```
 
-## Introduction
+## Learning objectives
 
-Suppose you have $k$ different treatment groups. A **one-way
-ANOVA** asks if there are any differences in the effects of
-treatment between any of the groups. This type of test is
-called an *omnibus* test.
+* Define and understand how to perform a **two-tailed**
+hypothesis test.
 
-In raw form, the H's look like this:
+* In the context of **two-tailed hypothesis tests**, define
+and understand the following:
 
-$\begin{align}
-& H_0: \mu1 = \mu2 = \mu3 \ldots \\
-& H_1: \lnot H_0 \\
-\end{align}$
-
-Usually, we have spent time in steps 1 and 3 of our
-hypothesis testing procedure to rewrite our hypotheses such
-that we can come up with a single statistic that is a good
-estimate of a single all-encompassing parameter. This case
-seems harder than most, we are interested in so many darn
-means! It turns out that the primary method used in this
-situation actually rests on *variances*. This can certainly
-seem a bit strange given that the test is concerned with
-*means*. Lets see how this all pans out.
-
-## Intuition
-
-The logic of an ANOVA can be understood intuitively as
-follows:
-
-- between-group variation --- how different are group means from each other?
-- within-group variation --- how noisy is your data in general?
-
-If the means are all the same (i.e., $H_0$ is true), then
-between-group and within-group variation will be very
-similar.
-
-If $H_0$ is not true, then between-group variation will be
-larger than within-group variation.
-
-Another good blurb for intuition can be read here:
-
-https://stats.stackexchange.com/questions/40549/how-can-i-explain-the-intuition-behind-anova
-
->ANOVA is statistical technique used to determine whether a particular
->classification of the data is useful in understanding the variation of an
->outcome. Think about dividing people into buckets or classes based on some
->criteria, like suburban and urban residence. The total variation in the
->dependent variable (the outcome you care about, like responsiveness to an
->advertising campaign) can be decomposed into the variation between classes and
->the variation within classes. When the within-class variation is small relative
->to the between-class variation, your classification scheme is in some sense
->meaningful or useful for understanding the world. Members of each cluster behave
->similarly to one another, but people from different clusters behave
->distinctively. This decomposition is used to create a formal F test of this
->hypothesis.
-
-Replacing the word *variance* in the above with the word
-*similarity* might be helpful / more intuitive.
-
-Armed with this intuition, we come up with the following
-test statistic form.
-$\begin{align}
-& H_0: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} = 1 \\
-& H_1: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} > 1 \\
-\end{align}$
-
-First, notice that an ANOVA always uses an alternative
-hypothesis that is one-sided. This is because we only reject
-the null if the between-group variability is significantly
-greater than the within-group variability, and this always
-corresponds to a "greater than" in $H_1$.
-
-Second, what the heck is $\sigma^2_{between-group}$ and
-$\sigma^2_{within-group}$? We will unpack this more formally
-below.
-
-## Formal treatment
-
-| Treatment 1 | Treatment 2 | Treatment 3 |
-|:------------|:------------|:------------|
-| $x_1$       | $y_1$       | $z_1$       |
-| $x_2$       | $y_2$       | $z_2$       |
-| $\ldots$    | $\ldots$    | $\ldots$    |
-| $x_l$       | $y_m$       | $z_n$       |
-
-- If $l=m=n$ then we have an equal number of observations for each group. When
-  this is the case, we say that we have a **balanced design**.
-
-* Grand mean:
-$$
-G = \frac{\bar{x} + \bar{y} + \bar{z}}{3}
-$$
-
-* Between-group variation:
-$$
-\text{ss}_{between} = 
-  l (\bar{x} - G)^2 + 
-  m (\bar{y} - G)^2 + 
-  n (\bar{z} - G)^2
-$$
-
-* Within-group variation:
-$$
-\text{ss}_{within} = 
-  \sum_{i=1}^l (x_i-\bar{x})^2 + 
-  \sum_{i=1}^m (y_i-\bar{y})^2 + 
-  \sum_{i=1}^n (z_i-\bar{z})^2
-$$
-
-### Test statistic
-With the formal maths defined above, we can state our
-hypotheses a bit more precisely.
-
-$\begin{align}
-& H_0: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} = 1 \\
-& H_1: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} > 1 \\
-\end{align}$
-
-This is pretty much correct. All we need to do to make it
-exactly correct carefully factor in the fact that we don't
-exactly have a ratio of variances. Rather, we have a ratio
-of a *sum of variances*. This will get factored in (1) via
-the degrees of freedom and (2) by using *mean squared*
-deviations instead of sum of squared deviations in the
-ratio.
-
-$\begin{align}
-& n_{total} = l + m + n \\\\
-& df_{between} = n_{groups} - 1 \\
-& df_{within} = n_{total} - n_{groups} \\\\
-& \text{ms}_{between} = \frac{\text{ss}_{between}}{df_{between}} \\
-& \text{ms}_{within} = \frac{\text{ss}_{within}}{df_{within}} \\\\
-& \widehat{\frac{\sigma^2_{between-group}}{\sigma^2_{within-group}}} = 
-                      \frac{\text{ms}_{between}}{\text{ms}_{within}} \\\\
-& F_{obs} = \frac{\text{ms}_{between}}{\text{ms}_{within}} \\
-& F_{obs} \sim F(df_{between}, df_{within}) \\
-\end{align}$
-
-**I have not shown how we know that the ratio of variances
-has an F distribution. For now, just trust me.**
-
-### Assumptions
-- The observations are obtained independently and randomly
-from the population defined by the factor levels.
-- The data of each factor level are normally distributed.
-- These normal populations have a common variance
-(homogeneity of variance).
-
-## Example 1: Made up data
-```{r, echo=F}
-library(data.table)
-library(ggplot2)
-
-rm(list = ls())
-
-## Let X, Y, and Z be iid Normal with the following parameters
-mux <- 10
-sdx <- 5
-
-muy <- 15
-sdy <- 5
-
-muz <- 20
-sdz <- 5
-
-## NOTE: sdx=sdy=sdz is the assumption of homogeneity of variance
-
-n_obs <- 5 ## define sample size
-n_groups <- 3 ## degine number of groups
-
-set.seed(1)
-x <- rnorm(n_obs, mux, sdx) ## sample from X
-y <- rnorm(n_obs, muy, sdy) ## sample from Y
-z <- rnorm(n_obs, muz, sdz) ## sample from Z
-
-d <- data.table(x, y, z)
-
-## NOTE: We are also constructing an example such that there
-## are true differences in the population means, so if our
-## test works out, we will reject the null.
-```
-
-Consider the following data:
-```{r, echo=F}
-d
-```
-
-Test the hypothesis that the population means $\mu_X$,
-$\mu_Y$, $\mu_Z$ are different.
-
-```{r, warning=F, message=F}
-## step 1
-## H0: sig_between / sig_within = 1
-## H1: sig_between / sig_within != 1
-
-## step 2
-alph <- 0.05
-
-## step 3
-## ms_ratio_hat = ms_between / ms_within
-
-## step 4
-x <- c(6.867731, 10.918217,  5.821857, 17.976404, 11.647539)
-y <- c(10.89766, 17.43715, 18.69162, 17.87891, 13.47306)
-z <- c(27.558906, 21.949216, 16.893797,  8.926501, 25.624655)
-
-nx <- length(x)
-ny <- length(y)
-nz <- length(z)
-
-n_total <- nx + ny + nz
-n_groups <- 3
+  * p-values
   
-## mean of each group
-mean_x <- mean(x)
-mean_y <- mean(y)
-mean_z <- mean(z)
+  * more extreme outcomes*
+  
+  * critical value
+  
+  * rejection region
+  
+  * $1-\alpha\%$ confidence interval
 
-## grand mean
-grand_mean <- mean(c(x, y, z))
+* Be able to perform two-tailed binomial tests, Normal, and
+t-tests manually (i.e., run through the 5 steps).
 
-## ss-between
-ss_between <- nx*(mean_x - grand_mean)^2 + 
-  ny*(mean_y - grand_mean)^2 + 
-  nz*(mean_z - grand_mean)^2
+* Understand when and how to use `binom.test()` to perform
+two-tailed binomial tests.
 
-## ss-within
-ss_within_x <- 0
-for(i in 1:nx) {
-  ss_within_x <- ss_within_x + (x[i] - mean_x)^2
-}
-ss_within_y <- 0
-for(i in 1:ny) {
-  ss_within_y <- ss_within_y + (y[i] - mean_y)^2
-}
-ss_within_z <- 0
-for(i in 1:nz) {
-  ss_within_z <- ss_within_z + (z[i] - mean_z)^2
-}
-ss_within <- ss_within_x + ss_within_y + ss_within_z
+* Understand when and how to use `t.test()` to perform
+two-tailed t-tests.
 
-## ss-within --- a better way
-ss_within <- sum((x - mean_x)^2) +
-             sum((y - mean_y)^2) +
-             sum((z - mean_z)^2)
+* Define, understand, and reason about type I error, type II
+error, and power.
 
-## dfs
-df_between <- n_groups-1
-df_within <- n_total - n_groups
 
-## mean squares
-ms_between <- ss_between / df_between
-ms_within <- ss_within / df_within
+## Two-tailed tests introduction
 
-## observed F-value
-fobs <- ms_between / ms_within
+- Last lecture, we learned how to perform one-tailed
+hypothesis tests. The hypothesis framing in those tests
+was as follows:
 
-## compute pval
-pval <- pf(fobs, df_between, df_within, lower.tail=F)
+$$
+H_0: \theta = c \\
+H_1: \theta < c \\
+\text{or} \\
+H_0: \theta = c \\
+H_1: \theta > c
+$$
 
-## report results
-print(c(ss_between, ss_within, df_between, df_within, fobs, pval))
+- The hypotheses of a two-tailed test takes the following
+form:
 
-## Check our work using a builtin R function
-d <- data.table(x,y,z)
-d <- melt(d, measure.var=c('x', 'y', 'z'))
-d[, variable := factor(variable)]
-fm <- lm(value ~ variable, data = d)
-anova(fm)
+$$
+H_0: \theta = c \\
+H_1: \theta \neq c  \\
+H_1: \theta < c \text{ or } \theta > c
+$$
 
-# We will ultimately be using the ez library for ANOVAs, so
-# might as well get started now.
-library(ez)
-d[, subject := factor(1:.N)]
-ezANOVA(
-  data=d,
-  dv=value,
-  wid=subject,
-  between=.(variable),
-  type=3
-) 
+- As we will see in the following examples, the main
+difference between one-tailed and two-tailed tests is that
+the p-value gets contributions from both the lower and the
+upper tail of the sampling distribution.
+
+## Two-tailed Binomial test
+
+In the binomial test example from last lecture  we
+considered an experiment in which researchers are trying to
+determine if a particular rat has learned to press one of
+two levers whenever they are placed inside of an
+experimental apparatus. Suppose that the experiment
+contained $n=100$ trials and the number of trials in which
+the rat pressed the correct lever was
+$n_{\text{pressed}}=61$. 
+
+Did the rat learn or not? 
+
+In answering this question, suppose that we are concerned
+that the rat may have learned to press the wrong lever
+(perhaps through experimenter error). This puts us into a
+two-tailed test scenario.
+
+<b>1\. Specify the null and alternative hypotheses ($H_0$ and
+   $H_1$) in terms of a distribution and population
+   parameter.</b>
+   
+$$
+X \sim binomial(n=100, p) \\
+H_0: p = 0.5 \\
+H_1: p \neq 0.5
+$$
+
+<b>2\. Specify the type I error rate -- denoted by the symbol
+   $\alpha$ -- you are willing to tolerate.</b>
+   
+$$
+\alpha = 0.05
+$$
+   
+<b>3\. Specify the sample statistic that you will use to
+   estimate the population parameter in step 1 and state how
+   it is distributed under the assumption that $H_0$ is
+   true.</b>
+   
+$$
+\widehat{p} = \frac{X}{n} \sim binomial(n=100, p=0.5) \\ 
+x \rightarrow \frac{x}{n}\\
+$$
+
+<b>4\. Obtain a random sample and use it to compute the
+   sample statistic from step 3. Call this value
+   $\widehat{\theta}_{\text{obs}}$</b>
+
+$$   
+\begin{align}
+\widehat{\theta}_{\text{obs}} &= \widehat{p}_{\text{obs}} \\
+                              &= \frac{x_{\text{obs}}}{n} \\
+                              &= \frac{61}{100}
+\end{align}
+$$
+   
+<b>5\. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
+   occur under the assumption that $H_0$ is true, then
+   reject $H_0$. Otherwise, do not reject $H_0$.</b>
+   
+* Below, we compute the critical values and p-values and plot
+them on the sampling distribution.
+
+* Because this is a two-tailed test, we have critical values
+above and below the mean.
+
+* Similarly, in two-tailed tests, what counts as *more
+extreme values* extends in both directions.
+
+* To get the p-value from a two-tailed test, you need to
+compute one p-value for the probability of getting more
+extreme results in one direction, and also compute a
+separate p-value for the probability of getting more extreme
+results in the other direction.
+
+* In the plot below, I have written `x_obs_lower` and
+`x_obs_upper` to faciliate thinking about this, but keep in
+mind that we only acutally observed `x_obs_upper`.
+
+* `x_obs_lower` is obtained from `x_obs_upper` by reflecting
+it around the mean of the sampling distribution.
+
+* Critical values are obtained by splitting $\alpha$ in half
+and using one half in the lower tail and one half in the
+upper tail.
+   
+```{r}
+n <- 100
+p <- 0.5
+
+xobs <- 61/n
+xobs_upper <- xobs
+xobs_lower <- -(xobs_upper - 0.5) + 0.5
+
+x_crit_upper <- qbinom(0.05/2, n, p, lower.tail=FALSE) / n
+x_crit_lower <- qbinom(0.05/2, n, p, lower.tail=TRUE) / n
 ```
 
-## Example 2: Criterion learning data
+```{r, echo=F, fig.width=8}
+n <- 100
+p <- 0.5
+
+xobs_upper <- 61/n
+xobs_lower <- -(xobs_upper - 0.5) + 0.5
+x_crit_upper <- qbinom(0.05/2, n, p, lower.tail=FALSE) / n
+x_crit_lower <- qbinom(0.05/2, n, p, lower.tail=TRUE) / n
+
+x <- 0:n
+fx <- dbinom(x, n, p)
+x <- x/n
+d <- data.table(x,
+                fx,
+                region=factor((x>x_crit_lower) & (x < x_crit_upper), 
+                              labels=c('rejection region', 'failed rejection region')))
+ggplot(d, aes(x, fx, colour=region)) +
+  geom_point() +
+  geom_segment(aes(x=xobs_lower, xend=xobs_lower, y=0, yend=d[, max(fx)]),
+               colour='black',
+               linetype=2) +
+  geom_segment(aes(x=xobs_upper, xend=xobs_upper, y=0, yend=d[, max(fx)]),
+               colour='black',
+               linetype=2) +
+  geom_segment(aes(x=x_crit_lower, xend=x_crit_lower, y=0, yend=d[, max(fx)]),
+               colour='#CC6666',
+               linetype=2) +
+  geom_segment(aes(x=x_crit_upper, xend=x_crit_upper, y=0, yend=d[, max(fx)]),
+               colour='#CC6666',
+               linetype=2) +
+  annotate('text', x=xobs_lower-0.09, y=d[x==xobs_lower, fx],
+           label='xobs \n (xobs_lower)',
+           colour='black') +
+  annotate('text', x=xobs_upper+0.09, y=d[x==xobs_upper, fx],
+           label='xobs \n (xobs_upper)',
+           colour='black') +
+  annotate('text', x=x_crit_lower, y=-0.0025,
+           label='x_crit_lower',
+           colour='#CC6666') +
+  annotate('text', x=x_crit_upper, y=-0.0025,
+           label='x_crit_upper',
+           colour='#CC6666') +
+  scale_x_continuous(breaks=seq(0,n,10)/n) +
+  ylab('P(X=x)') +
+  xlab('x_successes / n_total') +
+  theme(legend.title = element_blank())
+```
 
 ```{r}
-fp <- 'https://crossley.github.io/cogs2020/data/criterion_learning/crit_learn.csv'
+# compute p-value by hand
+pval_upper <- pbinom(xobs_upper*n-1, n, p, lower.tail=FALSE)
+pval_lower <- pbinom(xobs_lower*n, n, p, lower.tail=TRUE)
+pval <- pval_upper + pval_lower
+pval
 
-d <- fread(fp)
-
-## redefine d for simplification
-d <- d[cnd %in% c('Delay', 'Long ITI', 'Short ITI')][, mean(unique(t2c)), .(cnd, sub)]
-setnames(d, 'V1', 't2c')
-
-ggplot(d, aes(x=cnd, y=t2c)) +
-  geom_boxplot() +
-  theme(aspect.ratio = 1)
-
-# Calculate the number of groups and observations per group
-d[, n_cnds := length(unique(cnd))]
-d[, n_obs := .N, .(cnd)]
-
-## Calculate the mean within each cnd:
-d[, t2c_mean_cnd := mean(t2c), .(cnd)]
-
-## Calculate the overall mean:
-d[, t2c_mean_grand := mean(t2c)]
-
-## Calculate the between-cnd sum of squared differences:
-d[, ss_between := sum((t2c_mean_cnd - t2c_mean_grand)^2)]
-
-## Calculate the "within-cnd" sum of squared differences.
-d[, ss_within := sum((t2c - t2c_mean_cnd)^2)]
-
-## Compute degrees of freedom
-d[, df_between := n_cnds-1]
-d[, df_within := .N - n_cnds]
-
-## Calculate MSE terms
-d[, mse_between := ss_between / df_between]
-d[, mse_within := ss_within / df_within]
-
-## Calculate the F-ratio
-d[, fobs := mse_between / mse_within]
-
-## Calculate p-val
-d[, pval := pf(fobs, df_between, df_within, lower.tail=FALSE)]
-
-print(round(
-  c(d[, unique(ss_between)],
-    d[, unique(ss_within)],
-    d[, unique(df_between)],
-    d[, unique(df_within)],
-    d[, unique(fobs)],
-    d[, unique(pval)]
-    ), 4))
-
-## Do it with built-in R functions
-fm <- lm(t2c ~ cnd, data = d)
-anova(fm)
-
-# We will ultimately be using the ez library for ANOVAs, so
-# might as well get started now.
-library(ez)
-d[, sub := factor(sub)]
-d[, cnd := factor(cnd)]
-ezANOVA(
-  data=d,
-  dv=t2c,
-  wid=sub,
-  between=.(cnd),
-  type=3
-) 
+# check with binom.test
+binom.test(xobs_upper*n, n, p, alternative = "two.sided")
 ```
+
+## Two-tailed Normal test
+
+Last lecture we considered an experiment in which a rat is
+placed into a maze and given the chance to search for a bit
+of cheese hidden somewhere in the maze. The researchers know
+that rats without any training whatsoever find the cheese on
+average in 90 seconds with a standard deviation of 20
+seconds. After much training, the researchers are interested
+in assessing whether or not the animal has learned where the
+cheese is hidden or on the contrary, if the animal has
+become frustrated and is taking longer than baseline.
+
+<b>1\. Specify the null and alternative hypotheses ($H_0$ and
+   $H_1$) in terms of a distribution and population
+   parameter.</b>
+   
+$$
+H_0: \mu = 90 \\
+H_1: \mu \neq 90
+$$
+
+<b>2\. Specify the type I error rate -- denoted by the symbol
+   $\alpha$ -- you are willing to tolerate.</b>
+   
+$$
+\alpha = 0.05
+$$
+   
+<b>3\. Specify the sample statistic that you will use to
+   estimate the population parameter in step 1 and state how
+   it is distributed under the assumption that $H_0$ is
+   true.</b>
+   
+$$
+\widehat{\mu} = \bar{x} \\
+\bar{x} \sim \mathcal{N}(\mu_{\bar{x}}, \sigma_{\bar{x}}) \\
+\mu_{\bar{x}} = \mu_{x} \\
+\sigma_{\bar{x}} = \frac{\sigma_{x}}{\sqrt{n}}
+$$
+
+<b>4\. Obtain a random sample and use it to compute the
+   sample statistic from step 3. Call this value
+   $\widehat{\theta}_{\text{obs}}$</b>
+   
+The researchers perform 15 trials and measure the time to
+cheese on each trial. The data are as follows:
+
+```{r}
+xobs <- c(105.25909, 73.47533, 106.59599, 105.44859, 88.29283,
+          49.20100, 61.42866, 74.10559, 79.88466, 128.09307,
+          95.27187 ,64.01982 ,57.04686 ,74.21077, 74.01570)
+xbarobs <- mean(xobs)
+```
+   
+<b>5\. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
+   occur under the assumption that $H_0$ is true, then
+   reject $H_0$. Otherwise, do not reject $H_0$.</b>
+   
+```{r}
+n <- 15
+mux <-90
+
+sigx <- 20
+muxbar <- 90
+sigxbar <- sigx / sqrt(n)
+
+xbarobs_upper <- -(xbarobs - mux) + mux
+xbarobs_lower <- xbarobs
+
+xbar_crit_upper <- qnorm(0.05/2, muxbar, sigxbar, lower.tail=FALSE)
+xbar_crit_lower <- qnorm(0.05/2, muxbar, sigxbar, lower.tail=TRUE)
+```
+
+```{r, echo=F, fig.width=10}
+x <- seq(muxbar-4*sigxbar, muxbar+4*sigxbar, 0.01)
+fx <- dnorm(x, muxbar, sigxbar)
+d <- data.table(x,
+                fx,
+                region=factor(
+                  (x>xbar_crit_lower) & (x < xbar_crit_upper), 
+                  labels=c('rejection region', 'failed rejection region'))
+                )
+
+ggplot(d, aes(x, fx)) +
+  geom_line() +
+  geom_segment(x=xbarobs_lower, xend=xbarobs_lower, y= 0, yend=d[, max(fx)], colour='black', linetype=2) +
+  geom_segment(x=xbarobs_upper, xend=xbarobs_upper, y= 0, yend=d[, max(fx)], colour='black', linetype=2) +
+  geom_segment(x=xbar_crit_lower, xend=xbar_crit_lower, y= 0, yend=d[, max(fx)], colour='red', linetype=2) +
+  geom_segment(x=xbar_crit_upper, xend=xbar_crit_upper, y= 0, yend=d[, max(fx)], colour='red', linetype=2) +
+  geom_ribbon(data=d[x<xbar_crit_lower], 
+              aes(ymin=0, ymax=dnorm(x, muxbar, sigxbar), fill=region), alpha=0.5) +
+  geom_ribbon(data=d[x>xbar_crit_lower & x<xbar_crit_upper], 
+              aes(ymin=0, ymax=dnorm(x, muxbar, sigxbar), fill=region), alpha=0.5) +
+  geom_ribbon(data=d[x>xbar_crit_upper], 
+              aes(ymin=0, ymax=dnorm(x, muxbar, sigxbar), fill=region), alpha=0.5) +
+  annotate('text', 
+           x=xbarobs_lower, 
+           y=dnorm(xbarobs_lower, muxbar, sigxbar),
+           label='xobs lower',
+           colour='black',
+           hjust=0) +
+  annotate('text', 
+           x=xbarobs_upper, 
+           y=dnorm(xbarobs_upper, muxbar, sigxbar),
+           label='xobs upper',
+           colour='black',
+           hjust=1) +
+  annotate('text', x=xbar_crit_lower, y=-0.005,
+           label='xbar_crit_lower',
+           colour='black',
+           hjust=1) +
+  annotate('text', x=xbar_crit_upper, y=-0.005,
+           label='xbar_crit_upper',
+           colour='black',
+           hjust=0) +
+  ylab('f(xbar)') +
+  xlab('xbar')
+```
+
+```{r}
+# compute p-value by hand
+pval_upper <- pnorm(xbarobs_upper, muxbar, sigxbar, lower.tail=FALSE)
+pval_lower <- pnorm(xbarobs_lower, muxbar, sigxbar, lower.tail=TRUE)
+pval <- pval_upper + pval_lower
+pval
+```
+
+
+## Two-tailed t-test
+
+* t-test arises from the Normal test scenarios in which the
+sample variance $\sigma_X$ is unknown.
+
+<b>1\. Specify the null and alternative hypotheses ($H_0$ and
+   $H_1$) in terms of a distribution and population
+   parameter.</b>
+   
+$$
+H_0: \mu = 90 \\
+H_1: \mu \neq 90
+$$
+
+<b>2\. Specify the type I error rate -- denoted by the symbol
+   $\alpha$ -- you are willing to tolerate.</b>
+   
+$$
+\alpha = 0.05
+$$
+   
+<b>3\. Specify the sample statistic that you will use to
+   estimate the population parameter in step 1 and state how
+   it is distributed under the assumption that $H_0$ is
+   true.</b>
+   
+$$
+\widehat{\mu} = \bar{x} \\
+\bar{x} \sim \mathcal{N}(\mu_{\bar{x}}, \sigma_{\bar{x}}) \\
+\mu_{\bar{x}} = \mu_{x} \\
+\sigma_{\bar{x}} = \frac{\sigma_{x}}{\sqrt{n}} \rightarrow
+\widehat{\sigma}_{\bar{x}} = \frac{s_{x}}{\sqrt{n}} \\
+t = \frac{\bar{x} - \mu_x}{\frac{s_x}{\sqrt{n}}} \sim t(n-1)
+$$
+
+<b>4\. Obtain a random sample and use it to compute the
+   sample statistic from step 3. Call this value
+   $\widehat{\theta}_{\text{obs}}$</b>
+   
+The researchers perform 15 trials and measure the time to
+cheese on each trial. The data are as follows:
+
+```{r}
+xobs <- c(105.25909, 73.47533, 106.59599, 105.44859, 88.29283,
+          49.20100, 61.42866, 74.10559, 79.88466, 128.09307,
+          95.27187 ,64.01982 ,57.04686 ,74.21077, 74.01570)
+
+n <- length(xobs)
+xbarobs <- mean(xobs)
+sigxbarobs <- sd(xobs) / sqrt(n)
+
+mux <-90
+muxbar <- 90
+
+tobs <- (xbarobs - muxbar) / sigxbarobs
+```
+   
+<b>5\. If $\widehat{\theta}_{\text{obs}}$ is very unlikely to
+   occur under the assumption that $H_0$ is true, then
+   reject $H_0$. Otherwise, do not reject $H_0$.</b>
+   
+```{r}
+tobs_upper <- -tobs
+tobs_lower <- tobs
+
+t_crit_upper <- qt(0.05/2, n-1, lower.tail=FALSE)
+t_crit_lower <- qt(0.05/2, n-1, lower.tail=TRUE)
+```
+
+```{r, echo=F, fig.width=10}
+x <- seq(-4, 4, 0.01)
+fx <- dt(x, n-1)
+d <- data.table(x,
+                fx,
+                region=factor(
+                  (x>t_crit_lower) & (x < t_crit_upper), 
+                  labels=c('rejection region', 'failed rejection region'))
+                )
+
+ggplot(d, aes(x, fx)) +
+  geom_line() +
+  geom_segment(x=tobs_lower, xend=tobs_lower, y=0, yend=d[, max(fx)], colour='black', linetype=2) +
+  geom_segment(x=tobs_upper, xend=tobs_upper, y=0, yend=d[, max(fx)], colour='black', linetype=2) +
+  geom_segment(x=t_crit_lower, xend=t_crit_lower, y=0, yend=d[, max(fx)], colour='red', linetype=2) +
+  geom_segment(x=t_crit_upper, xend=t_crit_upper, y=0, yend=d[, max(fx)], colour='red', linetype=2) +
+  geom_ribbon(data=d[x<t_crit_lower], 
+              aes(ymin=0, ymax=dt(x, n-1), fill=region), alpha=0.5) +
+  geom_ribbon(data=d[x>t_crit_lower & x<t_crit_upper], 
+              aes(ymin=0, ymax=dt(x, n-1), fill=region), alpha=0.5) +
+  geom_ribbon(data=d[x>t_crit_upper], 
+              aes(ymin=0, ymax=dt(x, n-1), fill=region), alpha=0.5) +
+  annotate('text', 
+           x=tobs_lower, 
+           y=dt(tobs_lower, n-1),
+           label='tobs lower',
+           colour='black',
+           hjust=0) +
+  annotate('text', 
+           x=tobs_upper, 
+           y=dt(tobs_upper, n-1),
+           label='tobs upper',
+           colour='black',
+           hjust=1) +
+  annotate('text', x=t_crit_lower, y=-0.005,
+           label='t_crit_lower',
+           colour='black',
+           hjust=1) +
+  annotate('text', x=t_crit_upper, y=-0.005,
+           label='t_crit_upper',
+           colour='black',
+           hjust=0) +
+  ylab('f(t)') +
+  xlab('t')
+```
+
+```{r}
+# compute p-value by hand
+pval_upper <- pt(tobs_upper, n-1, lower.tail=FALSE)
+pval_lower <- pt(tobs_lower, n-1, lower.tail=TRUE)
+pval <- pval_upper + pval_lower
+pval
+
+# check with t.test
+t.test(xobs, mu=mux, alternative='two.sided')
+```
+
+
+## Confidence intervals
+
+- Way back in the beginning of the class we covered descriptive statistics, and
+  more recently we have used some of these descriptive statistics as **estimates**
+  of population parameters.
+
+- For example, we have used the sample mean $\bar{x}$ as an estimate of the
+  population mean $\mu_X$.
+
+- This is an example of a **point estimate** of a population parameter, and it
+  represents our single best guess about the true value of the parameter in
+  question.
+
+- An alternative approach to point estimation is to instead try to estimate a
+  range of values in which the true value of the parameter is likely to reside.
+
+- This is called **interval estimation** and it is accomplished by constructing
+  a **confidence interval**.
+
+- To construct a confidence interval for the population mean $\mu_X$ (assuming
+  the population variance $\sigma_X^2$ is known), first compute the sample mean
+  $\bar{x}$.
+
+- Next, the width of the CI is the same as the width of the distribution of
+  sample means required to cover $1-\alpha$ percent of it's probability. Call
+  this width $w$.
+
+- Then the confidence interval estimate of $\mu_X$ is given by $CI = \left[
+  \bar{x}-w \text{, } \bar{x}+w \right]$
+
+```{r, echo=F}
+## Choose a confidence level
+alph <- 0.05
+
+## specify a hypothetical distribution for an experiment
+mu_x <- 5
+sigma_x <- 3
+
+## specify the number of samples to take from X
+n <- 10
+
+## take n samples from x
+sample_x <- rnorm(n, mu_x, sigma_x)
+
+## compute the observed sample mean
+x_bar_obs <- mean(sample_x)
+
+## specify the distribution of sample means
+mu_x_bar <- mu_x
+sigma_x_bar <- sigma_x / sqrt(n)
+
+## do some routine stuff to plot x-bar sitribution
+x <- seq(mu_x_bar - 5*sigma_x_bar, mu_x_bar + 5*sigma_x_bar, 0.01)
+fx <- dnorm(x, mu_x_bar, sigma_x_bar)
+d <- data.table(x, fx)
+
+## Compute 1-alpha width of the x-bar distribution
+x_bar_lower <- qnorm(alph/2, mu_x_bar, sigma_x_bar)
+x_bar_upper <- qnorm(1-alph/2, mu_x_bar, sigma_x_bar)
+
+## Compute the width of the confidence interval
+CI_half_width <- (x_bar_upper - x_bar_lower)/2
+
+## Plot the distribution of sample means, and show with vertical lines the
+## interval that capture 1 - alpha percent of the distribution.
+ggplot(d, aes(x, fx)) +
+  geom_line() +
+  geom_vline(xintercept=x_bar_lower, linetype=2, colour='black') +
+  geom_vline(xintercept=x_bar_upper, linetype=2, colour='black') +
+  geom_vline(xintercept=x_bar_obs-CI_half_width, linetype=2, colour='red') +
+  geom_vline(xintercept=x_bar_obs+CI_half_width, linetype=2, colour='red')
+```
+
+- In the above plot, red vertical lines mark the confidence
+interval and black vertical lines mark the critical values.
+
+- CI is always centred around the observed value.
+
+- Critical values are always centred around the mean of the
+null sampling distribution.
+
+- This can all be written concisely as follows:
+
+$$
+CI_{1-\alpha} = \left[ \bar{x} - \Phi_{\bar{X}}^{-1}(1-\frac{\alpha}{2}),
+                \text{ }
+                \bar{x} + \Phi_{\bar{X}}^{-1}(1-\frac{\alpha}{2}) \right]
+$$
+
+- For example, the 95% confidence interval for the population mean of $X \sim
+  N(\mu_X, \sigma_X)$ is given by:
+
+\begin{align}
+CI_{1-0.05} &= \left[ \bar{x} - \Phi_{X}^{-1}(1-\frac{0.05}{2}),
+                \text{ }
+                \bar{x} + \Phi_{X}^{-1}(1-\frac{0.05}{2}) \right]
+\\ \\
+CI_{.95}    &= \left[ \bar{x} - \Phi_{X}^{-1}(1-0.025),
+                \text{ }
+                \bar{x} + \Phi_{X}^{-1}(1-0.025) \right]
+\\ \\
+            &= \left[ \bar{x} - \Phi_{X}^{-1}(0.975),
+                \text{ }
+                \bar{x} + \Phi_{X}^{-1}(0.975) \right]
+\end{align}
+
+- Notice that just like the point estimate $\bar{x}$, a
+confidence interval is also a random variable, and so
+changes with every experiment performed.
+
+- We can demonstrate this by repeating the procedure and
+observing that the obtained confidence intervals are
+different with each repetition.
+
+```{r, echo=F, fig.width=10}
+## Choose a confidence level
+alph <- 0.05
+
+## specify a hypothetical distribution for an experiment
+mu_x <- 5
+sigma_x <- 3
+
+## specify the number of samples to take from X
+n <- 10
+
+## take n samples from x
+sample_x_1 <- rnorm(n, mu_x, sigma_x)
+sample_x_2 <- rnorm(n, mu_x, sigma_x)
+sample_x_3 <- rnorm(n, mu_x, sigma_x)
+
+## compute the observed sample mean
+x_bar_obs_1 <- mean(sample_x_1)
+x_bar_obs_2 <- mean(sample_x_2)
+x_bar_obs_3 <- mean(sample_x_3)
+
+## specify the distribution of sample means
+mu_x_bar <- mu_x
+sigma_x_bar <- sigma_x / sqrt(n)
+
+## do some routine stuff to plot x-bar sitribution
+x <- seq(mu_x_bar - 5*sigma_x_bar, mu_x_bar + 5*sigma_x_bar, 0.01)
+fx <- dnorm(x, mu_x_bar, sigma_x_bar)
+d <- data.table(x, fx)
+
+## add sample mean results to d for plotting purposes
+d[, x_bar_obs_1 := x_bar_obs_1]
+d[, x_bar_obs_2 := x_bar_obs_2]
+d[, x_bar_obs_3 := x_bar_obs_3]
+
+## Convert d from wide to long
+d <- melt(d, measure.vars=c('x_bar_obs_1', 'x_bar_obs_2', 'x_bar_obs_3'))
+
+## Compute 1-alpha width of the x-bar distribution
+x_bar_lower <- qnorm(alph/2, mu_x_bar, sigma_x_bar)
+x_bar_upper <- qnorm(1-alph/2, mu_x_bar, sigma_x_bar)
+
+## Compute the width of the confidence interval
+CI_half_width <- (x_bar_upper - x_bar_lower)/2
+
+## Plot the distribution of sample means, and show with vertical lines the
+## interval that capture 1 - alpha percent of the distribution.
+ggplot(d, aes(x, fx)) +
+  geom_line() +
+  geom_vline(xintercept=x_bar_lower, linetype=2, colour='black') +
+  geom_vline(xintercept=x_bar_upper, linetype=2, colour='black') +
+  geom_vline(aes(xintercept=value-CI_half_width), linetype=2, colour='red') +
+  geom_vline(aes(xintercept=value+CI_half_width), linetype=2, colour='red') +
+  facet_wrap(~variable, ncol=3) +
+  theme(aspect.ratio=1)
+```
+
+
+<!-- ## Type I versus Type II errors -->
+
+<!-- ### Definitions -->
+
+<!-- - Hypothesis testing is about using noisy data to make decisions about what we -->
+<!--   think the true state of the universe is. -->
+
+<!-- - Sometimes, our procedure for making these decisions will lead us to make the -->
+<!--   correct decision, but sometimes we will make the wrong decision. -->
+
+<!-- - In the context of hypothesis testing, there are two ways to make a correct -->
+<!--   decision and two ways to make an incorrect decision. These are summarised in -->
+<!--   the following table. -->
+
+<!-- |                   | H0 True                 | H1 True                 | -->
+<!-- |:------------------|:------------------------|:------------------------| -->
+<!-- | Reject H0         | Type I error ($\alpha$) | Power ($1-\beta$)        | -->
+<!-- | Fail to reject H0 | Confidence ($1-\alpha$) | Type II error ($\beta$) | -->
+
+
+<!-- - Here, we have introduced the concept of **power**. -->
+
+<!-- - Power is the probability of correctly rejecting $H_0$. -->
+
+<!-- - Power can only be computed with respect to some fully specified $H_1$. -->
+
+<!-- - This is best seen with a visualisation. -->
+
+<!-- ```{r, echo=F} -->
+<!-- mu_x_0 <- 2 -->
+<!-- mu_x_1 <- 7 -->
+
+<!-- sigma_x <- 2 -->
+
+<!-- n <- 10 -->
+<!-- x_crit <- qnorm(0.95, mu_x_0, sigma_x, lower.tail=TRUE) -->
+
+<!-- x <- seq(mu_x_0 - 5*sigma_x, mu_x_1 + 5*sigma_x, 0.01) -->
+<!-- fx0 <- dnorm(x, mu_x_0, sigma_x) -->
+<!-- fx1 <- dnorm(x, mu_x_1, sigma_x) -->
+
+<!-- d <- data.table(x, fx0, fx1) -->
+
+<!-- g1 <- ggplot(d, aes(x=x)) + -->
+<!--   geom_line(aes(y=fx0), colour='red') + -->
+<!--   geom_line(aes(y=fx1), colour='blue') + -->
+<!--   geom_vline(xintercept=x_crit, linetype=2) + -->
+<!--   geom_ribbon(data=d[x<x_crit], aes(x=x, ymin=0, ymax=fx0), fill='red', alpha=0.5) + -->
+<!--   scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) + -->
+<!--   ylab('Probability Density') + -->
+<!--   ggtitle(expression(1-alpha)) + -->
+<!--   theme(plot.title = element_text(size=36)) -->
+
+<!-- g2 <- ggplot(d, aes(x=x)) + -->
+<!--   geom_line(aes(y=fx0), colour='red') + -->
+<!--   geom_line(aes(y=fx1), colour='blue') + -->
+<!--   geom_vline(xintercept=x_crit, linetype=2) + -->
+<!--   geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx0), fill='red', alpha=0.5) + -->
+<!--   scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) + -->
+<!--   ylab('Probability Density') + -->
+<!--   ggtitle(expression(alpha)) + -->
+<!--   theme(plot.title = element_text(size=36)) -->
+
+
+<!-- g3 <- ggplot(d, aes(x=x)) + -->
+<!--   geom_line(aes(y=fx0), colour='red') + -->
+<!--   geom_line(aes(y=fx1), colour='blue') + -->
+<!--   geom_vline(xintercept=x_crit, linetype=2) + -->
+<!--   geom_ribbon(data=d[x<x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) + -->
+<!--   scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) + -->
+<!--   ylab('Probability Density') + -->
+<!--   ggtitle(expression(beta)) + -->
+<!--   theme(plot.title = element_text(size=36)) -->
+
+
+<!-- g4 <- ggplot(d, aes(x=x)) + -->
+<!--   geom_line(aes(y=fx0), colour='red') + -->
+<!--   geom_line(aes(y=fx1), colour='blue') + -->
+<!--   geom_vline(xintercept=x_crit, linetype=2) + -->
+<!--   geom_ribbon(data=d[x>x_crit], aes(x=x, ymin=0, ymax=fx1), fill='blue', alpha=0.5) + -->
+<!--   scale_x_continuous(breaks=c(mu_x_0, mu_x_1)) + -->
+<!--   ylab('Probability Density') + -->
+<!--   ggtitle(expression(1 - beta)) + -->
+<!--   theme(plot.title = element_text(size=36)) -->
+
+<!-- ## ggarrange(g2, g4, g1, g3, ncol=2, nrow=2) -->
+<!-- ``` -->
+<!-- <div class = "row"> -->
+<!-- <div class = "col-md-6"> -->
+
+<!-- ```{r echo=F} -->
+<!-- g2 -->
+<!-- ``` -->
+
+<!-- - Type I error is given by $\alpha$ -->
+<!-- - The probability of a type I error is given by the area under the $H_0$ curve -->
+<!--   in the rejection region. -->
+<!-- - A type I error is the probability of incorrectly rejecting $H_0$ -->
+<!-- - Type I error is completely determined by $H_0$ -->
+<!-- - Type I error does not depend on $H_1$ -->
+
+<!-- </div> -->
+<!-- <div class = "col-md-6"> -->
+
+<!-- ```{r echo=F} -->
+<!-- g4 -->
+<!-- ``` -->
+
+<!-- - Power is given by $1 - \beta$ -->
+<!-- - Power is given by the area under the $H_1$ curve in the rejection region. -->
+<!-- - Power can depends on both $H_0$ and $H_1$ -->
+<!-- - -->
+<!-- - -->
+
+<!-- </div> -->
+<!-- <div class = "col-md-6"> -->
+
+<!-- ```{r echo=F} -->
+<!-- g1 -->
+<!-- ``` -->
+
+<!-- - Confidence is given by $1 - \alpha$ -->
+<!-- - Confidence is given by the area under the $H_0$ curve outside the rejection region. -->
+<!-- - Confidence depends only on $H_0$ -->
+<!-- - -->
+<!-- - -->
+<!-- - -->
+
+<!-- </div> -->
+<!-- <div class = "col-md-6"> -->
+
+<!-- ```{r echo=F} -->
+<!-- g3 -->
+<!-- ``` -->
+
+<!-- - Type II error is given by $\beta$ -->
+<!-- - The probability of a type II error is given by the area under the $H_1$ curve -->
+<!--   outside the rejection region. -->
+<!-- - A type II error is the probability of incorrectly failing to reject $H_0$ -->
+<!-- - Type II error depends on both $H_0$ and $H1$ -->
+<!-- - -->
+
+<!-- </div> -->
+<!-- </div> -->

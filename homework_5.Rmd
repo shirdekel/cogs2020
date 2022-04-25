@@ -167,10 +167,8 @@ ggplot(d, aes(x, fx)) +
   scale_y_continuous(breaks=fx) +
   xlab(TeX("$\\theta_x$")) +
   ylab(TeX("$P(\\hat{\\theta} = \\theta_x)$"))
+ggsave('img/hw5_discrete_theta.png')
 ```
-
-
-
 
 
 * Store the critical value of your test in a variable named
