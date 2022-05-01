@@ -16,22 +16,22 @@ output:
 fontsize: 14pt
 ---
 
-| DATE     | WEEK    | TOPIC                                                                    |
-|:---------|:--------|:-------------------------------------------------------------------------|
-| 21/02/22 | Week 1  | [Intro to course and R programming                    ](tutorial_1.html) |
-| 28/02/22 | Week 2  | [Descriptive statistics, data types, experiment design](tutorial_2.html) |
-| 07/03/22 | Week 3  | [Probability, Random Variables, confidence intervals  ](tutorial_3.html) |
-| 14/03/22 | Week 4  | [Binomial Distribution, Binomial Test                 ](tutorial_4.html) |
-| 21/03/22 | Week 5  | [Normal distribution, Normal Test                     ](tutorial_5.html) |
-| 28/03/22 | Week 6  | [t-distribution, single sample t-test                 ](tutorial_6.html) |
-| 04/04/22 | Week 7  | [Midsem exam                                          ](tutorial_7.html) |
-| 11/04/22 | Recess  | --                                                                       |
-| 18/04/22 | Recess  | --                                                                       |
-| 25/04/22 | Week 8  | [Two-sample t-test                                    ](tutorial_8.html) |
-| 02/05/22 | Week 9  | [One-way ANOVA                                        ](tutorial_9.html) |
-| 09/05/22 | Week 10 | [Two-way ANOVA                                        ](tutorial_10.html)|
-| 16/05/22 | Week 11 | [Repeated Measures and mixed design ANOVA             ](tutorial_11.html)|
-| 23/05/22 | Week 12 | [Simple Linear Regression                             ](tutorial_12.html)|
-| 30/05/22 | Week 13 | [Multiple Regression                                  ](tutorial_13.html)|
-| 14/06/22 | Exams   | --                                                                       |
-| 24/06/22 | Exams   | --                                                                       |
+| DATE       | WEEK      | TOPIC                                                                      |
+| :--------- | :-------- | :------------------------------------------------------------------------- |
+| 21/02/22   | Week 1    | [Intro to course and R programming                    ](tutorial_1.html)   |
+| 28/02/22   | Week 2    | [Descriptive statistics, data types, experiment design](tutorial_2.html)   |
+| 07/03/22   | Week 3    | [Probability, Random Variables, Estimation            ](tutorial_3.html)   |
+| 14/03/22   | Week 4    | [Binomial and Normal distributions                    ](tutorial_4.html)   |
+| 21/03/22   | Week 5    | [Hypothesis testing                                   ](tutorial_5.html)   |
+| 28/03/22   | Week 6    | Review                                                                     |
+| 04/04/22   | Week 7    | Midsem exam                                                                |
+| 11/04/22   | Recess    | --                                                                         |
+| 18/04/22   | Recess    | --                                                                         |
+| 25/04/22   | Week 8    | Hypothesis testing 2 Review                                                |
+| 02/05/22   | Week 9    | [two-sample t-tests                                   ](tutorial_9.html)   |
+| 09/05/22   | Week 10   | [One-way ANOVA                                        ](tutorial_10.html)  |
+| 16/05/22   | Week 11   | [Two-way ANOVA                                        ](tutorial_11.html)  |
+| 23/05/22   | Week 12   | [Repeated Measures and mixed design ANOVA             ](tutorial_12.html)  |
+| 30/05/22   | Week 13   | [Regression                                           ](tutorial_13.html)  |
+| 14/06/22   | Exams     | --                                                                         |
+| 24/06/22   | Exams     | --                                                                         |
