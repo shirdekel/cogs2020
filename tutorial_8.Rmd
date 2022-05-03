@@ -1,0 +1,32 @@
+---
+title: "Tutorial 8"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    # code_folding: show
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, collapse=T)
+```
+
+
+## Review and clarification
+
+* Ask your tutor questions and participate in discussions to
+clear up any lingering confusion.
+
+## Work on your problem sets
+
+* Work on your current or past problem sets and quizzes to
+make sure you understand them.
