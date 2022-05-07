@@ -313,7 +313,7 @@ but not exact.
 ## Don't assume equal sample sizes, but still assume equal variance
 s <- sqrt( (((nx-1)*varx + (ny-1)*vary) / (nx + ny - 2)) * (1/nx + 1/ny) )
 tobs <- (xbar - ybar) / s
-df <- (varx/nx +vary/ny)^2 / ( (varx/nx)^2/(nx-1) + (vary/ny)^2/(ny-1))
+df <- nx + ny - 2
 pval <- pt(tobs, df, lower.tail=F)
 
 if(pval < 0.05) {
@@ -335,6 +335,8 @@ t.test(x=x,
        paired=FALSE,
        var.equal=TRUE,
        conf.leve=0.95)
+
+# df <- (varx/nx +vary/ny)^2 / ( (varx/nx)^2/(nx-1) + (vary/ny)^2/(ny-1))
 ```
 
 Hooray! Now everything matches exactly!

@@ -359,7 +359,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Lecture 7 - Comparing two treatments</h1>
 <h4 class="author">Author: Matthew J. Cossley</h4>
-<h4 class="date">Last update: 30 April, 2022</h4>
+<h4 class="date">Last update: 05 May, 2022</h4>
 
 </div>
 
@@ -533,6 +533,8 @@ if(pval &lt; 0.05) {
 ## [1] 0.876303
 ## [1] 39
 ## [1] 0.1931156</code></pre>
+<!-- TODO: DISCUSS CONFIDENCE INTERVALS -->
+<!-- TODO: DISCUSS CONFIDENCE INTERVALS (FOR PAIRED TOO) -->
 <pre class="r"><code>## Check our work using built in t.test()
 t.test(x=x,
        y=y,
@@ -556,7 +558,7 @@ t.test(x=x,
 <pre class="r"><code>## Don&#39;t assume equal sample sizes, but still assume equal variance
 s &lt;- sqrt( (((nx-1)*varx + (ny-1)*vary) / (nx + ny - 2)) * (1/nx + 1/ny) )
 tobs &lt;- (xbar - ybar) / s
-df &lt;- (varx/nx +vary/ny)^2 / ( (varx/nx)^2/(nx-1) + (vary/ny)^2/(ny-1))
+df &lt;- nx + ny - 2
 pval &lt;- pt(tobs, df, lower.tail=F)
 
 if(pval &lt; 0.05) {
@@ -572,8 +574,8 @@ if(pval &lt; 0.05) {
 }</code></pre>
 <pre><code>## [1] &quot;fail to reject the null&quot;
 ## [1] 0.8870323
-## [1] 38.86263
-## [1] 0.1902591</code></pre>
+## [1] 39
+## [1] 0.1902496</code></pre>
 <pre class="r"><code>t.test(x=x,
        y=y,
        alternative=&#39;greater&#39;,
@@ -592,6 +594,7 @@ if(pval &lt; 0.05) {
 ## sample estimates:
 ## mean of x mean of y 
 ##  140.9593  107.1572</code></pre>
+<pre class="r"><code># df &lt;- (varx/nx +vary/ny)^2 / ( (varx/nx)^2/(nx-1) + (vary/ny)^2/(ny-1))</code></pre>
 <p>Hooray! Now everything matches exactly!</p>
 </div>
 </div>
