@@ -272,8 +272,9 @@ Consider two random variables $X \sim \mathcal{N}(\mu_X,
 \sigma_X)$ and $Y \sim \mathcal{N}(\mu_Y, \sigma_Y)$. Let
 $X$ generate data for MEG channel 039 and $Y$ generate data
 for MEG channel 135. Test the hypothesis that the mean MEG
-signal for $t > 0$ in these two channels are significantly
-different. Do not assume $X$ and $Y$ are independent.
+signal per epoch for $t > 0$ in these two channels are
+significantly different. Do not assume $X$ and $Y$ are
+independent.
 
 * Store the observed $t$ value of this test in a variable
 named `ans_4_t_test_stat_obs`.

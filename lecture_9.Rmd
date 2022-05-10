@@ -51,7 +51,6 @@ As an example, lets return to the criterion learning data we
 have discussed numerous times in lecture and homework.
 
 ```{r}
-
 library(data.table)
 library(ggplot2)
 rm(list = ls())
@@ -66,7 +65,6 @@ dd <- d[order(cnd, sub), mean(t2c), .(cnd, sub)]
 ggplot(dd, aes(cnd, V1)) +
   geom_violin() +
   ylab('Mean Trials to Criterion')
-
 ```
 
 Consider two random variables $X \sim \mathcal{N}(\mu_X,
@@ -269,6 +267,7 @@ vary <- var(y)
 s <- sqrt((varx + vary)/nx)
 
 tobs <- (xbar - ybar) / s
+
 df <- nx + ny - 2
 ```
 

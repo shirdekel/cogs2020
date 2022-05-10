@@ -80,134 +80,121 @@ d4[student_id == sid]
 <!-- d9 <- fread('https://crossley.github.io/cogs2020/grades/hw_9_table.csv') -->
 <!-- d9[student_id == sid] -->
 
+<!-- # HW 10 -->
+<!-- d9 <- fread('https://crossley.github.io/cogs2020/grades/hw_10_table.csv') -->
+<!-- d9[student_id == sid] -->
+
 <!-- # midterm -->
 <!-- dm <- fread('https://crossley.github.io/cogs2020/grades/midterm.csv') -->
 <!-- dm[student_id == sid] -->
-
-<!-- # Midterm recovery 1 -->
-<!-- dm1 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv') -->
-<!-- dm1[student_id == sid] -->
-
-<!-- # Midterm recovery 2 -->
-<!-- dm2 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv') -->
-<!-- dm2[student_id == sid] -->
 
 <!-- # Final exam -->
 <!-- df <- fread('https://crossley.github.io/cogs2020/grades/final_exam_table.csv') -->
 <!-- df[student_id == sid] -->
 <!-- ``` -->
 
-<!-- ## Total grades so far -->
-<!-- ```{r, eval=T, message=F, warning=F, fig.width=10} -->
-<!-- # If you want to know where you are standing currently, run -->
-<!-- # this entire code block and then select your student_id -->
-<!-- # from dd -->
-<!-- library(data.table) -->
-<!-- library(ggplot2) -->
-<!-- library(stringr) -->
+## Total grades so far
+```{r, eval=T, message=F, warning=F, fig.width=10}
+# If you want to know where you are standing currently, run
+# this entire code block and then select your student_id
+# from dd
+library(data.table)
+library(ggplot2)
+library(stringr)
 
-<!-- rm(list=ls()) -->
+rm(list=ls())
 
-<!-- d1 <- fread('https://crossley.github.io/cogs2020/grades/hw_1_table.csv') -->
-<!-- d2 <- fread('https://crossley.github.io/cogs2020/grades/hw_2_table.csv') -->
-<!-- d3 <- fread('https://crossley.github.io/cogs2020/grades/hw_3_table.csv') -->
-<!-- d4 <- fread('https://crossley.github.io/cogs2020/grades/hw_4_table.csv') -->
-<!-- d5 <- fread('https://crossley.github.io/cogs2020/grades/hw_5_table.csv') -->
-<!-- d6 <- fread('https://crossley.github.io/cogs2020/grades/hw_6_table.csv') -->
-<!-- d7 <- fread('https://crossley.github.io/cogs2020/grades/hw_7_table.csv') -->
-<!-- d8 <- fread('https://crossley.github.io/cogs2020/grades/hw_8_table.csv') -->
-<!-- d9 <- fread('https://crossley.github.io/cogs2020/grades/hw_9_table.csv') -->
-<!-- dm <- fread('https://crossley.github.io/cogs2020/grades/midterm.csv') -->
-<!-- dm1 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_1.csv') -->
-<!-- dm2 <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv') -->
-<!-- df <- fread('https://crossley.github.io/cogs2020/grades/final_exam_table.csv') -->
+d1 <- fread('https://crossley.github.io/cogs2020/grades/hw_1_table.csv')
+d2 <- fread('https://crossley.github.io/cogs2020/grades/hw_2_table.csv')
+d3 <- fread('https://crossley.github.io/cogs2020/grades/hw_3_table.csv')
+d4 <- fread('https://crossley.github.io/cogs2020/grades/hw_4_table.csv')
+d5 <- fread('https://crossley.github.io/cogs2020/grades/hw_5_table.csv')
+# d6 <- fread('https://crossley.github.io/cogs2020/grades/hw_6_table.csv')
+# d7 <- fread('https://crossley.github.io/cogs2020/grades/hw_7_table.csv')
+# d8 <- fread('https://crossley.github.io/cogs2020/grades/hw_8_table.csv')
+# d9 <- fread('https://crossley.github.io/cogs2020/grades/hw_9_table.csv')
+dm <- fread('https://crossley.github.io/cogs2020/grades/revised_midterm_marks.csv')
+# df <- fread('https://crossley.github.io/cogs2020/grades/final_exam_table.csv')
 
-<!-- d1[, assignment := 'hw1'] -->
-<!-- d2[, assignment := 'hw2'] -->
-<!-- d3[, assignment := 'hw3'] -->
-<!-- d4[, assignment := 'hw4'] -->
-<!-- d5[, assignment := 'hw5'] -->
-<!-- d6[, assignment := 'hw6'] -->
-<!-- d7[, assignment := 'hw7'] -->
-<!-- d8[, assignment := 'hw8'] -->
-<!-- d9[, assignment := 'hw9'] -->
-<!-- dm[, assignment := 'm'] -->
-<!-- dm1[, assignment := 'm1'] -->
-<!-- dm2[, assignment := 'm2'] -->
-<!-- df[, assignment := 'f'] -->
+d1[, assignment := 'hw1']
+d2[, assignment := 'hw2']
+d3[, assignment := 'hw3']
+d4[, assignment := 'hw4']
+d5[, assignment := 'hw5']
+# d6[, assignment := 'hw6']
+# d7[, assignment := 'hw7']
+# d8[, assignment := 'hw8']
+# d9[, assignment := 'hw9']
+dm[, assignment := 'm']
+df[, assignment := 'f']
 
-<!-- d <- rbindlist(list(d1, d2, d3, d4, d5, d6, d7, d8, d9, dm, dm1, dm2, df), use.names=T, fill=T) -->
+d <- rbindlist(list(d1, d2, d3, d4, d5, dm, df), use.names=T, fill=T)
 
-<!-- late <- fread('../code/hws_submissions_deadline_posneg.csv') -->
-<!-- setnames(late, c('ID number'), c('student_id')) -->
-<!-- late <- melt(late, -->
-<!--              id.vars=c('student_id'), -->
-<!--              measure.vars=c('hw1', -->
-<!--                             'hw2', -->
-<!--                             'hw3', -->
-<!--                             'hw4', -->
-<!--                             'hw5', -->
-<!--                             'hw6', -->
-<!--                             'hw7', -->
-<!--                             'hw8', -->
-<!--                             'hw9'), -->
-<!--              variable.name='assignment', -->
-<!--              value.name='sub_date' -->
-<!--              ) -->
+# late <- fread('../code/hws_submissions_deadline_posneg.csv')
+# setnames(late, c('ID number'), c('student_id'))
+# late <- melt(late,
+#              id.vars=c('student_id'),
+#              measure.vars=c('hw1',
+#                             'hw2',
+#                             'hw3',
+#                             'hw4',
+#                             'hw5',
+#                             'hw6',
+#                             'hw7',
+#                             'hw8',
+#                             'hw9',
+#                             'hw10'),
+#              variable.name='assignment',
+#              value.name='sub_date'
+#              )
 
-<!-- dd <- d[, .(score = unique(score)), .(student_id, assignment)] -->
-<!-- dd <- merge(dd, late, by=c('student_id', 'assignment'), all=T) -->
-<!-- dd <- dd[order(assignment, student_id)] -->
+dd <- d[, .(score = unique(score)), .(student_id, assignment)]
+dd <- merge(dd, late, by=c('student_id', 'assignment'), all=T)
+dd <- dd[order(assignment, student_id)]
 
-<!-- # apply late penalties -->
-<!-- dd[, late_penalty := ifelse(sub_date > 1, .1, 1)] -->
-<!-- dd[, late_penalty := ifelse(sub_date > 7, .5, 1)] -->
-<!-- dd[, late_penalty := ifelse(is.na(late_penalty), 1, late_penalty)] -->
-<!-- dd[, score := score * late_penalty] -->
+# apply late penalties
+# dd[, late_penalty := ifelse(sub_date > 1, .1, 1)]
+# dd[, late_penalty := ifelse(sub_date > 7, .5, 1)]
+# dd[, late_penalty := ifelse(is.na(late_penalty), 1, late_penalty)]
+# dd[, score := score * late_penalty]
 
-<!-- m_subs_1 <- dm1[, unique(student_id)] -->
-<!-- m_subs_2 <- dm2[, unique(student_id)] -->
-<!-- dd <- dcast(dd, student_id ~ assignment, value.var = 'score') -->
-<!-- dd[!(student_id %in% m_subs_1), m1 := m] -->
-<!-- dd[!(student_id %in% m_subs_2), m2 := m] -->
-<!-- dd[, hw1 := ifelse(is.na(hw1), 0, hw1)] -->
-<!-- dd[, hw2 := ifelse(is.na(hw2), 0, hw2)] -->
-<!-- dd[, hw3 := ifelse(is.na(hw3), 0, hw3)] -->
-<!-- dd[, hw4 := ifelse(is.na(hw4), 0, hw4)] -->
-<!-- dd[, hw5 := ifelse(is.na(hw5), 0, hw5)] -->
-<!-- dd[, hw6 := ifelse(is.na(hw6), 0, hw6)] -->
-<!-- dd[, hw7 := ifelse(is.na(hw7), 0, hw7)] -->
-<!-- dd[, hw8 := ifelse(is.na(hw8), 0, hw8)] -->
-<!-- dd[, hw9 := ifelse(is.na(hw9), 0, hw9)] -->
-<!-- dd[, hw10 := 1] -->
-<!-- dd[, m2 := ifelse(is.na(m2), m1, m2)] -->
-<!-- dd[, f := ifelse(is.na(f), 0, f)] -->
-<!-- dd[, m1 := ifelse(is.na(m1), 0, m1)] -->
-<!-- dd[, m2 := ifelse(is.na(m2), 0, m2)] -->
+dd <- dcast(dd, student_id ~ assignment, value.var = 'score')
+dd[, hw1 := ifelse(is.na(hw1), 0, hw1)]
+dd[, hw2 := ifelse(is.na(hw2), 0, hw2)]
+dd[, hw3 := ifelse(is.na(hw3), 0, hw3)]
+dd[, hw4 := ifelse(is.na(hw4), 0, hw4)]
+dd[, hw5 := ifelse(is.na(hw5), 0, hw5)]
+# dd[, hw6 := ifelse(is.na(hw6), 0, hw6)]
+# dd[, hw7 := ifelse(is.na(hw7), 0, hw7)]
+# dd[, hw8 := ifelse(is.na(hw8), 0, hw8)]
+# dd[, hw9 := ifelse(is.na(hw9), 0, hw9)]
+# dd[, hw10 := ifelse(is.na(hw10), 0, hw9)]
+dd[, m := ifelse(is.na(m), 0, m)]
+# dd[, f := ifelse(is.na(f), 0, m)]
 
-<!-- dd[, total_score := sum(0.1 * 1, # quizzes (assuming you got credit for the 3 given) -->
-<!--                     0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6, hw7, hw8, hw9, hw10)), # hw -->
-<!--                     0.3 * mean(c(m1, m2)), # midterm recovery -->
-<!--                     0.3 * f, na.rm=F) # final -->
-<!--    , .(student_id)] -->
-<!-- dd[, mark_class := "NA"] -->
-<!-- dd[total_score >= .85, mark_class := "High Distinction"] -->
-<!-- dd[total_score >= .75 & total_score < .85, mark_class := "Distinction"] -->
-<!-- dd[total_score >= .65 & total_score < .75, mark_class := "Credit"] -->
-<!-- dd[total_score >= .50 & total_score < .65, mark_class := "Pass"] -->
-<!-- dd[total_score < .50, mark_class := "Fail"] -->
-<!-- dd[, mark_class := factor(mark_class, -->
-<!--                           levels=c('High Distinction', -->
-<!--                                    'Distinction', -->
-<!--                                    'Credit', -->
-<!--                                    'Pass', -->
-<!--                                    'Fail'))] -->
-<!-- ggplot(dd, aes(total_score, fill=mark_class)) + -->
-<!--   geom_histogram(breaks=seq(0.0, 1.0, 0.05)) + -->
-<!--   xlim(0.3, 1.0) -->
+dd[, total_score := sum(0.1 * 1, # quizzes (assuming you get these)
+                    0.3 * mean(c(hw1, hw2, hw3, hw4, hw5)), # hw
+                    0.3 * m, # midterm
+                    0.3 * f, na.rm=F) # final
+   , .(student_id)]
+dd[, mark_class := "NA"]
+dd[total_score >= .85, mark_class := "High Distinction"]
+dd[total_score >= .75 & total_score < .85, mark_class := "Distinction"]
+dd[total_score >= .65 & total_score < .75, mark_class := "Credit"]
+dd[total_score >= .50 & total_score < .65, mark_class := "Pass"]
+dd[total_score < .50, mark_class := "Fail"]
+dd[, mark_class := factor(mark_class,
+                          levels=c('High Distinction',
+                                   'Distinction',
+                                   'Credit',
+                                   'Pass',
+                                   'Fail'))]
+ggplot(dd, aes(total_score, fill=mark_class)) +
+  geom_histogram(breaks=seq(0.0, 1.0, 0.05), closed='left') +
+  xlim(0.3, 1.0)
 
-<!-- fwrite(dd, '../code/dd.csv') -->
-<!-- ``` -->
+# fwrite(dd, '../code/dd.csv')
+```
 
 
 ## Homework 1 Grades
@@ -331,21 +318,6 @@ ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
 ## Midterm Grades
 ![Midterm performance by problem](img/midterm_by_prob.png)
 ![Midterm performance overall](img/midterm_total.png)
-
-<!-- ## Midterm 2 Grades -->
-<!-- ```{r, fig.width=10} -->
-<!-- library(data.table) -->
-<!-- library(ggplot2) -->
-
-<!-- rm(list=ls()) -->
-
-<!-- d <- fread('https://crossley.github.io/cogs2020/grades/midterm_recovery_2.csv') -->
-
-<!-- dd <- d[, .(score = unique(score)), .(student_id)] -->
-<!-- ggplot(dd, aes(score)) + -->
-<!--   geom_histogram(bins=10) -->
-<!-- ``` -->
-
 
 <!-- ## Homework 6 Grades -->
 <!-- ```{r, fig.width=10} -->
