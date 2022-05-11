@@ -1,5 +1,5 @@
 ---
-title: "Homework 6"
+title: "Homework 8"
 author: "Author: Matthew J. Cossley"
 date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -14,14 +14,88 @@ output:
     theme: cosmo
 fontsize: 14pt
 ---
+```{r global-options, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE)
+```
+
+```{r setup, include=FALSE, message=F}
+knitr::opts_chunk$set(echo = T, collapse=T, warning=F)
+```
+
+<style type="text/css">
+  body{
+  font-size: 18pt;
+}
+
+<style type="text/css">
+.table {
+
+    width: 40%;
+}
+</style>
 
 ```{r, echo=F}
 library(data.table)
 library(ggplot2)
-rm(list = ls())
+library(ggpubr)
+library(latex2exp)
 ```
 
-**1.** Consider the following data:
+* Create a new file named `cogs2020_hw_7.R` and save it in
+the `cogs2020` folder that you created during Lecture 1.
+
+* If you have not already installed the `data.table` and the
+`ggplot2` packages, do so now. If you use the
+`install.packages` function, do not include it in the script
+that you hand in.
+
+* If you have not already installed the `ez` package, do so
+now. If you use the `install.packages` function, do not
+include it in the script that you hand in.
+
+* Make the first line of your script `library(data.table)`
+the second line `library(ggplot2)`, and the third line
+`library(ez)`.
+
+* Make the second line of your script `rm(list=ls())`. This
+line of code will erase any variable defined before it. Do
+not put this line of code after anything important that you
+want to keep (e.g., so that I can mark your work).
+
+* After `rm(list=ls())`, create a variable named `my_name`
+and set its value equal to a **character** vector (i.e.,
+letters surrounded by `""` or by `''`) containing your name.
+
+* After `rm(list=ls())`, create a variable named
+`my_student_id` and set its value equal to a **character**
+vector (i.e., letters surrounded by `""` or by `''`)
+containing your student id.
+
+* So far, here is what your file should look like if your
+name is `John Doe` and and your student ID is `12345678`.
+Note that the following code chunk also includes a few lines
+to create a `data.table` named `d` that many of the problems
+below require you manipulate.
+
+```{r, echo=T}
+# load the packages we will need
+library(data.table)
+library(ggplot2)
+library(ez)
+
+# clean session
+rm(list=ls())
+
+# basic id info
+my_name <- "John Doe"
+my_student_id <- "12345678"
+
+# Please include the following line of code as well
+set.seed(0)
+```
+
+## 1. 
+Consider the following data:
 
 ```{r, echo=F}
 a <- rnorm(5, 10, 2)
@@ -44,17 +118,18 @@ a random variable $C \sim \mathcal{N}(\mu_C, \sigma_C)$.
 * Assume that the observations in columns `d` are drawn from
 a random variable $D \sim \mathcal{N}(\mu_D, \sigma_D)$.
 
-* Test the hypothesis that $\mu_A$, $\mu_B$, $\mu_C$, and
-$\mu_D$ are different. Please populate the following
-variables.
+* Using a one-way ANOVA, test the hypothesis that $\mu_A$,
+$\mu_B$, $\mu_C$, and $\mu_D$ are different. Please populate
+the following variables:
 
 ```{r, eval=F}
 ans_1_obs # observed test statistic
-ans_1_pval # pvalue of test 
-ans_1_crit # critical value of test statistic
+ans_1_pval # p-value of test 
+ans_1_crit # critical value of test
 ```
 
-**2.** Consider the following sampling distribution of an
+## 2.
+Consider the following sampling distribution of an
 $F_{obs}$ test statistic (indicated by the dashed line in
 the plot), with $df_{between} = 10$ and $df_{within} = 100$.
 
@@ -67,7 +142,10 @@ d <- data.table(x, fx)
 ggplot(d, aes(x, fx)) +
   geom_line() +
   geom_vline(xintercept = f_obs, linetype=2) +
-  scale_x_continuous(breaks=c(0, f_obs, 1, 2, 3, 4))
+  scale_x_continuous(breaks=c(0, f_obs, 1, 2, 3, 4)) +
+  xlab('F') +
+  ylab('Probability Density') +
+  annotate('text', x=f_obs, y=0, label='F observed')
 ```
 
 * Are the mean sqaured deviations greater within groups or
@@ -84,18 +162,41 @@ in a variable named `ans_2b`.
 answer in a variable named `ans_2c`.
 
 
-**3.** Consider the motor learning experiment data located
-here:
+## 3.
+Consider the motor learning experiment data located here:
 
 https://crossley.github.io/cogs2020/data/mis/mis_data.csv
 
-* Please consult HW1 for a detailed description of this
-data. Please also note that this is a between subjects
-design with respect to `condition`. This means that
-different subjects are in each level of `condition`. This is
-true despite the `subject` numbers being identical. They are
-only identical because of an error in how the data were
-processed.
+* This data is from a motor learning and motor control
+experiment.
+
+* On each trial, participants simply rested their hand in
+the middle of a desk, and then tried to move their hand
+quickly and accurately to a visual target somewhere on a
+circle centred at their hand position and with a radius of
+about 8 cm.
+
+* We tested two different groups of people. One group were
+college students, and the other group were professional
+surgeons.
+
+* The columns of this data file correspond to the following:
+
+  * `subject`: Anonymous subject ID
+  * `group`: Indicates college student or surgeon
+  * `phase`: Indicates the phase of the experiment
+  * `trial`: Trial number
+  * `target`: The visual target was reached to for this trial
+  * `error`: The mismatch between the centre of the target and the final hand position
+  * `movement_time`: How long the movement lasted
+  * `reaction_time`: How long until the movement began
+  * `peak_velocity`: The maximum velocity reached during the reach
+
+* Please note that this is a between subjects design with
+respect to `condition`. This means that different subjects
+are in each level of `condition`. This is true despite the
+`subject` numbers being identical. They are only identical
+because of an error in how the data were processed.
 
 * Is the mean `error` per `subject` different across
 different levels of `condition`? Answer this question by
@@ -108,7 +209,8 @@ ans_3_pval # pvalue of test
 ans_3_crit # critical value of test statistic
 ```
 
-**4.** Repeat problem 3 but this time use an appropriate
+## 4.
+Repeat problem 3 but this time use an appropriate
 t-test (assuming there is equal variance in different
 conditions).
 
