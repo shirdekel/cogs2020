@@ -23,6 +23,18 @@ library(ggplot2)
 
 rm(list=ls())
 ```
+## Learning objectives
+
+* Understand the basic logic of how a 1-way ANOVA uses
+variances to test for equality of means.
+
+* Understand why mean squares are used in the test statistic
+of a 1-way ANOVA rather than sum of squares.
+
+* Be able to calculate all terms in an ANOVA table by hand.
+
+* Understand how to use the `ez` library to perform 1-way
+ANOVAs.
 
 ## Introduction
 
@@ -70,21 +82,21 @@ Another good blurb for intuition can be read here:
 
 https://stats.stackexchange.com/questions/40549/how-can-i-explain-the-intuition-behind-anova
 
-<!-- ANOVA is statistical technique used to determine whether a -->
-<!-- particular classification of the data is useful in -->
-<!-- understanding the variation of an outcome. Think about -->
-<!-- dividing people into buckets or classes based on some -->
-<!-- criteria, like suburban and urban residence. The total -->
-<!-- variation in the dependent variable (the outcome you care -->
-<!-- about, like responsiveness to an advertising campaign) can -->
-<!-- be decomposed into the variation between classes and the -->
-<!-- variation within classes. When the within-class variation is -->
-<!-- small relative to the between-class variation, your -->
-<!-- classification scheme is in some sense meaningful or useful -->
-<!-- for understanding the world. Members of each cluster behave -->
-<!-- similarly to one another, but people from different clusters -->
-<!-- behave distinctively. This decomposition is used to create a -->
-<!-- formal F test of this hypothesis. -->
+> ANOVA is statistical technique used to determine whether a
+> particular classification of the data is useful in
+> understanding the variation of an outcome. Think about
+> dividing people into buckets or classes based on some
+> criteria, like suburban and urban residence. The total
+> variation in the dependent variable (the outcome you care
+> about, like responsiveness to an advertising campaign) can
+> be decomposed into the variation between classes and the
+> variation within classes. When the within-class variation is
+> small relative to the between-class variation, your
+> classification scheme is in some sense meaningful or useful
+> for understanding the world. Members of each cluster behave
+> similarly to one another, but people from different clusters
+> behave distinctively. This decomposition is used to create a
+> formal F test of this hypothesis.
 
 Replacing the word *variance* in the above with the word
 *similarity* might be helpful / more intuitive.
@@ -101,7 +113,7 @@ First, notice that an ANOVA always uses an alternative
 hypothesis that is one-sided. This is because we only reject
 the null if the between-group variability is significantly
 greater than the within-group variability, and this always
-corresponds to a "greater than" in $H_1$.
+corresponds to a *greater than* in $H_1$.
 
 Second, what the heck is $\sigma^2_{between-group}$ and
 $\sigma^2_{within-group}$? We will unpack this more formally
@@ -141,37 +153,62 @@ $$
   \sum_{i=1}^n (z_i-\bar{z})^2
 $$
 
-### Test statistic
-With the formal maths defined above, we can state our
-hypotheses a bit more precisely.
+Given this, a reasonable guess for how to estimate the
+population parameters in $H_0$ might be:
+
+$$
+\widehat{\frac{\sigma^2_{between-group}}{\sigma^2_{within-group}}} = 
+                      \frac{\text{ss}_{between}}{\text{ss}_{within}}
+$$
+
+This is pretty much correct, except that in practise we use
+*mean squared deviations*, which are just *sum of squared
+deviations* divided by their corresponding *degrees of
+freedom*. We need to do this because we don't want the
+within variance to dominate simply because it usually has
+many more observations that can contribute to the sum. This
+leads to the following treatment:
 
 $\begin{align}
 & H_0: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} = 1 \\
 & H_1: \frac{\sigma^2_{between-group}}{\sigma^2_{within-group}} > 1 \\
 \end{align}$
 
-This is pretty much correct. All we need to do to make it
-exactly correct carefully factor in the fact that we don't
-exactly have a ratio of variances. Rather, we have a ratio
-of a *sum of variances*. This will get factored in (1) via
-the degrees of freedom and (2) by using *mean squared*
-deviations instead of sum of squared deviations in the
-ratio.
-
 $\begin{align}
-& n_{total} = l + m + n \\\\
-& df_{between} = n_{groups} - 1 \\
-& df_{within} = n_{total} - n_{groups} \\\\
-& \text{ms}_{between} = \frac{\text{ss}_{between}}{df_{between}} \\
-& \text{ms}_{within} = \frac{\text{ss}_{within}}{df_{within}} \\\\
 & \widehat{\frac{\sigma^2_{between-group}}{\sigma^2_{within-group}}} = 
                       \frac{\text{ms}_{between}}{\text{ms}_{within}} \\\\
-& F_{obs} = \frac{\text{ms}_{between}}{\text{ms}_{within}} \\
-& F_{obs} \sim F(df_{between}, df_{within}) \\
+& \text{ms}_{between} = \frac{\text{ss}_{between}}{df_{between}} \\
+& \text{ms}_{within} = \frac{\text{ss}_{within}}{df_{within}} \\\\
+& df_{between} = n_{groups} - 1 \\
+& df_{within} = n_{total} - n_{groups} \\\\
+& n_{total} = l + m + n \\\\
+& \widehat{\frac{\sigma^2_{between-group}}{\sigma^2_{within-group}}}
+= \frac{\text{ms}_{between}}{\text{ms}_{within}} \sim F(df_{between}, df_{within})\\
+& F_{obs} = \frac{\text{ms}_{between}}{\text{ms}_{within}} \sim F(df_{between}, df_{within})\\
 \end{align}$
 
-**I have not shown how we know that the ratio of variances
-has an F distribution. For now, just trust me.**
+I have not shown how we know that the ratio of variances has
+an F distribution as doing so is beyond the scope of the
+unit. In general, we leave the process of finding good test
+statistics and characterising their distributions to the
+statisticians.
+
+### What is an F distribution
+```{r, echo=F}
+df1 <- c(1, 2, 5, 10, 100)
+df2 <- c(1, 1, 2, 1, 100)
+f <- seq(0, 5, 0.01)
+dlist <- list()
+for(i in 1:length(df1)) {
+  df <- df(f, df1[i], df2[i])
+  dlist[[i]] <- data.table(f, df, df1=df1[i], df2=df2[i])
+}
+d <- rbindlist(dlist)
+d[, df1 := factor(df1)]
+d[, df2 := factor(df2)]
+ggplot(d, aes(f, df, colour=df1:df2)) +
+  geom_line()
+```
 
 ### Assumptions
 - The observations are obtained independently and randomly
@@ -389,3 +426,13 @@ ezANOVA(
   type=3
 ) 
 ```
+
+Notice the warning message about *unequal n per group*. The
+gist of this warning is as follows: There are different
+methods of computing $ss$ terms (not shown in this lecture).
+If we have an unbalanced design (i.e., unequal $n$ per
+group), then these different methods produce different
+results. In psychology and neuroscience, the standard
+approach is to use *Type III* sums of squares. The reason
+for this is beyond the scope of this unit.
+

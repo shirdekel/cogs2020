@@ -49,24 +49,9 @@ $\mu_D$ are different. Please populate the following
 variables.
 
 ```{r, eval=F}
-prob_1_theta_hat_x <- theta_hat_x # possible outcomes of your test statistic
-prob_1_theta_hat_p <- theta_hat_p # corresponding probabilities of outcomes
-prob_1_theta_hat_obs <- theta_hat_obs # observed value of test statistic
-prob_1_pval <- p_val
-prob_1_theta_hat_crit <- theta_hat_crit # critical value of test statistic
-prob_1_decision <- decision
-prob_1_r_result <- r_result
-
-# NOTE: when determining the possible outcomes of your test
-# statistic, it is okay to truncate. For example, if your
-# test statistic has a minimum outcome that is less than 4
-# standard deviations away from the mean, then just stop at
-# the minimum value.
-
-# NOTE: the population mean of an F distribution (if
-# df_denominator > 2) is:
-
-# df_denominator/(df_denominator - 2)
+ans_1_obs # observed test statistic
+ans_1_pval # pvalue of test 
+ans_1_crit # critical value of test statistic
 ```
 
 **2.** Consider the following sampling distribution of an
@@ -114,10 +99,68 @@ processed.
 
 * Is the mean `error` per `subject` different across
 different levels of `condition`? Answer this question by
-performing a one-way ANOVA. Only `prob_3_r_result` will be
-marked for this problem.
+performing a one-way ANOVA. Please populate the following
+variables:
+
+```{r, eval=F}
+ans_3_obs # observed test statistic
+ans_3_pval # pvalue of test 
+ans_3_crit # critical value of test statistic
+```
 
 **4.** Repeat problem 3 but this time use an appropriate
 t-test (assuming there is equal variance in different
-conditions). For this problem, only `prob_4_r_result` will
-be marked for this problem.
+conditions).
+
+```{r, eval=F}
+ans_4_obs # observed test statistic
+ans_4_pval # pvalue of test 
+ans_4_crit # critical value of test statistic
+```
+
+## Final Check
+A common error on these problem sets is to accidentally
+erase or overwrite variables from one question with those
+from another. Another common error is to name your variables
+slightly wrong (e.g., `Ans_1a` instead of `ans_1a`). Yet
+another common error is to include a line of code or two
+that generates an error, and sometimes this error is serious
+enough to prevent most or all of your script from running,
+in which case you will lose most or all of your marks for
+that assignment. All of these can be a very frustrating way
+to lose marks, but you will indeed lose marks if you make
+these mistakes, so you need to be very careful!
+
+To ensure that this doesn't happen to you, please run your
+entire `.R` script from start to finish. One way to do this
+is to use `Code > Run Region > Run All`, but of course there
+are shortcuts for everything so do as you wish. If there are
+any errors at all when you do this, it is essential that you
+address them.
+
+After all of your code has executed from start to finish
+without and errors at all, then carefully inspect your
+workspace to ensure that the following variables are
+defined. A reasonable way to do this is to try to print each
+one of these variables to the console. If it is defined,
+then it will print without error.
+
+```{r, eval=F, echo=T}
+ans_1_obs
+ans_1_pval
+ans_1_crit
+ans_2a
+ans_2b
+ans_2c
+ans_3_obs
+ans_3_pval
+ans_3_crit
+ans_4_obs
+ans_4_pval
+ans_4_crit
+```
+
+Finally, be sure that the file you submit to iLearn is a
+`.R` file and nothing else. Any other extension cannot be
+marked. This means do not submit `.Rmd`, `.RProj`, `.pdf`,
+`.html` or anything else. You must submit a `.R` file.
