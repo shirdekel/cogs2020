@@ -41,7 +41,7 @@ library(ggpubr)
 library(latex2exp)
 ```
 
-* Create a new file named `cogs2020_hw_7.R` and save it in
+* Create a new file named `cogs2020_hw_8.R` and save it in
 the `cogs2020` folder that you created during Lecture 1.
 
 * If you have not already installed the `data.table` and the
