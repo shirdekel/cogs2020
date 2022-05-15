@@ -193,7 +193,7 @@ unit. In general, we leave the process of finding good test
 statistics and characterising their distributions to the
 statisticians.
 
-### What is an F distribution
+### What is an F distribution?
 ```{r, echo=F}
 df1 <- c(1, 2, 5, 10, 100)
 df2 <- c(1, 1, 2, 1, 100)
@@ -264,7 +264,7 @@ $\mu_Y$, $\mu_Z$ are different.
 ```{r, warning=F, message=F}
 ## step 1
 ## H0: sig_between / sig_within = 1
-## H1: sig_between / sig_within != 1
+## H1: sig_between / sig_within > 1
 
 ## step 2
 alph <- 0.05
