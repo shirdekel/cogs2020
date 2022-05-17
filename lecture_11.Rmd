@@ -27,7 +27,7 @@ rm(list=ls())
 
 gen_exp <- function(muA1, muA2, muB1, muB2, sig, n) {
 
-  ## generate obervations
+  ## generate observations
   y_A1 <- rnorm(n, muA1, sig)
   y_A2 <- rnorm(n, muA2, sig)
   y_B1 <- rnorm(n, muB1, sig)
@@ -210,6 +210,8 @@ g2
 g3
 ```
 </div>
+</div>
+
 
 ## Two-way ANOVA more formally
 To talk about a two-way ANOVA clearly, it is helpful to
