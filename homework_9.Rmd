@@ -448,6 +448,8 @@ g2 <- ggplot(d, aes(x, fx)) +
   annotate("text", x = 1.6, y = 0.1, hjust = 0, label = "Area of shaded region = 0.25")
 
 ggarrange(g1, g2, ncol=2)
+
+ggsave('./img/quiz9_1.png', g2)
 ```
 
 * Which distribution corresponds to the repeated measures

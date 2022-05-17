@@ -217,7 +217,8 @@ conditions).
 ```{r, eval=F}
 ans_4_obs # observed test statistic
 ans_4_pval # pvalue of test 
-ans_4_crit # critical value of test statistic
+ans_4_crit_lower # lower critical value of test statistic
+ans_4_crit_upper # upper critical value of test statistic
 ```
 
 ## Final Check
@@ -259,7 +260,8 @@ ans_3_pval
 ans_3_crit
 ans_4_obs
 ans_4_pval
-ans_4_crit
+ans_4_crit_lower
+ans_4_crit_upper
 ```
 
 Finally, be sure that the file you submit to iLearn is a
