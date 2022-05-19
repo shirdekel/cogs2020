@@ -1,0 +1,301 @@
+---
+title: "Homework 7 Solutions"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Solutions
+
+```{r}
+# Basic setup code that you will need for this problem
+library(data.table)
+library(ggplot2)
+library(stringr)
+
+rm(list=ls())
+
+# basic id info
+my_name <- "John Doe"
+my_student_id <- "12345678"
+
+# Please include the following line of code as well
+set.seed(0)
+
+d <-fread('https://crossley.github.io/cogs2020/data/eeg/epochs.txt')
+
+## The column names that come from this file have spaces
+## This line removes those spaces (depends on the `stringr` package)
+names(d) <- str_replace_all(names(d), c(" " = "." , "," = "" ))
+
+
+## Problem 1
+
+## Step 1: State the null and alternative hypotheses
+## H0: muX = muY
+## H1: muX != muY
+
+## H0: muX - muY = 0
+## H1: muX - muY != 0
+
+
+## Step 2: Choose a type I error rate
+alph <- 0.05
+
+
+## Step 3: Fully specify a statistic that estimates the parameter in step 1
+
+## Let W = X - Y
+## mu_w_hat = w_bar ~ N(mu_w_bar, sig_w_bar)
+
+## However, since we must estimate the population variance:
+## t = ( w_bar - 0 ) / sig_w_bar ~ t(df)
+
+## We know because of the structure of our MEG data that our
+## sample size for X and Y are the same (equal sample size)
+## and we are told to assume equal variance.
+
+## sig_w_bar = sqrt( (var_x + var_y) / n)
+
+## Step 4: Perform an experiment / obtain a sample from the statistic specified in step 3
+x <- d[time>0, mean(MEG.133), .(epoch)][, V1]
+y <- d[time>0, mean(MEG.135), .(epoch)][, V1]
+
+n <- length(x)
+
+xbar <- mean(x)
+ybar <- mean(y)
+
+varx <- var(x)
+vary <- var(y)
+
+sp <- sqrt((varx + vary)/n)
+tobs = (xbar - ybar) / sp
+df = 2*n - 2
+
+t_crit_lower <- qt(0.025, df, lower.tail=TRUE)
+t_crit_upper <- qt(0.025, df, lower.tail=FALSE)
+w <- (t_crit_upper - t_crit_lower) * sp
+ci_lower <- (xbar - ybar) - w/2
+ci_upper <- (xbar - ybar) + w/2
+
+## Step 5: Make a decision
+p_val_upper <- pt(abs(tobs), df, lower.tail=FALSE)
+p_val_lower <- pt(-abs(tobs), df, lower.tail=TRUE)
+p_val <- p_val_upper + p_val_lower
+
+if(p_val < 0.05) {
+  decision <- 'reject H0'
+} else {
+  decision <- 'fail to reject H0'
+}
+
+## Step 6: Check your work with `t.test()`
+r_result <- t.test(x,
+                   y,
+                   alternative='two.sided',
+                   mu=0,
+                   paired=FALSE,
+                   var.equal=TRUE,
+                   conf.level=1 - alph)
+
+# define variables for marking
+ans_1_t_test_stat_obs <- tobs
+ans_1_critical_value_lower <- t_crit_lower * sp
+ans_1_critical_value_upper <- t_crit_upper * sp
+ans_1_CI_lower <- ci_lower
+ans_1_CI_upper <- ci_upper
+ans_1_p_value <- p_val_lower + p_val_upper
+
+
+# Problem 2
+# 2. Consider two random variables X∼(μX,σX) and Y∼(μY,σY)
+# . Let X generate data for MEG channel 039 during the first
+# 30 epochs and Y generate data for MEG channel 039 during
+# the remaining epochs. Test the hypothesis that the mean
+# MEG signal for t>0 in these two signals are significantly
+# different. Assume X and Y are independent but do not
+# assume that σX=σY .
+
+## Step 1: State the null and alternative hypotheses
+## H0: muX = muY
+## H1: muX != muY
+
+## H0: muX - muY = 0
+## H1: muX - muY != 0
+
+## Step 2: Choose a type I error rate
+alph <- 0.05
+
+## Step 3: Fully specify a statistic that estimates the parameter in step 1
+
+## Let W = X - Y
+## mu_w_hat = w_bar ~ N(mu_w_bar, sig_w_bar)
+
+## However, since we must estimate the population variance:
+## t = ( w_bar - 0 ) / sig_w_bar ~ t(df)
+
+## We know because of the structure of our MEG data that our sample size for X
+## and Y are the same (equal sample size) and we are told NOT to assume equal
+## variance.
+
+## sig_w_bar = sqrt( varx/nx + vary/ny )
+## df ... complicaated ...
+
+## Step 4: Perform an experiment / obtain a sample from the statistic specified in step 3
+x <- d[time>0 & epoch <= min(epoch) + 29][, mean(MEG.039), .(epoch)][, V1]
+y <- d[time>0 & epoch > min(epoch) + 29][, mean(MEG.039), .(epoch)][, V1]
+
+nx <- length(x)
+ny <- length(y)
+
+xbar <- mean(x)
+ybar <- mean(y)
+
+varx <- var(x)
+vary <- var(y)
+
+sp <- sqrt((varx/nx + vary/ny))
+tobs <- (xbar - ybar) / sp
+df <- ( (varx/nx + vary/ny)^2 ) / ( ((varx/nx)^2)/(nx-1) + ((vary/ny)^2)/(ny-1) )
+
+t_crit_lower <- qt(0.025, df, lower.tail=TRUE)
+t_crit_upper <- qt(0.025, df, lower.tail=FALSE)
+w <- (t_crit_upper - t_crit_lower) * sp
+ci_lower <- (xbar - ybar) - w/2
+ci_upper <- (xbar - ybar) + w/2
+
+## Step 5: Make a decision
+p_val_upper <- pt(abs(tobs), df, lower.tail=FALSE)
+p_val_lower <- pt(-abs(tobs), df, lower.tail=TRUE)
+p_val <- p_val_upper + p_val_lower
+
+if(p_val < 0.05) {
+  decision <- 'reject H0'
+} else {
+  decision <- 'fail to reject H0'
+}
+
+## Step 6: Check your work with `t.test()`
+r_result <- t.test(x,
+                   y,
+                   alternative='two.sided',
+                   mu=0,
+                   paired=FALSE,
+                   var.equal=FALSE,
+                   conf.level=1 - alph)
+
+# define variables for marking
+ans_2_t_test_stat_obs <- tobs
+ans_2_critical_value_lower <- t_crit_lower * sp
+ans_2_critical_value_upper <- t_crit_upper * sp
+ans_2_CI_lower <- ci_lower
+ans_2_CI_upper <- ci_upper
+ans_2_p_value <- p_val_lower + p_val_upper
+
+# Problem 3
+# Do you think assuming that two different MEG channels on
+# the same persons head are likely to be independent?
+# Explain your reasoning.
+
+# Probably not! In the extreme case, two sensors might be
+# placed right next to each other, and this would lead them
+# to read out almost the same signal, so measuring one
+# signal might nearly completely determine the other. That
+# is the opposite of independence.
+
+
+# Problem 4
+
+## Step 1: State the null and alternative hypotheses
+## H0: muX = muY
+## H1: muX != muY
+
+## H0: muX - muY = 0
+## H1: muX - muY != 0
+
+
+## Step 2: Choose a type I error rate
+alph <- 0.05
+
+
+## Step 3: Fully specify a statistic that estimates the parameter in step 1
+
+## Let W = X - Y
+## mu_w_hat = w_bar ~ N(mu_w_bar, sig_w_bar)
+
+## However, since we must estimate the population variance:
+## t = ( w_bar - 0 ) / sig_w_bar ~ t(df)
+
+## We know because of the structure of our MEG data that our sample size for X
+## and Y are the same (equal sample size) and we are told NOT to assume independence,
+## so we do a repeated measures t-test.
+
+## Step 4: Perform an experiment / obtain a sample from the statistic specified in step 3
+x <- d[time>0][, mean(MEG.039), .(epoch)][, V1]
+y <- d[time>0][, mean(MEG.135), .(epoch)][, V1]
+
+d <- x - y
+n <- length(d)
+
+dbar <- mean(d)
+vard <- var(d)
+
+sp <- sqrt((vard/n))
+tobs = dbar / sp
+df = n - 1
+
+t_crit_lower <- qt(0.025, df, lower.tail=TRUE)
+t_crit_upper <- qt(0.025, df, lower.tail=FALSE)
+w <- (t_crit_upper - t_crit_lower) * sp
+ci_lower <- dbar - w/2
+ci_upper <- dbar + w/2
+
+## Step 5: Make a decision
+p_val_upper <- pt(abs(tobs), df, lower.tail=FALSE)
+p_val_lower <- pt(-abs(tobs), df, lower.tail=TRUE)
+p_val <- p_val_upper + p_val_lower
+
+if(p_val < 0.05) {
+  decision <- 'reject H0'
+} else {
+  decision <- 'fail to reject H0'
+}
+
+## Step 6: Check your work with `t.test()`
+r_result <- t.test(x,
+                   y,
+                   alternative='two.sided',
+                   mu=0,
+                   paired=TRUE,
+                   var.equal=TRUE,
+                   conf.level=1 - alph)
+
+r_result_2 <- t.test(d,
+                     alternative='two.sided',
+                     mu=0,
+                     paired=FALSE,
+                     var.equal=TRUE,
+                     conf.level=1 - alph)
+
+# define variables for marking
+ans_4_t_test_stat_obs <- tobs
+ans_4_critical_value_lower <- t_crit_lower * sp
+ans_4_critical_value_upper <- t_crit_upper * sp
+ans_4_CI_lower <- ci_lower
+ans_4_CI_upper <- ci_upper
+ans_4_p_value <- p_val_lower + p_val_upper

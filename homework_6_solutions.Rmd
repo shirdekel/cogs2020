@@ -1,0 +1,160 @@
+---
+title: "Homework 6 Solutions"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Solutions
+
+```{r}
+# Basic setup code that you will need for this problem
+library(data.table)
+library(ggplot2)
+
+rm(list=ls())
+
+# basic id info
+my_name <- "John Doe"
+my_student_id <- "12345678"
+
+# Please include the following line of code as well
+set.seed(0)
+
+# 1
+# Assume X ~ Normal(mu_x, sig_x)
+# Then Null and alternative H's are:
+# H0: mu_x = 58
+# H1: mu_x != 58
+
+# type I error (alpha) = 0.05
+type_I_error <- 0.05
+
+# estimate mu_x with mu_x_hat = x_bar
+x <- c(63.97,
+      60.29,
+      85.60,
+      72.57,
+      54.65,
+      53.74,
+      69.13,
+      70.07,
+      67.19,
+      53.95
+     )
+
+n <- length(x)
+x_bar_obs <- mean(x)
+
+# define the sampling distribution of x_bar:
+#
+# X ~ Normal(mu_x, sig_x)
+# X_bar ~ Normal(mu_x_bar, sig_x_bar)
+#
+# mu_x_bar = mu_x
+# sig_x_bar = sig_x / sqrt(n)
+
+mu_x = 58
+sig_x = sqrt(10) # given in the problem
+
+mu_x_bar <- mu_x # from central limit theorem
+sig_x_bar <- sig_x / sqrt(n) # from central limit theorem
+
+# prepare for two-tailed calculations
+x_bar_obs_lower <- mu_x_bar - abs(x_bar_obs - mu_x_bar)
+x_bar_obs_upper <- mu_x_bar + abs(x_bar_obs - mu_x_bar)
+
+# critical value
+critical_value_lower <- qnorm(type_I_error, mu_x_bar, sig_x_bar, lower.tail=T)
+critical_value_upper <- qnorm(type_I_error, mu_x_bar, sig_x_bar, lower.tail=F)
+
+# CI
+w <- critical_value_upper - critical_value_lower
+CI_lower <- x_bar_obs - w/2
+CI_upper <- x_bar_obs + w/2
+
+# p-value
+p_value_lower <- pnorm(x_bar_obs_lower, mu_x_bar, sig_x_bar, lower.tail=T)
+p_value_upper <- pnorm(x_bar_obs_upper, mu_x_bar, sig_x_bar, lower.tail=F)
+
+# Populate marking variables
+ans_1_test_stat_obs <- x_bar_obs
+ans_1_critical_value_lower <- critical_value_lower
+ans_1_critical_value_upper <- critical_value_upper
+ans_1_CI_lower <- CI_lower
+ans_1_CI_upper <- CI_upper
+ans_1_p_value <- p_value_lower + p_value_upper
+
+# 2
+# Assume X ~ Binomial(n, p)
+# Then Null and alternative H's are:
+# H0: p=0.5
+# H1: p!=0.5
+
+# type I error (alpha) = 0.05
+type_I_error <- 0.05
+
+# estimate p with the observed proportion of successes
+n <- 100 # given in problem
+n_obs = 63 # given in the problem
+p_hat_obs = n_obs / n
+
+# define the sampling distribution of np:
+# np ~ Binomial(n, p)
+p <- 0.5 # as specified in H0
+
+# prepare for two-tailed calculations
+n_obs_lower <- p * n - abs(n_obs - p * n)
+n_obs_upper <- p * n + abs(n_obs - p * n)
+
+# critical value (note the -1 due to discrete distribution)
+# NOTE: You guys should ask Shir about the +1/-1
+critical_value_lower <- (qbinom(type_I_error/2, n, p, lower.tail=T) - 1) / n
+critical_value_upper <- (qbinom(type_I_error/2, n, p, lower.tail=F) + 1) / n
+
+# CI
+w <- critical_value_upper - critical_value_lower
+CI_lower <- p_hat_obs - w/2
+CI_upper <- p_hat_obs + w/2
+
+# p-value
+p_value_lower <- pbinom(n_obs_lower, n, p, lower.tail=T)
+p_value_upper <- pbinom(n_obs_upper - 1, n, p, lower.tail = F)
+
+# Populate marking variables
+ans_2_test_stat_obs <- p_hat_obs
+ans_2_critical_value_lower <- critical_value_lower
+ans_2_critical_value_upper <- critical_value_upper
+ans_2_CI_lower <- CI_lower
+ans_2_CI_upper <- CI_upper
+ans_2_p_value <- p_value_lower + p_value_upper
+
+# 3
+ans_3_critical_value_lower <- 0.025
+ans_3_critical_value_upper <- 1 - 0.025
+w <- ans_3_critical_value_upper - ans_3_critical_value_lower
+ans_3_CI_lower <- 0.75 - w/2
+ans_3_CI_upper <- 0.75 + w/2
+ans_3_p_value <- 0.5
+
+# 4
+ans_4a <- "confidence"
+ans_4b <- "beta"
+ans_4c <- "alpha"
+ans_4d <- "power"
+ans_4e <- "alpha"
+ans_4f <- "power"
