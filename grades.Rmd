@@ -54,19 +54,15 @@ d3[student_id == sid]
 # HW 4
 d4 <- fread('https://crossley.github.io/cogs2020/grades/hw_4_table.csv')
 d4[student_id == sid]
+
+# HW 5
+d5 <- fread('https://crossley.github.io/cogs2020/grades/hw_5_table.csv')
+d5[student_id == sid]
+
+# HW 6
+d6 <- fread('https://crossley.github.io/cogs2020/grades/hw_6_table.csv')
+d6[student_id == sid]
 ```
-
-<!-- # HW 4 -->
-<!-- d4 <- fread('https://crossley.github.io/cogs2020/grades/hw_4_table.csv') -->
-<!-- d4[student_id == sid] -->
-
-<!-- # HW 5 -->
-<!-- d5 <- fread('https://crossley.github.io/cogs2020/grades/hw_5_table.csv') -->
-<!-- d5[student_id == sid] -->
-
-<!-- # HW 6 -->
-<!-- d6 <- fread('https://crossley.github.io/cogs2020/grades/hw_6_table.csv') -->
-<!-- d6[student_id == sid] -->
 
 <!-- # HW 7 -->
 <!-- d7 <- fread('https://crossley.github.io/cogs2020/grades/hw_7_table.csv') -->
@@ -185,25 +181,25 @@ d4[student_id == sid]
 <!-- dd[, hw10 := 85] -->
 <!-- dd[, f := 85] -->
 
-<!-- dd[, total_score := sum(0.1 * 1, # quizzes (assuming you get these) -->
+<!-- dd[, score := sum(0.1 * 1, # quizzes (assuming you get these) -->
 <!--                     0.3 * mean(c(hw1, hw2, hw3, hw4, hw5, hw6, hw7, hw8, hw9, hw10)), # hw -->
 <!--                     0.3 * m, # midterm -->
 <!--                     0.3 * f, na.rm=F) # final -->
 <!--    , .(student_id)] -->
 
 <!-- dd[, mark_class := "NA"] -->
-<!-- dd[total_score >= 85, mark_class := "High Distinction"] -->
-<!-- dd[total_score >= 75 & total_score < 85, mark_class := "Distinction"] -->
-<!-- dd[total_score >= 65 & total_score < 75, mark_class := "Credit"] -->
-<!-- dd[total_score >= 50 & total_score < 65, mark_class := "Pass"] -->
-<!-- dd[total_score < 50, mark_class := "Fail"] -->
+<!-- dd[score >= 85, mark_class := "High Distinction"] -->
+<!-- dd[score >= 75 & score < 85, mark_class := "Distinction"] -->
+<!-- dd[score >= 65 & score < 75, mark_class := "Credit"] -->
+<!-- dd[score >= 50 & score < 65, mark_class := "Pass"] -->
+<!-- dd[score < 50, mark_class := "Fail"] -->
 <!-- dd[, mark_class := factor(mark_class, -->
 <!--                           levels=c('High Distinction', -->
 <!--                                    'Distinction', -->
 <!--                                    'Credit', -->
 <!--                                    'Pass', -->
 <!--                                    'Fail'))] -->
-<!-- ggplot(dd, aes(total_score, fill=mark_class)) + -->
+<!-- ggplot(dd, aes(score, fill=mark_class)) + -->
 <!--   geom_histogram(breaks=seq(0.0, 100, 5), closed='left') + -->
 <!--   xlim(0, 100) -->
 
@@ -221,8 +217,20 @@ rm(list=ls())
 d <- fread('https://crossley.github.io/cogs2020/grades/hw_1_table.csv')
 
 dd <- d[, .(score = unique(score)), .(student_id)]
-ggplot(dd, aes(score)) +
-  geom_histogram(bins=10)
+dd[, mark_class := "NA"]
+dd[score >= 85, mark_class := "High Distinction"]
+dd[score >= 75 & score < 85, mark_class := "Distinction"]
+dd[score >= 65 & score < 75, mark_class := "Credit"]
+dd[score >= 50 & score < 65, mark_class := "Pass"]
+dd[score < 50, mark_class := "Fail"]
+dd[, mark_class := factor(mark_class,
+                          levels=c('High Distinction',
+                                   'Distinction',
+                                   'Credit',
+                                   'Pass',
+                                   'Fail'))]
+ggplot(dd, aes(score, fill=mark_class)) +
+  geom_histogram(breaks=seq(0, 100, by=5), closed='left')
 
 dd <- d[, .(ans_mean = mean(ans=="correct"),
             ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
@@ -244,8 +252,20 @@ rm(list=ls())
 d <- fread('https://crossley.github.io/cogs2020/grades/hw_2_table.csv')
 
 dd <- d[, .(score = unique(score)), .(student_id)]
-ggplot(dd, aes(score)) +
-  geom_histogram(bins=10)
+dd[, mark_class := "NA"]
+dd[score >= 85, mark_class := "High Distinction"]
+dd[score >= 75 & score < 85, mark_class := "Distinction"]
+dd[score >= 65 & score < 75, mark_class := "Credit"]
+dd[score >= 50 & score < 65, mark_class := "Pass"]
+dd[score < 50, mark_class := "Fail"]
+dd[, mark_class := factor(mark_class,
+                          levels=c('High Distinction',
+                                   'Distinction',
+                                   'Credit',
+                                   'Pass',
+                                   'Fail'))]
+ggplot(dd, aes(score, fill=mark_class)) +
+  geom_histogram(breaks=seq(0, 100, by=5), closed='left')
 
 dd <- d[, .(ans_mean = mean(ans=="correct"),
             ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
@@ -268,8 +288,20 @@ rm(list=ls())
 d <- fread('https://crossley.github.io/cogs2020/grades/hw_3_table.csv')
 
 dd <- d[, .(score = unique(score)), .(student_id)]
-ggplot(dd, aes(score)) +
-  geom_histogram(bins=10)
+dd[, mark_class := "NA"]
+dd[score >= 85, mark_class := "High Distinction"]
+dd[score >= 75 & score < 85, mark_class := "Distinction"]
+dd[score >= 65 & score < 75, mark_class := "Credit"]
+dd[score >= 50 & score < 65, mark_class := "Pass"]
+dd[score < 50, mark_class := "Fail"]
+dd[, mark_class := factor(mark_class,
+                          levels=c('High Distinction',
+                                   'Distinction',
+                                   'Credit',
+                                   'Pass',
+                                   'Fail'))]
+ggplot(dd, aes(score, fill=mark_class)) +
+  geom_histogram(breaks=seq(0, 100, by=5), closed='left')
 
 dd <- d[, .(ans_mean = mean(ans=="correct"),
             ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
@@ -291,8 +323,20 @@ rm(list=ls())
 d <- fread('https://crossley.github.io/cogs2020/grades/hw_4_table.csv')
 
 dd <- d[, .(score = unique(score)), .(student_id)]
-ggplot(dd, aes(score)) +
-  geom_histogram(bins=10)
+dd[, mark_class := "NA"]
+dd[score >= 85, mark_class := "High Distinction"]
+dd[score >= 75 & score < 85, mark_class := "Distinction"]
+dd[score >= 65 & score < 75, mark_class := "Credit"]
+dd[score >= 50 & score < 65, mark_class := "Pass"]
+dd[score < 50, mark_class := "Fail"]
+dd[, mark_class := factor(mark_class,
+                          levels=c('High Distinction',
+                                   'Distinction',
+                                   'Credit',
+                                   'Pass',
+                                   'Fail'))]
+ggplot(dd, aes(score, fill=mark_class)) +
+  geom_histogram(breaks=seq(0, 100, by=5), closed='left')
 
 dd <- d[, .(ans_mean = mean(ans=="correct"),
             ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
@@ -315,8 +359,20 @@ rm(list=ls())
 d <- fread('https://crossley.github.io/cogs2020/grades/hw_5_table.csv')
 
 dd <- d[, .(score = unique(score)), .(student_id)]
-ggplot(dd, aes(score)) +
-  geom_histogram(bins=10)
+dd[, mark_class := "NA"]
+dd[score >= 85, mark_class := "High Distinction"]
+dd[score >= 75 & score < 85, mark_class := "Distinction"]
+dd[score >= 65 & score < 75, mark_class := "Credit"]
+dd[score >= 50 & score < 65, mark_class := "Pass"]
+dd[score < 50, mark_class := "Fail"]
+dd[, mark_class := factor(mark_class,
+                          levels=c('High Distinction',
+                                   'Distinction',
+                                   'Credit',
+                                   'Pass',
+                                   'Fail'))]
+ggplot(dd, aes(score, fill=mark_class)) +
+  geom_histogram(breaks=seq(0, 100, by=5), closed='left')
 
 dd <- d[, .(ans_mean = mean(ans=="correct"),
             ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
@@ -333,29 +389,41 @@ ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
 ![Midterm performance by problem](img/midterm_by_prob.png)
 ![Midterm performance overall](img/midterm_total.png)
 
-<!-- ## Homework 6 Grades -->
-<!-- ```{r, fig.width=10} -->
-<!-- library(data.table) -->
-<!-- library(ggplot2) -->
+## Homework 6 Grades
+```{r, fig.width=10}
+library(data.table)
+library(ggplot2)
 
-<!-- rm(list=ls()) -->
+rm(list=ls())
 
-<!-- d <- fread('https://crossley.github.io/cogs2020/grades/hw_6_table.csv') -->
+d <- fread('https://crossley.github.io/cogs2020/grades/hw_6_table.csv')
 
-<!-- dd <- d[, .(score = unique(score)), .(student_id)] -->
-<!-- ggplot(dd, aes(score)) + -->
-<!--   geom_histogram(bins=10) -->
+dd <- d[, .(score = unique(score)), .(student_id)]
+dd[, mark_class := "NA"]
+dd[score >= 85, mark_class := "High Distinction"]
+dd[score >= 75 & score < 85, mark_class := "Distinction"]
+dd[score >= 65 & score < 75, mark_class := "Credit"]
+dd[score >= 50 & score < 65, mark_class := "Pass"]
+dd[score < 50, mark_class := "Fail"]
+dd[, mark_class := factor(mark_class,
+                          levels=c('High Distinction',
+                                   'Distinction',
+                                   'Credit',
+                                   'Pass',
+                                   'Fail'))]
+ggplot(dd, aes(score, fill=mark_class)) +
+  geom_histogram(breaks=seq(0, 100, by=5), closed='left')
 
-<!-- dd <- d[, .(ans_mean = mean(ans=="correct"), -->
-<!--             ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)] -->
-<!-- ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) + -->
-<!--   geom_pointrange(aes(x=ans_labels, -->
-<!--                       ymin=ans_mean-ans_err, -->
-<!--                       ymax=ans_mean+ans_err)) + -->
-<!--   xlab('Problem Number') + -->
-<!--   ylab('Proportion Correct')+ -->
-<!--   theme(axis.text.x=element_text(angle=45, hjust=1)) -->
-<!-- ``` -->
+dd <- d[, .(ans_mean = mean(ans=="correct"),
+            ans_err = sd(ans=="correct")/sqrt(.N)), .(ans_labels)]
+ggplot(data=dd, aes(x=ans_labels, y=ans_mean)) +
+  geom_pointrange(aes(x=ans_labels,
+                      ymin=ans_mean-ans_err,
+                      ymax=ans_mean+ans_err)) +
+  xlab('Problem Number') +
+  ylab('Proportion Correct')+
+  theme(axis.text.x=element_text(angle=45, hjust=1))
+```
 
 <!-- ## Homework 7 Grades -->
 <!-- ```{r, fig.width=10} -->
