@@ -152,6 +152,8 @@ here:
 
 ## load data_stroop.csv into a data.table
 d <- fread('https://crossley.github.io/cogs2020/data/real_data/data_stroop.csv')
+
+
 ```
 
 
