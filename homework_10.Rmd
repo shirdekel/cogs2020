@@ -419,5 +419,16 @@ dd <- d[,
         .(rt_mean = mean(resp.rt), 
           acc_mean = mean(acc)), 
         .(subject, letterColor)]
+
+ggplot(data=dd, aes(x=letterColor, y=rt_mean)) +
+  geom_violin() + 
+  geom_point()
+
+ddd <- dd[, 
+         .(rt_mean = mean(rt_mean), rt_err = sd(rt_mean)/sqrt(.N)),
+         .(letterColor)]
+
+ggplot(data=ddd, aes(x=letterColor, y=rt_mean)) +
+  geom_pointrange(aes(ymin=rt_mean-rt_err, ymax=rt_mean+rt_err))
 ```
 
