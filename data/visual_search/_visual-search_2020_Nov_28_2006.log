@@ -1,0 +1,164 @@
+5.2792 	WARNING 	We strongly recommend you activate the PTB sound engine in PsychoPy prefs as the preferred audio engine. Its timing is vastly superior. Your prefs are currently set to use ['sounddevice', 'PTB', 'pyo', 'pygame'] (in that order).
+9.2157 	WARNING 	User requested fullscreen with size [1024  768], but screen is actually [1920, 1200]. Using actual size
+11.2525 	EXP 	Created window1 = Window(allowGUI=False, allowStencil=False, args=UNKNOWN, autoLog=True, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0., 0., 0.]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x00000213E706B828>, gamma=None, gammaErrorPolicy='raise', kwargs=UNKNOWN, lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x00000213E6D84A58>, multiSample=False, name='window1', numSamples=2, pos=[0.0, 0.0], screen=0, size=array([1920, 1200]), stencilBits=0, stereo=False, units='height', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+11.2530 	EXP 	window1: mouseVisible = True
+11.2531 	EXP 	window1: recordFrameIntervals = False
+11.4183 	EXP 	window1: recordFrameIntervals = True
+11.6016 	EXP 	window1: recordFrameIntervals = False
+11.8815 	EXP 	Created instrTxt = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, languageStyle='LTR', name='instrTxt', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([255., 255., 255.]), text=str(...), units='height', win=Window(...), wrapWidth=1)
+11.8816 	EXP 	window1: mouseVisible = True
+12.7077 	EXP 	Created Tstim = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-2.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7093 	EXP 	Created Tstim_2 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-3.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_2', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7108 	EXP 	Created Tstim_3 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-4.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_3', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7125 	EXP 	Created Tstim_4 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-5.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_4', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7139 	EXP 	Created Tstim_5 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-6.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_5', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7152 	EXP 	Created Tstim_6 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-7.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_6', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7166 	EXP 	Created Tstim_7 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-8.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_7', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7189 	EXP 	Created Tstim_8 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-9.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_8', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7211 	EXP 	Created Tstim_9 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-10.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_9', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7233 	EXP 	Created Tstim_10 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-11.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_10', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7258 	EXP 	Created Tstim_11 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-12.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_11', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7285 	EXP 	Created Tstim_12 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-13.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_12', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7322 	EXP 	Created Tstim_13 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-14.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_13', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7358 	EXP 	Created Tstim_14 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-15.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_14', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7398 	EXP 	Created Tstim_15 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-16.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_15', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7439 	EXP 	Created Tstim_16 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-17.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_16', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7477 	EXP 	Created Tstim_17 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-18.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_17', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7511 	EXP 	Created Tstim_18 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-19.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_18', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7542 	EXP 	Created Tstim_19 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-20.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_19', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.7568 	EXP 	Created Tstim_20 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-21.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Tstim_20', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='T', units='height', win=Window(...), wrapWidth=1)
+12.8555 	EXP 	Created Lstim = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='black', colorSpace='named', contrast=1.0, depth=-22.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=1.0, italic=False, languageStyle='LTR', name='Lstim', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([0., 0., 0.]), text='L', units='height', win=Window(...), wrapWidth=1)
+12.8556 	EXP 	window1: mouseVisible = True
+12.8971 	EXP 	instrTxt: autoDraw = True
+13.3872 	DATA 	Mouse: Left button down, pos=(787,692)
+13.3900 	EXP 	Created sequence: random, trialTypes=1, nReps=5, seed=None
+13.3904 	EXP 	New trial (rep=0, index=0): None
+13.4946 	DATA 	Mouse:  Left button up, pos=(787,692)
+13.4964 	EXP 	instrTxt: autoDraw = False
+13.4964 	EXP 	Lstim: ori = 209.0
+13.4964 	EXP 	Tstim: ori = 211.0
+13.4964 	EXP 	Tstim_2: ori = 98.0
+13.4964 	EXP 	Tstim_3: ori = 28.0
+13.4964 	EXP 	Tstim_4: ori = 37.0
+13.4964 	EXP 	Tstim_5: ori = 274.0
+13.4964 	EXP 	Tstim_6: ori = 255.0
+13.4964 	EXP 	Tstim_7: ori = 275.0
+13.4964 	EXP 	Tstim_8: ori = 28.0
+13.4964 	EXP 	Tstim_9: ori = 307.0
+13.4964 	EXP 	Tstim_10: ori = 98.0
+13.4964 	EXP 	Tstim_11: ori = 169.0
+13.4964 	EXP 	Tstim_12: ori = 202.0
+13.4964 	EXP 	Tstim_13: ori = 350.0
+13.4964 	EXP 	Tstim_14: ori = 125.0
+13.4964 	EXP 	Tstim_15: ori = 205.0
+13.4964 	EXP 	Tstim_16: ori = 126.0
+13.4964 	EXP 	Tstim_17: ori = 142.0
+13.4964 	EXP 	Tstim_18: ori = 186.0
+13.4964 	EXP 	Tstim_19: ori = 260.0
+13.4964 	EXP 	Tstim_20: ori = 128.0
+13.4964 	EXP 	Tstim: opacity = 0.5
+13.4964 	EXP 	Tstim: pos = array([0.24, 0.24])
+13.4964 	EXP 	Tstim: height = 0.1
+13.4964 	EXP 	Tstim_2: opacity = 0.5
+13.4964 	EXP 	Tstim_2: height = 0.1
+13.4964 	EXP 	Tstim_3: opacity = 0.5
+13.4964 	EXP 	Tstim_3: pos = array([-0.21,  0.15])
+13.4964 	EXP 	Tstim_3: height = 0.1
+13.4964 	EXP 	Tstim_4: opacity = 0.5
+13.4964 	EXP 	Tstim_4: pos = array([-0.03,  0.06])
+13.4964 	EXP 	Tstim_4: height = 0.1
+13.4964 	EXP 	Tstim_5: opacity = 0.5
+13.4964 	EXP 	Tstim_5: pos = array([ 0.18, -0.03])
+13.4964 	EXP 	Tstim_5: height = 0.1
+13.4964 	EXP 	Tstim_6: opacity = 0.5
+13.4964 	EXP 	Tstim_6: pos = array([0.09, 0.3 ])
+13.4964 	EXP 	Tstim_6: height = 0.1
+13.4964 	EXP 	Tstim_7: opacity = 0.5
+13.4964 	EXP 	Tstim_7: pos = array([ 0.15, -0.12])
+13.4964 	EXP 	Tstim_7: height = 0.1
+13.4964 	EXP 	Tstim_8: opacity = 0.5
+13.4964 	EXP 	Tstim_8: pos = array([ 0.  , -0.24])
+13.4964 	EXP 	Tstim_8: height = 0.1
+13.4964 	EXP 	Tstim_9: opacity = 0.5
+13.4964 	EXP 	Tstim_9: pos = array([-0.3 , -0.18])
+13.4964 	EXP 	Tstim_9: height = 0.1
+13.4964 	EXP 	Tstim_10: opacity = 0.5
+13.4964 	EXP 	Tstim_10: pos = array([-0.18, -0.3 ])
+13.4964 	EXP 	Tstim_10: height = 0.1
+13.4964 	EXP 	Tstim_11: opacity = 0.5
+13.4964 	EXP 	Tstim_11: pos = array([0.06, 0.09])
+13.4964 	EXP 	Tstim_11: height = 0.1
+13.4964 	EXP 	Tstim_12: opacity = 0.5
+13.4964 	EXP 	Tstim_12: pos = array([-0.27, -0.06])
+13.4964 	EXP 	Tstim_12: height = 0.1
+13.4964 	EXP 	Tstim_13: opacity = 0.5
+13.4964 	EXP 	Tstim_13: pos = array([ 0.3 , -0.21])
+13.4964 	EXP 	Tstim_13: height = 0.1
+13.4964 	EXP 	Tstim_14: opacity = 0.5
+13.4964 	EXP 	Tstim_14: pos = array([0.03, 0.  ])
+13.4964 	EXP 	Tstim_14: height = 0.1
+13.4964 	EXP 	Tstim_15: opacity = 0.5
+13.4964 	EXP 	Tstim_15: pos = array([-0.09,  0.18])
+13.4964 	EXP 	Tstim_15: height = 0.1
+13.4964 	EXP 	Tstim_16: opacity = 0.5
+13.4964 	EXP 	Tstim_16: pos = array([-0.15,  0.03])
+13.4964 	EXP 	Tstim_16: height = 0.1
+13.4964 	EXP 	Tstim_17: opacity = 0.5
+13.4964 	EXP 	Tstim_17: pos = array([-0.06,  0.21])
+13.4964 	EXP 	Tstim_17: height = 0.1
+13.4964 	EXP 	Tstim_18: opacity = 0.5
+13.4964 	EXP 	Tstim_18: pos = array([-0.12, -0.27])
+13.4964 	EXP 	Tstim_18: height = 0.1
+13.4964 	EXP 	Tstim_19: opacity = 0.5
+13.4964 	EXP 	Tstim_19: pos = array([0.21, 0.27])
+13.4964 	EXP 	Tstim_19: height = 0.1
+13.4964 	EXP 	Tstim_20: opacity = 0.5
+13.4964 	EXP 	Tstim_20: pos = array([0.27, 0.12])
+13.4964 	EXP 	Tstim_20: height = 0.1
+13.4964 	EXP 	Lstim: opacity = 0.5
+13.4964 	EXP 	Lstim: pos = array([ 0.12, -0.09])
+13.4964 	EXP 	Lstim: height = 0.1
+13.4964 	EXP 	Tstim: autoDraw = True
+13.4964 	EXP 	Tstim_2: autoDraw = True
+13.4964 	EXP 	Tstim_3: autoDraw = True
+13.4964 	EXP 	Tstim_4: autoDraw = True
+13.4964 	EXP 	Tstim_5: autoDraw = True
+13.4964 	EXP 	Tstim_6: autoDraw = True
+13.4964 	EXP 	Tstim_7: autoDraw = True
+13.4964 	EXP 	Tstim_8: autoDraw = True
+13.4964 	EXP 	Tstim_9: autoDraw = True
+13.4964 	EXP 	Tstim_10: autoDraw = True
+13.4964 	EXP 	Tstim_11: autoDraw = True
+13.4964 	EXP 	Tstim_12: autoDraw = True
+13.4964 	EXP 	Tstim_13: autoDraw = True
+13.4964 	EXP 	Tstim_14: autoDraw = True
+13.4964 	EXP 	Tstim_15: autoDraw = True
+13.4964 	EXP 	Tstim_16: autoDraw = True
+13.4964 	EXP 	Tstim_17: autoDraw = True
+13.4964 	EXP 	Tstim_18: autoDraw = True
+13.4964 	EXP 	Tstim_19: autoDraw = True
+13.4964 	EXP 	Tstim_20: autoDraw = True
+13.4964 	EXP 	Lstim: autoDraw = True
+13.4964 	EXP 	Tstim: text = 'T'
+13.4964 	EXP 	Tstim_2: text = 'T'
+13.4964 	EXP 	Tstim_3: text = 'T'
+13.4964 	EXP 	Tstim_4: text = 'T'
+13.4964 	EXP 	Tstim_5: text = 'T'
+13.4964 	EXP 	Tstim_6: text = 'T'
+13.4964 	EXP 	Tstim_7: text = 'T'
+13.4964 	EXP 	Tstim_8: text = 'T'
+13.4964 	EXP 	Tstim_9: text = 'T'
+13.4964 	EXP 	Tstim_10: text = 'T'
+13.4964 	EXP 	Tstim_11: text = 'T'
+13.4964 	EXP 	Tstim_12: text = 'T'
+13.4964 	EXP 	Tstim_13: text = 'T'
+13.4964 	EXP 	Tstim_14: text = 'T'
+13.4964 	EXP 	Tstim_15: text = 'T'
+13.4964 	EXP 	Tstim_16: text = 'T'
+13.4964 	EXP 	Tstim_17: text = 'T'
+13.4964 	EXP 	Tstim_18: text = 'T'
+13.4964 	EXP 	Tstim_19: text = 'T'
+13.4964 	EXP 	Tstim_20: text = 'T'
+13.4964 	EXP 	Lstim: text = 'L'
+13.9541 	DATA 	Mouse: Left button down, pos=(787,692)
+14.1822 	EXP 	window1: mouseVisible = True

@@ -1,0 +1,17 @@
+﻿fixDuration,resp.keys,resp.corr,pracLoop.thisRepN,pracLoop.thisTrialN,pracLoop.thisN,pracLoop.thisIndex,pracLoop.ran,cue,tar,corrAns,targOrientation,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.95,,0,0,0,0,12,1,stim/lower.png,stim/congRight.png,left,180,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+0.85,,0,0,1,1,4,1,stim/lower.png,stim/congLeft.png,right,180,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+1.4,,0,0,2,2,23,1,stim/blank.png,stim/incongLeft.png,right,180,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+1.05,,0,0,3,3,11,1,stim/blank.png,stim/congRight.png,right,0,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+0.6,,0,0,4,4,0,1,stim/upper.png,stim/congLeft.png,left,0,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+1.55,,0,0,5,5,9,1,stim/both.png,stim/congRight.png,right,0,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+1.05,,0,0,6,6,8,1,stim/upper.png,stim/congRight.png,right,0,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+0.4,,0,0,7,7,13,1,stim/both.png,stim/congRight.png,left,180,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+1.15,,0,0,8,8,15,1,stim/blank.png,stim/congRight.png,left,180,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+0.75,,0,0,9,9,1,1,stim/both.png,stim/congLeft.png,left,0,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+1.15,,0,0,10,10,17,1,stim/both.png,stim/incongLeft.png,left,0,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+1.4,,0,0,11,11,18,1,stim/centre.png,stim/incongLeft.png,left,0,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+1.2,,0,0,12,12,21,1,stim/both.png,stim/incongLeft.png,right,180,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+1.05,,0,0,13,13,10,1,stim/centre.png,stim/congRight.png,right,0,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+1.1,,0,0,14,14,22,1,stim/centre.png,stim/incongLeft.png,right,180,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545
+1,,0,0,15,15,3,1,stim/blank.png,stim/congLeft.png,left,0,111,001,2022-03-14_17h43.01.222,ANT,2021.2.3,Win32,45.45454545

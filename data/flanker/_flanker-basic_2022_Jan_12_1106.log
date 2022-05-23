@@ -1,0 +1,100 @@
+4.7590 	WARNING 	We strongly recommend you activate the PTB sound engine in PsychoPy prefs as the preferred audio engine. Its timing is vastly superior. Your prefs are currently set to use ['sounddevice', 'PTB', 'pyo', 'pygame'] (in that order).
+7.3733 	WARNING 	User requested fullscreen with size [1024  768], but screen is actually [1280, 800]. Using actual size
+10.0265 	EXP 	Created window1 = Window(allowGUI=False, allowStencil=False, autoLog=True, backendConf=UNKNOWN, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x000001DB8B104908>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x000001DB8B0AEEF0>, multiSample=False, name='window1', numSamples=2, pos=[0.0, 0.0], screen=0, size=array([1280,  800]), stencilBits=0, stereo=False, units='height', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+10.0271 	EXP 	window1: mouseVisible = True
+10.0272 	EXP 	window1: recordFrameIntervals = False
+10.1920 	EXP 	window1: recordFrameIntervals = True
+10.3759 	EXP 	window1: recordFrameIntervals = False
+10.7031 	EXP 	Created instructionsTxt = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='instructionsTxt', opacity=1, ori=0, pos=array([0., 0.]), rgb=UNKNOWN, text=str(...), units='height', win=Window(...), wrapWidth=1)
+10.7042 	EXP 	Created flankerStim = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, languageStyle='LTR', name='flankerStim', opacity=1, ori=0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='height', win=Window(...), wrapWidth=1)
+10.7066 	EXP 	Created fixation = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color=array([-1., -1., -1.]), colorSpace='rgb', contrast=1.0, depth=-2.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='fixation', opacity=1, ori=0, pos=array([0., 0.]), rgb=UNKNOWN, text='+', units='height', win=Window(...), wrapWidth=1)
+10.7163 	EXP 	Created endMsg = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, languageStyle='LTR', name='endMsg', opacity=1, ori=0, pos=array([0., 0.]), rgb=UNKNOWN, text='Thanks for taking part!', units='height', win=Window(...), wrapWidth=1)
+10.7492 	EXP 	instructionsTxt: autoDraw = True
+12.4204 	EXP 	Imported conditions.xlsx as conditions, 10 conditions, 3 params
+12.4209 	EXP 	Created sequence: random, trialTypes=10, nReps=1, seed=None
+12.4211 	EXP 	New trial (rep=0, index=0): {'stimulus': '<<<<<', 'condition': 'congruent', 'response': 'left'}
+12.4274 	DATA 	Keypress: space
+12.4281 	EXP 	instructionsTxt: autoDraw = False
+12.4281 	EXP 	flankerStim: text = '<<<<<'
+12.4281 	EXP 	fixation: autoDraw = True
+12.9256 	EXP 	flankerStim: autoDraw = True
+12.9421 	EXP 	fixation: autoDraw = False
+13.6313 	EXP 	New trial (rep=0, index=1): {'stimulus': '<<<<<', 'condition': 'congruent', 'response': 'left'}
+13.6346 	DATA 	Keypress: right
+13.6423 	EXP 	flankerStim: autoDraw = False
+13.6423 	EXP 	fixation: autoDraw = False
+13.6423 	EXP 	flankerStim: text = '<<<<<'
+13.6423 	EXP 	fixation: autoDraw = True
+14.1258 	EXP 	flankerStim: autoDraw = True
+14.1423 	EXP 	fixation: autoDraw = False
+14.6324 	DATA 	Keypress: right
+14.6473 	EXP 	New trial (rep=0, index=2): {'stimulus': '>><>>', 'condition': 'incongruent', 'response': 'left'}
+14.6591 	EXP 	flankerStim: autoDraw = False
+14.6591 	EXP 	fixation: autoDraw = False
+14.6591 	EXP 	flankerStim: text = '>><>>'
+14.6591 	EXP 	fixation: autoDraw = True
+15.1426 	EXP 	flankerStim: autoDraw = True
+15.1594 	EXP 	fixation: autoDraw = False
+15.6488 	DATA 	Keypress: left
+15.6650 	EXP 	New trial (rep=0, index=3): {'stimulus': '<<><<', 'condition': 'incongruent', 'response': 'right'}
+15.6758 	EXP 	flankerStim: autoDraw = False
+15.6758 	EXP 	fixation: autoDraw = False
+15.6758 	EXP 	flankerStim: text = '<<><<'
+15.6758 	EXP 	fixation: autoDraw = True
+16.1595 	EXP 	flankerStim: autoDraw = True
+16.1759 	EXP 	fixation: autoDraw = False
+16.6815 	EXP 	New trial (rep=0, index=4): {'stimulus': '<<<<<', 'condition': 'congruent', 'response': 'left'}
+16.6864 	DATA 	Keypress: left
+16.6924 	EXP 	flankerStim: autoDraw = False
+16.6924 	EXP 	fixation: autoDraw = False
+16.6924 	EXP 	flankerStim: text = '<<<<<'
+16.6924 	EXP 	fixation: autoDraw = True
+17.1760 	EXP 	flankerStim: autoDraw = True
+17.1925 	EXP 	fixation: autoDraw = False
+17.6994 	DATA 	Keypress: left
+17.7153 	EXP 	New trial (rep=0, index=5): {'stimulus': '>>>>>', 'condition': 'congruent', 'response': 'right'}
+17.7260 	EXP 	flankerStim: autoDraw = False
+17.7260 	EXP 	fixation: autoDraw = False
+17.7260 	EXP 	flankerStim: text = '>>>>>'
+17.7260 	EXP 	fixation: autoDraw = True
+18.2095 	EXP 	flankerStim: autoDraw = True
+18.2261 	EXP 	fixation: autoDraw = False
+18.7640 	EXP 	New trial (rep=0, index=6): {'stimulus': '>>>>>', 'condition': 'congruent', 'response': 'right'}
+18.7676 	DATA 	Keypress: right
+18.7761 	EXP 	flankerStim: autoDraw = False
+18.7761 	EXP 	fixation: autoDraw = False
+18.7761 	EXP 	flankerStim: text = '>>>>>'
+18.7761 	EXP 	fixation: autoDraw = True
+19.2598 	EXP 	flankerStim: autoDraw = True
+19.2765 	EXP 	fixation: autoDraw = False
+19.7642 	EXP 	New trial (rep=0, index=7): {'stimulus': '>>>>>', 'condition': 'congruent', 'response': 'right'}
+19.7677 	DATA 	Keypress: right
+19.7762 	EXP 	flankerStim: autoDraw = False
+19.7762 	EXP 	fixation: autoDraw = False
+19.7762 	EXP 	flankerStim: text = '>>>>>'
+19.7762 	EXP 	fixation: autoDraw = True
+20.2600 	EXP 	flankerStim: autoDraw = True
+20.2764 	EXP 	fixation: autoDraw = False
+20.6995 	DATA 	Keypress: right
+20.7156 	EXP 	New trial (rep=0, index=8): {'stimulus': '<<<<<', 'condition': 'congruent', 'response': 'left'}
+20.7265 	EXP 	flankerStim: autoDraw = False
+20.7265 	EXP 	fixation: autoDraw = False
+20.7265 	EXP 	flankerStim: text = '<<<<<'
+20.7265 	EXP 	fixation: autoDraw = True
+21.2098 	EXP 	flankerStim: autoDraw = True
+21.2265 	EXP 	fixation: autoDraw = False
+21.6491 	DATA 	Keypress: left
+21.6650 	EXP 	New trial (rep=0, index=9): {'stimulus': '>>>>>', 'condition': 'congruent', 'response': 'right'}
+21.6769 	EXP 	flankerStim: autoDraw = False
+21.6769 	EXP 	fixation: autoDraw = False
+21.6769 	EXP 	flankerStim: text = '>>>>>'
+21.6769 	EXP 	fixation: autoDraw = True
+22.1601 	EXP 	flankerStim: autoDraw = True
+22.1766 	EXP 	fixation: autoDraw = False
+22.6203 	DATA 	Keypress: left
+22.6266 	EXP 	flankerStim: autoDraw = False
+22.6266 	EXP 	fixation: autoDraw = False
+22.6266 	EXP 	endMsg: autoDraw = True
+23.6274 	EXP 	endMsg: autoDraw = False
+23.6274 	EXP 	endMsg: autoDraw = False
+23.7061 	EXP 	window1: mouseVisible = True

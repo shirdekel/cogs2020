@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+-0.010185185,-0.249074074,1,0,0,-0.127777778,0.073148148,1,0,0,1.837715,1,"[-0.12,0.06]",0,0,0,2,1,black,black,1,5,toyomaki,001,2021-01-27_20h28.54.503,visual-search,2020.2.8,Win32,60
+,,,,,-0.009259259,0.302777778,1,0,0,1.542345,1,"[0,0.3]",0,1,1,1,1,black,black,1,5,toyomaki,001,2021-01-27_20h28.54.503,visual-search,2020.2.8,Win32,60
+,,,,,0.072222222,-0.201851852,1,0,0,2.657375,1,"[0.06,-0.21000000000000002]",0,2,2,8,1,black,black,1,20,toyomaki,001,2021-01-27_20h28.54.503,visual-search,2020.2.8,Win32,60
+,,,,,0.259259259,0.133333333,1,0,0,1.073435,1,"[0.24000000000000005,0.12]",0,3,3,9,1,red,black,1,20,toyomaki,001,2021-01-27_20h28.54.503,visual-search,2020.2.8,Win32,60
+,,,,,-0.041666667,0.324074074,1,0,0,1.257105,1,"[-0.02999999999999997,0.3]",0,4,4,0,1,black,black,1,5,toyomaki,001,2021-01-27_20h28.54.503,visual-search,2020.2.8,Win32,60
+,,,,,0.187962963,0.157407407,1,0,0,1.07531,1,"[0.21000000000000002,0.18]",0,5,5,5,1,black,black,0,20,toyomaki,001,2021-01-27_20h28.54.503,visual-search,2020.2.8,Win32,60
+,,,,,0.260185185,-0.147222222,1,0,0,1.09007,1,"[0.26999999999999996,-0.14999999999999997]",0,6,6,3,1,black,black,1,5,toyomaki,001,2021-01-27_20h28.54.503,visual-search,2020.2.8,Win32,60
+,,,,,-0.128703704,-0.188888889,1,0,0,2.090125,1,"[-0.12,-0.14999999999999997]",0,7,7,6,1,black,black,1,20,toyomaki,001,2021-01-27_20h28.54.503,visual-search,2020.2.8,Win32,60
+,,,,,-0.067592593,-0.121296296,1,0,0,0.822565,1,"[-0.02999999999999997,-0.12]",0,8,8,4,1,black,black,1,5,toyomaki,001,2021-01-27_20h28.54.503,visual-search,2020.2.8,Win32,60
+,,,,,0.044444444,-0.199074074,1,0,0,2.162885,1,"[0.02999999999999997,-0.21000000000000002]",0,9,9,7,1,black,black,1,20,toyomaki,001,2021-01-27_20h28.54.503,visual-search,2020.2.8,Win32,60

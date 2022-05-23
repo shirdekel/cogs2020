@@ -1,0 +1,10 @@
+﻿fixDuration,resp.keys,resp.corr,resp.rt,pracLoop.thisRepN,pracLoop.thisTrialN,pracLoop.thisN,pracLoop.thisIndex,pracLoop.ran,cue,tar,corrAns,targOrientation,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.6,left,1,0.5533,0,0,0,12,1,stim/lower.png,stim/congRight.png,left,180,9999,001,2022-03-29_10h22.28.160,ANT,2021.2.3,MacIntel,59.84082341
+0.55,left,1,0.8538,0,1,1,16,1,stim/upper.png,stim/incongLeft.png,left,0,9999,001,2022-03-29_10h22.28.160,ANT,2021.2.3,MacIntel,59.84082341
+0.8,left,0,0.7098,0,2,2,22,1,stim/centre.png,stim/incongLeft.png,right,180,9999,001,2022-03-29_10h22.28.160,ANT,2021.2.3,MacIntel,59.84082341
+0.8,right,1,0.6542,0,3,3,8,1,stim/upper.png,stim/congRight.png,right,0,9999,001,2022-03-29_10h22.28.160,ANT,2021.2.3,MacIntel,59.84082341
+1.15,right,1,0.6078,0,4,4,9,1,stim/both.png,stim/congRight.png,right,0,9999,001,2022-03-29_10h22.28.160,ANT,2021.2.3,MacIntel,59.84082341
+0.6,left,1,0.5857,0,5,5,15,1,stim/blank.png,stim/congRight.png,left,180,9999,001,2022-03-29_10h22.28.160,ANT,2021.2.3,MacIntel,59.84082341
+0.4,left,0,0.8857,0,6,6,20,1,stim/lower.png,stim/incongLeft.png,right,180,9999,001,2022-03-29_10h22.28.160,ANT,2021.2.3,MacIntel,59.84082341
+1.35,right,0,0.7582,0,7,7,19,1,stim/blank.png,stim/incongLeft.png,left,0,9999,001,2022-03-29_10h22.28.160,ANT,2021.2.3,MacIntel,59.84082341
+0.75,,0,,0,8,8,11,1,stim/blank.png,stim/congRight.png,right,0,9999,001,2022-03-29_10h22.28.160,ANT,2021.2.3,MacIntel,59.84082341

@@ -1,0 +1,15 @@
+﻿fixDuration,resp.keys,resp.corr,resp.rt,pracLoop.thisRepN,pracLoop.thisTrialN,pracLoop.thisN,pracLoop.thisIndex,pracLoop.ran,cue,tar,corrAns,targOrientation,participant,session,date,expName,psychopyVersion,OS,frameRate,pracLoop.order
+0.5,left,1,0.814,0,0,0,18,1,stim/centre.png,stim/incongLeft.png,left,0,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,
+0.45,right,1,0.703,0,1,1,23,1,stim/blank.png,stim/incongLeft.png,right,180,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,
+0.7,right,1,0.848,0,2,2,6,1,stim/centre.png,stim/congLeft.png,right,180,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,
+0.8,right,1,0.584,0,3,3,7,1,stim/blank.png,stim/congLeft.png,right,180,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,
+1.1,left,1,0.571,0,4,4,1,1,stim/both.png,stim/congLeft.png,left,0,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,
+0.75,left,0,0.53,0,5,5,21,1,stim/both.png,stim/incongLeft.png,right,180,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,
+1.2,left,1,0.551,0,6,6,16,1,stim/upper.png,stim/incongLeft.png,left,0,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,
+1.45,right,1,0.584,0,7,7,22,1,stim/centre.png,stim/incongLeft.png,right,180,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,
+0.4,left,1,0.468,0,8,8,13,1,stim/both.png,stim/congRight.png,left,180,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,
+1.5,right,1,0.751,0,9,9,11,1,stim/blank.png,stim/congRight.png,right,0,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,
+0.5,left,1,0.617,0,10,10,17,1,stim/both.png,stim/incongLeft.png,left,0,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,
+1.5,right,1,0.417,0,11,11,10,1,stim/centre.png,stim/congRight.png,right,0,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,
+0.45,right,0,0.4,0,12,12,19,1,stim/blank.png,stim/incongLeft.png,left,0,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,
+1.2,,,,0,13,13,4,1,stim/lower.png,stim/congLeft.png,right,180,,001,2022-03-01_13h10.36.940,ANT,2021.2.3,MacIntel,58.82352941,23

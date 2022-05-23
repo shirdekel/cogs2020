@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.180538194,-0.275568576,1,0,0,0.178172743,-0.125651042,1,0,0,21.151295,0,"[0.18,0.09]",0,0,0,3,1,black,black,1,5,1,001,2021-05-06_13h15.52.606,visual-search,2020.2.8,MacIntel,60
+,,,,,0.174713542,-0.167413194,1,0,0,2.400585,1,"[0.18,-0.14999999999999997]",0,1,1,1,1,black,black,1,5,1,001,2021-05-06_13h15.52.606,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.309392361,-0.19327691,1,0,0,1.788205,1,"[-0.3,-0.18]",0,2,2,5,1,black,black,0,20,1,001,2021-05-06_13h15.52.606,visual-search,2020.2.8,MacIntel,60
+,,,,,0.157899306,0.047265625,1,0,0,1.670165,1,"[0.14999999999999997,0.02999999999999997]",0,3,3,2,1,black,black,1,5,1,001,2021-05-06_13h15.52.606,visual-search,2020.2.8,MacIntel,60
+,,,,,0.005086806,-0.193563368,1,0,0,2.035455,1,"[0,-0.21000000000000002]",0,4,4,8,1,black,black,1,20,1,001,2021-05-06_13h15.52.606,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.086267361,-0.174292535,1,0,0,2.3185,0,"[-0.3,0.06]",0,5,5,6,1,black,black,1,20,1,001,2021-05-06_13h15.52.606,visual-search,2020.2.8,MacIntel,60
+,,,,,0.208693576,0.032200521,1,0,0,1.053625,1,"[0.21000000000000002,0.06]",0,6,6,0,1,black,black,1,5,1,001,2021-05-06_13h15.52.606,visual-search,2020.2.8,MacIntel,60
+,,,,,0.190143229,-0.203832465,1,0,0,1.60375,1,"[0.21000000000000002,-0.21000000000000002]",0,7,7,9,1,red,black,1,20,1,001,2021-05-06_13h15.52.606,visual-search,2020.2.8,MacIntel,60
+,,,,,0.084088542,-0.222625868,1,0,0,1.02229,1,"[0.06,-0.21000000000000002]",0,8,8,4,1,black,black,1,5,1,001,2021-05-06_13h15.52.606,visual-search,2020.2.8,MacIntel,60
+,,,,,0.214431424,-0.099986979,1,0,0,4.375545,1,"[0.24000000000000005,-0.12]",0,9,9,7,1,black,black,1,20,1,001,2021-05-06_13h15.52.606,visual-search,2020.2.8,MacIntel,60

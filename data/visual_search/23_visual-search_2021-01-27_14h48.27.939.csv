@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.128703704,-0.130555556,1,0,0,0.127777778,-0.130555556,1,0,0,2.421,1,"[0.12,-0.09000000000000002]",0,0,0,5,1,black,black,0,20,23,001,2021-01-27_14h48.27.939,visual-search,2020.2.8,MacIntel,60
+,,,,,0.225925926,0.232407407,1,0,0,1.176,1,"[0.24000000000000005,0.24]",0,1,1,0,1,black,black,1,5,23,001,2021-01-27_14h48.27.939,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.167592593,-0.319444444,1,0,0,1.165,1,"[-0.18,-0.3]",0,2,2,3,1,black,black,1,5,23,001,2021-01-27_14h48.27.939,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.19537037,0.002777778,1,0,0,1.102,1,"[-0.18,0]",0,3,3,4,1,black,black,1,5,23,001,2021-01-27_14h48.27.939,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.097222222,-0.293518519,1,0,0,1.097,1,"[-0.09,-0.26999999999999996]",0,4,4,1,1,black,black,1,5,23,001,2021-01-27_14h48.27.939,visual-search,2020.2.8,MacIntel,60
+,,,,,0.277777778,0.12037037,1,0,0,0.919,1,"[0.3,0.12]",0,5,5,7,1,black,black,1,20,23,001,2021-01-27_14h48.27.939,visual-search,2020.2.8,MacIntel,60
+,,,,,0.087037037,-0.162037037,1,0,0,2.634,1,"[0.09000000000000002,-0.14999999999999997]",0,6,6,6,1,black,black,1,20,23,001,2021-01-27_14h48.27.939,visual-search,2020.2.8,MacIntel,60
+,,,,,0.112037037,0.003703704,1,0,0,0.932,1,"[0.14999999999999997,0]",0,7,7,8,1,black,black,1,20,23,001,2021-01-27_14h48.27.939,visual-search,2020.2.8,MacIntel,60
+,,,,,0.263888889,-0.257407407,1,0,0,0.97,1,"[0.26999999999999996,-0.26999999999999996]",0,8,8,9,1,red,black,1,20,23,001,2021-01-27_14h48.27.939,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.301851852,0.044444444,1,0,0,0.967,1,"[-0.3,0.02999999999999997]",0,9,9,2,1,black,black,1,5,23,001,2021-01-27_14h48.27.939,visual-search,2020.2.8,MacIntel,60

@@ -1,0 +1,5 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+-0.191428571,-0.233333333,1,0,0,0.218095238,-0.08952381,1,0,0,2.0271,1,"[0.24000000000000005,-0.09000000000000002]",0,0,0,8,1,black,black,1,20,1,001,2021-11-08_17h02.40.274,visual-search,2020.2.8,Win32,60
+,,,,,0.11047619,0.241904762,1,0,0,1.602,1,"[0.09000000000000002,0.27]",0,1,1,9,1,red,black,1,20,1,001,2021-11-08_17h02.40.274,visual-search,2020.2.8,Win32,60
+,,,,,0.174285714,-0.107619048,1,0,0,1.4932,1,"[0.14999999999999997,-0.09000000000000002]",0,2,2,7,1,black,black,1,20,1,001,2021-11-08_17h02.40.274,visual-search,2020.2.8,Win32,60
+,,,,,0.121904762,0.306666667,1,0,0,1.256,1,"[0.12,0.3]",0,3,3,2,1,black,black,1,5,1,001,2021-11-08_17h02.40.274,visual-search,2020.2.8,Win32,60

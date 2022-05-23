@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.025,-0.018518519,1,0,0,0.053703704,0.17962963,1,0,0,1.3154,1,"[0.06,0.18]",0,0,0,3,1,black,black,1,5,phoebe,001,2022-02-28_14h44.15.109,visual-search,2020.2.8,Win32,60
+,,,,,0.321296296,-0.235185185,1,0,0,2.4415,1,"[0.3,-0.24000000000000005]",0,1,1,6,1,black,black,1,20,phoebe,001,2022-02-28_14h44.15.109,visual-search,2020.2.8,Win32,60
+,,,,,0.238888889,-0.237962963,1,0,0,0.8912,1,"[0.26999999999999996,-0.24000000000000005]",0,2,2,1,1,black,black,1,5,phoebe,001,2022-02-28_14h44.15.109,visual-search,2020.2.8,Win32,60
+,,,,,-0.123148148,0.272222222,1,0,0,0.9572,1,"[-0.12,0.24]",0,3,3,0,1,black,black,1,5,phoebe,001,2022-02-28_14h44.15.109,visual-search,2020.2.8,Win32,60
+,,,,,0.199074074,0.098148148,1,0,0,1.0416,1,"[0.24000000000000005,0.06]",0,4,4,9,1,red,black,1,20,phoebe,001,2022-02-28_14h44.15.109,visual-search,2020.2.8,Win32,60
+,,,,,0.294444444,0.043518519,1,0,0,0.993,1,"[0.24000000000000005,0.02999999999999997]",0,5,5,4,1,black,black,1,5,phoebe,001,2022-02-28_14h44.15.109,visual-search,2020.2.8,Win32,60
+,,,,,-0.282407407,-0.299074074,1,0,0,1.0587,1,"[-0.3,-0.24000000000000005]",0,6,6,8,1,black,black,1,20,phoebe,001,2022-02-28_14h44.15.109,visual-search,2020.2.8,Win32,60
+,,,,,-0.026851852,-0.321296296,1,0,0,2.3281,1,"[-0.02999999999999997,-0.3]",0,7,7,7,1,black,black,1,20,phoebe,001,2022-02-28_14h44.15.109,visual-search,2020.2.8,Win32,60
+,,,,,-0.326851852,0.289814815,1,0,0,1.2096,1,"[-0.3,0.3]",0,8,8,2,1,black,black,1,5,phoebe,001,2022-02-28_14h44.15.109,visual-search,2020.2.8,Win32,60
+,,,,,-0.147222222,-0.230555556,1,0,0,1.6102,1,"[-0.18,-0.21000000000000002]",0,9,9,5,1,black,black,0,20,phoebe,001,2022-02-28_14h44.15.109,visual-search,2020.2.8,Win32,60

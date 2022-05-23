@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+-0.025025318,0.083062066,1,0,0,0.021842448,-0.326671007,1,0,0,1.1968,1,"[0.02999999999999997,-0.3]",0,0,0,9,1,red,black,1,20,test001,001,2021-10-04_10h06.43.392,visual-search,2020.2.8,MacIntel,60
+,,,,,0.074432147,0.126016348,1,0,0,1.9851,1,"[0.09000000000000002,0.12]",0,1,1,5,1,black,black,0,20,test001,001,2021-10-04_10h06.43.392,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.241333912,-0.281781684,1,0,0,4.3707,0,"[0.02999999999999997,-0.14999999999999997]",0,2,2,7,1,black,black,1,20,test001,001,2021-10-04_10h06.43.392,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.241333912,-0.281781684,1,0,0,0.1318,0,"[0.06,-0.12]",0,3,3,4,1,black,black,1,5,test001,001,2021-10-04_10h06.43.392,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.072124566,-0.328428819,1,0,0,1.6923,1,"[-0.09,-0.3]",0,4,4,0,1,black,black,1,5,test001,001,2021-10-04_10h06.43.392,visual-search,2020.2.8,MacIntel,60
+,,,,,0.15073423,0.146976273,1,0,0,1.751,1,"[0.12,0.15]",0,5,5,6,1,black,black,1,20,test001,001,2021-10-04_10h06.43.392,visual-search,2020.2.8,MacIntel,60
+,,,,,0.272262008,0.247800926,1,0,0,1.1993,1,"[0.3,0.24]",0,6,6,1,1,black,black,1,5,test001,001,2021-10-04_10h06.43.392,visual-search,2020.2.8,MacIntel,60
+,,,,,0.094187645,-0.261820023,1,0,0,2.3187,1,"[0.09000000000000002,-0.24000000000000005]",0,7,7,8,1,black,black,1,20,test001,001,2021-10-04_10h06.43.392,visual-search,2020.2.8,MacIntel,60
+,,,,,0.210210503,-0.073383247,1,0,0,1.3365,1,"[0.21000000000000002,-0.06]",0,8,8,2,1,black,black,1,5,test001,001,2021-10-04_10h06.43.392,visual-search,2020.2.8,MacIntel,60
+,,,,,0.230088976,0.170963542,1,0,0,1.4002,1,"[0.24000000000000005,0.18]",0,9,9,3,1,black,black,1,5,test001,001,2021-10-04_10h06.43.392,visual-search,2020.2.8,MacIntel,60

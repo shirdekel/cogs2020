@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.163888889,-0.259259259,1,0,0,0.22962963,0.309259259,1,0,0,7.938,1,"[0.21000000000000002,0.3]",0,0,0,2,1,black,black,1,5,Rishabh,001,2021-10-20_11h06.38.015,visual-search,2020.2.8,Linux x86_64,60
+,,,,,-0.172222222,0.069444444,1,0,0,1.91,1,"[-0.18,0.06]",0,1,1,1,1,black,black,1,5,Rishabh,001,2021-10-20_11h06.38.015,visual-search,2020.2.8,Linux x86_64,60
+,,,,,0.222222222,0.261111111,1,0,0,3.132,1,"[0.24000000000000005,0.27]",0,2,2,7,1,black,black,1,20,Rishabh,001,2021-10-20_11h06.38.015,visual-search,2020.2.8,Linux x86_64,60
+,,,,,0.185185185,-0.032407407,1,0,0,4.238,1,"[0.18,0]",0,3,3,6,1,black,black,1,20,Rishabh,001,2021-10-20_11h06.38.015,visual-search,2020.2.8,Linux x86_64,60
+,,,,,0.069444444,0.148148148,1,0,0,1.449,1,"[0.06,0.15]",0,4,4,3,1,black,black,1,5,Rishabh,001,2021-10-20_11h06.38.015,visual-search,2020.2.8,Linux x86_64,60
+,,,,,0.225925926,0.02037037,1,0,0,4.186,1,"[0.24000000000000005,0]",0,5,5,5,1,black,black,0,20,Rishabh,001,2021-10-20_11h06.38.015,visual-search,2020.2.8,Linux x86_64,60
+,,,,,0.298148148,-0.150925926,1,0,0,1.568,1,"[0.26999999999999996,-0.12]",0,6,6,4,1,black,black,1,5,Rishabh,001,2021-10-20_11h06.38.015,visual-search,2020.2.8,Linux x86_64,60
+,,,,,0.015740741,-0.277777778,1,0,0,1.547,1,"[0.02999999999999997,-0.26999999999999996]",0,7,7,0,1,black,black,1,5,Rishabh,001,2021-10-20_11h06.38.015,visual-search,2020.2.8,Linux x86_64,60
+,,,,,-0.314814815,-0.231481481,1,0,0,1.767,1,"[-0.3,-0.24000000000000005]",0,8,8,9,1,red,black,1,20,Rishabh,001,2021-10-20_11h06.38.015,visual-search,2020.2.8,Linux x86_64,60
+,,,,,0.209259259,0.167592593,1,0,0,6.555,1,"[0.21000000000000002,0.18]",0,9,9,8,1,black,black,1,20,Rishabh,001,2021-10-20_11h06.38.015,visual-search,2020.2.8,Linux x86_64,60

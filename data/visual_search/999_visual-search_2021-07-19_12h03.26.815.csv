@@ -1,0 +1,2 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.207264957,-0.224358974,1,0,0,0.175238095,0.425714286,1,0,0,1.926,0,"[-0.02999999999999997,0.02999999999999997]",0,0,0,6,1,black,black,1,20,999,001,2021-07-19_12h03.26.815,visual-search,2020.2.8,Win32,60

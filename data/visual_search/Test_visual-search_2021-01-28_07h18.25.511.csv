@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.106122449,-0.212755102,1,0,0,-0.275510204,-0.257653061,1,0,0,1.594,1,"[-0.27,-0.26999999999999996]",0,0,0,0,1,black,black,1,5,Test,001,2021-01-28_07h18.25.511,visual-search,2020.2.8,iPhone,60
+,,,,,0.119387755,-0.243367347,1,0,0,0.848,1,"[0.09000000000000002,-0.24000000000000005]",0,1,1,3,1,black,black,1,5,Test,001,2021-01-28_07h18.25.511,visual-search,2020.2.8,iPhone,60
+,,,,,-0.080612245,0.004591837,1,0,0,0.987,1,"[-0.12,0]",0,2,2,2,1,black,black,1,5,Test,001,2021-01-28_07h18.25.511,visual-search,2020.2.8,iPhone,60
+,,,,,-0.187755102,-0.292346939,1,0,0,1.198,1,"[-0.15,-0.3]",0,3,3,1,1,black,black,1,5,Test,001,2021-01-28_07h18.25.511,visual-search,2020.2.8,iPhone,60
+,,,,,-0.260204082,0.21377551,1,0,0,3.222,1,"[-0.24,0.21]",0,4,4,6,1,black,black,1,20,Test,001,2021-01-28_07h18.25.511,visual-search,2020.2.8,iPhone,60
+,,,,,0.066326531,0.227040816,1,0,0,1.326,1,"[0.06,0.21]",0,5,5,4,1,black,black,1,5,Test,001,2021-01-28_07h18.25.511,visual-search,2020.2.8,iPhone,60
+,,,,,-0.017346939,0.280102041,1,0,0,1.081,1,"[0,0.3]",0,6,6,9,1,red,black,1,20,Test,001,2021-01-28_07h18.25.511,visual-search,2020.2.8,iPhone,60
+,,,,,-0.06122449,0.08622449,1,0,0,2.617,1,"[-0.06,0.09]",0,7,7,8,1,black,black,1,20,Test,001,2021-01-28_07h18.25.511,visual-search,2020.2.8,iPhone,60
+,,,,,-0.276530612,-0.228061224,1,0,0,1.366,1,"[-0.27,-0.24000000000000005]",0,8,8,5,1,black,black,0,20,Test,001,2021-01-28_07h18.25.511,visual-search,2020.2.8,iPhone,60
+,,,,,0.278571429,0.129081633,1,0,0,3.576,1,"[0.26999999999999996,0.09]",0,9,9,7,1,black,black,1,20,Test,001,2021-01-28_07h18.25.511,visual-search,2020.2.8,iPhone,60

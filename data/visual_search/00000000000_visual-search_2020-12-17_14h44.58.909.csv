@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.157142857,0.063392857,1,0,0,-0.183035714,0.325892857,1,0,0,2.242,1,"[-0.18,0.3]",0,0,0,6,1,black,black,1,20,00000000000,001,2020-12-17_14h44.58.909,visual-search,2020.2.8,MacIntel,60
+,,,,,0.308928571,0.1875,1,0,0,4.032,1,"[0.3,0.21]",0,1,1,5,1,black,black,0,20,00000000000,001,2020-12-17_14h44.58.909,visual-search,2020.2.8,MacIntel,60
+,,,,,0.040178571,0.155357143,1,0,0,1.088,1,"[0.02999999999999997,0.18]",0,2,2,0,1,black,black,1,5,00000000000,001,2020-12-17_14h44.58.909,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.15,-0.229464286,1,0,0,1.914,1,"[-0.18,-0.24000000000000005]",0,3,3,1,1,black,black,1,5,00000000000,001,2020-12-17_14h44.58.909,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.150892857,-0.2875,1,0,0,0.985,1,"[-0.15,-0.3]",0,4,4,9,1,red,black,1,20,00000000000,001,2020-12-17_14h44.58.909,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.098214286,0.05,1,0,0,1.111,1,"[-0.09,0.06]",0,5,5,3,1,black,black,1,5,00000000000,001,2020-12-17_14h44.58.909,visual-search,2020.2.8,MacIntel,60
+,,,,,0.315178571,0.133035714,1,0,0,1.663,1,"[0.3,0.12]",0,6,6,2,1,black,black,1,5,00000000000,001,2020-12-17_14h44.58.909,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.173214286,-0.057142857,1,0,0,1.413,1,"[-0.18,-0.09000000000000002]",0,7,7,8,1,black,black,1,20,00000000000,001,2020-12-17_14h44.58.909,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.095535714,-0.065178571,1,0,0,1.08,1,"[-0.09,-0.06]",0,8,8,7,1,black,black,1,20,00000000000,001,2020-12-17_14h44.58.909,visual-search,2020.2.8,MacIntel,60
+,,,,,0.007142857,0.201785714,1,0,0,1.98,1,"[0.02999999999999997,0.18]",0,9,9,4,1,black,black,1,5,00000000000,001,2020-12-17_14h44.58.909,visual-search,2020.2.8,MacIntel,60

@@ -1,0 +1,69 @@
+1.8258 	WARNING 	We strongly recommend you activate the PTB sound engine in PsychoPy prefs as the preferred audio engine. Its timing is vastly superior. Your prefs are currently set to use ['sounddevice', 'PTB', 'pyo', 'pygame'] (in that order).
+17.8862 	WARNING 	User requested fullscreen with size [1024  768], but screen is actually [1920, 1200]. Using actual size
+20.0212 	EXP 	Created window1 = Window(allowGUI=False, allowStencil=False, args=UNKNOWN, autoLog=True, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0., 0., 0.]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x0000025BCE035748>, gamma=None, gammaErrorPolicy='raise', kwargs=UNKNOWN, lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x0000025BCDEF9240>, multiSample=False, name='window1', numSamples=2, pos=[0.0, 0.0], screen=0, size=array([1920, 1200]), stencilBits=0, stereo=False, units='height', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+20.0227 	EXP 	window1: mouseVisible = True
+20.0227 	EXP 	window1: recordFrameIntervals = False
+20.1868 	EXP 	window1: recordFrameIntervals = True
+20.3708 	EXP 	window1: recordFrameIntervals = False
+20.7384 	EXP 	Created instructionsTxt = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='instructionsTxt', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([255., 255., 255.]), text=str(...), units='height', win=Window(...), wrapWidth=1)
+20.7728 	EXP 	Created flankerStim = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, languageStyle='LTR', name='flankerStim', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([255., 255., 255.]), text='default text', units='height', win=Window(...), wrapWidth=1)
+20.8040 	EXP 	Created endMsg = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color='white', colorSpace='named', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Arial', fontFiles=[], height=0.1, italic=False, languageStyle='LTR', name='endMsg', opacity=1.0, ori=0, pos=array([0., 0.]), rgb=array([255., 255., 255.]), text='Thanks for taking part!', units='height', win=Window(...), wrapWidth=1)
+20.8486 	EXP 	instructionsTxt: autoDraw = True
+21.8318 	EXP 	Imported conditions.xlsx as conditions, 10 conditions, 3 params
+21.8341 	EXP 	Created sequence: random, trialTypes=10, nReps=1, seed=None
+21.8347 	EXP 	New trial (rep=0, index=0): OrderedDict([('stimulus', '<<<<<'), ('condition', 'congruent'), ('response', 'left')])
+21.8499 	DATA 	Keypress: space
+21.8515 	EXP 	instructionsTxt: autoDraw = False
+21.8515 	EXP 	flankerStim: text = '<<<<<'
+21.8515 	EXP 	flankerStim: autoDraw = True
+22.3455 	EXP 	New trial (rep=0, index=1): OrderedDict([('stimulus', '<<><<'), ('condition', 'incongruent'), ('response', 'right')])
+22.3595 	DATA 	Keypress: left
+22.3612 	EXP 	flankerStim: autoDraw = False
+22.3612 	EXP 	flankerStim: text = '<<><<'
+22.3612 	EXP 	flankerStim: autoDraw = True
+22.9782 	EXP 	New trial (rep=0, index=2): OrderedDict([('stimulus', '>>>>>'), ('condition', 'congruent'), ('response', 'right')])
+22.9877 	DATA 	Keypress: right
+22.9894 	EXP 	flankerStim: autoDraw = False
+22.9894 	EXP 	flankerStim: text = '>>>>>'
+22.9894 	EXP 	flankerStim: autoDraw = True
+23.5118 	EXP 	New trial (rep=0, index=3): OrderedDict([('stimulus', '>>>>>'), ('condition', 'congruent'), ('response', 'right')])
+23.5156 	DATA 	Keypress: right
+23.5226 	EXP 	flankerStim: autoDraw = False
+23.5226 	EXP 	flankerStim: text = '>>>>>'
+23.5226 	EXP 	flankerStim: autoDraw = True
+24.9132 	DATA 	Keypress: right
+24.9301 	EXP 	New trial (rep=0, index=4): OrderedDict([('stimulus', '>><>>'), ('condition', 'incongruent'), ('response', 'left')])
+24.9407 	EXP 	flankerStim: autoDraw = False
+24.9407 	EXP 	flankerStim: text = '>><>>'
+24.9407 	EXP 	flankerStim: autoDraw = True
+25.5129 	EXP 	New trial (rep=0, index=5): OrderedDict([('stimulus', '<<<<<'), ('condition', 'congruent'), ('response', 'left')])
+25.5206 	DATA 	Keypress: left
+25.5242 	EXP 	flankerStim: autoDraw = False
+25.5242 	EXP 	flankerStim: text = '<<<<<'
+25.5242 	EXP 	flankerStim: autoDraw = True
+26.0806 	DATA 	Keypress: left
+26.0981 	EXP 	New trial (rep=0, index=6): OrderedDict([('stimulus', '>>>>>'), ('condition', 'congruent'), ('response', 'right')])
+26.1082 	EXP 	flankerStim: autoDraw = False
+26.1082 	EXP 	flankerStim: text = '>>>>>'
+26.1082 	EXP 	flankerStim: autoDraw = True
+26.6317 	EXP 	New trial (rep=0, index=7): OrderedDict([('stimulus', '<<<<<'), ('condition', 'congruent'), ('response', 'left')])
+26.6389 	DATA 	Keypress: right
+26.6423 	EXP 	flankerStim: autoDraw = False
+26.6423 	EXP 	flankerStim: text = '<<<<<'
+26.6423 	EXP 	flankerStim: autoDraw = True
+27.1818 	EXP 	New trial (rep=0, index=8): OrderedDict([('stimulus', '<<<<<'), ('condition', 'congruent'), ('response', 'left')])
+27.1860 	DATA 	Keypress: left
+27.1923 	EXP 	flankerStim: autoDraw = False
+27.1923 	EXP 	flankerStim: text = '<<<<<'
+27.1923 	EXP 	flankerStim: autoDraw = True
+27.7155 	DATA 	Keypress: left
+27.7325 	EXP 	New trial (rep=0, index=9): OrderedDict([('stimulus', '>>>>>'), ('condition', 'congruent'), ('response', 'right')])
+27.7433 	EXP 	flankerStim: autoDraw = False
+27.7433 	EXP 	flankerStim: text = '>>>>>'
+27.7433 	EXP 	flankerStim: autoDraw = True
+28.2493 	DATA 	Keypress: right
+29.7074 	DATA 	Keypress: right
+29.7112 	EXP 	flankerStim: autoDraw = False
+29.7112 	EXP 	endMsg: autoDraw = True
+30.5670 	DATA 	Keypress: escape
+30.8860 	EXP 	window1: mouseVisible = True

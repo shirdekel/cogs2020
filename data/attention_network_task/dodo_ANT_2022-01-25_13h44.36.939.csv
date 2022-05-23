@@ -1,0 +1,4 @@
+﻿fixDuration,resp.keys,resp.corr,pracLoop.thisRepN,pracLoop.thisTrialN,pracLoop.thisN,pracLoop.thisIndex,pracLoop.ran,cue,tar,corrAns,targOrientation,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.55,,0,0,0,0,4,1,stim/lower.png,stim/congLeft.png,right,180,dodo,001,2022-01-25_13h44.36.939,ANT,2021.2.3,Win32,59.95203837
+1.45,,0,0,1,1,20,1,stim/lower.png,stim/incongLeft.png,right,180,dodo,001,2022-01-25_13h44.36.939,ANT,2021.2.3,Win32,59.95203837
+1.2,,0,0,2,2,16,1,stim/upper.png,stim/incongLeft.png,left,0,dodo,001,2022-01-25_13h44.36.939,ANT,2021.2.3,Win32,59.95203837

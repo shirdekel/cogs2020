@@ -1,0 +1,159 @@
+---
+title: "Homework 10"
+author: "Author: Matthew J. Cossley"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+        collapsed: false 
+        smooth_scroll: true
+    toc_depth: 3
+    fig_caption: yes
+    number_sections: false
+    theme: cosmo
+fontsize: 14pt
+---
+
+```{r global-options, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE)
+```
+
+```{r setup, include=FALSE, message=F}
+knitr::opts_chunk$set(echo = T, collapse=T, warning=F)
+```
+
+<style type="text/css">
+  body{
+  font-size: 18pt;
+}
+
+<style type="text/css">
+.table {
+
+    width: 40%;
+}
+</style>
+
+```{r, echo=F}
+library(data.table)
+library(ggplot2)
+library(ggpubr)
+library(latex2exp)
+```
+
+* Create a new file named `cogs2020_hw_10.R` and save it in
+the `cogs2020` folder that you created during Lecture 1.
+
+* If you have not already installed the `data.table`,
+`ggplot2`, and `ez` packages, do so now. If you use the
+`install.packages` function, do not include it in the script
+that you hand in.
+
+* Make the first line of your script `library(data.table)`
+the second line `library(ggplot2)`, and the third line
+`library(ez)`.
+
+* Make the next line of your script `rm(list=ls())`. This
+line of code will erase any variable defined before it. Do
+not put this line of code after anything important that you
+want to keep (e.g., so that I can mark your work).
+
+* After `rm(list=ls())`, create a variable named `my_name`
+and set its value equal to a **character** vector (i.e.,
+letters surrounded by `""` or by `''`) containing your name.
+
+* After `rm(list=ls())`, create a variable named
+`my_student_id` and set its value equal to a **character**
+vector (i.e., letters surrounded by `""` or by `''`)
+containing your student id.
+
+* So far, here is what your file should look like if your
+name is `John Doe` and and your student ID is `12345678`.
+Note that the following code chunk also includes a few lines
+to create a `data.table` named `d` that many of the problems
+below require you manipulate.
+
+```{r, echo=T, warning=F, message=F}
+# load the packages we will need
+library(data.table)
+library(ggplot2)
+library(ez)
+
+# clean session
+rm(list=ls())
+
+# basic id info
+my_name <- "John Doe"
+my_student_id <- "12345678"
+
+# Please include the following line of code as well
+set.seed(0)
+```
+
+# COGS2020 goals
+Below, I summarise some major goals of COGS2020 and explain
+how they contribute to overall marking in the unit. Only
+mastery of skills described in all goals should be
+sufficient to earn a mark of high distinction.
+
+## Goal 1 
+A major goal of COGS2020 is to prepare students to get data
+from an experiment, assess / validate, cross-reference its
+design, make relevant diagnostic plots, and perform basic
+statistics to quantify patterns seen in the visualisations
+of the data. Mastery of this skill implies at least some
+mastery of Goal 3 (see below) and so it is expected should
+be sufficient to generate a credit or distinction mark.
+
+## Goal 2
+A major goal of COGS2020 is to develop in students a deep
+conceptual understanding of Null Hypothesis Significance
+Testing (NHST). Students with an understanding at this level
+will be well positioned to learn any and every NHST method
+that can ever be applied in any context throughout their
+research career. Mastery of this skill implies mastery of
+Goal 3 (see below) and so it is expected should be
+sufficient to generate a credit or distinction mark.
+  
+## Goal 3 
+A sub-goal of COGS2020 is to give students the ability to
+recognise when and how to use simple statistical tools
+(e.g., t-tests and ANOVAs) in the context of simple toy data
+examples. Mastery of this skill alone should be sufficient
+to generate a passing mark in the unit.
+
+# Goal 1 practice
+## Stroop experiment
+
+Consider the experiment here:
+
+* `https://gitlab.pavlovia.org/demos/stroop`
+* `https://run.pavlovia.org/demos/stroop/`
+
+You should participate in the experiment to get a feel for
+it.
+
+Reasonably cleaned data from this experiment can be found
+here: 
+
+* `../data/real_data/data_stroop.csv`
+
+`data_stroop.csv` contains the following columns:
+
+* `subject`: participant indicator
+* `resp.keys`: the key pressed
+* `resp.rt`: the response time of the key press
+* `text`: the text displayed
+* `letterColor`: the colour of the displayed text
+
+```{r}
+## Analyse the Stroop data
+
+## load data_stroop.csv into a data.table
+d <- fread('https://crossley.github.io/cogs2020/data/real_data/data_stroop.csv')
+```
+
+
+
+

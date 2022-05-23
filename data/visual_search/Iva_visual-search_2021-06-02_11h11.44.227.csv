@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.204427083,-0.330729167,1,0,0,-0.197916667,-0.119791667,1,0,0,2.151455,1,"[-0.21,-0.12]",0,0,0,2,1,black,black,1,5,Iva,001,2021-06-02_11h11.44.227,visual-search,2020.2.8,Win32,60
+,,,,,0.037760417,-0.143229167,1,0,0,3.661485,1,"[0.02999999999999997,-0.18]",0,1,1,8,1,black,black,1,20,Iva,001,2021-06-02_11h11.44.227,visual-search,2020.2.8,Win32,60
+,,,,,0.18359375,0.220052083,1,0,0,1.78012,1,"[0.18,0.21]",0,2,2,1,1,black,black,1,5,Iva,001,2021-06-02_11h11.44.227,visual-search,2020.2.8,Win32,60
+,,,,,0.23046875,-0.108072917,1,0,0,1.29575,1,"[0.21000000000000002,-0.14999999999999997]",0,3,3,4,1,black,black,1,5,Iva,001,2021-06-02_11h11.44.227,visual-search,2020.2.8,Win32,60
+,,,,,0.260416667,-0.11328125,1,0,0,1.28272,1,"[0.26999999999999996,-0.09000000000000002]",0,4,4,5,1,black,black,0,20,Iva,001,2021-06-02_11h11.44.227,visual-search,2020.2.8,Win32,60
+,,,,,-0.140625,0.127604167,1,0,0,2.38117,1,"[-0.12,0.15]",0,5,5,7,1,black,black,1,20,Iva,001,2021-06-02_11h11.44.227,visual-search,2020.2.8,Win32,60
+,,,,,0.24609375,0.12109375,1,0,0,2.17945,1,"[0.3,0.15]",0,6,6,3,1,black,black,1,5,Iva,001,2021-06-02_11h11.44.227,visual-search,2020.2.8,Win32,60
+,,,,,-0.130208333,0.265625,1,0,0,2.63278,1,"[-0.09,0.24]",0,7,7,6,1,black,black,1,20,Iva,001,2021-06-02_11h11.44.227,visual-search,2020.2.8,Win32,60
+,,,,,-0.061197917,-0.25390625,1,0,0,1.91492,1,"[-0.09,-0.26999999999999996]",0,8,8,9,1,red,black,1,20,Iva,001,2021-06-02_11h11.44.227,visual-search,2020.2.8,Win32,60
+,,,,,0.00390625,0.0078125,1,0,0,1.047305,1,"[0,0.02999999999999997]",0,9,9,0,1,black,black,1,5,Iva,001,2021-06-02_11h11.44.227,visual-search,2020.2.8,Win32,60

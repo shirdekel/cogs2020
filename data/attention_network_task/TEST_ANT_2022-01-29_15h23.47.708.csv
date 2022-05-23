@@ -1,0 +1,8 @@
+﻿fixDuration,resp.keys,resp.corr,resp.rt,pracLoop.thisRepN,pracLoop.thisTrialN,pracLoop.thisN,pracLoop.thisIndex,pracLoop.ran,cue,tar,corrAns,targOrientation,participant,session,date,expName,psychopyVersion,OS,frameRate,pracLoop.order
+1.25,right,1,1.0651,0,0,0,21,1,stim/both.png,stim/incongLeft.png,right,180,TEST,001,2022-01-29_15h23.47.708,ANT,2021.2.3,Win32,59.4530321,
+0.75,right,1,0.5257,0,1,1,6,1,stim/centre.png,stim/congLeft.png,right,180,TEST,001,2022-01-29_15h23.47.708,ANT,2021.2.3,Win32,59.4530321,
+0.9,left,1,0.8039,0,2,2,19,1,stim/blank.png,stim/incongLeft.png,left,0,TEST,001,2022-01-29_15h23.47.708,ANT,2021.2.3,Win32,59.4530321,
+0.65,right,1,0.5503,0,3,3,10,1,stim/centre.png,stim/congRight.png,right,0,TEST,001,2022-01-29_15h23.47.708,ANT,2021.2.3,Win32,59.4530321,
+0.8,left,1,0.5365,0,4,4,1,1,stim/both.png,stim/congLeft.png,left,0,TEST,001,2022-01-29_15h23.47.708,ANT,2021.2.3,Win32,59.4530321,
+0.75,right,1,0.517,0,5,5,4,1,stim/lower.png,stim/congLeft.png,right,180,TEST,001,2022-01-29_15h23.47.708,ANT,2021.2.3,Win32,59.4530321,
+0.6,,,,0,6,6,15,1,stim/blank.png,stim/congRight.png,left,180,TEST,001,2022-01-29_15h23.47.708,ANT,2021.2.3,Win32,59.4530321,23

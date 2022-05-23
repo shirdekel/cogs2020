@@ -1,0 +1,2 @@
+﻿fixDuration,resp.keys,resp.corr,pracLoop.thisRepN,pracLoop.thisTrialN,pracLoop.thisN,pracLoop.thisIndex,pracLoop.ran,cue,tar,corrAns,targOrientation,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.7,,0,0,0,0,1,1,stim/both.png,stim/congLeft.png,left,0,,001,2022-05-11_17h04.36.196,ANT,2021.2.3,Win32,59.99160118

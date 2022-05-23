@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.218073595,-0.328149618,1,0,0,0.119392293,0.08285553,1,0,0,2.39912,1,"[0.12,0.09]",0,0,0,0,1,black,black,1,5,oi,001,2021-02-03_20h33.51.731,visual-search,2020.2.8,MacIntel,60
+,,,,,0.119392293,0.072149082,1,0,0,1.23585,1,"[0.12,0.09]",0,1,1,6,1,black,black,1,20,oi,001,2021-02-03_20h33.51.731,visual-search,2020.2.8,MacIntel,60
+,,,,,0.016947089,0.14773268,1,0,0,2.00815,1,"[0,0.15]",0,2,2,7,1,black,black,1,20,oi,001,2021-02-03_20h33.51.731,visual-search,2020.2.8,MacIntel,60
+,,,,,0.245827976,0.048797811,1,0,0,2.87002,1,"[0.21000000000000002,0.06]",0,3,3,8,1,black,black,1,20,oi,001,2021-02-03_20h33.51.731,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.006052382,0.035929769,1,0,0,1.18756,1,"[0,0.02999999999999997]",0,4,4,3,1,black,black,1,5,oi,001,2021-02-03_20h33.51.731,visual-search,2020.2.8,MacIntel,60
+,,,,,0.279738837,0.048316243,1,0,0,1.303435,1,"[0.26999999999999996,0.02999999999999997]",0,5,5,4,1,black,black,1,5,oi,001,2021-02-03_20h33.51.731,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.272926025,0.191455315,1,0,0,2.92052,1,"[-0.27,0.21]",0,6,6,5,1,black,black,0,20,oi,001,2021-02-03_20h33.51.731,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.161336534,0.256397468,1,0,0,2.48736,1,"[-0.18,0.24]",0,7,7,1,1,black,black,1,5,oi,001,2021-02-03_20h33.51.731,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.223855523,-0.130977851,1,0,0,1.521735,1,"[-0.24,-0.14999999999999997]",0,8,8,2,1,black,black,1,5,oi,001,2021-02-03_20h33.51.731,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.309165921,-0.222150065,1,0,0,3.719795,1,"[-0.3,-0.21000000000000002]",0,9,9,9,1,red,black,1,20,oi,001,2021-02-03_20h33.51.731,visual-search,2020.2.8,MacIntel,60

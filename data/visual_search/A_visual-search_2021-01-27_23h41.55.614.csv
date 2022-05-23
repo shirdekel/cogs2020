@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+-0.292857143,-0.427040816,1,0,0,0.075510204,-0.085204082,1,0,0,1.142,1,"[0.06,-0.06]",0,0,0,7,1,black,black,1,20,A,001,2021-01-27_23h41.55.614,visual-search,2020.2.8,iPhone,60
+,,,,,-0.076530612,-0.057653061,1,0,0,1.083,1,"[-0.09,-0.02999999999999997]",0,1,1,8,1,black,black,1,20,A,001,2021-01-27_23h41.55.614,visual-search,2020.2.8,iPhone,60
+,,,,,-0.233673469,0.275,1,0,0,1.503,1,"[-0.24,0.27]",0,2,2,5,1,black,black,0,20,A,001,2021-01-27_23h41.55.614,visual-search,2020.2.8,iPhone,60
+,,,,,-0.168367347,-0.048469388,1,0,0,4.159,1,"[-0.18,-0.06]",0,3,3,6,1,black,black,1,20,A,001,2021-01-27_23h41.55.614,visual-search,2020.2.8,iPhone,60
+,,,,,0.244897959,0.165816327,1,0,0,1.295,1,"[0.24000000000000005,0.21]",0,4,4,2,1,black,black,1,5,A,001,2021-01-27_23h41.55.614,visual-search,2020.2.8,iPhone,60
+,,,,,0.023469388,-0.229081633,1,0,0,0.954,1,"[-0.02999999999999997,-0.21000000000000002]",0,5,5,3,1,black,black,1,5,A,001,2021-01-27_23h41.55.614,visual-search,2020.2.8,iPhone,60
+,,,,,0.247959184,0.027040816,1,0,0,0.994,1,"[0.24000000000000005,0.02999999999999997]",0,6,6,9,1,red,black,1,20,A,001,2021-01-27_23h41.55.614,visual-search,2020.2.8,iPhone,60
+,,,,,0.085714286,-0.077040816,1,0,0,0.815,1,"[0.09000000000000002,-0.06]",0,7,7,4,1,black,black,1,5,A,001,2021-01-27_23h41.55.614,visual-search,2020.2.8,iPhone,60
+,,,,,0.159183673,-0.284183673,1,0,0,1.271,1,"[0.14999999999999997,-0.26999999999999996]",0,8,8,1,1,black,black,1,5,A,001,2021-01-27_23h41.55.614,visual-search,2020.2.8,iPhone,60
+,,,,,-0.280612245,-0.303571429,1,0,0,1.039,1,"[-0.24,-0.3]",0,9,9,0,1,black,black,1,5,A,001,2021-01-27_23h41.55.614,visual-search,2020.2.8,iPhone,60

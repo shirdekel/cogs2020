@@ -1,0 +1,2 @@
+﻿startKey.keys,startKey.rt,key_resp.keys,key_resp.corr,key_resp.rt,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,stimulus,condition,response,participant,session,date,expName,psychopyVersion,OS,frameRate
+space,1.0064,left,1,0.6166,0,0,0,9,1,>><>>,incongruent,left,,001,2022-01-13_17h19.21.564,flanker-basic,2021.2.3,Win32,59.91970759

@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.347699969,-0.158628973,1,0,0,0.337531248,-0.236319583,1,0,0,1.8338,1,"[0.3,-0.24000000000000005]",0,0,0,2,1,black,black,1,5,,001,2021-01-27_23h47.50.659,visual-search,2020.2.8,Linux armv8l,60
+,,,,,0.162814463,-0.144755822,1,0,0,1.5048,1,"[0.18,-0.14999999999999997]",0,1,1,8,1,black,black,1,20,,001,2021-01-27_23h47.50.659,visual-search,2020.2.8,Linux armv8l,60
+,,,,,0.098104618,-0.035618906,1,0,0,1.1245,1,"[0.09000000000000002,-0.06]",0,2,2,0,1,black,black,1,5,,001,2021-01-27_23h47.50.659,visual-search,2020.2.8,Linux armv8l,60
+,,,,,0.14247706,-0.166953128,1,0,0,4.0576,1,"[0.12,-0.18]",0,3,3,6,1,black,black,1,20,,001,2021-01-27_23h47.50.659,visual-search,2020.2.8,Linux armv8l,60
+,,,,,-0.036861818,-0.203023585,1,0,0,1.72,1,"[-0.06,-0.21000000000000002]",0,4,4,7,1,black,black,1,20,,001,2021-01-27_23h47.50.659,visual-search,2020.2.8,Linux armv8l,60
+,,,,,0.373584,0.199301916,1,0,0,1.8331,0,"[0.3,0.06]",0,5,5,3,1,black,black,1,5,,001,2021-01-27_23h47.50.659,visual-search,2020.2.8,Linux armv8l,60
+,,,,,0.054656439,0.188204079,1,0,0,2.1338,1,"[0.09000000000000002,0.18]",0,6,6,5,1,black,black,0,20,,001,2021-01-27_23h47.50.659,visual-search,2020.2.8,Linux armv8l,60
+,,,,,0.029696904,-0.185450896,1,0,0,1.0399,1,"[0.02999999999999997,-0.18]",0,7,7,4,1,black,black,1,5,,001,2021-01-27_23h47.50.659,visual-search,2020.2.8,Linux armv8l,60
+,,,,,-0.037786275,-0.090187364,1,0,0,1.0253,1,"[-0.02999999999999997,-0.12]",0,8,8,1,1,black,black,1,5,,001,2021-01-27_23h47.50.659,visual-search,2020.2.8,Linux armv8l,60
+,,,,,-0.051652709,0.258495457,1,0,0,0.9868,1,"[-0.02999999999999997,0.24]",0,9,9,9,1,red,black,1,20,,001,2021-01-27_23h47.50.659,visual-search,2020.2.8,Linux armv8l,60

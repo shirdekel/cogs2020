@@ -1,0 +1,17 @@
+﻿fixDuration,resp.keys,resp.corr,resp.rt,pracLoop.thisRepN,pracLoop.thisTrialN,pracLoop.thisN,pracLoop.thisIndex,pracLoop.ran,cue,tar,corrAns,targOrientation,participant,session,date,expName,psychopyVersion,OS,frameRate
+1.45,right,1,0.5973,0,0,0,11,1,stim/blank.png,stim/congRight.png,right,0,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+0.7,left,1,0.4342,0,1,1,3,1,stim/blank.png,stim/congLeft.png,left,0,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+0.45,left,1,0.6344,0,2,2,18,1,stim/centre.png,stim/incongLeft.png,left,0,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+0.95,right,1,0.5661,0,3,3,10,1,stim/centre.png,stim/congRight.png,right,0,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+1.4,left,1,0.5184,0,4,4,1,1,stim/both.png,stim/congLeft.png,left,0,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+0.55,right,1,0.3861,0,5,5,8,1,stim/upper.png,stim/congRight.png,right,0,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+0.6,right,1,0.4675,0,6,6,5,1,stim/both.png,stim/congLeft.png,right,180,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+0.6,left,0,0.3646,0,7,7,22,1,stim/centre.png,stim/incongLeft.png,right,180,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+0.5,left,0,0.3887,0,8,8,20,1,stim/lower.png,stim/incongLeft.png,right,180,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+0.7,right,1,0.4345,0,9,9,4,1,stim/lower.png,stim/congLeft.png,right,180,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+0.8,left,1,0.4902,0,10,10,14,1,stim/centre.png,stim/congRight.png,left,180,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+0.55,right,1,0.3859,0,11,11,6,1,stim/centre.png,stim/congLeft.png,right,180,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+1.3,left,1,0.6429,0,12,12,16,1,stim/upper.png,stim/incongLeft.png,left,0,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+0.55,right,1,0.6846,0,13,13,21,1,stim/both.png,stim/incongLeft.png,right,180,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+1.15,left,1,0.6679,0,14,14,15,1,stim/blank.png,stim/congRight.png,left,180,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471
+1.25,,0,,0,15,15,7,1,stim/blank.png,stim/congLeft.png,right,180,,001,2022-02-28_13h25.02.156,ANT,2021.2.3,Win32,60.01680471

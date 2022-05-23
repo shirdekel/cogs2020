@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.260185219,-0.10185187,1,0,0,0.261111145,-0.064814832,1,0,0,1.4415,1,"[0.26999999999999996,-0.02999999999999997]",0,0,0,0,1,black,black,1,5,test,001,2021-07-26_16h18.41.996,visual-search,2020.2.8,Win32,60
+,,,,,0.275925961,-0.21388891,1,0,0,1.09,1,"[0.3,-0.21000000000000002]",0,1,1,4,1,black,black,1,5,test,001,2021-07-26_16h18.41.996,visual-search,2020.2.8,Win32,60
+,,,,,0.283333368,0.228703696,1,0,0,1.3583,1,"[0.3,0.24]",0,2,2,2,1,black,black,1,5,test,001,2021-07-26_16h18.41.996,visual-search,2020.2.8,Win32,60
+,,,,,-0.177777757,-0.210185206,1,0,0,0.9896,1,"[-0.15,-0.18]",0,3,3,3,1,black,black,1,5,test,001,2021-07-26_16h18.41.996,visual-search,2020.2.8,Win32,60
+,,,,,-0.120370291,-0.2527778,1,0,0,1.7512,1,"[-0.12,-0.24000000000000005]",0,4,4,5,1,black,black,0,20,test,001,2021-07-26_16h18.41.996,visual-search,2020.2.8,Win32,60
+,,,,,0.318518555,-0.002777793,1,0,0,2.5711,1,"[0.3,0]",0,5,5,8,1,black,black,1,20,test,001,2021-07-26_16h18.41.996,visual-search,2020.2.8,Win32,60
+,,,,,-0.31666665,-0.259259282,1,0,0,5.1767,1,"[-0.3,-0.26999999999999996]",0,6,6,7,1,black,black,1,20,test,001,2021-07-26_16h18.41.996,visual-search,2020.2.8,Win32,60
+,,,,,0.157407439,-0.176851872,1,0,0,1.258,1,"[0.14999999999999997,-0.18]",0,7,7,1,1,black,black,1,5,test,001,2021-07-26_16h18.41.996,visual-search,2020.2.8,Win32,60
+,,,,,-0.253703685,-0.143518538,1,0,0,1.3749,1,"[-0.27,-0.14999999999999997]",0,8,8,9,1,red,black,1,20,test,001,2021-07-26_16h18.41.996,visual-search,2020.2.8,Win32,60
+,,,,,0.219444477,-0.088888906,1,0,0,1.3506,1,"[0.21000000000000002,-0.09000000000000002]",0,9,9,6,1,black,black,1,20,test,001,2021-07-26_16h18.41.996,visual-search,2020.2.8,Win32,60

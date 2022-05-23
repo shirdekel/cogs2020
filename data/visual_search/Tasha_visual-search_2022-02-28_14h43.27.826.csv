@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+0.014814815,0.040740741,1,0,0,-0.253703704,-0.012962963,1,0,0,1.4613,1,"[-0.24,0]",0,0,0,5,1,black,black,0,20,Tasha,001,2022-02-28_14h43.27.826,visual-search,2020.2.8,Win32,60
+,,,,,-0.021296296,-0.092592593,1,0,0,0.8387,1,"[-0.02999999999999997,-0.09000000000000002]",0,1,1,1,1,black,black,1,5,Tasha,001,2022-02-28_14h43.27.826,visual-search,2020.2.8,Win32,60
+,,,,,0.221296296,-0.046296296,1,0,0,1.1419,1,"[0.3,-0.06]",0,2,2,2,1,black,black,1,5,Tasha,001,2022-02-28_14h43.27.826,visual-search,2020.2.8,Win32,60
+,,,,,-0.040740741,0.142592593,1,0,0,0.7384,1,"[-0.02999999999999997,0.12]",0,3,3,3,1,black,black,1,5,Tasha,001,2022-02-28_14h43.27.826,visual-search,2020.2.8,Win32,60
+,,,,,0.124074074,-0.196296296,1,0,0,2.211,1,"[0.14999999999999997,-0.18]",0,4,4,7,1,black,black,1,20,Tasha,001,2022-02-28_14h43.27.826,visual-search,2020.2.8,Win32,60
+,,,,,0.137037037,-0.196296296,1,0,0,1.2592,1,"[0.12,-0.21000000000000002]",0,5,5,0,1,black,black,1,5,Tasha,001,2022-02-28_14h43.27.826,visual-search,2020.2.8,Win32,60
+,,,,,0.071296296,0.213888889,1,0,0,1.3247,1,"[0.06,0.21]",0,6,6,4,1,black,black,1,5,Tasha,001,2022-02-28_14h43.27.826,visual-search,2020.2.8,Win32,60
+,,,,,0.151851852,-0.193518519,1,0,0,1.2254,1,"[0.12,-0.21000000000000002]",0,7,7,9,1,red,black,1,20,Tasha,001,2022-02-28_14h43.27.826,visual-search,2020.2.8,Win32,60
+,,,,,0.036111111,-0.066666667,1,0,0,3.2767,1,"[0.02999999999999997,-0.09000000000000002]",0,8,8,6,1,black,black,1,20,Tasha,001,2022-02-28_14h43.27.826,visual-search,2020.2.8,Win32,60
+,,,,,0.308333333,-0.19537037,1,0,0,1.9937,1,"[0.3,-0.18]",0,9,9,8,1,black,black,1,20,Tasha,001,2022-02-28_14h43.27.826,visual-search,2020.2.8,Win32,60

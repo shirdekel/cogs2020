@@ -1,0 +1,11 @@
+startMouse.x,startMouse.y,startMouse.leftButton,startMouse.midButton,startMouse.rightButton,mouse.x,mouse.y,mouse.leftButton,mouse.midButton,mouse.rightButton,mouse.time,corr,targetOri,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,trials.ran,targetCol,distractorCol,mixedOris,setSize,participant,session,date,expName,psychopyVersion,OS,frameRate
+-0.025467678,-0.084222234,1,0,0,0.214910753,0.171184873,1,0,0,1.242,1,"[0.21000000000000002,0.18]",0,0,0,9,1,red,black,1,20,99,001,2022-03-11_13h43.16.600,visual-search,2020.2.8,MacIntel,60
+,,,,,0.085589087,0.189704385,1,0,0,1.3357,1,"[0.09000000000000002,0.18]",0,1,1,1,1,black,black,1,5,99,001,2022-03-11_13h43.16.600,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.012368675,0.229932729,1,0,0,2.1198,1,"[-0.02999999999999997,0.24]",0,2,2,6,1,black,black,1,20,99,001,2022-03-11_13h43.16.600,visual-search,2020.2.8,MacIntel,60
+,,,,,0.14556979,-0.163707386,1,0,0,1.87,1,"[0.14999999999999997,-0.18]",0,3,3,8,1,black,black,1,20,99,001,2022-03-11_13h43.16.600,visual-search,2020.2.8,MacIntel,60
+,,,,,0.282415845,-0.05442619,1,0,0,1.2227,1,"[0.26999999999999996,-0.06]",0,4,4,3,1,black,black,1,5,99,001,2022-03-11_13h43.16.600,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.202528677,-0.03463363,1,0,0,0.9834,1,"[-0.18,0]",0,5,5,2,1,black,black,1,5,99,001,2022-03-11_13h43.16.600,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.068315823,-0.009011846,1,0,0,0.8192,1,"[-0.09,0]",0,6,6,0,1,black,black,1,5,99,001,2022-03-11_13h43.16.600,visual-search,2020.2.8,MacIntel,60
+,,,,,-0.010291595,-0.221309498,1,0,0,1.638,1,"[0,-0.24000000000000005]",0,7,7,7,1,black,black,1,20,99,001,2022-03-11_13h43.16.600,visual-search,2020.2.8,MacIntel,60
+,,,,,0.093327884,-0.136571344,1,0,0,0.9865,1,"[0.09000000000000002,-0.14999999999999997]",0,8,8,4,1,black,black,1,5,99,001,2022-03-11_13h43.16.600,visual-search,2020.2.8,MacIntel,60
+,,,,,0.206408126,0.066379449,1,0,0,1.6215,1,"[0.21000000000000002,0.09]",0,9,9,5,1,black,black,0,20,99,001,2022-03-11_13h43.16.600,visual-search,2020.2.8,MacIntel,60
