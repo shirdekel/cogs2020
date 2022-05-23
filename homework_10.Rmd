@@ -142,7 +142,7 @@ here:
 `data_stroop.csv` contains the following columns:
 
 * `subject`: participant indicator
-* `resp.keys`: the key pressed
+* `resp.keys`: the participant response
 * `resp.rt`: the response time of the key press
 * `text`: the text displayed
 * `letterColor`: the colour of the displayed text
@@ -304,11 +304,14 @@ df = 2*n - 2
 ## introductory unit.
 
 ##
+##
 ## How do things turn out for accuracy?
 ## This is a simple matter of creating and then referencing
 ## a different column in the top level data.table, so I'll
 ## fly through this.
-d[, acc := text == letterColor]
+##
+##
+d[, acc := resp.keys == letterColor]
 dd <- d[, 
         .(acc_mean = mean(acc), acc_err = sd(acc)/sqrt(.N)), 
         .(subject, trial_type)]
@@ -318,13 +321,13 @@ ggplot(data=dd, aes(x=trial_type, y=acc_mean)) +
   geom_point()
 
 ddd <- dd[, 
-         .(rt_mean = mean(rt_mean), rt_err = sd(rt_mean)/sqrt(.N)),
+         .(acc_mean = mean(acc_mean), acc_err = sd(acc_mean)/sqrt(.N)),
          .(trial_type)]
-ggplot(data=ddd, aes(x=trial_type, y=rt_mean)) +
-  geom_pointrange(aes(ymin=rt_mean-rt_err, ymax=rt_mean+rt_err))
+ggplot(data=ddd, aes(x=trial_type, y=acc_mean)) +
+  geom_pointrange(aes(ymin=acc_mean-acc_err, ymax=acc_mean+acc_err))
 
-x <- dd[trial_type == 'incongruent', rt_mean]
-y <- dd[trial_type == 'congruent', rt_mean]
+x <- dd[trial_type == 'incongruent', acc_mean]
+y <- dd[trial_type == 'congruent', acc_mean]
 t.test(x = x, 
        y = y,
        alternative = c("greater"),
@@ -334,9 +337,6 @@ t.test(x = x,
        conf.level = 0.95
 )
 
-## Notice below that now that we've got our equal sample
-## size sorted out our standard error calculation is
-## simplified.
 nx <- length(x)
 ny <- length(y)
 n <- nx
@@ -344,5 +344,80 @@ sp_err = sqrt((var(x) + var(y)) / n)
 t_obs = (mean(x) - mean(y)) / sp_err
 df = 2*n - 2
 
+
+##
+##
+## Ah, crap again. Is trial type a within-subjects factor or
+## a between-subjects factor?  It's easy to see that it is a
+## within-subjects factor. This means that it was not
+## appropriate for us to apply an independent samples
+## t-test! We should have done a paired samples t-test.
+ddesigntype <- dd[, unique(subject), .(trial_type)]
+ggplot(ddesigntype, aes(x=trial_type, y=V1)) +
+  geom_point()
+
+##  Paired samples t-test for both accuracy and rt
+dd <- d[, 
+        .(rt_mean = mean(resp.rt), 
+          acc_mean = mean(acc)), 
+        .(subject, trial_type)]
+
+diff_scores = dd[, .(diff_scores_rt = diff(rt_mean),
+                     diff_scores_acc = diff(acc_mean)), 
+                 .(subject)]
+
+
+x <- diff_scores[, diff_scores_rt]
+t.test(x = x, 
+       y = NULL,
+       alternative = c("less"),
+       mu = 0, 
+       paired = F, 
+       var.equal = T,
+       conf.level = 0.95
+)
+
+n <- length(x)
+sp_err = sqrt((var(x)) / n) 
+t_obs = (mean(x)) / sp_err
+df = n - 1
+
+x <- diff_scores[, diff_scores_acc]
+t.test(x = x, 
+       y = NULL,
+       alternative = c("greater"),
+       mu = 0, 
+       paired = F, 
+       var.equal = T,
+       conf.level = 0.95
+)
+
+n <- length(x)
+sp_err = sqrt((var(x)) / n) 
+t_obs = (mean(x)) / sp_err
+df = n - 1
+
+## Takeaway: If we do things correctly, then we aren't left
+## wondering about the replication crises or how to deal
+## with outliers. That is convenient, I suppose.
+
+
+##
+##
+## Lets move on to another question. 
+## Does letterColor itself have an effect on response time?
+## E.g., bull fighters use red flags to antagonise bulls...
+## perhaps that will make people faster? Perhaps other
+## colours have a similar or different effect?
+
+## How many colours are there?
+d[, unique(letterColor)]
+
+## There are certainly more than two colours, so an ANOVA is
+## the most appropriate of our tools to use. 
+dd <- d[, 
+        .(rt_mean = mean(resp.rt), 
+          acc_mean = mean(acc)), 
+        .(subject, letterColor)]
 ```
 
