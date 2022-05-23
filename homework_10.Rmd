@@ -146,8 +146,13 @@ here:
 * `resp.rt`: the response time of the key press
 * `text`: the text displayed
 * `letterColor`: the colour of the displayed text
+* `group`: the group or participants 
 
 ```{r}
+library(data.table)
+library(ggplot2)
+library(ez)
+
 ## Analyse the Stroop data
 
 ## Load data_stroop.csv into a data.table
@@ -413,22 +418,42 @@ df = n - 1
 ## How many colours are there?
 d[, unique(letterColor)]
 
+## Which colours belong to which colour set?
+d[, unique(letterColor), .(colorSet)]
+
+## Which factors are within and which are between?
+ddesigntype <- d[, unique(subject), .(letterColor, colorSet)]
+ggplot(data=ddesigntype, aes(x=letterColor, y=V1, colour=colorSet)) +
+  geom_point()
+
+## We can see:
+## blue, green, and red belong to colorSet I 
+## Orange, purple, and yellow belong to colorSet II 
+## letterColor is within-subject
+## colorSet is between-subject
+
 ## There are certainly more than two colours, so an ANOVA is
 ## the most appropriate of our tools to use. 
 dd <- d[, 
         .(rt_mean = mean(resp.rt), 
           acc_mean = mean(acc)), 
-        .(subject, letterColor)]
+        .(subject, letterColor, colorSet)]
 
-ggplot(data=dd, aes(x=letterColor, y=rt_mean)) +
+ggplot(data=dd, aes(x=letterColor, y=rt_mean, colour=colorSet)) +
   geom_violin() + 
   geom_point()
 
 ddd <- dd[, 
          .(rt_mean = mean(rt_mean), rt_err = sd(rt_mean)/sqrt(.N)),
-         .(letterColor)]
+         .(letterColor, colorSet)]
 
-ggplot(data=ddd, aes(x=letterColor, y=rt_mean)) +
+ggplot(data=ddd, aes(x=letterColor, y=rt_mean, colour=colorSet)) +
   geom_pointrange(aes(ymin=rt_mean-rt_err, ymax=rt_mean+rt_err))
-```
 
+ezANOVA(data=dd,
+        dv=rt_mean,
+        wid=subject,
+        within=letterColor,
+        between=colorSet,
+        type=3)
+```
