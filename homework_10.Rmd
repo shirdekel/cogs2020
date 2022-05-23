@@ -150,12 +150,141 @@ here:
 ```{r}
 ## Analyse the Stroop data
 
-## load data_stroop.csv into a data.table
+## Load data_stroop.csv into a data.table
 d <- fread('https://crossley.github.io/cogs2020/data/real_data/data_stroop.csv')
 
+## Make a violin plot that contains one box indicating the
+## response time on congruent (i.e., `text == letterColor`)
+## trials and another violin indicating the response time on
+## incongruent (i.e., `text != letterColor`) trials. Make
+## sure that each subject contributes only one data point
+## (i.e., their mean response time on the desired trial
+## type) to each box.
+d[, trial_type := 'NA']
+d[text == letterColor, trial_type := 'congruent']
+d[text != letterColor, trial_type := 'incongruent']
 
+dd <- d[, 
+        .(rt_mean = mean(resp.rt), rt_err = sd(resp.rt)/sqrt(.N)), 
+        .(subject, trial_type)]
+
+ggplot(data=dd, aes(x=trial_type, y=rt_mean)) +
+  geom_violin() + 
+  geom_point()
+
+## Make a point range plot that plots a point at the mean
+## value for each trial type and extends error bars in one
+## standard error above and below these mean values.
+ddd <- dd[, 
+         .(rt_mean = mean(rt_mean), rt_err = sd(rt_mean)/sqrt(.N)),
+         .(trial_type)]
+ggplot(data=ddd, aes(x=trial_type, y=rt_mean)) +
+  geom_pointrange(aes(ymin=rt_mean-rt_err, ymax=rt_mean+rt_err))
+
+## Are the mean response times per subject significantly
+## greater on incongruent trials then they are on
+## incongruent trials? Assume equal variance. Ensure an
+## expected type I error rate of 0.05.
+x <- dd[trial_type == 'incongruent', rt_mean]
+y <- dd[trial_type == 'congruent', rt_mean]
+t.test(x = x, 
+       y = y,
+       alternative = c("greater"),
+       mu = 0, 
+       paired = F, 
+       var.equal = T,
+       conf.level = 0.95
+)
+
+## Do the results of this t-test make sense? Can we be
+## confident that we didn't do something careless in our
+## coding?
+
+## * t = 2.19 indicates that the difference in the mean
+## values between congruent and incongruent trials are just
+## a bit more than 2 standard errors apart. We can check
+## this, but we need to know what sort of standard error
+## this test is / should be using.
+
+## Check for equal sample size
+nx <- length(x)
+ny <- length(y)
+
+## We do not have equal sample size, and above we are told
+## to assume equal variance. We go to the lecture notes to
+## find:
+sp = sqrt(((nx-1)*var(x) + (ny-1)*var(y)) / (nx + ny - 2)) 
+sp_err = sp * sqrt((1/nx) + (1/ny))
+
+## We see that one standard error for this test is about
+## 0.09.  
+
+## The difference in means (`mean(x) - mean(y)`) in this
+## test is is about .2, which means that we would expect our
+## observed t-statistic to be just a bit more than 2. We can 
+## check this formally as follows:
+t_obs = (mean(x) - mean(y)) / sp_err
+
+## How about the degrees of freedom of this test? Do they
+## also check out? From the lecture notes, we expect:
+df = nx + ny - 2
+
+## This also lines up with our call to t.test(), but how can
+## we be sure we didn't make a mistake wrangling the data?
+## How many subjects are in this data set?
+d[, length(unique(subject))]
+
+## Each of these subjects should contribute one observation
+## to x and one observation to y. Wait... what??? How can we
+## have 431 participants and only 425 incongruent
+## observations and 246 congruent observations? A good way
+## to go about investigating this is to ask how many
+## observations in total each subject provides.
+dN <- d[, .N, .(subject)][order(N)]
+ggplot(data=dN, aes(N)) +
+  geom_histogram()
+
+## Ah, we see that quite a few participants didn't complete
+## the experiment. It probably makes sense to exlcude these
+## people from our analysis.
+d[, trials_completed := .N, .(subject)]
+d <- d[trials_completed == 30]
+
+## From here, we redo all the above analyses
+dd <- d[, 
+        .(rt_mean = mean(resp.rt), rt_err = sd(resp.rt)/sqrt(.N)), 
+        .(subject, trial_type)]
+
+## Check that each subject gives one observation per trial
+## type
+dd[, .N, .(subject, trial_type)][, unique(N)]
+
+ggplot(data=dd, aes(x=trial_type, y=rt_mean)) +
+  geom_violin() + 
+  geom_point()
+
+ddd <- dd[, 
+         .(rt_mean = mean(rt_mean), rt_err = sd(rt_mean)/sqrt(.N)),
+         .(trial_type)]
+ggplot(data=ddd, aes(x=trial_type, y=rt_mean)) +
+  geom_pointrange(aes(ymin=rt_mean-rt_err, ymax=rt_mean+rt_err))
+
+x <- dd[trial_type == 'incongruent', rt_mean]
+y <- dd[trial_type == 'congruent', rt_mean]
+t.test(x = x, 
+       y = y,
+       alternative = c("greater"),
+       mu = 0, 
+       paired = F, 
+       var.equal = T,
+       conf.level = 0.95
+)
+
+nx <- length(x)
+ny <- length(y)
+sp = sqrt(((nx-1)*var(x) + (ny-1)*var(y)) / (nx + ny - 2)) 
+sp_err = sp * sqrt((1/nx) + (1/ny))
+t_obs = (mean(x) - mean(y)) / sp_err
+df = nx + ny - 2
 ```
-
-
-
 
