@@ -70,9 +70,6 @@ containing your student id.
 
 * So far, here is what your file should look like if your
 name is `John Doe` and and your student ID is `12345678`.
-Note that the following code chunk also includes a few lines
-to create a `data.table` named `d` that many of the problems
-below require you manipulate.
 
 ```{r, echo=T, warning=F, message=F}
 # load the packages we will need
@@ -91,22 +88,38 @@ my_student_id <- "12345678"
 set.seed(0)
 ```
 
+# How to do this problem set
+This problem set will not be marked by the same methods used
+on previous problem sets. In particular, I will mark these
+by hand and I will only be looking to see that you have made
+reasonable attempts at each. It is up to you to work with
+your peers, with me, and with your tutor to ensure that you
+understand everything that you do on this problem set and
+everything else covered in any way throughout the unit.
+Finally, I may update this problem set leading up to the
+final exam with additional problems or revised old problems.
+It's all just to help you practice. None of the additions
+will count against your marks on this problem set.
+
 # COGS2020 goals
 Below, I summarise some major goals of COGS2020 and explain
 how they contribute to overall marking in the unit. Only
 mastery of skills described in all goals should be
 sufficient to earn a mark of high distinction.
 
-## Goal 1 
+* **Goal 1:**
 A major goal of COGS2020 is to prepare students to get data
-from an experiment, assess / validate, cross-reference its
-design, make relevant diagnostic plots, and perform basic
-statistics to quantify patterns seen in the visualisations
-of the data. Mastery of this skill implies at least some
-mastery of Goal 3 (see below) and so it is expected should
-be sufficient to generate a credit or distinction mark.
+from an experiment, figure out the design of the experiment
+(i.e., what factors are within-subject and which factors are
+between-subject) by interacting with the data.table and / or
+making plots, make relevant diagnostic plots, and perform
+basic statistics to quantify patterns seen in the
+visualisations of the data. Mastery of this skill implies at
+least some mastery of Goal 3 (see below) and so it is
+expected should be sufficient to generate a credit or
+distinction mark.
 
-## Goal 2
+* **Goal 2:**
 A major goal of COGS2020 is to develop in students a deep
 conceptual understanding of Null Hypothesis Significance
 Testing (NHST). Students with an understanding at this level
@@ -116,7 +129,7 @@ research career. Mastery of this skill implies mastery of
 Goal 3 (see below) and so it is expected should be
 sufficient to generate a credit or distinction mark.
   
-## Goal 3 
+* **Goal 3:**
 A sub-goal of COGS2020 is to give students the ability to
 recognise when and how to use simple statistical tools
 (e.g., t-tests and ANOVAs) in the context of simple toy data
@@ -125,6 +138,18 @@ to generate a passing mark in the unit.
 
 # Goal 1 practice
 ## Stroop experiment
+
+Below, I have written my own analysis code with comments to
+explain my reasoning. The purpose is to give you an example
+of the kind of thing we are trying to get good at in this
+unit. In reading through my analysis, you will see that I
+made lots of mistakes, and that it was only in understanding
+the deep principles of NHST that I was able to catch these
+mistakes. I swear this wasn't planned... it just happens all
+the time. That's partly why I teach this unit with so much
+emphasis on concepts. Anyway, you should be sure to
+underastand all my code, and then move on to try our hand on
+the remaining data sets below.
 
 Consider the experiment here:
 
@@ -137,7 +162,7 @@ it.
 Reasonably cleaned data from this experiment can be found
 here: 
 
-* `../data/real_data/data_stroop.csv`
+* `https://crossley.github.io/cogs2020/data/real_data/data_stroop.csv`
 
 `data_stroop.csv` contains the following columns:
 
@@ -153,12 +178,12 @@ library(data.table)
 library(ggplot2)
 library(ez)
 
-## Analyse the Stroop data
+rm(list = ls())
 
 ## Load data_stroop.csv into a data.table
 d <- fread('https://crossley.github.io/cogs2020/data/real_data/data_stroop.csv')
 
-## Make a violin plot that contains one box indicating the
+## Make a violin plot that contains one violin indicating the
 ## response time on congruent (i.e., `text == letterColor`)
 ## trials and another violin indicating the response time on
 ## incongruent (i.e., `text != letterColor`) trials. Make
@@ -170,7 +195,7 @@ d[text == letterColor, trial_type := 'congruent']
 d[text != letterColor, trial_type := 'incongruent']
 
 dd <- d[, 
-        .(rt_mean = mean(resp.rt), rt_err = sd(resp.rt)/sqrt(.N)), 
+        .(rt_mean = mean(resp.rt)), 
         .(subject, trial_type)]
 
 ggplot(data=dd, aes(x=trial_type, y=rt_mean)) +
@@ -179,15 +204,21 @@ ggplot(data=dd, aes(x=trial_type, y=rt_mean)) +
 
 ## Make a point range plot that plots a point at the mean
 ## value for each trial type and extends error bars in one
-## standard error above and below these mean values.
+## standard error above and below these mean values. In this
+## sort of plot, the point will indicate the observed sample
+## means, and the error bars will give the viewer an
+## indication of how much variability is in the distribution
+## of the **test statistic**.
 ddd <- dd[, 
-         .(rt_mean = mean(rt_mean), rt_err = sd(rt_mean)/sqrt(.N)),
+         .(rt_mean = mean(rt_mean), 
+           rt_err = sd(rt_mean)/sqrt(.N)),
          .(trial_type)]
+
 ggplot(data=ddd, aes(x=trial_type, y=rt_mean)) +
   geom_pointrange(aes(ymin=rt_mean-rt_err, ymax=rt_mean+rt_err))
 
 ## Are the mean response times per subject significantly
-## greater on incongruent trials then they are on
+## greater on congruent trials then they are on
 ## incongruent trials? Assume equal variance. Ensure an
 ## expected type I error rate of 0.05.
 x <- dd[trial_type == 'incongruent', rt_mean]
@@ -250,14 +281,14 @@ ggplot(data=dN, aes(N)) +
   geom_histogram()
 
 ## Ah, we see that quite a few participants didn't complete
-## the experiment. It probably makes sense to exlcude these
+## the experiment. It probably makes sense to exclude these
 ## people from our analysis.
 d[, trials_completed := .N, .(subject)]
 d <- d[trials_completed == 30]
 
 ## From here, we redo all the above analyses
 dd <- d[, 
-        .(rt_mean = mean(resp.rt), rt_err = sd(resp.rt)/sqrt(.N)), 
+        .(rt_mean = mean(resp.rt)), 
         .(subject, trial_type)]
 
 ## Check that each subject gives one observation per trial
@@ -269,8 +300,10 @@ ggplot(data=dd, aes(x=trial_type, y=rt_mean)) +
   geom_point()
 
 ddd <- dd[, 
-         .(rt_mean = mean(rt_mean), rt_err = sd(rt_mean)/sqrt(.N)),
+         .(rt_mean = mean(rt_mean), 
+           rt_err = sd(rt_mean)/sqrt(.N)),
          .(trial_type)]
+
 ggplot(data=ddd, aes(x=trial_type, y=rt_mean)) +
   geom_pointrange(aes(ymin=rt_mean-rt_err, ymax=rt_mean+rt_err))
 
@@ -318,7 +351,7 @@ df = 2*n - 2
 ##
 d[, acc := resp.keys == letterColor]
 dd <- d[, 
-        .(acc_mean = mean(acc), acc_err = sd(acc)/sqrt(.N)), 
+        .(acc_mean = mean(acc)), 
         .(subject, trial_type)]
 
 ggplot(data=dd, aes(x=trial_type, y=acc_mean)) +
@@ -326,8 +359,10 @@ ggplot(data=dd, aes(x=trial_type, y=acc_mean)) +
   geom_point()
 
 ddd <- dd[, 
-         .(acc_mean = mean(acc_mean), acc_err = sd(acc_mean)/sqrt(.N)),
+         .(acc_mean = mean(acc_mean), 
+           acc_err = sd(acc_mean)/sqrt(.N)),
          .(trial_type)]
+
 ggplot(data=ddd, aes(x=trial_type, y=acc_mean)) +
   geom_pointrange(aes(ymin=acc_mean-acc_err, ymax=acc_mean+acc_err))
 
@@ -335,7 +370,7 @@ x <- dd[trial_type == 'incongruent', acc_mean]
 y <- dd[trial_type == 'congruent', acc_mean]
 t.test(x = x, 
        y = y,
-       alternative = c("greater"),
+       alternative = c("less"),
        mu = 0, 
        paired = F, 
        var.equal = T,
@@ -352,9 +387,10 @@ df = 2*n - 2
 
 ##
 ##
-## Ah, crap again. Is trial type a within-subjects factor or
-## a between-subjects factor?  It's easy to see that it is a
-## within-subjects factor. This means that it was not
+## Ah, crap again. I just realised I forgot to figure out
+## whether the factor we are examining (i.e., `trial_type`)
+## is within- or between-subject. It's easy to see that it
+## is a within-subjects factor. This means that it was not
 ## appropriate for us to apply an independent samples
 ## t-test! We should have done a paired samples t-test.
 ddesigntype <- dd[, unique(subject), .(trial_type)]
@@ -409,51 +445,411 @@ df = n - 1
 
 ##
 ##
-## Lets move on to another question. 
-## Does letterColor itself have an effect on response time?
-## E.g., bull fighters use red flags to antagonise bulls...
-## perhaps that will make people faster? Perhaps other
-## colours have a similar or different effect?
+## Lets move on to another question. Does `letterColor`
+## itself have an effect on response time? E.g., bull
+## fighters use red flags to antagonise bulls... perhaps
+## that will make people faster? Perhaps other colours have
+## a similar or different effect?
 
 ## How many colours are there?
 d[, unique(letterColor)]
 
-## Which colours belong to which colour set?
-d[, unique(letterColor), .(colorSet)]
+## Which colours belong to which group?
+d[, unique(letterColor), .(group)]
 
 ## Which factors are within and which are between?
-ddesigntype <- d[, unique(subject), .(letterColor, colorSet)]
-ggplot(data=ddesigntype, aes(x=letterColor, y=V1, colour=colorSet)) +
+ddesigntype <- d[, unique(subject), .(letterColor, group)]
+ggplot(data=ddesigntype, aes(x=letterColor, y=V1, colour=group)) +
   geom_point()
 
-## We can see:
-## blue, green, and red belong to colorSet I 
-## Orange, purple, and yellow belong to colorSet II 
-## letterColor is within-subject
-## colorSet is between-subject
+## We can see that letterColor is within-subject and group
+## is between-subject
 
 ## There are certainly more than two colours, so an ANOVA is
 ## the most appropriate of our tools to use. 
 dd <- d[, 
         .(rt_mean = mean(resp.rt), 
           acc_mean = mean(acc)), 
-        .(subject, letterColor, colorSet)]
+        .(subject, letterColor, group)]
 
-ggplot(data=dd, aes(x=letterColor, y=rt_mean, colour=colorSet)) +
-  geom_violin() + 
-  geom_point()
+ggplot(data=dd, aes(x=letterColor, y=rt_mean, colour=group)) +
+  geom_violin()
 
 ddd <- dd[, 
          .(rt_mean = mean(rt_mean), rt_err = sd(rt_mean)/sqrt(.N)),
-         .(letterColor, colorSet)]
+         .(letterColor, group)]
 
-ggplot(data=ddd, aes(x=letterColor, y=rt_mean, colour=colorSet)) +
+ggplot(data=ddd, aes(x=letterColor, y=rt_mean, colour=group)) +
   geom_pointrange(aes(ymin=rt_mean-rt_err, ymax=rt_mean+rt_err))
 
 ezANOVA(data=dd,
         dv=rt_mean,
         wid=subject,
         within=letterColor,
-        between=colorSet,
+        between=group,
         type=3)
+
+## First, the ANOVA results line up with the plot we made
+## pretty well (main effect of group and not much else). For
+## mixed designs, we haven't learned how to perform
+## diagnostic checks (i.e., doing everything by hand) as we
+## did above for the t-test, so we will leave it at this.
 ```
+
+## Flanker experiment
+
+Consider the experiment here:
+
+* `https:/gitlab.pavlovia.org/demos/flanker`
+* `https:/run.pavlovia.org/demos/flanker`
+
+You should participate in the experiment to get a feel for
+it.
+
+Reasonably cleaned data from this experiment can be found
+here: 
+
+* `https://crossley.github.io/cogs2020/data/real_data/data_flanker.csv`
+
+`data_flanker.csv` contains the following columns:
+
+* `subject`: participant indicator
+* `stimulus`: the presented stimulus
+* `condition`: whether the stimulus is congruent or incongruent
+* `key_resp.keys`: the response made by the participant
+* `response`: the correct response
+* `key_resp.rt`: the response time of the key press
+* `group`: the group or participants 
+
+```{r}
+library(data.table)
+library(ggplot2)
+library(ez)
+
+rm(list = ls())
+
+## Load data_flanker.csv into a data.table
+d <- fread('https://crossley.github.io/cogs2020/data/real_data/data_flanker.csv')
+
+## For each of the questions listed below, make a diagnostic
+## plot and perform an appropriate NHST. Perform the most
+## robust sanity checks you can / we have learned to be sure
+## that the results you obtain from using built-in R
+## functions are not corrupted by incorrect data wrangling,
+## or otherwise slippery coding mistakes.
+
+## The classic finding in a flanker experiment is that
+## accuracy and reaction times are both better on congruent
+## (e.g., <<<<<) trials than on incongruent trials (e.g.,
+## <<><<). Test this hypothesis using an appropriate t-test
+
+## Does the group a participant belongs to make a difference
+## in overall accuracy or reaction time?
+
+## Is there any difference in accuracy or reaction time
+## between any combination of group and condition (congruent
+## vs incongruent)?
+
+## ## Is there any difference in accuracy or reaction time
+## between any combination of condition (congruent vs
+## incongruent) and congruent stimuli?
+
+## ## Is there any difference in accuracy or reaction time
+## between any combination of condition (congruent vs
+## incongruent) and incongruent stimuli?
+```
+
+## Visual search experiment
+Consider the experiment here:
+
+* `https:/gitlab.pavlovia.org/demos/visual-search`
+* `https:/run.pavlovia.org/demos/visual-search`
+
+You should participate in the experiment to get a feel for
+it.
+
+Reasonably cleaned data from this experiment can be found
+here: 
+
+* `https://crossley.github.io/cogs2020/data/real_data/data_visual_search.csv`
+
+`data_visual_search.csv` contains the following columns:
+
+* `subject`: participant indicator
+* `setSize`: number of stimuli on the screen
+* `targetCol`: colour of the target image
+* `distractorCol`: colour of the distractor images
+* `mouse.time`: response time
+
+```{r}
+library(data.table)
+library(ggplot2)
+library(ez)
+
+rm(list = ls())
+
+## Load data_fla.csv into a data.table
+d <- fread('https://crossley.github.io/cogs2020/data/real_data/data_visual_search.csv')
+
+## For each of the questions listed below, make a diagnostic
+## plot and perform an appropriate NHST. Perform the most
+## robust sanity checks you can / we have learned to be sure
+## that the results you obtain from using built-in R
+## functions are not corrupted by incorrect data wrangling,
+## or otherwise slippery coding mistakes.
+
+## Is the search time longer when the target is the same
+## colour as the distractor images?
+
+## Is the the search time longer when set size is bigger?
+
+## Does the target colour have a bigger effect on search
+## time at larger set sizes?
+```
+
+# Goal 2 practice
+
+## 1.
+```{r, echo=F}
+mux <- 10
+sigx <- 3
+n <- 10
+
+muxbar <- mux
+sigxbar <- sigx / sqrt(n)
+
+x <- seq(mux-4*sigx, mux+4*sigx, 0.01)
+fx <- dnorm(x, mean=mux, sd=sigx)
+dx <- data.table(x=x, fx=fx)
+
+xobs <- rnorm(n, mux, sigx)
+y <- rep(0, n)
+dobs <- data.table(xobs, y)
+
+xbar <- seq(muxbar-4*sigxbar, muxbar+4*sigxbar, 0.01)
+fxbar <- dnorm(xbar, mean=muxbar, sd=sigxbar)
+dxbar <- data.table(x=xbar, fx=fxbar)
+
+ggplot() +
+  geom_line(data=dx, aes(x, fx), colour='red') +
+  geom_line(data=dxbar, aes(x, fx), colour='blue') +
+  geom_point(data=dobs, aes(x=xobs, y=y)) +
+  geom_vline(aes(xintercept=mean(xobs)))
+```
+
+* Which distribution corresponds to the random variable that
+generates observed raw data, and which corresponds to the
+random variable that generates observed test statistic
+values?
+
+* Which distribution generated the observed raw data
+illustrated by the black dots?
+
+* Which distribution generated the observed test statistic
+illustrated by the black vertical line.
+
+* What type of test does this figure illustrate?
+
+  * `Normal test`
+  * `t-test`
+  * `Binomial test`
+  * `ANOVA`
+  * `None of the above`
+  * `All of the above`
+
+* What is the null hypothesis of this test?
+
+* Define a specific alternative hypothesis compute the
+minimum sample size required required to generate a power of
+at least 0.8 and a type I error rate of 0.05.
+
+
+## 2.
+```{r, echo=F}
+mux <- 8
+muy <- 10
+muz <- 12
+
+sig <- 3
+n <- 10
+
+x <- seq(mux-4*sig, muz+4*sig, 0.01)
+fx <- dnorm(x, mean=mux, sd=sig)
+fy <- dnorm(x, mean=muy, sd=sig)
+fz <- dnorm(x, mean=muz, sd=sig)
+dxyz <- data.table(x=x, fx=fx, fy=fy, fz=fz)
+
+xobs <- rnorm(n, mux, sig)
+yobs <- rnorm(n, muy, sig)
+zobs <- rnorm(n, muz, sig)
+
+dobs <- data.table(xobs, yobs, zobs, vp=0)
+
+ggplot() +
+  geom_line(data=dxyz, aes(x, fx), colour='red') +
+  geom_line(data=dxyz, aes(x, fy), colour='blue') +
+  geom_line(data=dxyz, aes(x, fz), colour='green') +
+  geom_point(data=dobs, aes(x=xobs, y=vp), color='red') +
+  geom_point(data=dobs, aes(x=yobs, y=vp), color='blue') +
+  geom_point(data=dobs, aes(x=zobs, y=vp), color='green')
+```
+
+* The figure shows a plausible illustration of the
+alternative hypothesis for what NHST?
+
+  * `Normal test`
+  * `t-test`
+  * `Binomial test`
+  * `1-way ANOVA`
+  * `None of the above`
+  * `All of the above`
+  
+* Draw the sampling distribution of the test statistic given
+that there are 10 observations from each illustrated raw
+data distribution.
+
+## 3.
+```{r, echo=F}
+mux <- 10
+muy <- 10
+muz <- 10
+
+sigx <- 3
+sigy <- 6
+sigz <- 9
+
+n <- 10
+
+x <- seq(mux-4*sigz, muz+4*sigz, 0.01)
+fx <- dnorm(x, mean=mux, sd=sigx)
+fy <- dnorm(x, mean=muy, sd=sigy)
+fz <- dnorm(x, mean=muz, sd=sigz)
+dxyz <- data.table(x=x, fx=fx, fy=fy, fz=fz)
+
+xobs <- rnorm(n, mux, sigx)
+yobs <- rnorm(n, muy, sigy)
+zobs <- rnorm(n, muz, sigz)
+
+dobs <- data.table(xobs, yobs, zobs, vp=0)
+
+ggplot() +
+  geom_line(data=dxyz, aes(x, fx), colour='red') +
+  geom_line(data=dxyz, aes(x, fy), colour='blue') +
+  geom_line(data=dxyz, aes(x, fz), colour='green') +
+  geom_point(data=dobs, aes(x=xobs, y=vp), color='red') +
+  geom_point(data=dobs, aes(x=yobs, y=vp), color='blue') +
+  geom_point(data=dobs, aes(x=zobs, y=vp), color='green')
+```
+
+* Suppose that raw data is generated from the above
+distributions. Is this raw data consistent with the
+assumptions made in the null hypothesis of a 1-way ANOVA? If
+not, why?
+
+## 4.
+
+* Consider a scenario where researchers are testing for
+significant differences between treatments and doses of each
+treatment in a fully between-subjects design. Draw the
+distributions for the raw data of a possible alternative
+hypothesis that shows a significant interaction but no main
+effects.
+
+# Goal 3 practice
+
+```{r, echo=F}
+gen_exp <- function(muA1, muA2, muB1, muB2, muC1, muC2, sig, n) {
+
+  ## generate obervations
+  y_A1 <- rnorm(n, muA1, sig)
+  y_A2 <- rnorm(n, muA2, sig)
+  y_B1 <- rnorm(n, muB1, sig)
+  y_B2 <- rnorm(n, muB2, sig)
+  y_C1 <- rnorm(n, muC1, sig) # new level but same mu
+  y_C2 <- rnorm(n, muC2, sig) # new level but same mu
+
+  ## store observations plus relevant indicators in data.table
+  d <- data.table(y=c(y_A1, y_A2, y_B1, y_B2, y_C1, y_C2),
+                  treatment=rep(c('A', 'B', 'C'), each=2*n),
+                  dose=rep(c(1, 2), 3, each=n))
+
+  d[, treatment := factor(treatment)]
+  d[, dose := factor(dose)]
+
+  ## main effect of treatment (A vs B)
+  dd <- d[, .(mean(y), sd(y)/sqrt(length(unique(dose)))), .(treatment)]
+  g1 <- ggplot(dd, aes(treatment, V1)) +
+    geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2)) +
+    theme_classic() +
+    theme(aspect.ratio=1) +
+    ylab('Observed mean effect') +
+    ggtitle('Main effect')
+
+  ## main effect of dose (1 vs 2)
+  dd <- d[, .(mean(y), sd(y)/sqrt(length(unique(treatment)))), .(dose)]
+  g2 <- ggplot(dd, aes(dose, V1)) +
+    geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2)) +
+    theme_classic() +
+    theme(aspect.ratio=1) +
+    ylab('Observed mean effect') +
+    ggtitle('Main effect')
+
+  ## interaction between treatment and dose
+  dd <- d[, .(mean(y), sd(y)/sqrt(length(unique(treatment))*length(unique(dose)))), .(treatment, dose)]
+  g3 <- ggplot(dd, aes(dose, V1, colour=treatment)) +
+    geom_pointrange(aes(ymin=V1-V2, ymax=V1+V2)) +
+    geom_line(aes(as.integer(dose), V1, colour=treatment)) +
+    theme_classic() +
+    theme(aspect.ratio=1) +
+    ylab('Observed mean effect') +
+    ggtitle('Interaction')
+
+  return(list(g1, g2, g3, unique(d)))
+}
+```
+
+## 1.
+```{r, echo=F}
+set.seed(2)
+n <- 10
+# muA1, muA2, muB1, muB2, muC1, muC2, sig, n
+res <- gen_exp(10, 30, 40, 20, 40, 20, 5, n)
+g1 <- res[[1]]
+g2 <- res[[2]]
+g3 <- res[[3]]
+d <- res[[4]]
+d[, subject := 1:.N]
+d <- d[treatment %in% c('A', 'B'), .(y, treatment, subject)]
+```
+
+* Use an appropriate NHST to test for significant
+differences between treatment A and treatment B.
+
+* Use another appropriate NHST to test for significant
+differences between treatment A and treatment B.
+
+* Use an appropriate NHST to test if treatment A is
+significantly greater than treatment B.
+
+## 2.
+```{r, echo=F}
+set.seed(4)
+n <- 10
+# muA1, muA2, muB1, muB2, muC1, muC2, sig, n
+res <- gen_exp(10, 30, 40, 20, 40, 20, 5, n)
+g1 <- res[[1]]
+g2 <- res[[2]]
+g3 <- res[[3]]
+d <- res[[4]]
+d[, subject := rep(1:(2*n), 3)]
+d <- d[treatment %in% c('A', 'B'), .(y, treatment, subject)]
+```
+
+* Use an appropriate NHST to test for significant
+differences between treatment A and treatment B.
+
+* Use another appropriate NHST to test for significant
+differences between treatment A and treatment B.
+
+* Use an appropriate NHST to test if treatment A is
+significantly greater than treatment B.
