@@ -533,30 +533,27 @@ d <- fread('https://crossley.github.io/cogs2020/data/real_data/data_flanker.csv'
 
 ## For each of the questions listed below, make a diagnostic
 ## plot and perform an appropriate NHST. Perform the most
-## robust sanity checks you can / we have learned to be sure
-## that the results you obtain from using built-in R
-## functions are not corrupted by incorrect data wrangling,
-## or otherwise slippery coding mistakes.
+## robust sanity checks you can to be sure that the results
+## you obtain from using built-in R functions are not
+## corrupted by incorrect data wrangling, or otherwise
+## slippery coding mistakes.
 
 ## The classic finding in a flanker experiment is that
 ## accuracy and reaction times are both better on congruent
-## (e.g., <<<<<) trials than on incongruent trials (e.g.,
-## <<><<). Test this hypothesis using an appropriate t-test
+## (e.g., `stimulus == '<<<<<'`) trials than on incongruent
+## trials (e.g., `stimulus != '<<><<'`). Test this
+## hypothesis using an appropriate t-test.
 
-## Does the group a participant belongs to make a difference
-## in overall accuracy or reaction time?
+## Does the `group` a participant belongs to make a
+## difference in overall accuracy or reaction time?
 
 ## Is there any difference in accuracy or reaction time
-## between any combination of group and condition (congruent
-## vs incongruent)?
+## between any combination of `group` and `condition`
+## (congruent vs incongruent)?
 
 ## ## Is there any difference in accuracy or reaction time
-## between any combination of condition (congruent vs
-## incongruent) and congruent stimuli?
-
-## ## Is there any difference in accuracy or reaction time
-## between any combination of condition (congruent vs
-## incongruent) and incongruent stimuli?
+## within the congruent stimuli? Within the inconruent
+## stimuli?
 ```
 
 ## Visual search experiment
@@ -593,10 +590,10 @@ d <- fread('https://crossley.github.io/cogs2020/data/real_data/data_visual_searc
 
 ## For each of the questions listed below, make a diagnostic
 ## plot and perform an appropriate NHST. Perform the most
-## robust sanity checks you can / we have learned to be sure
-## that the results you obtain from using built-in R
-## functions are not corrupted by incorrect data wrangling,
-## or otherwise slippery coding mistakes.
+## robust sanity checks you can to be sure that the results
+## you obtain from using built-in R functions are not
+## corrupted by incorrect data wrangling, or otherwise
+## slippery coding mistakes.
 
 ## Is the search time longer when the target is the same
 ## colour as the distractor images?
@@ -626,7 +623,7 @@ xobs <- rnorm(n, mux, sigx)
 y <- rep(0, n)
 dobs <- data.table(xobs, y)
 
-xbar <- seq(muxbar-4*sigxbar, muxbar+4*sigxbar, 0.01)
+xbar <- seq(muxbar-15*sigxbar, muxbar+15*sigxbar, 0.01)
 fxbar <- dnorm(xbar, mean=muxbar, sd=sigxbar)
 dxbar <- data.table(x=xbar, fx=fxbar)
 
@@ -637,16 +634,12 @@ ggplot() +
   geom_vline(aes(xintercept=mean(xobs)))
 ```
 
-* Which distribution corresponds to the random variable that
-generates observed raw data, and which corresponds to the
-random variable that generates observed test statistic
-values?
-
 * Which distribution generated the observed raw data
 illustrated by the black dots?
 
 * Which distribution generated the observed test statistic
-illustrated by the black vertical line.
+(i.e., the sample mean) illustrated by the black vertical
+line.
 
 * What type of test does this figure illustrate?
 
@@ -661,8 +654,9 @@ illustrated by the black vertical line.
 
 * Define a specific alternative hypothesis compute the
 minimum sample size required required to generate a power of
-at least 0.8 and a type I error rate of 0.05.
-
+at least 0.8 and a type I error rate of 0.05. The population
+standard deviation of the random variable that generated the
+raw data is $\sigma_X = 3$.
 
 ## 2.
 ```{r, echo=F}
@@ -706,7 +700,11 @@ alternative hypothesis for what NHST?
   
 * Draw the sampling distribution of the test statistic given
 that there are 10 observations from each illustrated raw
-data distribution.
+data distribution. Note that -- while you are quite welcome
+to use `ggplot` to do this -- it is also okay to simply draw
+by hand on a piece of paper. We won't be looking at this
+point to mark you. It will be, however, an essential tool
+for you to know how to use on the exam.
 
 ## 3.
 ```{r, echo=F}
@@ -746,14 +744,23 @@ distributions. Is this raw data consistent with the
 assumptions made in the null hypothesis of a 1-way ANOVA? If
 not, why?
 
+* Suppose we were only interested in pairwise comparisons
+between the red, blue, and green random variables. Is the
+raw data consistent with the assumptions made in the null
+hypothesis of any t-test?
+
 ## 4.
 
 * Consider a scenario where researchers are testing for
-significant differences between treatments and doses of each
-treatment in a fully between-subjects design. Draw the
+significant differences between 2 treatments and 2 doses of
+each treatment in a fully between-subjects design. Draw the
 distributions for the raw data of a possible alternative
 hypothesis that shows a significant interaction but no main
-effects.
+effects. Note that -- while you are quite welcome to use
+`ggplot` to do this -- it is also okay to simply draw by
+hand on a piece of paper. We won't be looking at this point
+to mark you. It will be, however, an essential tool for you
+to know how to use on the exam.
 
 # Goal 3 practice
 
@@ -811,7 +818,7 @@ gen_exp <- function(muA1, muA2, muB1, muB2, muC1, muC2, sig, n) {
 ## 1.
 ```{r, echo=F}
 set.seed(2)
-n <- 10
+n <- 4
 # muA1, muA2, muB1, muB2, muC1, muC2, sig, n
 res <- gen_exp(10, 30, 40, 20, 40, 20, 5, n)
 g1 <- res[[1]]
@@ -820,6 +827,28 @@ g3 <- res[[3]]
 d <- res[[4]]
 d[, subject := 1:.N]
 d <- d[treatment %in% c('A', 'B'), .(y, treatment, subject)]
+```
+
+```{r}
+d <- fread(
+ 'y treatment subject
+  5.515427          A       1
+  10.924246         A       2
+  17.939227         A       3
+  4.348122          A       4
+  29.598741         A       5
+  30.662101         A       6
+  33.539774         A       7
+  28.801510         A       8
+  49.922370         B       9
+  39.306065         B      10
+  42.088254         B      11
+  44.908764         B      12
+  18.036523         B      13
+  14.801655         B      14
+  28.911145         B      15
+  8.444655          B      16'
+)
 ```
 
 * Use an appropriate NHST to test for significant
@@ -834,7 +863,7 @@ significantly greater than treatment B.
 ## 2.
 ```{r, echo=F}
 set.seed(4)
-n <- 10
+n <- 4
 # muA1, muA2, muB1, muB2, muC1, muC2, sig, n
 res <- gen_exp(10, 30, 40, 20, 40, 20, 5, n)
 g1 <- res[[1]]
@@ -843,6 +872,28 @@ g3 <- res[[3]]
 d <- res[[4]]
 d[, subject := rep(1:(2*n), 3)]
 d <- d[treatment %in% c('A', 'B'), .(y, treatment, subject)]
+```
+
+```{r}
+d <- fread(
+ 'y treatment subject
+  11.083774         A       1
+  7.287537          A       2
+  14.455723         A       3
+  12.979903         A       4
+  38.178090         A       5
+  33.446377         A       6
+  23.593767         A       7
+  28.934277         A       8
+  49.482699         B       1
+  48.884316         B       2
+  42.833022         B       3
+  40.078597         B       4
+  21.915287         B       5
+  19.774314         B       6
+  20.171760         B       7
+  20.845134         B       8'  
+)
 ```
 
 * Use an appropriate NHST to test for significant
